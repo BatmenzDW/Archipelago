@@ -31,9 +31,9 @@ ITEM_NAME_TO_ID = (
         "Extra Allowance 1": 10101,
         "Extra Allowance 2": 10102,
         #
-        "Extra Coin 1": 10201,
-        "Extra Coin 2": 10202,
-        "Extra Coin 5": 10203,
+        "Extra Gold 1": 10201,
+        "Extra Gold 2": 10202,
+        "Extra Gold 5": 10203,
         #
         "Extra Dice 1": 10301,
         "Extra Dice 2": 10302,
@@ -60,8 +60,8 @@ ITEM_NAME_TO_ID = (
         "Extra Starting Gems 1": 10901,
         "Extra Starting Gems 2": 10902,
         #
-        "Extra Starting Key 1": 11001,
-        "Extra Starting Key 2": 11002,
+        "Extra Starting Keys 1": 11001,
+        "Extra Starting Keys 2": 11002,
         #
         "Extra Starting Luck 1": 11101,
         "Extra Starting Luck 2": 11102,
@@ -78,18 +78,18 @@ ITEM_NAME_TO_ID = (
         #
         "Trap Freeze Items": 40101,
         #
-        "Trap Take Step 1": 40201,
-        "Trap Take Step 2": 40202,
-        "Trap Take Step 5": 40203,
+        "Trap Take Steps 1": 40201,
+        "Trap Take Steps 2": 40202,
+        "Trap Take Steps 5": 40203,
         #
         "Trap Set Steps 1": 41201,
         "Trap Set Steps 10": 41202,
         #
         "Trap Lose Item": 40301,
         #
-        "Trap Lose Star 1": 40401,
-        "Trap Lose Star 2": 40402,
-        "Trap Lose Star 5": 40405,
+        "Trap Lose Stars 1": 40401,
+        "Trap Lose Stars 2": 40402,
+        "Trap Lose Stars 5": 40405,
         #
         "Trap End Day": 40501,
         #
@@ -122,9 +122,9 @@ DEFAULT_ITEM_CLASSIFICATIONS = (
         "Extra Allowance 1": ItemClassification.filler,
         "Extra Allowance 2": ItemClassification.filler,
         #
-        "Extra Coin 1": ItemClassification.filler,
-        "Extra Coin 2": ItemClassification.filler,
-        "Extra Coin 5": ItemClassification.filler,
+        "Extra Gold 1": ItemClassification.filler,
+        "Extra Gold 2": ItemClassification.filler,
+        "Extra Gold 5": ItemClassification.filler,
         #
         "Extra Dice 1": ItemClassification.filler,
         "Extra Dice 2": ItemClassification.filler,
@@ -151,8 +151,8 @@ DEFAULT_ITEM_CLASSIFICATIONS = (
         "Extra Starting Gems 1": ItemClassification.filler,
         "Extra Starting Gems 2": ItemClassification.filler,
         #
-        "Extra Starting Key 1": ItemClassification.filler,
-        "Extra Starting Key 2": ItemClassification.filler,
+        "Extra Starting Keys 1": ItemClassification.filler,
+        "Extra Starting Keys 2": ItemClassification.filler,
         #
         "Extra Starting Luck 1": ItemClassification.filler,
         "Extra Starting Luck 2": ItemClassification.filler,
@@ -169,18 +169,18 @@ DEFAULT_ITEM_CLASSIFICATIONS = (
         #
         "Trap Freeze Items": ItemClassification.trap,
         #
-        "Trap Take Step 1": ItemClassification.trap,
-        "Trap Take Step 2": ItemClassification.trap,
-        "Trap Take Step 5": ItemClassification.trap,
+        "Trap Take Steps 1": ItemClassification.trap,
+        "Trap Take Steps 2": ItemClassification.trap,
+        "Trap Take Steps 5": ItemClassification.trap,
         #
         "Trap Set Steps 1": ItemClassification.trap,
         "Trap Set Steps 10": ItemClassification.trap,
         #
         "Trap Lose Item": ItemClassification.trap,
         #
-        "Trap Lose Star 1": ItemClassification.trap,
-        "Trap Lose Star 2": ItemClassification.trap,
-        "Trap Lose Star 5": ItemClassification.trap,
+        "Trap Lose Stars 1": ItemClassification.trap,
+        "Trap Lose Stars 2": ItemClassification.trap,
+        "Trap Lose Stars 5": ItemClassification.trap,
         #
         "Trap End Day": ItemClassification.trap,
         #
@@ -213,11 +213,11 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
                 return "Trap Freeze Items"
 
             case "step_traps_1":
-                return "Trap Take Step 1"
+                return "Trap Take Steps 1"
             case "step_traps_2":
-                return "Trap Take Step 2"
+                return "Trap Take Steps 2"
             case "step_traps_5":
-                return "Trap Take Step 5"
+                return "Trap Take Steps 5"
 
             case "step_traps_set_to_1":
                 return "Trap Set Steps 1"
@@ -225,29 +225,29 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
                 return "Trap Set Steps 10"
 
             case "star_traps_1":
-                return "Trap Lose Star 1"
+                return "Trap Lose Stars 1"
             case "star_traps_2":
-                return "Trap Lose Star 2"
+                return "Trap Lose Stars 2"
             case "star_traps_5":
-                return "Trap Lose Star 5"
+                return "Trap Lose Stars 5"
 
             case "eod_traps":
                 return "Trap End Day"
 
             case "step_traps":
                 if count < 20:
-                    return "Trap Take Step 5"
+                    return "Trap Take Steps 5"
                 elif count < 60:
-                    return "Trap Take Step 2"
+                    return "Trap Take Steps 2"
                 else:
-                    return "Trap Take Step 1"
+                    return "Trap Take Steps 1"
             case "star_traps":
                 if count < 20:
-                    return "Trap Take Star 5"
+                    return "Trap Take Stars 5"
                 elif count < 60:
-                    return "Trap Take Star 2"
+                    return "Trap Take Stars 2"
                 else:
-                    return "Trap Take Star 1"
+                    return "Trap Take Stars 1"
     else:
         choice = world.random.choices(
             list(world.options.filler_item_distribution.valid_keys),
@@ -261,12 +261,12 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
                 return "Extra Allowance 1"
             case "extra_allowance_2":
                 return "Extra Allowance 2"
-            case "extra_coins_1":
-                return "Extra Coin 1"
-            case "extra_coins_2":
-                return "Extra Coin 2"
-            case "extra_coins_5":
-                return "Extra Coin 5"
+            case "extra_gold_1":
+                return "Extra Gold 1"
+            case "extra_gold_2":
+                return "Extra Gold 2"
+            case "extra_gold_5":
+                return "Extra Gold 5"
             case "extra_dice_1":
                 return "Extra Dice 1"
             case "extra_dice_2":
@@ -305,9 +305,9 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
             case "extra_starting_gems_2":
                 return "Extra Starting Gems 2"
             case "extra_starting_key_1":
-                return "Extra Starting Key 1"
+                return "Extra Starting Keys 1"
             case "extra_starting_key_2":
-                return "Extra Starting Key 2"
+                return "Extra Starting Keys 2"
             case "extra_starting_luck_1":
                 return "Extra Starting Luck 1"
             case "extra_starting_luck_2":
@@ -332,13 +332,13 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
                 else:
                     return "Extra Allowance 1"
 
-            case "extra_coins":
+            case "extra_gold":
                 if count < 20:
-                    return "Extra Coin 5"
+                    return "Extra Gold 5"
                 elif count < 60:
-                    return "Extra Coin 2"
+                    return "Extra Gold 2"
                 else:
-                    return "Extra Coin 1"
+                    return "Extra Gold 1"
 
             case "extra_dice":
                 if count < 10:
@@ -392,9 +392,9 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
 
             case "extra_starting_key":
                 if count < 20:
-                    return "Extra Starting Key 2"
+                    return "Extra Starting Keys 2"
                 else:
-                    return "Extra Starting Key 1"
+                    return "Extra Starting Keys 1"
 
             case "extra_starting_luck":
                 if count < 20:

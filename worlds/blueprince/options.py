@@ -82,10 +82,10 @@ class FillerItemDistribution(OptionCounter):
         "extra_allowance": 50,
         "extra_allowance_1": 0,
         "extra_allowance_2": 0,
-        "extra_coins": 50,
-        "extra_coins_1": 0,
-        "extra_coins_2": 0,
-        "extra_coins_5": 0,
+        "extra_gold": 50,
+        "extra_gold_1": 0,
+        "extra_gold_2": 0,
+        "extra_gold_5": 0,
         "extra_dice": 50,
         "extra_dice_1": 0,
         "extra_dice_2": 0,
@@ -139,7 +139,7 @@ class TrapTypeDistribution(OptionCounter):
     - **Freeze Trap**: Freeze items as if the player entered a freezer.
     - **Lose Steps Trap**: Lose between one and five steps.
     - **Lose Item Trap**: Loose an item as if the player entered the lost and found.
-    - **Lose Star Trap**: Lose one or more stars
+    - **Lose Stars Trap**: Lose one or more stars
     - **End Day Trap**: End the day immediately.
 
     Setting the trap with a number will remove that many specifically.
