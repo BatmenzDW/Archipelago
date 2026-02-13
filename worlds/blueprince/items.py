@@ -39,10 +39,6 @@ ITEM_NAME_TO_ID = (
         "Extra Dice 2": 10302,
         "Extra Dice 4": 10303,
         #
-        "Extra Fruits Apple": 10401,
-        "Extra Fruits Banana": 10420,
-        "Extra Fruits Orange": 10430,
-        #
         "Extra Gems 1": 10501,
         "Extra Gems 2": 10502,
         #
@@ -129,10 +125,6 @@ DEFAULT_ITEM_CLASSIFICATIONS = (
         "Extra Dice 1": ItemClassification.filler,
         "Extra Dice 2": ItemClassification.filler,
         "Extra Dice 4": ItemClassification.filler,
-        #
-        "Extra Fruits Apple": ItemClassification.filler,
-        "Extra Fruits Banana": ItemClassification.filler,
-        "Extra Fruits Orange": ItemClassification.filler,
         #
         "Extra Gems 1": ItemClassification.filler,
         "Extra Gems 2": ItemClassification.filler,
@@ -273,12 +265,6 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
                 return "Extra Dice 2"
             case "extra_dice_4":
                 return "Extra Dice 4"
-            case "extra_fruit_apple":
-                return "Extra Fruits Apple"
-            case "extra_fruit_banana":
-                return "Extra Fruits Banana"
-            case "extra_fruit_orange":
-                return "Extra Fruits Orange"
             case "extra_gems_1":
                 return "Extra Gems 1"
             case "extra_gems_2":
@@ -347,14 +333,6 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
                     return "Extra Dice 2"
                 else:
                     return "Extra Dice 1"
-
-            case "extra_fruit":
-                if count < 20:
-                    return "Extra Fruits Orange"
-                elif count < 50:
-                    return "Extra Fruits Banana"
-                else:
-                    return "Extra Fruits Apple"
 
             case "extra_gems":
                 if count < 30:
