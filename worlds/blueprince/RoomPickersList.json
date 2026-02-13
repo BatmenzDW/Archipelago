@@ -5,8 +5,8 @@
         "CENTER - Tier 2 G",
         "EDGE ADVANCE WESTWING - G",
         "EDGE ADVANCE EASTWING - G",
-        "EDGE RETREAT WESTWING -  G",
-        "EDGE RETREAT EASTTWING -  G",
+        "EDGE RETREAT WESTWING - G",
+        "EDGE RETREAT EASTTWING - G",
         "EDGEPIERCE G"
     ],
     "ARCHIVES": [
@@ -20,13 +20,13 @@
         "EDGECREEP - RARE G",
         "EDGEPIERCE - RARE G"
     ],
-     "BALLROOM": [
+    "BALLROOM": [
         "FRONTBACK G - RARE",
         "CENTER - Tier 2 G",
         "EDGECREEP - RARE G"
     ],
     "BEDROOM": [
-         "FRONTBACK - RARE",
+        "FRONTBACK - RARE",
         "SOUTH PIERCE",
         "CORNER - Tier 1",
         "CENTER - Tier 1",
@@ -35,7 +35,7 @@
         "EDGEPIERCE EAST",
         "EDGEPIERCE WEST"
     ],
-     "BILLIARD ROOM": [
+    "BILLIARD ROOM": [
         "FRONTBACK - RARE",
         "NORTH PIERCE",
         "CORNER - Tier 1",
@@ -48,9 +48,9 @@
     "BOILER ROOM": [
         "CENTER - Tier 2 G",
         "EDGE ADVANCE EASTWING - G",
-        "EDGE RETREAT WESTWING -  G"  
+        "EDGE RETREAT WESTWING -  G"
     ],
-    "BOOKSHOP": [ ],
+    "BOOKSHOP": [],
     "BOUDOIR": [
         "SOUTH PIERCE",
         "CORNER - Tier 1",
@@ -70,15 +70,15 @@
         "EDGEPIERCE WEST"
     ],
     "CASINO": [
-       "FRONTBACK G - RARE",
-       "EDGEPIERCE G",
-       "EDGE ADVANCE EASTWING - G",
-       "EDGE ADVANCE WESTWING - G",
-       "EDGE RETREAT WESTWING -  G",
-       "EDGE RETREAT EASTTWING -  G",
-       "NORTH PIERCE G",
-       "CENTER - Tier 1 G",
-       "CORNER - Tier 1 G"
+        "FRONTBACK G - RARE",
+        "EDGEPIERCE G",
+        "EDGE ADVANCE EASTWING - G",
+        "EDGE ADVANCE WESTWING - G",
+        "EDGE RETREAT WESTWING -  G",
+        "EDGE RETREAT EASTTWING -  G",
+        "NORTH PIERCE G",
+        "CENTER - Tier 1 G",
+        "CORNER - Tier 1 G"
     ],
     "CHAMBER OF MIRRORS": [
         "CENTER - Tier 2"
@@ -92,7 +92,7 @@
         "EDGEPIERCE EAST",
         "EDGEPIERCE WEST"
     ],
-     "CLASSROOM": [
+    "CLASSROOM": [
         "CENTER - Tier 1 G",
         "FRONT - Tier 1 G",
         "CORNER - Tier 1 G",
@@ -103,13 +103,13 @@
         "EDGEPIERCE G"
     ],
     "CLOCK TOWER": [
-       "CENTER - Tier 2 G",
-       "FRONTBACK G - RARE",
-       "NORTH PIERCE G",
-       "CORNER - Tier 1 G",
-       "EDGE RETREAT WESTWING -  G",
-       "EDGE RETREAT EASTTWING -  G",
-       "EDGEPIERCE G"
+        "CENTER - Tier 2 G",
+        "FRONTBACK G - RARE",
+        "NORTH PIERCE G",
+        "CORNER - Tier 1 G",
+        "EDGE RETREAT WESTWING -  G",
+        "EDGE RETREAT EASTTWING -  G",
+        "EDGEPIERCE G"
     ],
     "CLOISTER": [
         "CENTER - Tier 2 G"
@@ -307,7 +307,7 @@
         "SOUTH PIERCE",
         "CENTER - Tier 1"
     ],
-     "HER LADYSHIP'S CHAMBER": [
+    "HER LADYSHIP'S CHAMBER": [
         "EDGE RETREAT WESTWING -  G"
     ],
     "HOVEL": [
@@ -364,11 +364,11 @@
         "EDGEPIERCE WEST"
     ],
     "LOCKER ROOM": [
-       "FRONT - Tier 1 G",
+        "FRONT - Tier 1 G",
         "EDGE ADVANCE WESTWING - G",
         "EDGE ADVANCE EASTWING - G",
-        "EDGE RETREAT WESTWING - G",
-        "EDGE RETREAT EASTWING - G",
+        "EDGE RETREAT WESTWING -  G",
+        "EDGE RETREAT EASTTWING -  G",
         "CENTER - Tier 2 G"
     ],
     "LOCKSMITH": [
@@ -426,7 +426,7 @@
         "EDGECREEP - RARE G",
         "EDGEPIERCE - RARE G"
     ],
-     "NOOK": [
+    "NOOK": [
         "FRONTBACK - RARE",
         "SOUTH PIERCE",
         "CORNER - Tier 1",
@@ -518,9 +518,7 @@
         "NORTH PIERCE",
         "CENTER - Tier 2"
     ],
-    "ROOM 8": [
-        "DOWSING NOMBOS"
-    ],
+    "ROOM 8": [],
     "ROOT CELLAR": [
         "STANDALONE ARRAY",
         "STANDALONE ARRAY FULL"
@@ -551,8 +549,8 @@
         "STANDALONE ARRAY",
         "STANDALONE ARRAY FULL"
     ],
-     "SECRET GARDEN": [],
-     "SECRET PASSAGE": [
+    "SECRET GARDEN": [],
+    "SECRET PASSAGE": [
         "CENTER - Tier 2 G",
         "EDGE ADVANCE WESTWING - G",
         "EDGE ADVANCE EASTWING - G",
@@ -581,7 +579,6 @@
         "FRONTBACK G - RARE",
         "CENTER - Tier 3 G",
         "EDGECREEP - RARE G",
-        "SILVER KEY LIST 2",
         "Center Rare G"
     ],
     "SHRINE": [
@@ -612,7 +609,7 @@
         "EDGEPIERCE EAST",
         "EDGEPIERCE WEST"
     ],
-     "STUDY": [
+    "STUDY": [
         "FRONTBACK - RARE",
         "NORTH PIERCE",
         "CORNER - RARE",
@@ -621,7 +618,7 @@
         "EDGEPIERCE - RARE",
         "Center Rare"
     ],
-     "TERRACE": [
+    "TERRACE": [
         "EDGEPIERCE EAST",
         "EDGEPIERCE WEST"
     ],
@@ -635,11 +632,10 @@
         "EDGEPIERCE G",
         "NORTH PIERCE G"
     ],
-    "THE FOUNDATION": [ 
+    "THE FOUNDATION": [
         "CENTER - Tier 1",
         "CENTER - Tier 2",
         "CENTER - Tier 3"
-
     ],
     "THE KENNEL": [
         "FRONT - Tier 1",
@@ -647,7 +643,7 @@
         "EDGECREEP WEST",
         "CENTER - Tier 1"
     ],
-     "THE POOL": [
+    "THE POOL": [
         "FRONTBACK G - RARE",
         "NORTH PIERCE G",
         "CENTER - Tier 2 G",
@@ -658,7 +654,7 @@
         "EDGEPIERCE G",
         "Center Rare G"
     ],
-     "THRONE ROOM": [
+    "THRONE ROOM": [
         "EDGEPIERCE - RARE G",
         "CENTER - Tier 2 G"
     ],
@@ -675,11 +671,12 @@
         "STANDALONE ARRAY FULL"
     ],
     "TREASURE TROVE": [
-        "SILVER KEY LIST 2",
-        "LIBRARY LIST",
-        "LIBRARY LIST RARER",
-        "DOWSING NOMBOS",
-        "BLACKPRINTS"
+        "FRONTBACK G - RARE",
+        "CORNER - RARE G",
+        "EDGECREEP - RARE G",
+        "EDGEPIERCE - RARE G",
+        "NORTH PIERCE G",
+        "CENTER - Tier 3 G"
     ],
     "TROPHY ROOM": [
         "FRONTBACK G - RARE",
@@ -719,7 +716,7 @@
         "EDGE RETREAT WESTWING -  G",
         "EDGE RETREAT EASTTWING -  G"
     ],
-     "VESTIBULE": [
+    "VESTIBULE": [
         "CENTER - Tier 1 G"
     ],
     "WALK-IN CLOSET": [
