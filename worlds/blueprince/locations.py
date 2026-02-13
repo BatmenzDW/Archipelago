@@ -33,7 +33,7 @@ LOCATION_NAME_TO_ID = (
         f"{k} Locked Trunk {idx}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 10_000 + idx
         for k, v in rooms.items()
         for idx in range(1, 101)
-        if v[ROOM_CHEST_SPOT_COUNT] > 0
+        if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0
     }
     | {
         # Add First Pickup as locations for the standard "tools".
@@ -77,7 +77,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         # Add Nth locked trunk open
 
         for idx in range(1, world.options.locked_trunks + 1):
-            if v[ROOM_CHEST_SPOT_COUNT] > 0:
+            if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0:
                 # TODO-2 this could be a comprehension, but this works for now.
                 location_key = f"{room_key} Locked Trunk {idx}"
                 locations = get_location_names_with_ids([location_key])
@@ -200,11 +200,11 @@ def create_events(world: BluePrinceWorld) -> None:
 
     # Chess Piece Access Rules
     for k, v in rooms.items():
-        if v[ROOM_CHESS_PIECE] == CHESS_PIECE_NONE:
+        if v[ROOM_CHESS_PIECE_KEY] == CHESS_PIECE_NONE:
             continue
         world.get_region(k).add_event(
             f"Has {k} Chess Piece",
-            f"Chess Piece {v[ROOM_CHESS_PIECE]}",
+            f"Chess Piece {v[ROOM_CHESS_PIECE_KEY]}",
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
