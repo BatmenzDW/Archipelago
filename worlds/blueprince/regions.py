@@ -193,6 +193,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                             world.player,
                         ),
                 )
+            # This is only necessary if we track the day count
             # elif k == "Gallery":
             #     entrance_hall.connect(
             #         room,
@@ -575,7 +576,7 @@ def can_reach_pick_position(room : str, world: BluePrinceWorld, state: Collectio
                 if depth_first_tile_search(new_x, new_y, d, remaining, visited):
                     state.collect(pt, world.player)
                     return True
-
+    
     # TODO: add an additional pass for when Foundation is in inventory
 
     def get_shape_for_tile_type(tile_type):

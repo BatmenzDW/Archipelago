@@ -148,7 +148,36 @@ OPPOSITE = {
 }
 
 POSITION_CHECKS = {
-    ROOM_PICK_POSITION_CENTER_TIER_1: [((3, 2), [S])],
-    ROOM_PICK_POSITION_CENTER_TIER_1_GEMS: [((3, 2), [S])],
+    ROOM_PICK_POSITION_CENTER_TIER_1: [((3, 2), [S])], # Should always be true
+    ROOM_PICK_POSITION_CENTER_TIER_1_GEMS: [((3, 2), [S])], # Should always be true
     ROOM_PICK_POSITION_CENTER_TIER_1_FOUNDATION: [((3, 3), [S]), ((2, 3), [S]), ((4, 3), [S])],
+    ROOM_PICK_POSITION_CENTER_TIER_2: [((3, 4), [S]), ((2, 4), [S]), ((4, 4), [S])],
+    ROOM_PICK_POSITION_CENTER_TIER_2_GEMS: [((3, 4), [S]), ((2, 4), [S]), ((4, 4), [S])],
+    ROOM_PICK_POSITION_CENTER_TIER_3: [((3, 7), [S]), ((2, 7), [S]), ((4, 7), [S])],
+    ROOM_PICK_POSITION_CENTER_TIER_3_GEMS: [((3, 7), [S]), ((2, 7), [S]), ((4, 7), [S])],
+    ROOM_PICK_POSITION_CORNER_RARE: [((1, 1), [N, E])],
+    ROOM_PICK_POSITION_CORNER_RARE_GEMS: [((1, 1), [N, E])],
+    ROOM_PICK_POSITION_CORNER: [((1, 1), [N, E])],
+    ROOM_PICK_POSITION_CORNER_GEMS: [((1, 1), [N, E])],
+    ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS: [((5, 2), [S])],
+    ROOM_PICK_POSITION_EDGE_ADVANCE_WEST_WING_GEMS: [((1, 2), [S])],
+    ROOM_PICK_POSITION_EDGE_RETREAT_EAST_WING_GEMS: [((5, 2), [N])],
+    ROOM_PICK_POSITION_EDGE_RETREAT_WEST_WING_GEMS: [((1, 2), [N])],
+    ROOM_PICK_POSITION_EDGE_CREEP_RARE: [((1, 2), [S])],
+    ROOM_PICK_POSITION_EDGE_CREEP_RARE_GEMS: [((1, 2), [S])],
+    ROOM_PICK_POSITION_EDGE_CREEP_EAST: [((5, 2), [S])],
+    ROOM_PICK_POSITION_EDGE_CREEP_WEST: [((1, 2), [S])],
+    ROOM_PICK_POSITION_EDGE_PIERCE_EAST: [((5, 2), [W])],
+    ROOM_PICK_POSITION_EDGE_PIERCE_WEST: [((1, 2), [E])],
+    ROOM_PICK_POSITION_EDGE_PIERCE_GEMS: [((1, 2), [E])],
+    ROOM_PICK_POSITION_EDGE_PIERCE_RARE: [((1, 2), [E])],
+    ROOM_PICK_POSITION_EDGE_PIERCE_RARE_GEMS: [((1, 2), [E])],
+    ROOM_PICK_POSITION_FRONT: [((2, 1), [E])], # should always be true
+    ROOM_PICK_POSITION_FRONT_GEMS: [((2, 1), [E])], # should always be true
+    ROOM_PICK_POSITION_FRONT_BACK_RARE: [((2, 1), [E])], # should always be true
+    ROOM_PICK_POSITION_FRONT_BACK_RARE_GEMS: [((2, 1), [E])], # should always be true
+    ROOM_PICK_POSITION_NORTH_PIERCE: [((2, 9), [S])],
+    ROOM_PICK_POSITION_NORTH_PIERCE_GEMS: [((2, 9), [S])],
+    ROOM_PICK_POSITION_SOUTH_PIERCE: [((2, 1), [N])],
+    ROOM_PICK_POSITION_ANTECHAMBER: [((3, 9), [S, E, W])],
 }
