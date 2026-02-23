@@ -22,6 +22,28 @@ LOCATION_NAME_TO_ID = (
         # TODO-1 add locations for other stuff later.
         # "Entrance Hall East Vase": rooms["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 0,
         # "Entrance Hall West Vase": rooms["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
+
+        # Moria Jia boxes
+
+        # Drafting Studio Additions
+        # Found Floorplans
+        # Mirror Room Floorplan Duplicates
+
+        # Safes
+
+        # Static Allowance Tokens
+
+        # Basement Key?
+
+        # Gift Shop Items
+        # Bookshop Items
+
+        # Upgrade Disks
+
+        # Trophies
+
+        # Gas Valves
+        # Sundial
     }
     | {
         # Create First Entering locations for each room.
@@ -208,3 +230,42 @@ def create_events(world: BluePrinceWorld) -> None:
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
+
+    # For room placement logic
+    for k, v in rooms.items():
+        if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_X:
+            world.get_region(k).add_event(
+                f"Has X Piece",
+                f"X Piece",
+                location_type=BluePrinceLocation,
+                item_type=items.BluePrinceItem,
+            )
+        elif v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_T:
+            world.get_region(k).add_event(
+                f"Has T Piece",
+                f"T Piece",
+                location_type=BluePrinceLocation,
+                item_type=items.BluePrinceItem,
+            )
+        elif v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_I:
+            world.get_region(k).add_event(
+                f"Has I Piece",
+                f"I Piece",
+                location_type=BluePrinceLocation,
+                item_type=items.BluePrinceItem,
+            )
+        elif v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_J:
+            world.get_region(k).add_event(
+                f"Has J Piece",
+                f"J Piece",
+                location_type=BluePrinceLocation,
+                item_type=items.BluePrinceItem,
+            )
+        elif v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_D:
+            world.get_region(k).add_event(
+                f"Has D Piece",
+                f"D Piece",
+                location_type=BluePrinceLocation,
+                item_type=items.BluePrinceItem,
+            )
+        
