@@ -182,17 +182,8 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     room,
                     "Entrance Hall The Armory",
                     lambda state: state.has("The Armory", world.player) and 
-                        state.has_all(
-                            {
-                                "Chess Piece King",
-                                "Chess Piece Queen",
-                                "Chess Piece Rook",
-                                "Chess Piece Knight",
-                                "Chess Piece Bishop",
-                                "Chess Piece Pawn",
-                            },
-                            world.player,
-                        ) and can_reach_pick_position("The Armory", world, state),
+                        state.can_reach_region("Aries Court", world.player) and 
+                        can_reach_pick_position("The Armory", world, state),
                 )
             # This is only necessary if we track the day count
             # elif k == "Gallery":
