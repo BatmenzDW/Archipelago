@@ -521,10 +521,36 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         lambda state: state.has("Secret Passage", world.player) and state.has("Watering Can", world.player),
     )
 
-def can_reach_pick_position(room : str, world: BluePrinceWorld, state: CollectionState) -> bool:
+def simple_reachability_test(room: str, state: CollectionState, world: BluePrinceWorld) -> bool:
+    """
+    Uses a simple check of how many rooms are in the pool to determine if a pick position is reachable. Only used if ENABLE_ADVANCED_ROOM_ACCESS_LOGIC is False.
+    """
+    room_data = rooms[room]
+    positions_types = room_data[ROOM_PICK_POSITIONS_KEY]
+
+    for pt in positions_types:
+        if state.has(pt, world.player):
+            return True
+        
+    pool_count = state.count_from_list(room_layout_lists[INNER_ROOM_KEY], world.player)
+
+    for pt in positions_types:
+        targets = POSITION_CHECKS[pt]
+
+        for target in targets:
+            target_count = target[2] if len(target) > 2 else 100_000
+            if pool_count >= target_count:
+                state.collect(pt, world.player)
+                return True
+
+
+def can_reach_pick_position(room: str, world: BluePrinceWorld, state: CollectionState) -> bool:
     """
     Use depth first search to determine if a the pick position is reachable with the current inventory.
     """
+
+    if not ENABLE_ADVANCED_ROOM_ACCESS_LOGIC:
+        return simple_reachability_test(room, state, world)
 
     # TODO: figure out how to cache unreachable pick locations and clear cache when a new region logic pass starts
 
@@ -537,12 +563,16 @@ def can_reach_pick_position(room : str, world: BluePrinceWorld, state: Collectio
             return True
 
     inventory = {
-        "x": state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_X], world.player),
-        "t": state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_T], world.player),
-        "i": state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_I], world.player),
-        "j": state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_J], world.player),
-        "d": state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_D], world.player),
+        ROOM_LAYOUT_TYPE_X: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_X], world.player),
+        ROOM_LAYOUT_TYPE_T: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_T], world.player),
+        ROOM_LAYOUT_TYPE_I: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_I], world.player),
+        ROOM_LAYOUT_TYPE_J: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_J], world.player),
+        # ROOM_LAYOUT_TYPE_D: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_D], world.player),
     }
+
+    # This check shouldn't be necessary in theory, but adding it in case we later want to check if a room not in the pool is reachable for some reason.
+    if (state.has(room, world.player) and room_data[ROOM_LAYOUT_TYPE_KEY] in [ROOM_LAYOUT_TYPE_I, ROOM_LAYOUT_TYPE_J, ROOM_LAYOUT_TYPE_T, ROOM_LAYOUT_TYPE_X]):
+        inventory[room_data[ROOM_LAYOUT_TYPE_KEY]] -= 1
 
     start = (3, 1)
 
@@ -570,13 +600,13 @@ def can_reach_pick_position(room : str, world: BluePrinceWorld, state: Collectio
     # TODO: add an additional pass for when Foundation is in pool
 
     def get_shape_for_tile_type(tile_type):
-        if tile_type == "i":
+        if tile_type == ROOM_LAYOUT_TYPE_I:
             return [N | S, E | W]
-        elif tile_type == "j":
+        elif tile_type == ROOM_LAYOUT_TYPE_J:
             return [N | E, E | S, S | W, W | N]
-        elif tile_type == "t":
+        elif tile_type == ROOM_LAYOUT_TYPE_T:
             return [N | E | S, E | S | W, S | W | N, W | N | E]
-        elif tile_type == "x":
+        elif tile_type == ROOM_LAYOUT_TYPE_X:
             return [N | E | S | W]
         else:
             return []
@@ -612,10 +642,10 @@ def can_reach_pick_position(room : str, world: BluePrinceWorld, state: Collectio
     
     def depth_first_tile_search(x, y, side, inventory, visited):
         state_key = (x, y, side,
-                     inventory["i"],
-                     inventory["j"],
-                     inventory["t"],
-                     inventory["x"])
+                     inventory[ROOM_LAYOUT_TYPE_I],
+                     inventory[ROOM_LAYOUT_TYPE_J],
+                     inventory[ROOM_LAYOUT_TYPE_T],
+                     inventory[ROOM_LAYOUT_TYPE_X])
         if state_key in memo:
             return False
         if (x, y) == target_cell:
