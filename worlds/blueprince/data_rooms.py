@@ -11,7 +11,7 @@ core_rooms = {
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_X,
-        ROOM_PICK_POSITIONS_KEY: [],
+        ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_ANTECHAMBER],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
     },
@@ -270,7 +270,7 @@ blue_001_012 = {
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
         ROOM_PICK_POSITIONS_KEY: [
-            ROOM_PICK_POSITION_CENTER_TIER_1,
+            ROOM_PICK_POSITION_CENTER_TIER_1_FOUNDATION,
             ROOM_PICK_POSITION_CENTER_TIER_2,
             ROOM_PICK_POSITION_CENTER_TIER_3,
         ],
@@ -1591,7 +1591,7 @@ shops = {
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_KNIGHT,
     },
-    "Mount Holly Gift Shop": {
+    "Gift Shop": {
         ROOM_ITEM_ID_KEY: 610,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
@@ -1812,3 +1812,13 @@ black_rooms = {
 }
 
 rooms = blue_rooms | bedrooms | hallways | green_rooms | shops | red_rooms | black_rooms
+
+room_layout_lists = {
+    ROOM_LAYOUT_TYPE_X: [k for k, v in rooms.items() if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_X],
+    ROOM_LAYOUT_TYPE_J: [k for k, v in rooms.items() if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_J],
+    ROOM_LAYOUT_TYPE_T: [k for k, v in rooms.items() if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_T],
+    ROOM_LAYOUT_TYPE_D: [k for k, v in rooms.items() if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_D],
+    ROOM_LAYOUT_TYPE_I: [k for k, v in rooms.items() if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_I],
+    INNER_ROOM_KEY: [k for k, v in rooms.items() if not v[OUTER_ROOM_KEY]],
+    OUTER_ROOM_KEY: [k for k, v in rooms.items() if v[OUTER_ROOM_KEY]],
+}

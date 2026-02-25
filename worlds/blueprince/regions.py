@@ -2,15 +2,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from BaseClasses import Entrance, Region
+from BaseClasses import CollectionState, Entrance, Region
 
-from .data_rooms import rooms
+from .data_rooms import rooms, room_layout_lists
 from .data_items import sanctum_keys
 from .constants import *
 
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
-
 
 def create_and_connect_regions(world: BluePrinceWorld) -> None:
 
@@ -128,6 +127,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     # Get regions I am going to need later.
     tomb = world.get_region("Tomb")
     garage = world.get_region("Garage")
+    library = world.get_region("Library")
     foundation = world.get_region("The Foundation")
     entrance_hall = world.get_region("Entrance Hall")
     antechamber = world.get_region("Antechamber")
@@ -154,14 +154,16 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             if k == "Antechamber":
                 entrance_hall.connect(
                     room,
-                    f"Entrance Hall {k}",
-                    # TODO-2: This does not take into account that you need to have some level of placement restriction
-                    lambda state: state.has("Great Hall", world.player)
-                    or (state.has("Greenhouse", world.player) and state.has("BROKEN LEVER", world.player))
-                    or state.has("Mechanarium", world.player)
-                    or (state.has("Weight Room", world.player) and state.has("Power Hammer", world.player))
-                    or state.has("Secret Garden", world.player)
-                    or (state.has("Secret Garden", world.player) and state.has("Power Hammer", world.player)),
+                    "Entrance Hall Antechamber",
+                    lambda state: (
+                        state.has("Great Hall", world.player)
+                        or (state.has("Greenhouse", world.player) and state.has("BROKEN LEVER", world.player))
+                        or state.has("Mechanarium", world.player)
+                        or (state.has("Weight Room", world.player) and state.has("Power Hammer", world.player))
+                        or state.has("Secret Garden", world.player)
+                        # This check is redundant
+                        # or (state.has("Secret Garden", world.player) and state.has("Power Hammer", world.player))
+                    ) and can_reach_pick_position("Antechamber", world, state),
                 )
             elif k == "Room 46":
                 antechamber.connect(
@@ -169,6 +171,59 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     "Antechamber To Room 46",
                     lambda state: state.has("North Lever Access", world.player),
                 )
+            elif k == "Bookshop":
+                library.connect(
+                    room,
+                    "Library To Bookshop",
+                    lambda state: state.has("Bookshop", world.player),
+                )
+            elif k == "The Armory":
+                entrance_hall.connect(
+                    room,
+                    "Entrance Hall The Armory",
+                    lambda state: state.has("The Armory", world.player) and 
+                        state.can_reach_region("Aries Court", world.player) and 
+                        can_reach_pick_position("The Armory", world, state),
+                )
+            # This is only necessary if we track the day count
+            # elif k == "Gallery":
+            #     entrance_hall.connect(
+            #         room,
+            #         f"Entrance Hall {k}",
+            #         lambda state: state.has(k, world.player) and state.can_reach_region("Room 46", world.player),
+            #     ) # Has reached Room 46 or Day Count is >= 46, but < 363; Very rarily possible without either with a Silver Key, but that seems to be a bug
+            elif k == "Trophy Room":
+                entrance_hall.connect(
+                    room,
+                    "Entrance Hall Trophy Room",
+                    lambda state: state.has("Trophy Room", world.player) and
+                        (
+                            state.can_reach_region("Room 46", world.player) or 
+                            state.can_reach_location("Full House Trophy", world.player) or 
+                            state.can_reach_location("Trophy of Invention", world.player) or 
+                            state.can_reach_location("Trophy of Drafting", world.player) or 
+                            state.can_reach_location("Trophy of Wealth", world.player)
+                        ) and can_reach_pick_position("Trophy Room", world, state),
+                ) # Has reached Room 46 or has one of the 4 listed Trophies
+            elif k == "Gift Shop":
+                entrance_hall.connect(
+                    room,
+                    "Entrance Hall Gift Shop",
+                    lambda state: state.has("Gift Shop", world.player) and 
+                        state.can_reach_region("Room 46", world.player) and
+                        can_reach_pick_position("Gift Shop", world, state),
+                ) # Has reached Room 46
+            elif k == "Room 8":
+                entrance_hall.connect(
+                    room,
+                    "Entrance Hall Room 8",
+                    lambda state: state.has("Room 8", world.player) and 
+                        (
+                            state.has("Gallery", world.player) or 
+                            state.has("Lost And Found", world.player)
+                        ) and can_reach_pick_position("Room 8", world, state),
+                ) # Can get Key 8
+            # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
                 continue
             else:
@@ -176,8 +231,8 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     f"Entrance Hall {k}",
-                    # TODO-2: This does not take into account that you need to have some level of placement restriction
-                    lambda state, key=k: state.has(key, world.player),
+                    lambda state, key=k: state.has(key, world.player) and
+                        can_reach_pick_position(key, world, state),
                 )
 
     foundation.connect(
@@ -396,7 +451,6 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     tunnel_area_post_crates.connect(
         tunnel_area_post_normal_locked_door,
         "Tunnel Area Post Crates to Tunnel Area Post Normal Locked Door",
-        # lambda state: state.has("Normal Keys", world.player),
     )
     tunnel_area_post_normal_locked_door.connect(
         tunnel_area_post_basement_key_door,
@@ -456,7 +510,6 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     rotating_gear.connect(
         abandoned_mine,
         "Rotating Gear To Abandoned Mine",
-        lambda state: True,
     )
     reservoir_fountain_side.connect(
         reservoir_gear_side,
@@ -475,3 +528,168 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         "Grounds To The Well",
         lambda state: state.has("Pump Room", world.player),
     )
+    
+def simple_reachability_test(room: str, state: CollectionState, world: BluePrinceWorld) -> bool:
+    """
+    Uses a simple check of how many rooms are in the pool to determine if a pick position is reachable. Only used if ENABLE_ADVANCED_ROOM_ACCESS_LOGIC is False.
+    """
+    room_data = rooms[room]
+    positions_types = room_data[ROOM_PICK_POSITIONS_KEY]
+
+    for pt in positions_types:
+        if state.has(pt, world.player):
+            return True
+        
+    pool_count = state.count_from_list(room_layout_lists[INNER_ROOM_KEY], world.player)
+
+    for pt in positions_types:
+        targets = POSITION_CHECKS[pt]
+
+        for target in targets:
+            target_count = target[2] if len(target) > 2 else 100_000
+            if pool_count >= target_count:
+                state.collect(pt, world.player)
+                return True
+
+
+def can_reach_pick_position(room: str, world: BluePrinceWorld, state: CollectionState) -> bool:
+    """
+    Use depth first search to determine if a the pick position is reachable with the current inventory.
+    """
+
+    if not ENABLE_ADVANCED_ROOM_ACCESS_LOGIC:
+        return simple_reachability_test(room, state, world)
+
+    # TODO: figure out how to cache unreachable pick locations and clear cache when a new region logic pass starts
+
+    room_data = rooms[room]
+    
+    positions_types = room_data[ROOM_PICK_POSITIONS_KEY]
+
+    for pt in positions_types:
+        if state.has(pt, world.player):
+            return True
+
+    inventory = {
+        ROOM_LAYOUT_TYPE_X: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_X], world.player),
+        ROOM_LAYOUT_TYPE_T: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_T], world.player),
+        ROOM_LAYOUT_TYPE_I: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_I], world.player),
+        ROOM_LAYOUT_TYPE_J: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_J], world.player),
+        # ROOM_LAYOUT_TYPE_D: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_D], world.player),
+    }
+
+    # This check shouldn't be necessary in theory, but adding it in case we later want to check if a room not in the pool is reachable for some reason.
+    if (state.has(room, world.player) and room_data[ROOM_LAYOUT_TYPE_KEY] in [ROOM_LAYOUT_TYPE_I, ROOM_LAYOUT_TYPE_J, ROOM_LAYOUT_TYPE_T, ROOM_LAYOUT_TYPE_X]):
+        inventory[room_data[ROOM_LAYOUT_TYPE_KEY]] -= 1
+
+    start = (3, 1)
+
+    for pt in positions_types:
+        targets = POSITION_CHECKS[pt]
+
+        visited = set()
+        memo = set()
+
+        visited.add(start)
+
+        for target in targets:
+            target_cell = target[0]
+            target_sides = [OPPOSITE[x] for x in target[1]]
+
+            for d in [N, E, S, W]:
+                if not 0b1111 & d:
+                    continue
+                new_x, new_y = start[0] + DIRS[d][0], start[1] + DIRS[d][1]
+                remaining = inventory.copy()
+                if depth_first_tile_search(new_x, new_y, d, remaining, visited):
+                    state.collect(pt, world.player)
+                    return True
+    
+    # TODO: add an additional pass for when Foundation is in pool
+
+    def get_shape_for_tile_type(tile_type):
+        if tile_type == ROOM_LAYOUT_TYPE_I:
+            return [N | S, E | W]
+        elif tile_type == ROOM_LAYOUT_TYPE_J:
+            return [N | E, E | S, S | W, W | N]
+        elif tile_type == ROOM_LAYOUT_TYPE_T:
+            return [N | E | S, E | S | W, S | W | N, W | N | E]
+        elif tile_type == ROOM_LAYOUT_TYPE_X:
+            return [N | E | S | W]
+        else:
+            return []
+
+    def inside(x, y):
+        return 1 <= x <= 9 and 1 <= y <= 9
+
+    def is_valid_move(x, y, shape):
+        for d in DIRS:
+            if shape & d:
+                nx = x + DIRS[d][0]
+                ny = y + DIRS[d][1]
+                if not inside(nx, ny) and not ((x, y) in target_cell and d in target_sides):
+                    return False
+        return True
+    
+    # Deconstruct the shape mask, except for the incoming side
+    def get_sides_for_shape(shape, side):
+        result = []
+        if shape == 0:
+            return result
+        
+        if shape & N and side != N:
+            result.append(N)
+        if shape & E and side != E:
+            result.append(E)
+        if shape & S and side != S:
+            result.append(S)
+        if shape & W and side != W:
+            result.append(W)
+
+        return result
+    
+    def depth_first_tile_search(x, y, side, inventory, visited):
+        state_key = (x, y, side,
+                     inventory[ROOM_LAYOUT_TYPE_I],
+                     inventory[ROOM_LAYOUT_TYPE_J],
+                     inventory[ROOM_LAYOUT_TYPE_T],
+                     inventory[ROOM_LAYOUT_TYPE_X])
+        if state_key in memo:
+            return False
+        if (x, y) == target_cell:
+            # print(f"Reached target cell {target_cell} with side {get_dir_name(side)}")
+            if side in target_sides:
+                return True
+        
+        visited.add((x, y))
+
+        if not inside(x, y):
+            visited.remove((x, y))
+            memo.add(state_key)
+            return False
+
+        # print(f"At {(x, y)} coming from {get_dir_name(side)}, trying to move to {(new_x, new_y)}, inventory: {inventory}")
+        
+        for piece_type in inventory:
+            if inventory[piece_type] > 0:
+                for shape in get_shape_for_tile_type(piece_type):
+                    if not shape & OPPOSITE[side]:
+                        continue
+
+                    inventory[piece_type] -= 1
+
+                    for new_side in get_sides_for_shape(shape, OPPOSITE[side]):
+                        new_x, new_y = x + DIRS[new_side][0], y + DIRS[new_side][1]
+                        if (new_x, new_y) not in visited and is_valid_move(new_x, new_y, shape):
+
+                            if depth_first_tile_search(new_x, new_y, new_side, inventory, visited):
+                                return True
+                    
+                    inventory[piece_type] += 1
+        
+        visited.remove((x, y))
+        memo.add(state_key)
+
+        return False
+    
+    return False

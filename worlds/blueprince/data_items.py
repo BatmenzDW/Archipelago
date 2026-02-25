@@ -189,6 +189,11 @@ keys = {
         ITEM_ID_KEY: 1046,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
+    "CABINET KEY 3": {
+        ITEM_ELEMENT_INDEX_KEY: 46,
+        ITEM_ID_KEY: 1047,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
     "PRISM KEY_0": {
         # Known exception to formatting. Keeping consistent with game format.
         ITEM_ELEMENT_INDEX_KEY: 50,

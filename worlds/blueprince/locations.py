@@ -2,15 +2,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from BaseClasses import ItemClassification, Location
+from BaseClasses import CollectionState, ItemClassification, Location
 
 from .options import GoalType
 
 from . import items
 from .constants import *
 
-from .data_rooms import rooms
+from .data_rooms import rooms, room_layout_lists
 from .data_items import showroom_items, armory_items, other_items
+# from .data_other_locations import other_locations
 
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
@@ -19,9 +20,8 @@ ROOM_MULTIPLIER = 100_000
 
 LOCATION_NAME_TO_ID = (
     {
-        # TODO-1 add locations for other stuff later.
-        # "Entrance Hall East Vase": rooms["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 0,
-        # "Entrance Hall West Vase": rooms["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
+        # k: v[LOCATION_ID_KEY]
+        # for k, v in other_locations.items()
     }
     | {
         # Create First Entering locations for each room.
@@ -83,6 +83,64 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
                 locations = get_location_names_with_ids([location_key])
                 room.add_locations(locations, BluePrinceLocation)
 
+    # Other locations
+    # for k, v in other_locations.items():
+    #     location_key = k
+    #     locations = get_location_names_with_ids([location_key])
+    #     world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locations, BluePrinceLocation)
+
+    #     world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_requirements(key, world, state))
+    
+# def can_access_location_with_requirements(location_key: str, world: BluePrinceWorld, state: CollectionState) -> bool:
+#     location_data = other_locations[location_key]
+
+#     if LOCATION_REQUIREMENTS not in location_data:
+#         return True
+#     requirements = location_data[LOCATION_REQUIREMENTS]
+
+#     if LOCATION_REQUIREMENT_TYPE_ROOM_COUNT in requirements:
+#         if state.count_from_list(room_layout_lists[INNER_ROOM_KEY]) < requirements[LOCATION_REQUIREMENT_TYPE_ROOM_COUNT]:
+#             return False
+        
+#     if LOCATION_REQUIREMENT_TYPE_HAS_ALL_ROOMS in requirements:
+#         if not state.has_all(rooms.keys(), world.player):
+#             return False
+        
+#     if LOCATION_REQUIREMENT_TYPE_HAS_ITEMS_ALL in requirements:
+#         if not state.has_all(requirements[LOCATION_REQUIREMENT_TYPE_HAS_ITEMS_ALL], world.player):
+#             return False
+    
+#     if LOCATION_REQUIREMENT_TYPE_HAS_ITEMS_ANY in requirements:
+#         if not state.has_any(requirements[LOCATION_REQUIREMENT_TYPE_HAS_ITEMS_ANY], world.player):
+#             return False
+        
+#     if LOCATION_REQUIREMENT_TYPE_HAS_ITEM_COUNTS in requirements:
+#         for item_name, count in requirements[LOCATION_REQUIREMENT_TYPE_HAS_ITEM_COUNTS].items():
+#             if state.count(item_name, world.player) < count:
+#                 return False
+    
+#     if LOCATION_REQUIREMENT_TYPE_HAS_REGIONS_ACCESS in requirements:
+#         for region_name in requirements[LOCATION_REQUIREMENT_TYPE_HAS_REGIONS_ACCESS]:
+#             if not state.can_reach_region(region_name, world.player):
+#                 return False
+    
+#     if LOCATION_REQUIREMENT_TYPE_HAS_LOCATIONS_ACCESS in requirements:
+#         for location_name in requirements[LOCATION_REQUIREMENT_TYPE_HAS_LOCATIONS_ACCESS]:
+#             if not state.can_reach_location(location_name, world.player):
+#                 return False
+
+#     if LOCATION_REQUIREMENT_TYPE_COUNT_LOCATIONS_ACCESS in requirements:
+#         loc_names, count = requirements[LOCATION_REQUIREMENT_TYPE_COUNT_LOCATIONS_ACCESS]
+#         i = 0
+#         for location_name in loc_names:
+#             if state.can_reach_location(location_name, world.player):
+#                 i += 1
+#             if i >= count:
+#                 break
+#         if i < count:
+#             return False
+
+#     return True
 
 def create_events(world: BluePrinceWorld) -> None:
 
@@ -208,3 +266,4 @@ def create_events(world: BluePrinceWorld) -> None:
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
+        
