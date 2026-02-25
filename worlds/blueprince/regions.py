@@ -203,7 +203,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         "Private Drive To Blackbridge Grotto",
         lambda state: state.has("Boiler Room", world.player),
     )
-    private_drive.connect(grounds, "Private Drive To Frounds")
+    private_drive.connect(grounds, "Private Drive To Grounds")
     blakbridge_grotto.connect(
         orindian_ruins,
         "Blackbridge Grotto To Orindian Ruins",
@@ -345,7 +345,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     the_well.connect(
         reservoir_fountain_side,
         "Well To Reservoir Fountain Side",
-        lambda state: state.has("Pump Room", world.player) and state.has("BASEMENT KEY", world.player),
+        lambda state: state.has("BASEMENT KEY", world.player),
     )
 
     west_path.connect(
@@ -466,4 +466,10 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         atelier,
         "Outer Room To Atelier",
         lambda state: state.has("Secret Passage", world.player) and state.has("Watering Can", world.player),
+    )
+
+    grounds.connect(
+        the_well,
+        "Grounds To The Well",
+        lambda state: state.has("Pump Room", world.player),
     )
