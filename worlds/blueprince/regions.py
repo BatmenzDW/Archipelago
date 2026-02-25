@@ -263,10 +263,10 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         reservoir_gear_side,
         "Basement To Reservoir Gear Side",
     )
-    reservoir_gear_side.connect(
-        basement,
-        "Reservoir Gear Side To Basement",
-    )
+    # reservoir_gear_side.connect(
+    #     basement,
+    #     "Reservoir Gear Side To Basement",
+    # )
     reservoir_gear_side.connect(
         rotating_gear,
         "Reservoir Gear Side To Rotating Gear",
@@ -325,10 +325,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     abandoned_mine.connect(
         excavation_tunnel,
         "Abandoned Mine To Excavation Tunnel",
+        lambda state: state.can_reach_region("Reservoir Fountain Side", world.player)
     )
     excavation_tunnel.connect(
         abandoned_mine,
         "Excavation Tunnel To Abandoned Mine",
+        lambda state: state.can_reach_region("Reservoir Fountain Side", world.player)
     )
     excavation_tunnel.connect(
         torch_chamber,
