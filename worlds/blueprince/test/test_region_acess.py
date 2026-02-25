@@ -132,3 +132,5 @@ class TestRegionAcess(BluePrinceTestBase):
         self.collect_by_name("BASEMENT KEY")
         self.debug_print_regions_and_items()
         self.assertTrue(self.can_reach_region("Basement"), "Basement should be reachable after having the Foundation and Basement Key")
+    
+    

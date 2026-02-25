@@ -380,7 +380,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     torch_chamber.connect(
         the_precipice,
         "Torch Chamber To Precipice",
-        lambda state: state.has("Burning Glass Access", world.player) and state.has("TORCH", world.player),
+        lambda state: state.has("Burning Glass", world.player) or state.has("TORCH", world.player),
     )
 
     grounds.connect(
