@@ -104,4 +104,31 @@ class TestRegionAcess(BluePrinceTestBase):
         self.collect_by_name("Pump Room")
         self.collect_by_name("BASEMENT KEY")
         self.assertTrue(self.can_reach_region("The Underpass"), "The Underpass should be reachable after having the Reservoir on both sides")
-        
+    
+    def test_aries_court_requires_chess_pieces(self) -> None:
+        self.collect_by_name("Garage")
+        self.collect_by_name("Utility Closet")
+        self.collect_by_name("Schoolhouse")
+        self.collect_by_name("Hovel")
+        # Precipice
+        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+        self.collect_by_name("Office")
+        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+        self.collect_by_name("Study")
+        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+        self.collect_by_name("Nook")
+        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+        self.collect_by_name("Security")
+        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+        self.collect_by_name("Chapel")
+        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+        self.collect_by_name("Den")
+        self.assertTrue(self.can_reach_region("Aries Court"), "Aries Court should be reachable after having all Chess Pieces")
+    
+    def test_basement_requires_the_foundation_and_basement_key(self) -> None:
+        self.assertFalse(self.can_reach_region("Basement"), "Basement should not be reachable without having the Foundation")
+        self.collect_by_name("The Foundation")
+        self.assertFalse(self.can_reach_region("Basement"), "Basement should not be reachable without having the Basement Key")
+        self.collect_by_name("BASEMENT KEY")
+        self.debug_print_regions_and_items()
+        self.assertTrue(self.can_reach_region("Basement"), "Basement should be reachable after having the Foundation and Basement Key")
