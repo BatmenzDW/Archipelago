@@ -142,7 +142,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             outer_room.connect(
                 room,
                 f"Outer Room To {k}",
-                lambda state: state.has(k, world.player),
+                lambda state, key=k: state.has(key, world.player),
             )
         else:
 
@@ -177,7 +177,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     room,
                     f"Entrance Hall {k}",
                     # TODO-2: This does not take into account that you need to have some level of placement restriction
-                    lambda state: state.has(k, world.player),
+                    lambda state, key=k: state.has(key, world.player),
                 )
 
     foundation.connect(
