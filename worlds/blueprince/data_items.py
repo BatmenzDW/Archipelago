@@ -411,6 +411,49 @@ other_items = {
     },
 }
 
+workshop_items = {
+    "Burning Glass": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3001,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "Detector Shovel": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3002,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "Dowsing Rod": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3003,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+    },
+    "Electromagnet": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3004,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+    },
+    "Jack Hammer": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3005,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "Lucky Purse": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3006,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+    },
+    "Pick Sound Amplifier": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3007,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+    },
+    "Power Hammer": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 3008,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+}
+
 upgrade_items = {
     "IVORY DICE": {
         ITEM_ELEMENT_INDEX_KEY: 8,
@@ -430,5 +473,5 @@ upgrade_items = {
 }
 
 
-all_items_excluding_upgrade_items = upgrade_disks | keys | showroom_items | armory_items | other_items
+all_items_excluding_upgrade_items = upgrade_disks | keys | showroom_items | armory_items | workshop_items | other_items
 all_items = all_items_excluding_upgrade_items | upgrade_items

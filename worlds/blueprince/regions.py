@@ -201,7 +201,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     private_drive.connect(
         blakbridge_grotto,
         "Private Drive To Blackbridge Grotto",
-        lambda state: state.has("Boiler Room", world.player),
+        lambda state: state.has("Boiler Room", world.player) and state.has("Laboratory", world.player),
     )
     private_drive.connect(grounds, "Private Drive To Grounds")
     blakbridge_grotto.connect(
