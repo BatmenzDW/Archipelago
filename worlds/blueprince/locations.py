@@ -59,14 +59,26 @@ def create_all_locations(world: BluePrinceWorld) -> None:
 def create_regular_locations(world: BluePrinceWorld) -> None:
 
     campsite = world.get_region("Campsite")  # For Sanctum Solves Victory.
+    showroom = world.get_region("Showroom")
+    armory = world.get_region("Armory")
 
-    # Iterate through the campsite and add locations for all items.
-    for k, v in (showroom_items | armory_items | other_items).items():
-        # TODO-2 this could be a comprehension, but this works for now.
+    for k, v in showroom_items.items():
         location_key = f"{k} First Pickup"
         locations = get_location_names_with_ids([location_key])
+        showroom.add_locations(locations, BluePrinceLocation)
+    
+    for k, v in armory_items.items():
+        location_key = f"{k} First Pickup"
+        locations = get_location_names_with_ids([location_key])
+        armory.add_locations(locations, BluePrinceLocation)
 
-        campsite.add_locations(locations, BluePrinceLocation)
+    # Iterate through the campsite and add locations for all items.
+    # for k, v in (other_items).items():
+    #     # TODO-2 this could be a comprehension, but this works for now.
+    #     location_key = f"{k} First Pickup"
+    #     locations = get_location_names_with_ids([location_key])
+
+    #     campsite.add_locations(locations, BluePrinceLocation)
             
 
     for room_key, v in rooms.items():

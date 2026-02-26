@@ -195,3 +195,136 @@ POSITION_CHECKS = {
     ROOM_PICK_POSITION_SOUTH_PIERCE: [((2, 1), [N], 3)],
     ROOM_PICK_POSITION_ANTECHAMBER: [((3, 9), [S, E, W], 14)],
 }
+
+#################################
+# TRADING POST LOOKUP CONSTANTS #
+#################################
+
+TRADING_POST_GIVE = "GIVE"
+TRADING_POST_RECEIVE = "RECEIVE"
+
+#############################
+# TRADING POST TIER LOOKUPS #
+#############################
+
+TRADING_POST_TIER1 = {
+    TRADING_POST_GIVE: [
+        "BATTERY PACK",
+        "MAGNIFYING GLASS",
+        "SALT SHAKER",
+        "SLEEPING MASK",
+        "BROKEN LEVER",
+    ],
+    TRADING_POST_RECEIVE: [
+        "BATTERY PACK",
+        "MAGNIFYING GLASS",
+        "SALT SHAKER",
+        "SLEEPING MASK",
+        "BROKEN LEVER",
+    ],
+}
+TRADING_POST_TIER2 = {
+    TRADING_POST_GIVE: [
+        "CAR KEYS",
+        "COIN PURSE",
+        "COMPASS",
+        "COUPON BOOK",
+        "SHOVEL",
+        "SLEDGE HAMMER",
+    ],
+    TRADING_POST_RECEIVE: [
+        "CAR KEYS",
+        "COIN PURSE",
+        "COMPASS",
+        "COUPON BOOK",
+        "SHOVEL",
+        "SLEDGE HAMMER",
+        "MICROCHIP 1",
+        "MICROCHIP 2",
+        "MICROCHIP 3",
+        "TREASURE MAP",
+        "Wind-up Key",
+    ],
+}
+TRADING_POST_TIER3 = {
+    TRADING_POST_GIVE: [
+        "KEYCARD",
+        "LOCK PICK KIT",
+        "LUCKY RABBIT'S FOOT",
+        "METAL DETECTOR",
+        "RUNNING SHOES",
+        "SILVER KEY",
+        "VAULT KEY 149",
+        "VAULT KEY 233",
+        "VAULT KEY 304",
+        "VAULT KEY 370",
+    ],
+    TRADING_POST_RECEIVE: [
+        "KEYCARD",
+        "LOCK PICK KIT",
+        "LUCKY RABBIT'S FOOT",
+        "METAL DETECTOR",
+        "RUNNING SHOES",
+        "SILVER KEY",
+        "VAULT KEY 149",
+        "VAULT KEY 233",
+        "VAULT KEY 304",
+        "VAULT KEY 370",
+        "THE AXE",
+        "KNIGHTS SHIELD",
+        "MORNING STAR",
+        "TORCH",
+        "MOON PENDANT",
+        "SILVER SPOON",
+    ],
+}
+TRADING_POST_TIER4 = {
+    TRADING_POST_GIVE: [
+        "GEAR WRENCH",
+        "HALL PASS",
+        "PRISM KEY_0",
+        "SECRET GARDEN KEY",
+        "TELESCOPE",
+    ],
+    TRADING_POST_RECEIVE: [
+        "GEAR WRENCH",
+        "HALL PASS",
+        "PRISM KEY_0",
+        "SECRET GARDEN KEY",
+        "TELESCOPE",
+        "Burning Glass",
+        "Detector Shovel",
+        "Dowsing Rod",
+        "Electromagnet",
+        "Jack Hammer",
+        "Lucky Purse",
+        "Pick Sound Amplifier",
+        "Power Hammer",
+        "BASEMENT KEY",
+        "DIARY KEY",
+        "KEY 8",
+        "CHRONOGRAPH",
+        "LUNCH BOX",
+        "REPELLENT",
+        "STOPWATCH",
+        "WATERING CAN",
+        "UPGRADE DISK COMMISSARY",
+        "UPGRADE DISK OFFICE",
+        "UPGRADE DISK GARAGE",
+        "UPGRADE DISK FOUNDATION",
+        "UPGRADE DISK GREAT HALL",
+        "UPGRADE DISK MORNING ROOM",
+        "UPGRADE DISK HER LADYSHIPS CHAMBER",
+        "UPGRADE DISK VAULT",
+        "UPGRADE DISK ARCHIVES",
+        "UPGRADE DISK FREEZER",
+        "UPGRADE DISK TOMB",
+        "UPGRADE DISK LOST AND FOUND",
+        "UPGRADE DISK MECHANARIUM",
+        "UPGRADE DISK ABANDONED MINE",
+        "UPGRADE DISK TRADING POST TRADE",
+        "UPGRADE DISK TRADING POST DYNAMITE"
+    ],
+}
+
+# None of the Tier 5 items can be received, so there's no point in defining it atm
