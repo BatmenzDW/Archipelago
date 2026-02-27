@@ -11,7 +11,7 @@ from .constants import *
 
 from .data_rooms import rooms, room_layout_lists
 from .data_items import showroom_items, armory_items, other_items
-from .data_other_locations import other_locations
+from .data_other_locations import locations
 
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
@@ -21,7 +21,7 @@ ROOM_MULTIPLIER = 100_000
 LOCATION_NAME_TO_ID = (
     {
         k: v[LOCATION_ID_KEY]
-        for k, v in other_locations.items()
+        for k, v in locations.items()
     }
     | {
         # Create First Entering locations for each room.
@@ -36,9 +36,9 @@ LOCATION_NAME_TO_ID = (
         if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0
     }
     | {
-        # Add First Pickup as locations for the standard "tools".
+        # Add First Pickup as locations for armory items.
         f"{k} First Pickup": v[ITEM_ID_KEY] * ROOM_MULTIPLIER
-        for k, v in (showroom_items | armory_items | other_items).items()
+        for k, v in armory_items.items()
     }
 )
 
@@ -58,28 +58,13 @@ def create_all_locations(world: BluePrinceWorld) -> None:
 
 def create_regular_locations(world: BluePrinceWorld) -> None:
 
-    campsite = world.get_region("Campsite")  # For Sanctum Solves Victory.
-    showroom = world.get_region("Showroom")
     armory = world.get_region("Armory")
-
-    for k, v in showroom_items.items():
-        location_key = f"{k} First Pickup"
-        locations = get_location_names_with_ids([location_key])
-        showroom.add_locations(locations, BluePrinceLocation)
     
+    # Ignoring chance to get Knight's Shield by digging with Jack Hammer for now.
     for k, v in armory_items.items():
         location_key = f"{k} First Pickup"
         locations = get_location_names_with_ids([location_key])
         armory.add_locations(locations, BluePrinceLocation)
-
-    # Iterate through the campsite and add locations for all items.
-    # for k, v in (other_items).items():
-    #     # TODO-2 this could be a comprehension, but this works for now.
-    #     location_key = f"{k} First Pickup"
-    #     locations = get_location_names_with_ids([location_key])
-
-    #     campsite.add_locations(locations, BluePrinceLocation)
-            
 
     for room_key, v in rooms.items():
         room = world.get_region(room_key)
@@ -98,7 +83,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
                 room.add_locations(locations, BluePrinceLocation)
 
     # Other locations
-    for k, v in other_locations.items():
+    for k, v in locations.items():
         location_key = k
         locations = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locations, BluePrinceLocation)
@@ -106,7 +91,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
     
 def can_access_location_with_rule(location_key: str, world: BluePrinceWorld, state: CollectionState) -> bool:
-    location_data = other_locations[location_key]
+    location_data = locations[location_key]
 
     if LOCATION_RULE not in location_data:
         return True

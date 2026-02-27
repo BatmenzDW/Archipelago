@@ -218,10 +218,8 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     room,
                     "Entrance Hall Room 8",
                     lambda state: state.has("Room 8", world.player) and 
-                        (
-                            state.has("Gallery", world.player) or 
-                            state.has("Lost And Found", world.player)
-                        ) and can_reach_pick_position("Room 8", world, state),
+                        state.has("KEY 8", world.player) and 
+                        can_reach_pick_position("Room 8", world, state),
                 ) # Can get Key 8
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
