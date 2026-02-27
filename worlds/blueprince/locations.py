@@ -9,9 +9,9 @@ from .options import GoalType
 from . import items
 from .constants import *
 
-from .data_rooms import rooms, blue_rooms, room_layout_lists
-from .data_items import showroom_items, armory_items, other_items
-from .data_other_locations import locations
+from .data_rooms import rooms, blue_rooms, core_rooms
+from .data_items import armory_items
+from .data_other_locations import can_reach_item_location, locations
 
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
@@ -80,7 +80,6 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
                 locs = get_location_names_with_ids([location_key])
                 room.add_locations(locs, BluePrinceLocation)
 
-    # Other locations
     for k, v in locations.items():
         location_key = k
         locs = get_location_names_with_ids([location_key])
@@ -158,29 +157,33 @@ def create_events(world: BluePrinceWorld) -> None:
             item_type=items.BluePrinceItem,
         )
 
+    throne_room.add_event(
+        "Ascended The Throne",
+        "Ascend The Throne",
+        lambda state: can_reach_item_location("CROWN", state, world) and
+        can_reach_item_location("ROYAL SCEPTER", state, world) and
+        can_reach_item_location("CURSED EFFIGY", state, world),
+        location_type=BluePrinceLocation,
+        item_type=items.BluePrinceItem,
+    )
+
     # Set Victory as ascending to the throne
     if world.options.goal_type.value == GoalType.option_ascend:
         throne_room.add_event(
-            "Ascended The Throne",
+            "Ascend The Throne Victory",
             "Victory",
-            lambda state: state.has("CROWN", world.player) and
-            state.has("ROYAL SCEPTER", world.player) and
-            state.has("CURSED EFFIGY", world.player) and
-            state.has_from_list(blue_rooms.keys(), world.player, 8),
+            lambda state: state.has("Ascend The Throne", world.player),
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
-    else:
-        throne_room.add_event(
-            "Ascended The Throne",
-            "Blue Door Access",
-            lambda state: state.has("CROWN", world.player) and
-            state.has("ROYAL SCEPTER", world.player) and
-            state.has("CURSED EFFIGY", world.player) and
-            state.has_from_list(blue_rooms.keys(), world.player, 8),
-            location_type=BluePrinceLocation,
-            item_type=items.BluePrinceItem,
-        )
+
+    throne_room.add_event(
+        "Unseal Blue Doors",
+        "Blue Door Access",
+        lambda state: len([x for x in blue_rooms if x not in core_rooms and state.can_reach_region(x, world.player)]) >= 8,
+        location_type=BluePrinceLocation,
+        item_type=items.BluePrinceItem,
+    )
 
     # Set Victory as entering the atelier and reading the blue prints.
     if world.options.goal_type.value == GoalType.option_blueprints:
@@ -235,7 +238,7 @@ def create_events(world: BluePrinceWorld) -> None:
     world.get_region("Apple Orchard").add_event(
         "Raise Satellite",
         "Satellite Raised",
-        lambda state: state.has_all(["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"], world.player) 
+        lambda state: all(can_reach_item_location(x, state, world) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]) 
         and state.can_reach_location("Scorch Sundial", world.player),
         location_type=BluePrinceLocation,
         item_type=items.BluePrinceItem,

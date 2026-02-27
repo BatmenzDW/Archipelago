@@ -199,88 +199,89 @@ safes_and_small_gates = {
     }
 }
 
-aries_court_moria_jia_boxes = {
-    f"Aries Court Moria Jia Box {n}": {
+aries_court_mora_jia_boxes = {
+    f"Aries Court Mora Jia Box {n}": {
         LOCATION_ID_KEY: get_room_location_id("Aries Court", n - 1),
         LOCATION_ROOM_KEY: "Aries Court",
     } for n in range(1, 9)
 }
 
-moria_jia_boxes = {
-    "Master Bedroom Moria Jia Box": {
+mora_jia_boxes = {
+    "Master Bedroom Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Master Bedroom", 0),
         LOCATION_ROOM_KEY: "Master Bedroom",
     },
-    "Closed Exhbit Moria Jia Box": {
+    "Closed Exhbit Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Closed Exhibit", 0),
         LOCATION_ROOM_KEY: "Closed Exhibit",
     },
-    "Underpass Moria Jia Box": {
+    "Underpass Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("The Underpass", 0),
         LOCATION_ROOM_KEY: "The Underpass",
     },
-    "Tomb Moria Jia Box": {
+    "Tomb Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Tomb", 0),
         LOCATION_ROOM_KEY: "Tomb",
     },
-    "Trading Post Moria Jia Box": {
+    "Trading Post Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Trading Post", 0),
         LOCATION_ROOM_KEY: "Trading Post",
     },
-    "Tunnel Moria Jia Box": {
+    "Tunnel Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Tunnel", 0),
         LOCATION_ROOM_KEY: "Tunnel",
     },
-    "Solaium Moria Jia Box": {
+    "Solaium Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Solarium", 0),
         LOCATION_ROOM_KEY: "Solarium",
     },
-    "Lost And Found Moria Jia Box": {
+    "Lost And Found Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Lost And Found", 0),
         LOCATION_ROOM_KEY: "Lost And Found",
     },
-    "Throne of the Blue Prince Moria Jia Box": {
+    "Throne of the Blue Prince Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Throne Room", 0),
         LOCATION_ROOM_KEY: "Throne Room",
-        LOCATION_RULE: lambda state, world: all(can_reach_item_location(item, state, world) for item in [
+        LOCATION_RULE: lambda state, world: state.has("Ascend The Throne", world.player) and
+        all(can_reach_item_location(item, state, world) for item in [
             "CROWN",
             "ROYAL SCEPTER",
             "CURSED EFFIGY",
         ])
     },
-    "Arch Aries Sanctum Moria Jia Box": {
+    "Arch Aries Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Arch Aries Sanctum", 0),
         LOCATION_ROOM_KEY: "Arch Aries Sanctum",
     },
-    "Corarica Sanctum Moria Jia Box": {
+    "Corarica Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Corarica Sanctum", 0),
         LOCATION_ROOM_KEY: "Corarica Sanctum",
     },
-    "Eraja Sanctum Moria Jia Box": {
+    "Eraja Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Eraja Sanctum", 0),
         LOCATION_ROOM_KEY: "Eraja Sanctum",
     },
-    "Fenn Aries Sanctum Moria Jia Box": {
+    "Fenn Aries Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Fenn Aries Sanctum", 0),
         LOCATION_ROOM_KEY: "Fenn Aries Sanctum",
     },
-    "Mora Jai Sanctum Moria Jia Box": {
+    "Mora Jai Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Mora Jai Sanctum", 0),
         LOCATION_ROOM_KEY: "Mora Jai Sanctum",
     },
-    "Orinda Aries Sanctum Moria Jia Box": {
+    "Orinda Aries Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Orinda Aries Sanctum", 0),
         LOCATION_ROOM_KEY: "Orinda Aries Sanctum",
     },
-    "Verra Sanctum Moria Jia Box": {
+    "Verra Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Verra Sanctum", 0),
         LOCATION_ROOM_KEY: "Verra Sanctum",
     },
-    "Nuance Sanctum Moria Jia Box": {
+    "Nuance Sanctum Mora Jia Box": {
         LOCATION_ID_KEY: get_room_location_id("Nuance Sanctum", 0),
         LOCATION_ROOM_KEY: "Nuance Sanctum",
     }
-} | aries_court_moria_jia_boxes
+} | aries_court_mora_jia_boxes
 # not adding atelier boxes, since they are bascially already at the latest goal
 
 drafting_studio_additions = {
@@ -313,7 +314,7 @@ drafting_studio_additions = {
         LOCATION_ROOM_KEY: "Drafting Studio",
     },
     "Casino Floorplan": {
-        LOCATION_ID_KEY: get_room_location_id("Drafting Studio", 8) ,
+        LOCATION_ID_KEY: get_room_location_id("Drafting Studio", 8),
         LOCATION_ROOM_KEY: "Drafting Studio",
     },
 }
@@ -1413,5 +1414,5 @@ misc_locations = {
 
 # Mirror Room Floorplan Duplicates?
 
-locations = trophies | safes_and_small_gates | moria_jia_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions
+locations = trophies | safes_and_small_gates | mora_jia_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions
     

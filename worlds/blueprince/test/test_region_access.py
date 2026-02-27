@@ -115,7 +115,7 @@ class TestRegionAccess(BluePrinceTestBase):
 
     def test_the_underpass_requires_reservoir_both_sides(self) -> None:
         self.assertFalse(self.can_reach_region("The Underpass"), "The Underpass should not be reachable without having the Reservoir on both sides")
-        self.collect_by_name(["Power Hammer", "BASEMENT KEY"])
+        self.collect_by_name(["Power Hammer", "BASEMENT KEY", "Observatory"])
         self.assertFalse(self.can_reach_region("The Underpass"), "The Underpass should not be reachable without having the Reservoir on both sides")
         self.collect_by_name(["Pump Room"])
         self.debug_print_regions_items_locations(True)
@@ -142,12 +142,11 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Aries Court"), "Aries Court should be reachable after having all Chess Pieces")
     
     def test_basement_requires_the_foundation_and_basement_key(self) -> None:
-        self.collect_by_name("Hallway")
+        self.collect_by_name(["Hallway", "Observatory"])
         self.assertFalse(self.can_reach_region("Basement"), "Basement should not be reachable without having the Foundation")
         self.collect_by_name("The Foundation")
         self.assertFalse(self.can_reach_region("Basement"), "Basement should not be reachable without having the Basement Key")
         self.collect_by_name("BASEMENT KEY")
-        self.debug_print_regions_items_locations()
         self.assertTrue(self.can_reach_region("Basement"), "Basement should be reachable after having the Foundation and Basement Key")
     
     def test_room_8_requires_key_8(self) -> None:

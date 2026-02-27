@@ -198,8 +198,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Trophy Room",
-                    lambda state: state.has("Trophy Room", world.player) and
-                        (
+                    lambda state: (
                             state.can_reach_region("Room 46", world.player) or 
                             state.can_reach_location("Full House Trophy", world.player) or 
                             state.can_reach_location("Trophy of Invention", world.player) or 
@@ -400,7 +399,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     the_well.connect(
         reservoir_fountain_side,
         "Well To Reservoir Fountain Side",
-        lambda state: state.has("BASEMENT KEY", world.player),
+        lambda state: can_reach_item_location("BASEMENT KEY", state, world),
     )
 
     west_path.connect(
@@ -427,12 +426,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     foundation_elevator.connect(
         basement,
         "Foundation Elevator To Basement",
-        lambda state: state.can_reach_region("The Foundation", world.player) and state.has("BASEMENT KEY", world.player),
+        lambda state: state.can_reach_region("The Foundation", world.player) and can_reach_item_location("BASEMENT KEY", state, world),
     )
     torch_chamber.connect(
         the_precipice,
         "Torch Chamber To Precipice",
-        lambda state: state.has("Burning Glass", world.player) or state.has("TORCH", world.player),
+        lambda state: can_reach_item_location("Burning Glass", state, world) or can_reach_item_location("TORCH", state, world),
     )
 
     grounds.connect(
@@ -452,17 +451,17 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     tunnel_area_post_normal_locked_door.connect(
         tunnel_area_post_basement_key_door,
         "Tunnel Area Post Normal Locked Door to Tunnel Area Post Basement Key",
-        lambda state: state.has("BASEMENT KEY", world.player),
+        lambda state: can_reach_item_location("BASEMENT KEY", state, world),
     )
     tunnel_area_post_basement_key_door.connect(
         tunnel_area_post_security_door,
         "Tunnel Area Post Basement Key to Tunnel Area Post Security Door",
-        lambda state: state.has("KEYCARD", world.player),
+        lambda state: can_reach_item_location("KEYCARD", state, world),
     )
     tunnel_area_post_security_door.connect(
         tunnel_area_post_weak_wall,
         "Tunnel Area Post Security Door to Tunnel Area Post Weak Wall",
-        lambda state: state.has("Power Hammer", world.player),
+        lambda state: can_reach_item_location("Power Hammer", state, world),
     )
     tunnel_area_post_weak_wall.connect(
         tunnel_area_post_red_door,
@@ -472,12 +471,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     tunnel_area_post_red_door.connect(
         tunnel_area_post_candle_door,
         "Tunnel Area Post Red Door to Tunnel Area Post Candle Door",
-        lambda state: state.has("TORCH", world.player) or state.has("Burning Glass", world.player),
+        lambda state: can_reach_item_location("Burning Glass", state, world) or can_reach_item_location("TORCH", state, world),
     )
     tunnel_area_post_candle_door.connect(
         tunnel_area_post_sealed_door,
         "Tunnel Area Post Candle Door to Tunnel Area Post Sealed Door",
-        lambda state: state.has_all({"MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"}, world.player),
+        lambda state: all(can_reach_item_location(x, state, world) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]),
     )
     tunnel_area_post_sealed_door.connect(
         tunnel_area_post_blue_door,
@@ -492,14 +491,18 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     reservoir_gear_side.connect(
         safehouse,
         "Reservoir Gear Side To Safehouse",
-        lambda state: state.has("Pump Room", world.player) and state.can_reach_region("Reservoir Fountain Side", world.player) and state.can_reach_region("Basement", world.player),
+        lambda state: can_reach_pick_position("Pump Room", world, state) 
+        and state.can_reach_region("Reservoir Fountain Side", world.player) 
+        and state.can_reach_region("Basement", world.player),
     )  # Pump Room & Fountain Side Access. (take fountain side to gear side, lower again, and make it back down on gear side.)
     reservoir_gear_side.connect(
         reservoir_bottom,
         "Reservoir Gear Side To Reservoir Bottom",
-        lambda state: state.has("Pump Room", world.player) and state.has("Boiler Room", world.player) and state.can_reach_region("Basement", world.player),
+        lambda state: state.can_reach_region("Pump Room", world.player) 
+        and state.can_reach_region("Boiler Room", world.player) 
+        and state.can_reach_region("Basement", world.player),
     )  # Pump Room and boiler room (both this and safehouse require ability to get to gear side NOT through well side.)
-    gear_to_underpass = rotating_gear.connect(
+    rotating_gear.connect(
         the_underpass,
         "Rotating Gear To Underpass",
         lambda state: state.can_reach_region("Reservoir Fountain Side", world.player) and state.can_reach_region("Reservoir Gear Side", world.player),
@@ -511,19 +514,21 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     reservoir_fountain_side.connect(
         reservoir_gear_side,
         "Reservoir Fountain Side To Reservoir Gear Side",
-        lambda state: state.has("Pump Room", world.player),
+        lambda state: state.can_reach_region("Pump Room", world.player),
     )  # Pump Room
 
     outer_room.connect(
         atelier,
         "Outer Room To Atelier",
-        lambda state: state.has("Secret Passage", world.player) and can_reach_item_location("WATERING CAN", state, world),
+        lambda state: state.can_reach_region("Secret Passage", world.player) 
+        and state.can_reach_region("Shrine", world.player)
+        and can_reach_item_location("WATERING CAN", state, world),
     )
 
     grounds.connect(
         the_well,
         "Grounds To The Well",
-        lambda state: state.has("Pump Room", world.player),
+        lambda state: state.can_reach_region("Pump Room", world.player),
     )
 
 def can_reach_pick_position(room: str, world: BluePrinceWorld, state: CollectionState) -> bool:

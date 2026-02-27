@@ -477,6 +477,13 @@ upgrade_items = {
     },
 }
 
+# 
+# Items to add:
+# 
+# Gift Shop Items
+# Bookshop Items
+# 
+# Orchard Gate?
 
 all_items_excluding_upgrade_items = upgrade_disks | keys | showroom_items | armory_items | workshop_items | other_items
 all_items = all_items_excluding_upgrade_items | upgrade_items
