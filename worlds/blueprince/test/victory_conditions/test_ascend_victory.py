@@ -1,6 +1,6 @@
-from ..options import GoalType
-from ..test import BluePrinceTestBase
-from ..constants import *
+from ...options import GoalType
+from ...test import BluePrinceTestBase
+from ...constants import *
 
 class TestAscendVictory(BluePrinceTestBase):
     options = {

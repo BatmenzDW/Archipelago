@@ -1,8 +1,8 @@
 from BaseClasses import CollectionState, Location
-from ..options import GoalType
-from ..test import BluePrinceTestBase
-from ..data_rooms import rooms, core_rooms
-from ..constants import *
+from ...options import GoalType
+from ...test import BluePrinceTestBase
+from ...data_rooms import rooms, core_rooms
+from ...constants import *
 
 class TestRoom46Victory(BluePrinceTestBase):
     options = {
