@@ -8,6 +8,7 @@ from .data_rooms import rooms, core_rooms, room_layout_lists
 from .data_items import sanctum_keys
 from .constants import *
 from .room_min_pieces import *
+from .data_other_locations import can_reach_item_location
 
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
@@ -158,9 +159,9 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     "Entrance Hall Antechamber",
                     lambda state: (
                         state.can_reach_region("Great Hall", world.player)
-                        or (state.can_reach_region("Greenhouse", world.player) and state.has("BROKEN LEVER", world.player))
+                        or (state.can_reach_region("Greenhouse", world.player) and can_reach_item_location("BROKEN LEVER", state, world))
                         or state.can_reach_region("Mechanarium", world.player)
-                        or (state.can_reach_region("Weight Room", world.player) and state.has("Power Hammer", world.player))
+                        or (state.can_reach_region("Weight Room", world.player) and can_reach_item_location("Power Hammer", state, world))
                         or state.can_reach_region("Secret Garden", world.player)
                         # This check is redundant
                         # or (state.has("Secret Garden", world.player) and state.has("Power Hammer", world.player))
@@ -216,13 +217,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Room 8",
-                    lambda state: state.has("KEY 8", world.player) and can_reach_pick_position("Room 8", world, state),
+                    lambda state: can_reach_item_location("KEY 8", state, world) and can_reach_pick_position("Room 8", world, state),
                 ) # Has Key 8
             elif k == "Secret Garden":
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Secret Garden",
-                    lambda state: state.has("SECRET GARDEN KEY", world.player) and can_reach_pick_position("Secret Garden", world, state),
+                    lambda state: can_reach_item_location("SECRET GARDEN KEY", state, world) and can_reach_pick_position("Secret Garden", world, state),
                 )
             
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
