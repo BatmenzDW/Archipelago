@@ -98,9 +98,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("The Precipice"), "The Precipice should be reachable after having all Gas Valves")
     
     def test_orindian_ruins_requires_microchips(self) -> None:
-        self.collect_by_name("Hallway")
-        self.collect_by_name("Boiler Room")
-        self.collect_by_name("Laboratory")
+        self.collect_by_name(["Hallway", "Boiler Room", "Laboratory", "Garage", "SHOVEL", "SLEDGE HAMMER"])
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
         self.collect_by_name("MICROCHIP 1")
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
@@ -110,6 +108,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should be reachable after having all Microchips")
     
     def test_sealed_entrance_requires_power_hammer(self) -> None:
+        self.collect_by_name(["Workshop", "SLEDGE HAMMER", "BATTERY PACK", "BROKEN LEVER"])
         self.assertFalse(self.can_reach_region("Sealed Entrance"), "Sealed Entrance should not be reachable without having the Power Hammer")
         self.collect_by_name("Power Hammer")
         self.assertTrue(self.can_reach_region("Sealed Entrance"), "Sealed Entrance should be reachable after having the Power Hammer")

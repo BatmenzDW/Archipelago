@@ -170,17 +170,17 @@ def create_events(world: BluePrinceWorld) -> None:
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
-
-    throne_room.add_event(
-        "Ascended The Throne",
-        "Blue Door Access",
-        lambda state: state.has("CROWN", world.player) and
-        state.has("ROYAL SCEPTER", world.player) and
-        state.has("CURSED EFFIGY", world.player) and
-        state.has_from_list(blue_rooms.keys(), world.player, 8),
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
+    else:
+        throne_room.add_event(
+            "Ascended The Throne",
+            "Blue Door Access",
+            lambda state: state.has("CROWN", world.player) and
+            state.has("ROYAL SCEPTER", world.player) and
+            state.has("CURSED EFFIGY", world.player) and
+            state.has_from_list(blue_rooms.keys(), world.player, 8),
+            location_type=BluePrinceLocation,
+            item_type=items.BluePrinceItem,
+        )
 
     # Set Victory as entering the atelier and reading the blue prints.
     if world.options.goal_type.value == GoalType.option_blueprints:

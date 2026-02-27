@@ -264,7 +264,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     blakbridge_grotto.connect(
         orindian_ruins,
         "Blackbridge Grotto To Orindian Ruins",
-        lambda state: state.has_all({"MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"}, world.player),
+        lambda state: all(can_reach_item_location(x, state, world) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]) 
     )
     grounds.connect(
         the_precipice,
@@ -282,14 +282,14 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     grounds.connect(
         sealed_entrance,
         "Grounds To Sealed Entrance",
-        lambda state: state.has("Power Hammer", world.player),
+        lambda state: can_reach_item_location("Power Hammer", state, world),
     )
     grounds.connect(entrance_hall, "Grounds To Entrance Hall")
 
     sealed_entrance.connect(
         grounds,
         "Sealed Entrance To Grounds",
-        lambda state: state.has("Power Hammer", world.player),
+        lambda state: can_reach_item_location("Power Hammer", state, world),
     )
     the_precipice.connect(
         aries_court,
@@ -309,12 +309,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     sealed_entrance.connect(
         basement,
         "Sealed Entrance To Basement",
-        lambda state: state.has("Power Hammer", world.player),
+        lambda state: can_reach_item_location("Power Hammer", state, world),
     )
     basement.connect(
         sealed_entrance,
         "Basement To Sealed Entrance",
-        lambda state: state.has("Power Hammer", world.player),
+        lambda state: can_reach_item_location("Power Hammer", state, world),
     )
     basement.connect(
         reservoir_gear_side,
@@ -338,42 +338,42 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     inner_sanctum.connect(
         orinda_aries_sanctum,
         "Inner Sanctum To Orinda Aries Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 1),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 1,
     )
     inner_sanctum.connect(
         fenn_aries_sanctum,
         "Inner Sanctum To Fenn Aries Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 2),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 2,
     )
     inner_sanctum.connect(
         arch_aries_sanctum,
         "Inner Sanctum To Arch Aries Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 3),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 3,
     )
     inner_sanctum.connect(
         eraja_sanctum,
         "Inner Sanctum To Eraja Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 4),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 4,
     )
     inner_sanctum.connect(
         corarica_sanctum,
         "Inner Sanctum To Corarica Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 5),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 5,
     )
     inner_sanctum.connect(
         mora_jai_sanctum,
         "Inner Sanctum To Mora Jai Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 6),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 6,
     )
     inner_sanctum.connect(
         verra_sanctum,
         "Inner Sanctum To Verra Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 7),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 7,
     )
     inner_sanctum.connect(
         nuance_sanctum,
         "Inner Sanctum To Nuance Sanctum",
-        lambda state: state.has_from_list_unique(sanctum_key_names, world.player, 8),
+        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 8,
     )
     abandoned_mine.connect(
         excavation_tunnel,
@@ -517,7 +517,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     outer_room.connect(
         atelier,
         "Outer Room To Atelier",
-        lambda state: state.has("Secret Passage", world.player) and state.has("Watering Can", world.player),
+        lambda state: state.has("Secret Passage", world.player) and can_reach_item_location("WATERING CAN", state, world),
     )
 
     grounds.connect(

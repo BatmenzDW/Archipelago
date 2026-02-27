@@ -1290,35 +1290,43 @@ sanctum_keys = {
     "Sanctum Key - Room 46": {
         LOCATION_ID_KEY: get_room_location_id("Room 46", 5),
         LOCATION_ROOM_KEY: "Room 46",
+        LOCATION_ITEM_KEY: "SANCTUM KEY ANTECHAMBER"
     },
     "Sanctum Key - Vault": {
         LOCATION_ID_KEY: get_room_location_id("Vault", 1),
         LOCATION_ROOM_KEY: "Vault",
-        LOCATION_RULE: lambda state, world: state.has("VAULT KEY 370", world.player)
+        LOCATION_ITEM_KEY: "SANCTUM KEY VAULT",
+        LOCATION_RULE: lambda state, world: can_reach_item_location("VAULT KEY 370", state, world)
     },
     "Sanctum Key - Clock Tower": {
         LOCATION_ID_KEY: get_room_location_id("Clock Tower", 0),
         LOCATION_ROOM_KEY: "Clock Tower",
+        LOCATION_ITEM_KEY: "SANCTUM KEY CLOCK TOWER"
     },
     "Sanctum Key - Reservoir Bottom": {
         LOCATION_ID_KEY: get_room_location_id("Reservoir Bottom", 0),
         LOCATION_ROOM_KEY: "Reservoir Bottom",
+        LOCATION_ITEM_KEY: "SANCTUM KEY RESERVOIR"
     },
     "Sanctum Key - Throne Room": {
         LOCATION_ID_KEY: get_room_location_id("Throne Room", 1),
         LOCATION_ROOM_KEY: "Throne Room",
+        LOCATION_ITEM_KEY: "SANCTUM KEY THRONE ROOM"
     },
     "Sanctum Key - Safehouse": {
         LOCATION_ID_KEY: get_room_location_id("Safehouse", 0),
         LOCATION_ROOM_KEY: "Safehouse",
+        LOCATION_ITEM_KEY: "SANCTUM KEY SAFEHOUSE"
     },
     "Sanctum Key - Music Room": {
         LOCATION_ID_KEY: get_room_location_id("Music Room", 0),
         LOCATION_ROOM_KEY: "Music Room",
+        LOCATION_ITEM_KEY: "SANCTUM KEY MUSIC ROOM"
     },
     "Sanctum Key - Mechanarium": {
         LOCATION_ID_KEY: get_room_location_id("Mechanarium", 1),
         LOCATION_ROOM_KEY: "Mechanarium",
+        LOCATION_ITEM_KEY: "SANCTUM KEY MECHANARIUM"
     }
 }
 
