@@ -396,7 +396,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
             continue
 
         room_item = world.create_item(k)
-        if ENABLE_ROOM_LOGIC:
+        if world.options.room_draft_sanity:
             itempool.append(room_item)
         else:
             world.push_precollected(room_item)
