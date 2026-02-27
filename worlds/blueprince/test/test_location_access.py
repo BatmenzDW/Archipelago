@@ -1,8 +1,8 @@
 from BaseClasses import CollectionState, Location
-from worlds.blueprince.options import GoalType
-from worlds.blueprince.test import BluePrinceTestBase
-from worlds.blueprince.data_rooms import rooms, core_rooms
-from worlds.blueprince.constants import *
+from ..options import GoalType
+from ..test import BluePrinceTestBase
+from ..data_rooms import rooms, core_rooms
+from ..constants import *
 
 class TestLocationAccess(BluePrinceTestBase):
     options = {

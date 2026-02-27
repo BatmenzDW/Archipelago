@@ -1,7 +1,7 @@
 
-from worlds.blueprince.options import GoalType
-from worlds.blueprince.test import BluePrinceTestBase
-from worlds.blueprince.data_rooms import rooms, core_rooms
+from ..options import GoalType
+from ..test import BluePrinceTestBase
+from ..data_rooms import rooms, core_rooms
 
 class TestDraftSanity(BluePrinceTestBase):
     options = {

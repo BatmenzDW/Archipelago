@@ -1,4 +1,4 @@
-from worlds.blueprince.constants import *
+from .constants import *
 
 POSITION_MINIMUM_TOTAL_PIECES = {
     ROOM_PICK_POSITION_CENTER_TIER_1: 0, # Should always be true
