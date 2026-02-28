@@ -85,7 +85,9 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         locs = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
 
-        world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
+        # TODO: switch to using set_rule once 0.6.7 is released.
+        world.get_location(location_key).access_rule = lambda state, key=location_key: can_access_location_with_rule(key, world, state)
+        # world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
     
 def can_access_location_with_rule(location_key: str, world: BluePrinceWorld, state: CollectionState) -> bool:
     location_data = locations[location_key]
