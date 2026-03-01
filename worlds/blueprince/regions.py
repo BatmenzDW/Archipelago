@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import CollectionState, Entrance, Region
 
-from .data_rooms import rooms, core_rooms, room_layout_lists
+from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import sanctum_keys
 from .constants import *
 from .room_min_pieces import *
@@ -223,6 +223,16 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     room,
                     "Entrance Hall Secret Garden",
                     lambda state: can_reach_item_location("SECRET GARDEN KEY", state, world) and can_reach_pick_position("Secret Garden", world, state),
+                )
+            elif k in classrooms and k != "Classroom 1":
+                if k == "Classroom Exam":
+                    prev = "Classroom 8"
+                else:
+                    prev = f"Classroom {int(k[-1]) - 1}"
+                world.get_region(prev).connect(
+                    room,
+                    f"{prev} {k}",
+                    lambda state: state.has(k, world.player),
                 )
             
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
