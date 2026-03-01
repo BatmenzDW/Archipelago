@@ -357,7 +357,8 @@ found_floorplans = {
     "Conservatory Floorplan": {
         LOCATION_ID_KEY: get_room_location_id("Campsite", 1),
         LOCATION_ROOM_KEY: "Campsite",
-        NONSANITY_LOCATION_KEY: "Conservatory"
+        NONSANITY_LOCATION_KEY: "Conservatory",
+        LOCATION_RULE: lambda state, world: can_reach_item_location("SHOVEL", state, world),
     },
     "Lost And Found Floorplan": {
         LOCATION_ID_KEY: get_room_location_id("Basement", 0),
