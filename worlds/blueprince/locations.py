@@ -192,9 +192,9 @@ def create_events(world: BluePrinceWorld) -> None:
     throne_room.add_event(
         "Ascended The Throne",
         "Ascend The Throne",
-        lambda state: can_reach_item_location("CROWN", state, world) and
-        can_reach_item_location("ROYAL SCEPTER", state, world) and
-        can_reach_item_location("CURSED EFFIGY", state, world),
+        lambda state: can_reach_item_location("CROWN", state, world.player) and
+        can_reach_item_location("ROYAL SCEPTER", state, world.player) and
+        can_reach_item_location("CURSED EFFIGY", state, world.player),
         location_type=BluePrinceLocation,
         item_type=items.BluePrinceItem,
     )
