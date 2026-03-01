@@ -86,11 +86,16 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False:
             if v[NONSANITY_LOCATION_KEY] != STARTING_INVENTORY:
                 # Place room items at their in-game locations when room draft sanity is off.
-                loc = BluePrinceLocation(world.player, k, None)
-                loc.place_locked_item(BluePrinceItem(v[NONSANITY_LOCATION_KEY], ItemClassification.progression, None, world.player))
-                print(f"Placing {v[NONSANITY_LOCATION_KEY]} at {k} for player {world.player}")
-                continue
+                reg = world.get_region(v[LOCATION_ROOM_KEY])
+                loc = BluePrinceLocation(world.player, k, LOCATION_NAME_TO_ID[k], reg)
+                loc.place_locked_item(BluePrinceItem(v[NONSANITY_LOCATION_KEY], ItemClassification.progression_skip_balancing, None, world.player))
 
+                reg.locations.append(loc)
+
+                # TODO: switch to using set_rule once 0.6.7 is released.
+                world.get_location(k).access_rule = lambda state, key=k: can_access_location_with_rule(key, world, state)
+                # world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
+                continue
         
         location_key = k
         locs = get_location_names_with_ids([location_key])

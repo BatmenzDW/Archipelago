@@ -426,8 +426,6 @@ def create_all_items(world: BluePrinceWorld) -> None:
         # Precollects all room items, except for those that should be at their in-game locations, which are handled in locations.py
         to_precollect += [room for room in room_item_list if NONSANITY_LOCATION_KEY not in rooms[room.name] or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY]
 
-    print(f"Precollecting items for player {world.player}: {[item.name for item in to_precollect]}")
-
     [world.push_precollected(item) for item in to_precollect]
 
     #

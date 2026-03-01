@@ -1,7 +1,7 @@
 from BaseClasses import CollectionState, ItemClassification
 
 from .constants import *
-from .data_rooms import rooms, core_rooms, room_layout_lists
+from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import *
 from .locations import ROOM_MULTIPLIER
 
@@ -86,7 +86,7 @@ trophies = {
     "Explorer's Trophy": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 1),
         LOCATION_ROOM_KEY: "Entrance Hall",
-        LOCATION_RULE: lambda state, world: state.has_all([x for x in rooms if x not in core_rooms], world.player)
+        LOCATION_RULE: lambda state, world: state.has_all([x for x in rooms if x not in core_rooms and (x not in classrooms or x == "Classroom 1")], world.player)
     },
     "Trophy of Sigils": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 2),
@@ -303,7 +303,7 @@ drafting_studio_additions = {
     "Classroom Floorplan": {
         LOCATION_ID_KEY: get_room_location_id("Drafting Studio", 4),
         LOCATION_ROOM_KEY: "Drafting Studio",
-        NONSANITY_LOCATION_KEY: "Classroom"
+        NONSANITY_LOCATION_KEY: "Classroom Exam"
     },
     "Solarium Floorplan": {
         LOCATION_ID_KEY: get_room_location_id("Drafting Studio", 5),

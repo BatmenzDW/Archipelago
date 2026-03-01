@@ -7,6 +7,7 @@ from ...data_rooms import rooms, core_rooms
 
 class TestNoDraftSanity(BluePrinceTestBase):
     options = {
+        "progression_balancing": 50,
         "room_draft_sanity": False,
         "standard_item_sanity": True,
         "workshop_sanity": True,
