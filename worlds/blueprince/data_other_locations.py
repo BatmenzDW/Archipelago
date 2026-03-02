@@ -3,9 +3,8 @@ from BaseClasses import CollectionState, ItemClassification
 from .constants import *
 from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import *
-from .locations import ROOM_MULTIPLIER
 
-room_location_mem = {}
+room_location_mem : dict[str, list[int]] = {}
 
 def get_room_location_id(room_name: str, n: int = 0) -> int:
     if room_name not in room_location_mem:
@@ -13,6 +12,8 @@ def get_room_location_id(room_name: str, n: int = 0) -> int:
 
     if n in room_location_mem[room_name]:
         raise Exception(f"Duplicate location ID for {room_name} {n}")
+    
+    room_location_mem[room_name].append(n)
     
     if room_name in rooms:
         return rooms[room_name][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + n + 1000
