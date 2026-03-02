@@ -102,7 +102,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("The Precipice"), "The Precipice should be reachable after having all Gas Valves")
     
     def test_orindian_ruins_requires_microchips(self) -> None:
-        self.collect_by_name(["Hallway", "Boiler Room", "Laboratory", "Garage", "SHOVEL", "SLEDGE HAMMER"])
+        self.collect_by_name(["Hallway", "Boiler Room", "Laboratory", "Garage", "SHOVEL", "SLEDGE HAMMER", "Attic"])
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
         self.collect_by_name("MICROCHIP 1")
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
@@ -119,10 +119,9 @@ class TestRegionAccess(BluePrinceTestBase):
 
     def test_the_underpass_requires_reservoir_both_sides(self) -> None:
         self.assertFalse(self.can_reach_region("The Underpass"), "The Underpass should not be reachable without having the Reservoir on both sides")
-        self.collect_by_name(["Power Hammer", "BASEMENT KEY", "Observatory"])
+        self.collect_by_name(["Power Hammer", "BASEMENT KEY", "Hallway", "Spare Room", "Workshop", "Attic", "Courtyard", "Greenhouse", "SLEDGE HAMMER", "BROKEN LEVER", "BATTERY PACK", "Veranda", "The Pool", "Observatory"])
         self.assertFalse(self.can_reach_region("The Underpass"), "The Underpass should not be reachable without having the Reservoir on both sides")
         self.collect_by_name(["Pump Room"])
-        self.debug_print_regions_items_locations(True)
         self.assertTrue(self.can_reach_region("The Underpass"), "The Underpass should be reachable after having the Reservoir on both sides")
     
     def test_aries_court_requires_chess_pieces(self) -> None:
@@ -146,7 +145,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Aries Court"), "Aries Court should be reachable after having all Chess Pieces")
     
     def test_basement_requires_the_foundation_and_basement_key(self) -> None:
-        self.collect_by_name(["Hallway", "Observatory"])
+        self.collect_by_name(["Hallway", "Tunnel", "Great Hall", "Courtyard", "Foyer", "Spare Room", "Workshop"])
         self.assertFalse(self.can_reach_region("Basement"), "Basement should not be reachable without having the Foundation")
         self.collect_by_name("The Foundation")
         self.assertFalse(self.can_reach_region("Basement"), "Basement should not be reachable without having the Basement Key")

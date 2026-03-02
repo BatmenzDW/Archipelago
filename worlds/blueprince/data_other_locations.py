@@ -1114,7 +1114,7 @@ special_key_pickup = {
             "Locksmith"
         ]),
 
-        LOCATION_RULE_COMPLEX: lambda state, world: (state.can_reach_region("Freezer", world.player) and any(can_reach_item_location(item, state, world) for item in ["Burning Glass", "TORCH"]))
+        LOCATION_RULE_COMPLEX: lambda state, world: (state.can_reach_region("Freezer", world.player) and any(can_reach_item_location(item, state, world.player) for item in ["Burning Glass", "TORCH"]))
         or (state.can_reach_region("Planetarium", world.player) and can_reach_item_location("TELESCOPE", state, world.player)),
     },
     "SECRET GARDEN KEY First Pickup": {
@@ -1152,7 +1152,7 @@ special_key_pickup = {
 
         LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player),
 
-        LOCATION_RULE_COMPLEX: lambda state, world: (state.can_reach_region("Freezer", world.player) and any(can_reach_item_location(item, state, world) for item in ["Burning Glass", "TORCH"]) 
+        LOCATION_RULE_COMPLEX: lambda state, world: (state.can_reach_region("Freezer", world.player) and any(can_reach_item_location(item, state, world.player) for item in ["Burning Glass", "TORCH"]) 
             and can_reach_item_location("PRISM KEY_0", state, world)) or trunk_rule(state, world.player),
 
         LOCATION_RULE_EXTREME:lambda state, world: advanced_experiment_rule(state, world.player) or trunk_extreme_rule(state, world.player) or state.can_reach_region("Observatory", world.player), # Spiral of Stars
@@ -1279,49 +1279,49 @@ workshop_contraptions = {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 1),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Burning Glass",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["MAGNIFYING GLASS", "METAL DETECTOR"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["MAGNIFYING GLASS", "METAL DETECTOR"])
     },
     "Detector Shovel First Craft": {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 2),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Detector Shovel",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["SHOVEL", "METAL DETECTOR"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["SHOVEL", "METAL DETECTOR"])
     },
     "Dowsing Rod First Craft": {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 3),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Dowsing Rod",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["SHOVEL", "COMPASS"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["SHOVEL", "COMPASS"])
     },
     "Power Hammer First Craft": {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 4),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Power Hammer",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["SLEDGE HAMMER", "BROKEN LEVER", "BATTERY PACK"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["SLEDGE HAMMER", "BROKEN LEVER", "BATTERY PACK"])
     },
     "Electromagnet First Craft": {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 5),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Electromagnet",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["COMPASS", "BATTERY PACK"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["COMPASS", "BATTERY PACK"])
     },
     "Lucky Purse First Craft": {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 6),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Lucky Purse",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["COIN PURSE", "LUCKY RABBIT'S FOOT"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["COIN PURSE", "LUCKY RABBIT'S FOOT"])
     },
     "Jack Hammer First Craft": {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 7),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Jack Hammer",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["SHOVEL", "BATTERY PACK", "BROKEN LEVER"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["SHOVEL", "BATTERY PACK", "BROKEN LEVER"])
     },
     "Pick Sound Amplifier First Craft": {
         LOCATION_ID_KEY: get_room_location_id("Workshop", 8),
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Pick Sound Amplifier",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world) for item in ["LOCK PICK KIT", "METAL DETECTOR"])
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(can_reach_item_location(item, state, world.player) for item in ["LOCK PICK KIT", "METAL DETECTOR"])
     },
 }
 
@@ -1354,17 +1354,17 @@ upgrade_disks = {
     "Upgrade Disk - Vault": {
         LOCATION_ID_KEY: get_room_location_id("Vault", 0),
         LOCATION_ROOM_KEY: "Vault",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("VAULT KEY 304", state, world)
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("VAULT KEY 304", state, world.player)
     },
     "Upgrade Disk - Trading Post Dynamite": {
         LOCATION_ID_KEY: get_room_location_id("Trading Post", 1),
         LOCATION_ROOM_KEY: "Trading Post",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: any(can_reach_item_location(item, state, world) for item in ["Burning Glass", "TORCH"]),
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: any(can_reach_item_location(item, state, world.player) for item in ["Burning Glass", "TORCH"]),
     },
     "Upgrade Disk - Freezer": {
         LOCATION_ID_KEY: get_room_location_id("Freezer", 0),
         LOCATION_ROOM_KEY: "Freezer",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: any(can_reach_item_location(item, state, world) for item in [
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: any(can_reach_item_location(item, state, world.player) for item in [
             "Burning Glass",
             "TORCH",
             "Power Hammer",
@@ -1393,7 +1393,7 @@ upgrade_disks = {
     "Upgrade Disk - Archives": {
         LOCATION_ID_KEY: get_room_location_id("Archives", 0),
         LOCATION_ROOM_KEY: "Archives",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("CABINET KEY 1", state, world)
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("CABINET KEY 1", state, world.player)
     },
     "Upgrade Disk - Trading Post Trade": {
         LOCATION_ID_KEY: get_room_location_id("Trading Post", 2),
@@ -1470,7 +1470,7 @@ sanctum_keys = {
         LOCATION_ID_KEY: get_room_location_id("Vault", 1),
         LOCATION_ROOM_KEY: "Vault",
         LOCATION_ITEM_KEY: "SANCTUM KEY VAULT",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("VAULT KEY 370", state, world)
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("VAULT KEY 370", state, world.player)
     },
     "Sanctum Key - Clock Tower": {
         LOCATION_ID_KEY: get_room_location_id("Clock Tower", 0),

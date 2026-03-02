@@ -216,7 +216,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Room 8",
-                    lambda state: can_reach_item_location("KEY 8", state, world) and can_reach_pick_position("Room 8", world, state),
+                    lambda state: can_reach_item_location("KEY 8", state, world.player) and can_reach_pick_position("Room 8", world, state),
                 ) # Has Key 8
             elif k == "Secret Garden":
                 entrance_hall.connect(
@@ -273,7 +273,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     blakbridge_grotto.connect(
         orindian_ruins,
         "Blackbridge Grotto To Orindian Ruins",
-        lambda state: all(can_reach_item_location(x, state, world) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]) 
+        lambda state: all(can_reach_item_location(x, state, world.player) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]) 
     )
     grounds.connect(
         the_precipice,
@@ -342,47 +342,45 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         "The Underpass To Inner Sanctum",
     )
 
-    sanctum_key_names = list(sanctum_keys.keys())
-
     inner_sanctum.connect(
         orinda_aries_sanctum,
         "Inner Sanctum To Orinda Aries Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 1,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 1,
     )
     inner_sanctum.connect(
         fenn_aries_sanctum,
         "Inner Sanctum To Fenn Aries Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 2,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 2,
     )
     inner_sanctum.connect(
         arch_aries_sanctum,
         "Inner Sanctum To Arch Aries Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 3,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 3,
     )
     inner_sanctum.connect(
         eraja_sanctum,
         "Inner Sanctum To Eraja Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 4,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 4,
     )
     inner_sanctum.connect(
         corarica_sanctum,
         "Inner Sanctum To Corarica Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 5,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 5,
     )
     inner_sanctum.connect(
         mora_jai_sanctum,
         "Inner Sanctum To Mora Jai Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 6,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 6,
     )
     inner_sanctum.connect(
         verra_sanctum,
         "Inner Sanctum To Verra Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 7,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 7,
     )
     inner_sanctum.connect(
         nuance_sanctum,
         "Inner Sanctum To Nuance Sanctum",
-        lambda state: len([x for x in sanctum_key_names if can_reach_item_location(x, state, world)]) >= 8,
+        lambda state: len([x for x in sanctum_keys if can_reach_item_location(x, state, world.player)]) >= 8,
     )
     abandoned_mine.connect(
         excavation_tunnel,
@@ -486,7 +484,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     tunnel_area_post_candle_door.connect(
         tunnel_area_post_sealed_door,
         "Tunnel Area Post Candle Door to Tunnel Area Post Sealed Door",
-        lambda state: all(can_reach_item_location(x, state, world) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]),
+        lambda state: all(can_reach_item_location(x, state, world.player) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]),
     )
     tunnel_area_post_sealed_door.connect(
         tunnel_area_post_blue_door,

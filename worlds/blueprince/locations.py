@@ -270,7 +270,7 @@ def create_events(world: BluePrinceWorld) -> None:
     world.get_region("Apple Orchard").add_event(
         "Raise Satellite",
         "Satellite Raised",
-        lambda state: all(can_reach_item_location(x, state, world) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]) 
+        lambda state: all(can_reach_item_location(x, state, world.player) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]) 
         and state.can_reach_location("Scorch Sundial", world.player),
         location_type=BluePrinceLocation,
         item_type=items.BluePrinceItem,

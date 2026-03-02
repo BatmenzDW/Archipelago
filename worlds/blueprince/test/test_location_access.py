@@ -9,7 +9,6 @@ from ..items import ITEM_NAME_TO_ID
 class TestLocationAccess(BluePrinceTestBase):
     options = {
         "room_draft_sanity": True,
-        "item_sanity": True,
         "goal_type": GoalType.option_room46,
     }
 
