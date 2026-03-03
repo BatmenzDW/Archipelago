@@ -1,8 +1,7 @@
 from BaseClasses import ItemClassification
 
-
 from .constants import *
-
+from .world import ITEMS_BY_GROUPS
 
 core_rooms = {
     "Antechamber": {
@@ -1839,7 +1838,7 @@ room_layout_lists = {
     OUTER_ROOM_KEY: [k for k, v in rooms.items() if v[OUTER_ROOM_KEY]],
 }
 
-ROOMS_BY_GROUPS = {
+ITEMS_BY_GROUPS |= {
     "Blue Rooms": [room for room in blue_rooms],
     "Bedrooms": [room for room in bedrooms],
     "Hallways": [room for room in hallways],

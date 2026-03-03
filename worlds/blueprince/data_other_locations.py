@@ -1,9 +1,9 @@
 from BaseClasses import CollectionState, ItemClassification
 
-from .locations import LOCATIONS_BY_GROUPS
 from .constants import *
 from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import *
+# from .world import LOCATIONS_BY_GROUPS
 
 room_location_mem : dict[str, list[int]] = {}
 

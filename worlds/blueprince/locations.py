@@ -54,8 +54,6 @@ def create_all_locations(world: BluePrinceWorld) -> None:
     create_regular_locations(world)
     create_events(world)
 
-LOCATIONS_BY_GROUPS : dict[str, list[str]] = {}
-
 def create_regular_locations(world: BluePrinceWorld) -> None:
 
     armory = world.get_region("The Armory")

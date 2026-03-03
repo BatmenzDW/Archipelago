@@ -169,3 +169,11 @@ ROOM_PICK_POSITION_ROOM_8 = "ROOM 8"
 
 TRADING_POST_GIVE = "GIVE"
 TRADING_POST_RECEIVE = "RECEIVE"
+
+
+########################
+# Item/Location GROUPS #
+########################
+
+ITEMS_BY_GROUPS : dict[str, list[str]] = {}
+LOCATIONS_BY_GROUPS : dict[str, list[str]] = {}
