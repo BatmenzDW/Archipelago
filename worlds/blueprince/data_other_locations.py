@@ -1328,7 +1328,7 @@ workshop_contraptions = {
 }
 
 upgrade_disks = {
-    "Upgrade Disk - Offic": {
+    "Upgrade Disk - Office": {
         LOCATION_ID_KEY: get_room_location_id("Office", 1),
         LOCATION_ROOM_KEY: "Office",
     },
