@@ -227,12 +227,14 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             elif k in classrooms and k != "Classroom 1":
                 if k == "Classroom Exam":
                     prev = "Classroom 8"
+                    cnum = 9
                 else:
                     prev = f"Classroom {int(k[-1]) - 1}"
+                    cnum = int(k[-1])
                 world.get_region(prev).connect(
                     room,
                     f"{prev} {k}",
-                    lambda state: state.has(k, world.player),
+                    lambda state: state.count_from_list_unique(classrooms, world.player) >= cnum,
                 )
             
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
