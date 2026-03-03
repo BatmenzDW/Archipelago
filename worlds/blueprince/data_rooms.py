@@ -1838,3 +1838,13 @@ room_layout_lists = {
     INNER_ROOM_KEY: [k for k, v in rooms.items() if not v[OUTER_ROOM_KEY]],
     OUTER_ROOM_KEY: [k for k, v in rooms.items() if v[OUTER_ROOM_KEY]],
 }
+
+ROOMS_BY_GROUPS = {
+    "Blue Rooms": [room for room in blue_rooms],
+    "Bedrooms": [room for room in bedrooms],
+    "Hallways": [room for room in hallways],
+    "Green Rooms": [room for room in green_rooms],
+    "Shops": [room for room in shops],
+    "Red Rooms": [room for room in red_rooms],
+    "Black Rooms": [room for room in black_rooms],
+}

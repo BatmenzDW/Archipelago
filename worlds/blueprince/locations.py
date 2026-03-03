@@ -54,18 +54,21 @@ def create_all_locations(world: BluePrinceWorld) -> None:
     create_regular_locations(world)
     create_events(world)
 
-
+LOCATIONS_BY_GROUPS : dict[str, list[str]] = {}
 
 def create_regular_locations(world: BluePrinceWorld) -> None:
 
     armory = world.get_region("The Armory")
-    
+    LOCATIONS_BY_GROUPS["Armory Purchases"] = []
     # Ignoring chance to get Knight's Shield by digging with Jack Hammer for now.
     for k, v in armory_items.items():
         location_key = f"{k} First Pickup"
         locs = get_location_names_with_ids([location_key])
         armory.add_locations(locs, BluePrinceLocation)
+        LOCATIONS_BY_GROUPS["Armory Purchases"].append(location_key)
 
+    LOCATIONS_BY_GROUPS["Room Entrances"] = []
+    LOCATIONS_BY_GROUPS["Trunks"] = []
     for room_key, v in rooms.items():
         room = world.get_region(room_key)
 
@@ -73,17 +76,20 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         location_key = f"{room_key} First Entering"
         locs = get_location_names_with_ids([location_key])
         room.add_locations(locs, BluePrinceLocation)
+        LOCATIONS_BY_GROUPS["Room Entrances"].append(location_key)
         # Add Nth locked trunk open
 
-        locs = get_location_names_with_ids([f"{room_key} Locked Trunk {idx}" for idx in range(1, world.options.locked_trunks + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0])
+        trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, world.options.locked_trunks + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
+        locs = get_location_names_with_ids(trunks)
         room.add_locations(locs, BluePrinceLocation)
+        LOCATIONS_BY_GROUPS["Trunks"].extend(trunks)
 
+        # These trunks require extra logic
         if room_key == "Entrance Hall":
             # TODO: switch to using set_rule once 0.6.7 is released.
             for idx in range(1, world.options.locked_trunks + 1):
                 world.get_location(f"Entrance Hall Locked Trunk {idx}").access_rule = lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player)
             
-
     for k, v in locations.items():
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False:
             if v[NONSANITY_LOCATION_KEY] != STARTING_INVENTORY:

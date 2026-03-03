@@ -1,5 +1,6 @@
 from BaseClasses import CollectionState, ItemClassification
 
+from .locations import LOCATIONS_BY_GROUPS
 from .constants import *
 from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import *
@@ -200,84 +201,84 @@ safes_and_small_gates = {
     }
 }
 
-aries_court_mora_jia_boxes = {
-    f"Aries Court Mora Jia Box {n}": {
+aries_court_mora_jai_boxes = {
+    f"Aries Court Mora Jai Box {n}": {
         LOCATION_ID_KEY: get_room_location_id("Aries Court", n),
         LOCATION_ROOM_KEY: "Aries Court",
     } for n in range(1, 9)
 }
 
-mora_jia_boxes = {
-    "Master Bedroom Mora Jia Box": {
+mora_jai_boxes = {
+    "Master Bedroom Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Master Bedroom", 0),
         LOCATION_ROOM_KEY: "Master Bedroom",
     },
-    "Closed Exhibit Mora Jia Box": {
+    "Closed Exhibit Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Closed Exhibit", 0),
         LOCATION_ROOM_KEY: "Closed Exhibit",
     },
-    "Underpass Mora Jia Box": {
+    "Underpass Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("The Underpass", 1),
         LOCATION_ROOM_KEY: "The Underpass",
     },
-    "Tomb Mora Jia Box": {
+    "Tomb Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Tomb", 0),
         LOCATION_ROOM_KEY: "Tomb",
     },
-    "Trading Post Mora Jia Box": {
+    "Trading Post Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Trading Post", 0),
         LOCATION_ROOM_KEY: "Trading Post",
     },
-    "Tunnel Mora Jia Box": {
+    "Tunnel Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Tunnel", 0),
         LOCATION_ROOM_KEY: "Tunnel",
     },
-    "Solarium Mora Jia Box": {
+    "Solarium Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Solarium", 0),
         LOCATION_ROOM_KEY: "Solarium",
     },
-    "Lost And Found Mora Jia Box": {
+    "Lost And Found Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Lost And Found", 1),
         LOCATION_ROOM_KEY: "Lost And Found",
     },
-    "Throne of the Blue Prince Mora Jia Box": {
+    "Throne of the Blue Prince Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Throne Room", 0),
         LOCATION_ROOM_KEY: "Throne Room",
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.has("Ascend The Throne", world.player)
     },
-    "Arch Aries Sanctum Mora Jia Box": {
+    "Arch Aries Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Arch Aries Sanctum", 0),
         LOCATION_ROOM_KEY: "Arch Aries Sanctum",
     },
-    "Corarica Sanctum Mora Jia Box": {
+    "Corarica Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Corarica Sanctum", 0),
         LOCATION_ROOM_KEY: "Corarica Sanctum",
     },
-    "Eraja Sanctum Mora Jia Box": {
+    "Eraja Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Eraja Sanctum", 0),
         LOCATION_ROOM_KEY: "Eraja Sanctum",
     },
-    "Fenn Aries Sanctum Mora Jia Box": {
+    "Fenn Aries Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Fenn Aries Sanctum", 0),
         LOCATION_ROOM_KEY: "Fenn Aries Sanctum",
     },
-    "Mora Jai Sanctum Mora Jia Box": {
+    "Mora Jai Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Mora Jai Sanctum", 0),
         LOCATION_ROOM_KEY: "Mora Jai Sanctum",
     },
-    "Orinda Aries Sanctum Mora Jia Box": {
+    "Orinda Aries Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Orinda Aries Sanctum", 0),
         LOCATION_ROOM_KEY: "Orinda Aries Sanctum",
     },
-    "Verra Sanctum Mora Jia Box": {
+    "Verra Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Verra Sanctum", 0),
         LOCATION_ROOM_KEY: "Verra Sanctum",
     },
-    "Nuance Sanctum Mora Jia Box": {
+    "Nuance Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: get_room_location_id("Nuance Sanctum", 0),
         LOCATION_ROOM_KEY: "Nuance Sanctum",
     }
-} | aries_court_mora_jia_boxes
+} | aries_court_mora_jai_boxes
 # not adding atelier boxes, since they are basically already at the latest goal
 
 drafting_studio_additions = {
@@ -1592,5 +1593,27 @@ misc_locations = {
 
 # Deposit Box 053? (The one opened with Key 8)
 
-locations = trophies | safes_and_small_gates | mora_jia_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions
-    
+# Basement to Reservior door button (Basement puzzle)
+
+# West gate unlock
+
+# Swansong/SwansongHSS + Blackbridge passwords
+
+# Foundation Elevator controls
+
+# Tomb puzzle 1 & 2 (Catacombs and Book Drafts)
+
+locations = trophies | safes_and_small_gates | mora_jai_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions
+
+LOCATIONS_BY_GROUPS |= {
+    "Trophies": [k for k in trophies],
+    "Safes and Small Gates": [k for k in safes_and_small_gates],
+    "Mora Jai Boxes": [k for k in mora_jai_boxes],
+    "Floorplans": [k for k in floorplans],
+    "Shop Items": [k for k in shop_items],
+    "Upgrade Disks": [k for k in upgrade_disks],
+    "Keys": [k for k in keys],
+    "Miscellaneous": [k for k in misc_locations],
+    "Item Pickups": [k for k in item_pickups],
+    "Workshop Contraptions": [k for k in workshop_contraptions],
+}
