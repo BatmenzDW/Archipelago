@@ -231,32 +231,6 @@ def create_events(world: BluePrinceWorld) -> None:
             item_type=items.BluePrinceItem,
         )
 
-    # Set access events for the 4 blue flames.
-    world.get_region("Apple Orchard").add_event(
-        "Has Apple Orchard Access",
-        "Apple Orchard Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-    world.get_region("Schoolhouse").add_event(
-        "Has School House Access",
-        "School House Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-    world.get_region("Hovel").add_event(
-        "Has Hovel Access",
-        "Hovel Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-    world.get_region("Gemstone Cavern").add_event(
-        "Has Gemstone Cavern Access",
-        "Gemstone Cavern Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-
     # Set North Lever Access
     world.get_region("Inner Sanctum").add_event(
         "Inner Sanctum North Lever",

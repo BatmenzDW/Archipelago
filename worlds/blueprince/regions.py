@@ -280,15 +280,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     grounds.connect(
         the_precipice,
         "Grounds To Precipice",
-        lambda state: state.has_all(
-            {
-                "Apple Orchard Access",
-                "School House Access",
-                "Hovel Access",
-                "Gemstone Cavern Access",
-            },
-            world.player,
-        ),
+        lambda state: all([state.can_reach_region(x, world.player) for x in ["Apple Orchard", "Schoolhouse", "Hovel", "Gemstone Cavern"]]),
     )
     grounds.connect(
         sealed_entrance,
