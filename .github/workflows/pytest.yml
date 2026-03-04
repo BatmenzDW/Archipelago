@@ -2,6 +2,10 @@ name: Run Pytest
 
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
     branches:
       - main   # change if your default branch is different
     paths:
@@ -10,6 +14,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    strategy:
+        fail-fast: false
 
     steps:
       - name: Checkout repo
