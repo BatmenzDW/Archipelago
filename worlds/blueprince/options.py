@@ -93,7 +93,7 @@ class SpecialShopSanity(Toggle):
 
 class LockedTrunkCommonCount(Range):
     """
-    This is the number of common locked trunks per room that need to be opened for archipelago items.
+    This is the number of common locked trunks per room that need to be opened for archipelago items. Example: Bedroom and Den trunks.
     """
 
     display_name = "Common Locked Trunks"
@@ -105,7 +105,7 @@ class LockedTrunkCommonCount(Range):
 
 class LockedTrunkRareCount(Range):
     """
-    This is the number of rare locked trunks per room that need to be opened for archipelago items.
+    This is the number of rare locked trunks per room that need to be opened for archipelago items. Exmple: Drawing Room trunk.
     """
 
     display_name = "Rare Locked Trunks"
@@ -117,7 +117,7 @@ class LockedTrunkRareCount(Range):
 
 class LockedTrunkComplexCount(Range):
     """
-    This is the number of complex locked trunks per room that need to be opened for archipelago items.
+    This is the number of complex locked trunks per room that need to be opened for archipelago items. Example: Entrance Hall trunks from The Twins constellation or Laboratory experiments.
     """
 
     display_name = "Complex Locked Trunks"
