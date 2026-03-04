@@ -28,7 +28,8 @@ core_rooms = {
         ROOM_ITEM_ID_KEY: 2,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
-        ROOM_CHEST_SPOT_COUNT_KEY: 2,  # EXCEPTION: REQUIRES OBSERVATORY
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMPLEX,
+        ROOM_CHEST_SPOT_COUNT_KEY: 17,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_X,
         ROOM_PICK_POSITIONS_KEY: [],
         OUTER_ROOM_KEY: False,
@@ -197,6 +198,7 @@ secret_blue = {
         ROOM_ITEM_ID_KEY: 204,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMPLEX,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D,
         ROOM_PICK_POSITIONS_KEY: [
@@ -349,6 +351,7 @@ blue_001_012 = {
         ROOM_ITEM_ID_KEY: 7,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_RARE,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
         ROOM_PICK_POSITIONS_KEY: [
@@ -477,6 +480,7 @@ blue_013_024 = {
         ROOM_ITEM_ID_KEY: 15,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_RARE,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
         ROOM_PICK_POSITIONS_KEY: [
@@ -546,6 +550,7 @@ blue_013_024 = {
         ROOM_ITEM_ID_KEY: 19,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_RARE,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
         ROOM_PICK_POSITIONS_KEY: [
@@ -654,8 +659,9 @@ blue_013_024 = {
 blue_025_036 = {
     "Drawing Room": {
         ROOM_ITEM_ID_KEY: 25,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_RARE,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
         ROOM_PICK_POSITIONS_KEY: [
@@ -675,7 +681,7 @@ blue_025_036 = {
     },
     "Study": {
         ROOM_ITEM_ID_KEY: 26,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D,
@@ -721,9 +727,10 @@ blue_025_036 = {
     },
     "The Pool": {
         ROOM_ITEM_ID_KEY: 29,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
-        ROOM_CHEST_SPOT_COUNT_KEY: 1,  # REQUIRES MOUNT HOLLY GIFT SHOP
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMPLEX,
+        ROOM_CHEST_SPOT_COUNT_KEY: 2,  # REQUIRES MOUNT HOLLY GIFT SHOP
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE_GEMS,
@@ -741,7 +748,7 @@ blue_025_036 = {
     },
     "Drafting Studio": {
         ROOM_ITEM_ID_KEY: 30,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
@@ -755,7 +762,7 @@ blue_025_036 = {
     },
     "Utility Closet": {
         ROOM_ITEM_ID_KEY: 31,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D,
@@ -773,7 +780,7 @@ blue_025_036 = {
     },
     "Boiler Room": {
         ROOM_ITEM_ID_KEY: 32,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
@@ -787,7 +794,7 @@ blue_025_036 = {
     },
     "Pump Room": {
         ROOM_ITEM_ID_KEY: 33,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
@@ -806,7 +813,7 @@ blue_025_036 = {
     },
     "Security": {
         ROOM_ITEM_ID_KEY: 34,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
@@ -820,7 +827,7 @@ blue_025_036 = {
     },
     "Workshop": {
         ROOM_ITEM_ID_KEY: 35,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
@@ -835,7 +842,7 @@ blue_025_036 = {
     },
     "Laboratory": {
         ROOM_ITEM_ID_KEY: 36,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
@@ -1200,6 +1207,7 @@ hallways = {
         ROOM_ITEM_ID_KEY: 403,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMPLEX,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
         ROOM_PICK_POSITIONS_KEY: [
@@ -1288,8 +1296,9 @@ hallways = {
     },
     "Great Hall": {
         ROOM_ITEM_ID_KEY: 410,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_RARE,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_X,
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_CENTER_TIER_3],
@@ -1408,7 +1417,7 @@ green_rooms = {
     },
     "Greenhouse": {
         ROOM_ITEM_ID_KEY: 509,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
@@ -1436,7 +1445,7 @@ green_rooms = {
     },
     "Secret Garden": {
         ROOM_ITEM_ID_KEY: 511,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
@@ -1805,7 +1814,7 @@ black_rooms = {
     },
     "Throne Room": {
         ROOM_ITEM_ID_KEY: 802,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
@@ -1816,7 +1825,7 @@ black_rooms = {
     },
     "Tomb": {
         ROOM_ITEM_ID_KEY: 803,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D,
@@ -1846,4 +1855,5 @@ ITEMS_BY_GROUPS |= {
     "Shops": [room for room in shops],
     "Red Rooms": [room for room in red_rooms],
     "Black Rooms": [room for room in black_rooms],
+    "Outer Rooms": [room for room in rooms if rooms[room][OUTER_ROOM_KEY]],
 }

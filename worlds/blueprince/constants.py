@@ -24,6 +24,8 @@ ROOM_ITEM_ID_KEY = "item_id"
 ROOM_PICK_POSITIONS_KEY = "room_picker_positions"
 # Defines the key for setting the data in a room's info-dict. Used specifically to define how many spots the room can place an item like a shovel.
 ROOM_ITEM_SPOT_COUNT_KEY = "item_spot_count"
+# Defines which trunk spawn setting a room should be affected by.
+ROOM_CHEST_SPOT_TYPE_KEY = "chest_spot_type"
 # Defines the key for setting the data in a room's info-dict. Used specifically to define how many chest spots the room can have.
 ROOM_CHEST_SPOT_COUNT_KEY = "chest_spot_count"
 # defines the key for setting the data in a room's info-dict. Used specifically to define which chess piece is in a room
@@ -41,6 +43,10 @@ INNER_ROOM_KEY = "is_inner_room"
 ##################
 
 ROOM_MULTIPLIER = 100_000
+
+ROOM_CHEST_SPOT_COMMON = "common"
+ROOM_CHEST_SPOT_RARE = "rare"
+ROOM_CHEST_SPOT_COMPLEX = "complex"
 
 # One of the room layout types. Specifically, for dead-end rooms
 ROOM_LAYOUT_TYPE_D = "room_layout_type_d"

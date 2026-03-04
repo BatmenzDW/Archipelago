@@ -77,7 +77,9 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         LOCATIONS_BY_GROUPS["Room Entrances"].append(location_key)
         # Add Nth locked trunk open
 
-        trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, world.options.locked_trunks + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
+        trunk_count = world.options.locked_trunks_common if ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON else world.options.locked_trunks_rare if v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE else world.options.locked_trunks_complex
+
+        trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
         locs = get_location_names_with_ids(trunks)
         room.add_locations(locs, BluePrinceLocation)
         LOCATIONS_BY_GROUPS["Trunks"].extend(trunks)
@@ -85,8 +87,13 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         # These trunks require extra logic
         if room_key == "Entrance Hall":
             # TODO: switch to using set_rule once 0.6.7 is released.
-            for idx in range(1, world.options.locked_trunks + 1):
+            for idx in range(1, trunk_count + 1):
                 world.get_location(f"Entrance Hall Locked Trunk {idx}").access_rule = lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player)
+
+        elif room_key == "The Pool":
+            # TODO: switch to using set_rule once 0.6.7 is released.
+            for idx in range(1, trunk_count + 1): 
+                world.get_location(f"The Pool Locked Trunk {idx}").access_rule = lambda state: state.can_reach_region("Gift Shop", world.player)
             
     for k, v in locations.items():
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False:
