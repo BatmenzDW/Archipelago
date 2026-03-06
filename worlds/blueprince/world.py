@@ -4,6 +4,7 @@ from typing import Any
 # Imports of base Archipelago modules must be absolute.
 from worlds.AutoWorld import World
 
+from .data_items import ITEMS_BY_GROUPS
 # Imports of your world's files must be relative.
 from . import items, locations, regions, rules, web_world
 from . import (
@@ -35,6 +36,8 @@ class BluePrinceWorld(World):
 
     # Technically, Simon starts in the Entrance Hall, but for lore reasons, Starting at The Campsite is also acceptable, and is not a "room"
     origin_region_name = "Campsite"
+
+    item_name_groups = ITEMS_BY_GROUPS
 
     # # Our world class must have certain functions ("steps") that get called during generation.
     # # The main ones are: create_regions, set_rules, create_items.

@@ -91,17 +91,41 @@ class SpecialShopSanity(Toggle):
 # TODO-2 Crate Sanity?
 # TODO-2 Document full list of potential checks/locations posted in blue prince thread.
 
-class LockedTrunkCount(Range):
+class LockedTrunkCommonCount(Range):
     """
-    This is the number of locked trunks per room that need to be opened for archipelago items.
+    This is the number of common locked trunks per room that need to be opened for archipelago items. Example: Bedroom and Den trunks.
     """
 
-    display_name = "Locked Trunks"
+    display_name = "Common Locked Trunks"
 
     range_start = 0
     range_end = 100
 
     default = 2
+
+class LockedTrunkRareCount(Range):
+    """
+    This is the number of rare locked trunks per room that need to be opened for archipelago items. Exmple: Drawing Room trunk.
+    """
+
+    display_name = "Rare Locked Trunks"
+
+    range_start = 0
+    range_end = 100
+
+    default = 0
+
+class LockedTrunkComplexCount(Range):
+    """
+    This is the number of complex locked trunks per room that need to be opened for archipelago items. Example: Entrance Hall trunks from The Twins constellation or Laboratory experiments.
+    """
+
+    display_name = "Complex Locked Trunks"
+
+    range_start = 0
+    range_end = 100
+
+    default = 0
 
 class ItemLogicMode(Choice):
     """
@@ -343,7 +367,9 @@ class BluePrinceOptions(PerGameCommonOptions):
 
     # Development Options
     room_draft_sanity: RoomDraftSanity
-    locked_trunks: LockedTrunkCount
+    locked_trunks_common: LockedTrunkCommonCount
+    locked_trunks_rare: LockedTrunkRareCount
+    locked_trunks_complex: LockedTrunkComplexCount
     item_logic_mode: ItemLogicMode
 
     standard_item_sanity: StandardItemSanity
@@ -373,7 +399,9 @@ option_groups = [
         "Sanity Options",
         [
             RoomDraftSanity,
-            LockedTrunkCount,
+            LockedTrunkCommonCount,
+            LockedTrunkRareCount,
+            LockedTrunkComplexCount,
             ItemLogicMode,
             StandardItemSanity,
             WorkshopSanity,
@@ -403,7 +431,9 @@ option_presets = {
     # with no death link, with the goal set to room 64, and with no filler items or traps added to the pool.
     "Room 46 Extra Drafting": {
         "room_draft_sanity": True,
-        "locked_trunks": 2,
+        "locked_trunks_common": 2,
+        "locked_trunks_rare": 0,
+        "locked_trunks_complex": 0,
         "standard_item_sanity": True,
         "workshop_sanity": True,
         "upgrade_disk_sanity": True,

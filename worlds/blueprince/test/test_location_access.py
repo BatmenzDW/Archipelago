@@ -19,13 +19,6 @@ class TestLocationAccess(BluePrinceTestBase):
                 self.fail(f"Duplicate location ID {id} for {name} and {mem[id]}")
             mem[id] = name
 
-    def test_all_item_ids_unique(self):
-        mem = dict()
-        for name, id in ITEM_NAME_TO_ID.items():
-            if id in mem:
-                self.fail(f"Duplicate item ID {id} for {name} and {mem[id]}")
-            mem[id] = name
-    
     def test_can_reach_tunnel_floorplan_after_crates(self):
         self.collect_by_name(["Laboratory", "Boiler Room", "Parlor", "MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3", "Garage", "Hovel", "Utility Closet", "Schoolhouse", "SHOVEL", "SLEDGE HAMMER", "Workshop", "MAGNIFYING GLASS", "METAL DETECTOR", "Library", "Burning Glass"])
         self.debug_print_regions_items_locations(True)

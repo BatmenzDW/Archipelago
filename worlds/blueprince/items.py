@@ -389,6 +389,8 @@ def create_all_items(world: BluePrinceWorld) -> None:
     itempool: list[Item] = []
     to_precollect: list[Item] = []
 
+    exclude = [item for item in world.multiworld.precollected_items[world.player]]
+
     standard_item_list = [world.create_item(k) for k in other_items]
     if world.options.standard_item_sanity:
         itempool += standard_item_list
@@ -426,7 +428,17 @@ def create_all_items(world: BluePrinceWorld) -> None:
         # Precollects all room items, except for those that should be at their in-game locations, which are handled in locations.py
         to_precollect += [room for room in room_item_list if NONSANITY_LOCATION_KEY not in rooms[room.name] or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY]
 
-    [world.push_precollected(item) for item in to_precollect]
+    # remove any items that are in starting inventory
+    for item in to_precollect:
+        if item in exclude:
+            exclude.remove(item)
+        else:
+            world.push_precollected(item)
+
+    for item in itempool.copy():
+        if item in exclude:
+            exclude.remove(item)
+            itempool.remove(item)
 
     #
     # Add Filler Stuff

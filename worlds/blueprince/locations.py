@@ -54,18 +54,19 @@ def create_all_locations(world: BluePrinceWorld) -> None:
     create_regular_locations(world)
     create_events(world)
 
-
-
 def create_regular_locations(world: BluePrinceWorld) -> None:
 
     armory = world.get_region("The Armory")
-    
+    LOCATIONS_BY_GROUPS["Armory Purchases"] = []
     # Ignoring chance to get Knight's Shield by digging with Jack Hammer for now.
     for k, v in armory_items.items():
         location_key = f"{k} First Pickup"
         locs = get_location_names_with_ids([location_key])
         armory.add_locations(locs, BluePrinceLocation)
+        LOCATIONS_BY_GROUPS["Armory Purchases"].append(location_key)
 
+    LOCATIONS_BY_GROUPS["Room Entrances"] = []
+    LOCATIONS_BY_GROUPS["Trunks"] = []
     for room_key, v in rooms.items():
         room = world.get_region(room_key)
 
@@ -73,17 +74,27 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         location_key = f"{room_key} First Entering"
         locs = get_location_names_with_ids([location_key])
         room.add_locations(locs, BluePrinceLocation)
+        LOCATIONS_BY_GROUPS["Room Entrances"].append(location_key)
         # Add Nth locked trunk open
 
-        locs = get_location_names_with_ids([f"{room_key} Locked Trunk {idx}" for idx in range(1, world.options.locked_trunks + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0])
-        room.add_locations(locs, BluePrinceLocation)
+        trunk_count = world.options.locked_trunks_common if ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON else world.options.locked_trunks_rare if v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE else world.options.locked_trunks_complex
 
+        trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
+        locs = get_location_names_with_ids(trunks)
+        room.add_locations(locs, BluePrinceLocation)
+        LOCATIONS_BY_GROUPS["Trunks"].extend(trunks)
+
+        # These trunks require extra logic
         if room_key == "Entrance Hall":
             # TODO: switch to using set_rule once 0.6.7 is released.
-            for idx in range(1, world.options.locked_trunks + 1):
+            for idx in range(1, trunk_count + 1):
                 world.get_location(f"Entrance Hall Locked Trunk {idx}").access_rule = lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player)
-            
 
+        elif room_key == "The Pool":
+            # TODO: switch to using set_rule once 0.6.7 is released.
+            for idx in range(1, trunk_count + 1): 
+                world.get_location(f"The Pool Locked Trunk {idx}").access_rule = lambda state: state.can_reach_region("Gift Shop", world.player)
+            
     for k, v in locations.items():
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False:
             if v[NONSANITY_LOCATION_KEY] != STARTING_INVENTORY:
@@ -226,32 +237,6 @@ def create_events(world: BluePrinceWorld) -> None:
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
-
-    # Set access events for the 4 blue flames.
-    world.get_region("Apple Orchard").add_event(
-        "Has Apple Orchard Access",
-        "Apple Orchard Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-    world.get_region("Schoolhouse").add_event(
-        "Has School House Access",
-        "School House Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-    world.get_region("Hovel").add_event(
-        "Has Hovel Access",
-        "Hovel Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-    world.get_region("Gemstone Cavern").add_event(
-        "Has Gemstone Cavern Access",
-        "Gemstone Cavern Access",
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
 
     # Set North Lever Access
     world.get_region("Inner Sanctum").add_event(
