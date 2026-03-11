@@ -1,3 +1,4 @@
+from typing import Dict, Set
 from .constants import *
 
 from BaseClasses import Item, ItemClassification
@@ -614,12 +615,12 @@ TRADING_POST_TIER4 = {
 
 # None of the Tier 5 items can be received, so there's no point in defining it atm
 
-ITEMS_BY_GROUPS = {
-    "Upgrade Disks": [disk for disk in upgrade_disks],
-    "Sanctum Keys": [key for key in sanctum_keys],
-    "Keys": [key for key in keys],
-    "Showroom Items": [item for item in showroom_items],
-    "Armory Items": [item for item in armory_items],
-    "Workshop Items": [item for item in workshop_items],
-    "Standard Items": [item for item in other_items]
+ITEMS_BY_GROUPS : Dict[str, Set[str]] = {
+    "Upgrade Disks": {disk for disk in upgrade_disks},
+    "Sanctum Keys": {key for key in sanctum_keys},
+    "Keys": {key for key in keys},
+    "Showroom Items": {item for item in showroom_items},
+    "Armory Items": {item for item in armory_items},
+    "Workshop Items": {item for item in workshop_items},
+    "Standard Items": {item for item in other_items}
 }
