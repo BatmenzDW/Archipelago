@@ -1,8 +1,5 @@
 from BaseClasses import CollectionState, ItemClassification
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from .world import BluePrinceWorld
 from .constants import *
 from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import *
@@ -492,7 +489,7 @@ def advanced_experiment_rule(state: CollectionState, player: int) -> bool:
 def trading_post_rule(item_name: str, state: CollectionState, player: int) -> bool:
     return state.can_reach_region("Trading Post", player) and any(can_reach_item_location(item, state, player) for item in get_trading_post_offers(item_name))
 
-def dig_spot_rule(state: CollectionState, player: int, world: BluePrinceWorld) -> bool:
+def dig_spot_rule(state: CollectionState, player: int, world) -> bool:
     return any(state.can_reach_region(region, player) for region in [
         "The Foundation",
         "Wine Cellar",

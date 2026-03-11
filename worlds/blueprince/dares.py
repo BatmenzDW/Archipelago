@@ -1,6 +1,5 @@
-from typing import Union
+from typing import Union, TYPE_CHECKING
 
-from .world import BluePrinceWorld
 from .constants import *
 from .data_rooms import blue_rooms, red_rooms, bedrooms, shops, black_rooms, hallways, green_rooms
 
@@ -19,7 +18,7 @@ def dare_is_possible(dare_name: str, state: CollectionState, player: int, win_da
     
     return dare[DARE_IS_POSSIBLE_RULE](state, player, win_day)
 
-def can_reach_with_dares(world: BluePrinceWorld, to_check: str, type_hint: str = "Region", win_day: bool = False) -> bool:
+def can_reach_with_dares(world, to_check: str, type_hint: str = "Region", win_day: bool = False) -> bool:
     for d in world.dares:
         if not can_reach_with_dare(d, to_check, type_hint, win_day):
             return False
