@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, Set
 
 # Imports of base Archipelago modules must be absolute.
 from worlds.AutoWorld import World
@@ -8,7 +8,7 @@ from .data_items import ITEMS_BY_GROUPS
 # Imports of your world's files must be relative.
 from . import items, locations, regions, rules, web_world
 from . import (
-    options as blue_prince_optionss,
+    options as blue_prince_options,
 )  # rename due to a name conflict with World.options
 
 
@@ -26,8 +26,8 @@ class BluePrinceWorld(World):
     web = web_world.BluePrinceWebWorld()
 
     # Set the Options
-    options_dataclass = blue_prince_optionss.BluePrinceOptions
-    options: blue_prince_optionss.BluePrinceOptions
+    options_dataclass = blue_prince_options.BluePrinceOptions
+    options: blue_prince_options.BluePrinceOptions
 
     # Our world class must have a static location_name_to_id and item_name_to_id defined.
     # We define these in regions.py and items.py respectively, so we just set them here.
@@ -38,6 +38,8 @@ class BluePrinceWorld(World):
     origin_region_name = "Campsite"
 
     item_name_groups = ITEMS_BY_GROUPS
+
+    dares : Set[str] = set()
 
     # # Our world class must have certain functions ("steps") that get called during generation.
     # # The main ones are: create_regions, set_rules, create_items.
@@ -58,11 +60,29 @@ class BluePrinceWorld(World):
     def get_filler_item_name(self) -> str:
         return items.get_random_filler_item_name(self)
 
-    # # There may be data that the game client will need to modify the behavior of the game.
-    # # This is what slot_data exists for. Upon every client connection, the slot's slot_data is sent to the client.
-    # # slot_data is just a dictionary using basic types, that will be converted to json when sent to the client.
-    # def fill_slot_data(self) -> Mapping[str, Any]:
-    #     # If you need access to the player's chosen options on the client side, there is a helper for that.
-    #     return self.options.as_dict(
-    #         "hard_mode", "hammer", "extra_starting_chest", "confetti_explosiveness", "player_sprite"
-    #     )
+    # There may be data that the game client will need to modify the behavior of the game.
+    # This is what slot_data exists for. Upon every client connection, the slot's slot_data is sent to the client.
+    # slot_data is just a dictionary using basic types, that will be converted to json when sent to the client.
+    def fill_slot_data(self) -> Mapping[str, Any]:
+        # If you need access to the player's chosen options on the client side, there is a helper for that.
+        return self.options.as_dict(
+            "room_draft_sanity",
+            "locked_trunks_common",
+            "locked_trunks_rare",
+            "locked_trunks_complex",
+            "standard_item_sanity",
+            "workshop_sanity",
+            "upgrade_disk_sanity",
+            "key_sanity",
+            "special_shop_sanity",
+            "item_logic_mode",
+            "filler_item_distribution",
+            "trap_type_distribution",
+            "trap_percentage",
+            "death_link_type",
+            "death_link_grace",
+            "death_link_monk_exception",
+            "goal_type",
+            "goal_sanctum_solves",
+            "start_inventory",
+        )

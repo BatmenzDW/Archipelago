@@ -3,7 +3,7 @@ from BaseClasses import CollectionState, ItemClassification
 from .constants import *
 from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import *
-# from .world import LOCATIONS_BY_GROUPS
+from .dares import can_reach_with_dares
 
 room_location_mem : dict[str, list[int]] = {}
 
@@ -189,7 +189,7 @@ safes_and_small_gates = {
     "Underpass Gate": {
         LOCATION_ID_KEY: get_room_location_id("The Underpass", 0),
         LOCATION_ROOM_KEY: "The Underpass",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Boiler Room", world.player)
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Boiler Room", world.player) and can_reach_with_dares(world, "Boiler Room", "Region")
     },
     "Shelter Safe": {
         LOCATION_ID_KEY: get_room_location_id("Shelter", 0),
@@ -338,7 +338,7 @@ found_floorplans = {
     "Treasure Trove Floorplan": {
         LOCATION_ID_KEY: get_room_location_id("The Underpass", 2),
         LOCATION_ROOM_KEY: "The Underpass",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Boiler Room", world.player),
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Boiler Room", world.player) and can_reach_with_dares(world, "Boiler Room", "Region"),
         NONSANITY_LOCATION_KEY: "Treasure Trove"
     },
     "Throne Room Floorplan": {
@@ -489,7 +489,7 @@ def advanced_experiment_rule(state: CollectionState, player: int) -> bool:
 def trading_post_rule(item_name: str, state: CollectionState, player: int) -> bool:
     return state.can_reach_region("Trading Post", player) and any(can_reach_item_location(item, state, player) for item in get_trading_post_offers(item_name))
 
-def dig_spot_rule(state: CollectionState, player: int) -> bool:
+def dig_spot_rule(state: CollectionState, player: int, world) -> bool:
     return any(state.can_reach_region(region, player) for region in [
         "The Foundation",
         "Wine Cellar",
@@ -503,7 +503,6 @@ def dig_spot_rule(state: CollectionState, player: int) -> bool:
         "Patio",
         "Storeroom",
         "Garage",
-        "Boiler Room",
         "Pump Room",
         "Workshop",
         "Secret Garden",
@@ -514,7 +513,7 @@ def dig_spot_rule(state: CollectionState, player: int) -> bool:
         "Solarium",
         "Tunnel",
         "Conservatory",
-    ]) or (state.can_reach_region("Planetarium", player) and can_reach_item_location("TELESCOPE", state, player))
+    ]) or (state.can_reach_region("Planetarium", player) and can_reach_item_location("TELESCOPE", state, player)) or (state.can_reach_region("Boiler Room", player) and can_reach_with_dares(world, "Boiler Room", "Region"))
 
 standard_item_pickup = {
     "BATTERY PACK First Pickup": {
@@ -579,7 +578,7 @@ standard_item_pickup = {
             "Garage",
             "Utility Closet",
             "Kitchen",
-        ]) or (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player)),
+        ]) or (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world)),
 
         LOCATION_RULE_COMPLEX: darkroom_rule,
 
@@ -968,7 +967,7 @@ standard_item_pickup = {
             "Lost And Found",
         ]),
 
-        LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("JACK HAMMER", state, world.player) and dig_spot_rule(state, world.player),
+        LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("JACK HAMMER", state, world.player) and dig_spot_rule(state, world.player, world),
     },
     "TELESCOPE First Pickup": {
         LOCATION_ID_KEY: get_room_location_id("Campsite", 20), # Doesn't spawn there, but putting it there and adding spawn locations as requirements
@@ -1131,7 +1130,7 @@ special_key_pickup = {
             "Billiard Room",
         ]),
 
-        LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player),
+        LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world),
 
         LOCATION_RULE_COMPLEX: lambda state, world: (state.can_reach_region("Garage", world.player) and can_reach_item_location("CAR KEYS", state, world.player)) or trunk_rule(state, world.player),
 
@@ -1152,7 +1151,7 @@ special_key_pickup = {
         ]),
         # Also ignoring chance to spawn in trunks for the moment
 
-        LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player),
+        LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world),
 
         LOCATION_RULE_COMPLEX: lambda state, world: (state.can_reach_region("Freezer", world.player) and any(can_reach_item_location(item, state, world.player) for item in ["Burning Glass", "TORCH"]) 
             and can_reach_item_location("PRISM KEY_0", state, world)) or trunk_rule(state, world.player),
@@ -1416,7 +1415,7 @@ vault_keys = {
             "Music Room",
         ]),
 
-        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player)) or state.can_reach_region("Trophy Room", world.player),
+        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world)) or state.can_reach_region("Trophy Room", world.player),
 
         LOCATION_RULE_EXTREME: advanced_experiment_rule,
     },
@@ -1434,7 +1433,7 @@ vault_keys = {
             "Music Room",
         ]),
 
-        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player)),
+        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world)),
         LOCATION_RULE_COMPLEX: lavatory_rule,
         LOCATION_RULE_EXTREME: advanced_experiment_rule,
     },
@@ -1450,7 +1449,7 @@ vault_keys = {
             "Hovel",
         ]),
         # Can also spawn in Spare Hall, but we aren't adding upgraded rooms seperately atm.
-        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player)) or state.can_reach_region("Drawing Room", world.player),
+        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world)) or state.can_reach_region("Drawing Room", world.player),
     },
     "Vault Key 370": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 7), # Doesn't spawn there, but putting it there and adding spawn locations as requirements
@@ -1458,7 +1457,7 @@ vault_keys = {
         LOCATION_ITEM_KEY: "VAULT KEY 370",
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Lost And Found", world.player),
 
-        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player)),
+        LOCATION_RULE_SIMPLE_RARE: lambda state, world: (can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world)),
     }
 }
 
@@ -1606,14 +1605,14 @@ misc_locations = {
 locations = trophies | safes_and_small_gates | mora_jai_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions
 
 LOCATIONS_BY_GROUPS |= {
-    "Trophies": [k for k in trophies],
-    "Safes and Small Gates": [k for k in safes_and_small_gates],
-    "Mora Jai Boxes": [k for k in mora_jai_boxes],
-    "Floorplans": [k for k in floorplans],
-    "Shop Items": [k for k in shop_items],
-    "Upgrade Disks": [k for k in upgrade_disks],
-    "Keys": [k for k in keys],
-    "Miscellaneous": [k for k in misc_locations],
-    "Item Pickups": [k for k in item_pickups],
-    "Workshop Contraptions": [k for k in workshop_contraptions],
+    "Trophies": {k for k in trophies},
+    "Safes and Small Gates": {k for k in safes_and_small_gates},
+    "Mora Jai Boxes": {k for k in mora_jai_boxes},
+    "Floorplans": {k for k in floorplans},
+    "Shop Items": {k for k in shop_items},
+    "Upgrade Disks": {k for k in upgrade_disks},
+    "Keys": {k for k in keys},
+    "Miscellaneous": {k for k in misc_locations},
+    "Item Pickups": {k for k in item_pickups},
+    "Workshop Contraptions": {k for k in workshop_contraptions},
 }

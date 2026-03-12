@@ -2,6 +2,9 @@
 # OPTIONS CONSTANTS #
 #####################
 
+from typing import Dict, Set
+
+
 ROOM_DRAFT_SANITY = "room_draft_sanity"
 STANDARD_ITEM_SANITY = "standard_item_sanity"
 WORKSHOP_SANITY = "workshop_sanity"
@@ -36,7 +39,6 @@ ROOM_LAYOUT_TYPE_KEY = "room_layout"
 OUTER_ROOM_KEY = "is_outer_room"
 
 INNER_ROOM_KEY = "is_inner_room"
-
 
 ##################
 # ITEM CONSTANTS #
@@ -176,10 +178,16 @@ ROOM_PICK_POSITION_ROOM_8 = "ROOM 8"
 TRADING_POST_GIVE = "GIVE"
 TRADING_POST_RECEIVE = "RECEIVE"
 
+##################
+# DARE CONSTANTS #
+##################
+
+DARE_CAN_REACH_RULE = "Can Reach Rule"
+DARE_IS_POSSIBLE_RULE = "Is Possible Rule"
 
 ########################
 # Item/Location GROUPS #
 ########################
 
-ITEMS_BY_GROUPS : dict[str, list[str]] = {}
-LOCATIONS_BY_GROUPS : dict[str, list[str]] = {}
+ITEMS_BY_GROUPS : Dict[str, Set[str]] = {}
+LOCATIONS_BY_GROUPS : Dict[str, Set[str]] = {}

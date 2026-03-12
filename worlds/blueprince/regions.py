@@ -9,6 +9,7 @@ from .data_items import sanctum_keys
 from .constants import *
 from .room_min_pieces import *
 from .data_other_locations import can_reach_item_location
+from .dares import can_reach_with_dares
 
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
@@ -237,6 +238,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     lambda state: state.count_from_list_unique(classrooms, world.player) >= cnum,
                 )
             
+            elif k == "Aquarium":
+                entrance_hall.connect(
+                    room,
+                    f"Entrance Hall Aquarium",
+                    lambda state: can_reach_pick_position("Aquarium", world, state) and can_reach_with_dares(world, "Aquarium"),
+                )
+
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
                 continue
@@ -565,7 +573,7 @@ def can_reach_pick_position(room: str, world: BluePrinceWorld, state: Collection
         
     return False
 
-def matches_minimum_inventory(required: list[tuple[int]], inventory: dict[str, int]) -> bool:
+def matches_minimum_inventory(required: list[tuple[int, int, int, int]], inventory: dict[str, int]) -> bool:
     inv = tuple(inventory[k] for k in inventory)
     for req in required:
         if all(inv[i] >= req[i] for i in range(4)):
