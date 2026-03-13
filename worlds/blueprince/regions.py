@@ -217,13 +217,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Room 8",
-                    lambda state: can_reach_item_location("KEY 8", state, world.player) and can_reach_pick_position("Room 8", world, state),
+                    lambda state: can_reach_item_location("KEY 8", state, world.player) and can_reach_pick_position("Room 8", world, state, always_have=True),
                 ) # Has Key 8
             elif k == "Secret Garden":
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Secret Garden",
-                    lambda state: can_reach_item_location("SECRET GARDEN KEY", state, world.player) and can_reach_pick_position("Secret Garden", world, state),
+                    lambda state: can_reach_item_location("SECRET GARDEN KEY", state, world.player) and can_reach_pick_position("Secret Garden", world, state, always_have=True),
                 )
             elif k in classrooms and k != "Classroom 1":
                 if k == "Classroom Exam":
@@ -237,13 +237,6 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     f"{prev} {k}",
                     lambda state: state.count_from_list_unique(classrooms, world.player) >= cnum,
                 )
-            
-            elif k == "Aquarium":
-                entrance_hall.connect(
-                    room,
-                    f"Entrance Hall Aquarium",
-                    lambda state: can_reach_pick_position("Aquarium", world, state) and can_reach_with_dares(world, "Aquarium"),
-                )
 
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
@@ -253,7 +246,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     f"Entrance Hall {k}",
-                    lambda state, key=k: can_reach_pick_position(key, world, state),
+                    lambda state, key=k: can_reach_pick_position(key, world, state) and can_reach_with_dares(world, key),
                 )
 
     foundation.connect(
@@ -541,12 +534,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         lambda state: state.can_reach_region("Pump Room", world.player),
     )
 
-def can_reach_pick_position(room: str, world: BluePrinceWorld, state: CollectionState) -> bool:
+def can_reach_pick_position(room: str, world: BluePrinceWorld, state: CollectionState, always_have: bool = False) -> bool:
     """
     Use pre-calculated tables to determine if a the pick position is reachable with the current inventory.
     """
 
-    if room not in core_rooms and not state.has(room, world.player):
+    if not always_have and room not in core_rooms and not state.has(room, world.player):
         return False
     
     room_data = rooms[room]

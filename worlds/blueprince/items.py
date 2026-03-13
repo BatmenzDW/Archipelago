@@ -421,7 +421,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
     else:
         to_precollect += special_shop_item_list
 
-    room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms]
+    room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"]]
     if world.options.room_draft_sanity:
         itempool += room_item_list
     else:
