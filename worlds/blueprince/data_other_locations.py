@@ -88,7 +88,7 @@ trophies = {
     "Explorer's Trophy": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 1),
         LOCATION_ROOM_KEY: "Entrance Hall",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.has_all([x for x in rooms if x not in core_rooms and (x not in classrooms or x == "Classroom 1")], world.player) # Only count Classroom 1
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Secret Garden", world.player) and state.can_reach_region("Room 8", world.player) and state.has_all([x for x in rooms if x not in core_rooms and (x not in classrooms or x == "Classroom 1") and x not in ["Secret Garden", "Room 8"]], world.player) # Only count Classroom 1
     },
     "Trophy of Sigils": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 2),
@@ -1606,7 +1606,7 @@ doors_walls_and_gates = {
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("KEY 8", state, world.player)
     },
     "Open Basement to Reservoir Door": {
-        LOCATION_ID_KEY: get_room_location_id("Basement", 0),
+        LOCATION_ID_KEY: get_room_location_id("Basement", 1),
         LOCATION_ROOM_KEY: "Basement",
     },
     "Lower The Foundation Elevator": {
