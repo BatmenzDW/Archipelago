@@ -1527,6 +1527,94 @@ file_cabinet_keys = {
 
 keys = vault_keys | sanctum_keys | file_cabinet_keys
 
+doors_walls_and_gates = {
+    "Unlock West Gate": {
+        LOCATION_ID_KEY: get_room_location_id("West Path", 1),
+        LOCATION_ROOM_KEY: "West Path",
+    },
+    "Unlock Orchard Gate": {
+        LOCATION_ID_KEY: get_room_location_id("Campsite", 46),
+        LOCATION_ROOM_KEY: "Campsite",
+    },
+    "Break Grounds to Sealed Entrance Wall": {
+        LOCATION_ID_KEY: get_room_location_id("Sealed Entrance", 0),
+        LOCATION_ROOM_KEY: "Sealed Entrance",
+    },
+    "Break Basement to Sealed Entrance Wall": {
+        LOCATION_ID_KEY: get_room_location_id("Sealed Entrance", 1),
+        LOCATION_ROOM_KEY: "Sealed Entrance",
+    },
+    "Break Weight Room Wall": {
+        LOCATION_ID_KEY: get_room_location_id("Weight Room", 0),
+        LOCATION_ROOM_KEY: "Weight Room",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Power Hammer", state, world.player)
+    },
+    "Break Greenhouse Wall": {
+        LOCATION_ID_KEY: get_room_location_id("Greenhouse", 0),
+        LOCATION_ROOM_KEY: "Greenhouse",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Power Hammer", state, world.player)
+    },
+    "Break Secret Garden Wall": {
+        LOCATION_ID_KEY: get_room_location_id("Secret Garden", 0),
+        LOCATION_ROOM_KEY: "Secret Garden",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Power Hammer", state, world.player)
+    },
+    "Access the Frozen Server Room in the Freezer": {
+        LOCATION_ID_KEY: get_room_location_id("Freezer", 1),
+        LOCATION_ROOM_KEY: "Freezer",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Power Hammer", state, world.player) or state.can_reach_region("Furnace", world.player) or can_reach_item_location("Burning Glass", state, world.player) or can_reach_item_location("TORCH", state, world.player)
+    },
+    "Break Precipice Wall": {
+        LOCATION_ID_KEY: get_room_location_id("The Precipice", 0),
+        LOCATION_ROOM_KEY: "The Precipice",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Power Hammer", state, world.player)
+    },
+    "Break Tunnel Wall": {
+        LOCATION_ID_KEY: get_room_location_id("Tunnel Area Past Sealed Door", 0),
+        LOCATION_ROOM_KEY: "Tunnel Area Past Sealed Door",
+    },
+    "Unlock Basement Door The Foundation": {
+        LOCATION_ID_KEY: get_room_location_id("The Foundation", 1),
+        LOCATION_ROOM_KEY: "The Foundation",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("BASEMENT KEY", state, world.player)
+    },
+    "Unlock Basement Door The Well": {
+        LOCATION_ID_KEY: get_room_location_id("The Well", 0),
+        LOCATION_ROOM_KEY: "The Well",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("BASEMENT KEY", state, world.player)
+    },
+    "Unlock Basement Door Tunnel Area": {
+        LOCATION_ID_KEY: get_room_location_id("Tunnel Area Past Basement key Door", 0),
+        LOCATION_ROOM_KEY: "Tunnel Area Past Basement key Door",
+    },
+    "Solve Tomb Puzzle 1": {
+        LOCATION_ID_KEY: get_room_location_id("Catacombs", 0),
+        LOCATION_ROOM_KEY: "Catacombs",
+    },
+    "Solve Tomb Puzzle 2": {
+        LOCATION_ID_KEY: get_room_location_id("Catacombs", 1),
+        LOCATION_ROOM_KEY: "Catacombs",
+    },
+    "Open the Torch Chamber Shortcut": {
+        LOCATION_ID_KEY: get_room_location_id("Torch Chamber", 1),
+        LOCATION_ROOM_KEY: "Torch Chamber",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Burning Glass", state, world.player) or can_reach_item_location("TORCH", state, world.player)
+    },
+    "Open Deposit Box 053": {
+        LOCATION_ID_KEY: get_room_location_id("Vault", 2),
+        LOCATION_ROOM_KEY: "Vault",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("KEY 8", state, world.player)
+    },
+    "Open Basement to Reservoir Door": {
+        LOCATION_ID_KEY: get_room_location_id("Basement", 0),
+        LOCATION_ROOM_KEY: "Basement",
+    },
+    "Lower The Foundation Elevator": {
+        LOCATION_ID_KEY: get_room_location_id("The Foundation", 2),
+        LOCATION_ROOM_KEY: "The Foundation",
+    },
+}
+
 misc_locations = {
     "Entrance Hall East Vase": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 8),
@@ -1579,6 +1667,11 @@ misc_locations = {
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Shrine", world.player) and (can_reach_item_location("SLEDGE HAMMER", state, world.player) or can_reach_item_location("MORNING STAR", state, world.player))
     },
     # Ignoring deposit box allowance tokens for now, since they are missable (don't respawn if not picked up)
+    "Dig up The Bedroom Treasure Chest": {
+        LOCATION_ID_KEY: get_room_location_id("Bedroom", 0),
+        LOCATION_ROOM_KEY: "Bedroom",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("SHOVEL", state, world.player) and can_reach_item_location("TREASURE MAP", state, world.player)
+    },
 }
 
 # TODO-1: add locations for other stuff later.
@@ -1586,23 +1679,14 @@ misc_locations = {
 # Alzara Prophecies
 
 # Treasure Map Chests? (Might need to pre-calculate min piece counts for chest locations)
-# Bedroom Treasure Map Chest
 
 # Mirror Room Floorplan Duplicates?
 
-# Deposit Box 053? (The one opened with Key 8)
-
-# Basement to Reservior door button (Basement puzzle)
-
-# West gate unlock
-
 # Swansong/SwansongHSS + Blackbridge passwords
 
-# Foundation Elevator controls
+# Reservoir/Treasure Trove chests?
 
-# Tomb puzzle 1 & 2 (Catacombs and Book Drafts)
-
-locations = trophies | safes_and_small_gates | mora_jai_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions
+locations = trophies | safes_and_small_gates | mora_jai_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions | doors_walls_and_gates
 
 LOCATIONS_BY_GROUPS |= {
     "Trophies": {k for k in trophies},
@@ -1615,4 +1699,5 @@ LOCATIONS_BY_GROUPS |= {
     "Miscellaneous": {k for k in misc_locations},
     "Item Pickups": {k for k in item_pickups},
     "Workshop Contraptions": {k for k in workshop_contraptions},
+    "Doors, Walls, and Gates": {k for k in doors_walls_and_gates},
 }
