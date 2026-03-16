@@ -1666,6 +1666,10 @@ misc_locations = {
         LOCATION_ROOM_KEY: "Outer Room",
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Shrine", world.player) and (can_reach_item_location("SLEDGE HAMMER", state, world.player) or can_reach_item_location("MORNING STAR", state, world.player))
     },
+    "Allowance Tokens - Reservoir Bottom": {
+        LOCATION_ID_KEY: get_room_location_id("Reservoir Bottom", 1),
+        LOCATION_ROOM_KEY: "Reservoir Bottom",
+    },
     # Ignoring deposit box allowance tokens for now, since they are missable (don't respawn if not picked up)
     "Dig up The Bedroom Treasure Chest": {
         LOCATION_ID_KEY: get_room_location_id("Bedroom", 0),
@@ -1684,7 +1688,7 @@ misc_locations = {
 
 # Swansong/SwansongHSS + Blackbridge passwords
 
-# Reservoir/Treasure Trove chests?
+# Reservoir/Treasure Trove chests? (46 in Trove, 23 in Reservoir)
 
 locations = trophies | safes_and_small_gates | mora_jai_boxes | floorplans | shop_items | upgrade_disks | keys | misc_locations | item_pickups | workshop_contraptions | doors_walls_and_gates
 
