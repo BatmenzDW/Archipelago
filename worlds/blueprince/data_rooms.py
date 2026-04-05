@@ -277,9 +277,7 @@ blue_001_012 = {
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
         ROOM_PICK_POSITIONS_KEY: [
-            ROOM_PICK_POSITION_CENTER_TIER_1_FOUNDATION,
-            ROOM_PICK_POSITION_CENTER_TIER_2,
-            ROOM_PICK_POSITION_CENTER_TIER_3,
+            ROOM_PICK_POSITION_CENTER_FOUNDATION,
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
@@ -1846,6 +1844,8 @@ room_layout_lists = {
     INNER_ROOM_KEY: [k for k, v in rooms.items() if not v[OUTER_ROOM_KEY]],
     OUTER_ROOM_KEY: [k for k, v in rooms.items() if v[OUTER_ROOM_KEY]],
 }
+
+progressive_classroom = []
 
 ITEMS_BY_GROUPS |= {
     "Blue Rooms": [room for room in blue_rooms],

@@ -6,7 +6,7 @@ from ..constants import *
 from ..locations import LOCATION_NAME_TO_ID
 from ..items import ITEM_NAME_TO_ID
 
-class TestLocationAccess(BluePrinceTestBase):
+class TestItems(BluePrinceTestBase):
     options = {
         "room_draft_sanity": True,
         "goal_type": GoalType.option_room46,

@@ -57,16 +57,16 @@ def create_all_locations(world: BluePrinceWorld) -> None:
 def create_regular_locations(world: BluePrinceWorld) -> None:
 
     armory = world.get_region("The Armory")
-    LOCATIONS_BY_GROUPS["Armory Purchases"] = []
+    LOCATIONS_BY_GROUPS["Armory Purchases"] = set()
     # Ignoring chance to get Knight's Shield by digging with Jack Hammer for now.
     for k, v in armory_items.items():
         location_key = f"{k} First Pickup"
         locs = get_location_names_with_ids([location_key])
         armory.add_locations(locs, BluePrinceLocation)
-        LOCATIONS_BY_GROUPS["Armory Purchases"].append(location_key)
+        LOCATIONS_BY_GROUPS["Armory Purchases"].add(location_key)
 
-    LOCATIONS_BY_GROUPS["Room Entrances"] = []
-    LOCATIONS_BY_GROUPS["Trunks"] = []
+    LOCATIONS_BY_GROUPS["Room Entrances"] = set()
+    LOCATIONS_BY_GROUPS["Trunks"] = set()
     for room_key, v in rooms.items():
         room = world.get_region(room_key)
 
@@ -74,7 +74,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         location_key = f"{room_key} First Entering"
         locs = get_location_names_with_ids([location_key])
         room.add_locations(locs, BluePrinceLocation)
-        LOCATIONS_BY_GROUPS["Room Entrances"].append(location_key)
+        LOCATIONS_BY_GROUPS["Room Entrances"].add(location_key)
         # Add Nth locked trunk open
 
         trunk_count = world.options.locked_trunks_common if ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON else world.options.locked_trunks_rare if v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE else world.options.locked_trunks_complex
@@ -82,7 +82,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
         locs = get_location_names_with_ids(trunks)
         room.add_locations(locs, BluePrinceLocation)
-        LOCATIONS_BY_GROUPS["Trunks"].extend(trunks)
+        LOCATIONS_BY_GROUPS["Trunks"].update(trunks)
 
         # These trunks require extra logic
         if room_key == "Entrance Hall":
