@@ -1845,6 +1845,8 @@ room_layout_lists = {
     OUTER_ROOM_KEY: [k for k, v in rooms.items() if v[OUTER_ROOM_KEY]],
 }
 
+progressive_classroom = []
+
 ITEMS_BY_GROUPS |= {
     "Blue Rooms": [room for room in blue_rooms],
     "Bedrooms": [room for room in bedrooms],

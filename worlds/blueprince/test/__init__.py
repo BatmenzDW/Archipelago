@@ -13,9 +13,9 @@ class BluePrinceTestBase(WorldTestBase):
         if do_print:
             print("Regions: [",", ".join([x.name for x in regions]), "]")
             print()
-            print("Items: [",", ".join(items), "]")
+            print("Items: [",", ".join([f"{item}: {items[item]}" if items[item] > 1 else item for item in items]), "]")
             print()
             print("Locations: [",", ".join([x.name for x in locations]), "]")
         else:
-            return f"Regions: [{', '.join([x.name for x in regions])} ]\nItems: [{', '.join(items)}]\nLocations: [{', '.join([x.name for x in locations])}]"
+            return f"Regions: [{', '.join([x.name for x in regions])} ]\nItems: [{', '.join([f'{item}: {items[item]}' if items[item] > 1 else item for item in items])}]\nLocations: [{', '.join([x.name for x in locations])}]"
             

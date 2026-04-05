@@ -2,15 +2,15 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .data_rooms import rooms, core_rooms
+from .data_rooms import rooms, core_rooms, classrooms
 from .data_items import *
 from .constants import *
+from . import data_rooms
 
 from BaseClasses import Item, ItemClassification
 
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
-
 
 ITEM_NAME_TO_ID = (
     {
@@ -83,6 +83,10 @@ ITEM_NAME_TO_ID = (
         # Trash Item from digging. Client may interpret this freely as any of the "trash" items
         #
         "Dug Up Nothing": 50000,
+        #
+        # Progressive Classroom
+        #
+        "Progressive Classroom": 60000,
     }
     | {k: v[ROOM_ITEM_ID_KEY] * 100_000 for k, v in rooms.items()}
     | {k: v[ITEM_ID_KEY] * 1_000_000 for k, v in all_items.items()}
@@ -160,6 +164,10 @@ DEFAULT_ITEM_CLASSIFICATIONS = (
         # Trash Item from digging. Client may interpret this freely as any of the "trash" items
         #
         "Dug Up Nothing": ItemClassification.filler,
+        #
+        # Progressive Classroom
+        #
+        "Progressive Classroom": ItemClassification.progression,
     }
     | {k: v[ROOM_ITEM_CLASSIFICATION_KEY] for k, v in rooms.items()}
     | {k: v[ROOM_ITEM_CLASSIFICATION_KEY] for k, v in all_items.items()}
@@ -382,7 +390,6 @@ def create_item_with_correct_classification(world: BluePrinceWorld, name: str) -
     classification = DEFAULT_ITEM_CLASSIFICATIONS[name]
     return BluePrinceItem(name, classification, ITEM_NAME_TO_ID[name], world.player)
 
-
 # Create the items For the world
 def create_all_items(world: BluePrinceWorld) -> None:
 
@@ -421,12 +428,18 @@ def create_all_items(world: BluePrinceWorld) -> None:
     else:
         to_precollect += special_shop_item_list
 
-    room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"]]
+    room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"] and room not in classrooms]
     if world.options.room_draft_sanity:
         itempool += room_item_list
     else:
         # Precollects all room items, except for those that should be at their in-game locations, which are handled in locations.py
         to_precollect += [room for room in room_item_list if NONSANITY_LOCATION_KEY not in rooms[room.name] or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY]
+
+    data_rooms.progressive_classroom = [world.create_item("Progressive Classroom") for _ in range(9)]
+    if world.options.room_draft_sanity:
+        itempool += data_rooms.progressive_classroom
+    else:
+        to_precollect += data_rooms.progressive_classroom
 
     # remove any items that are in starting inventory
     for item in to_precollect:

@@ -38,6 +38,8 @@ def can_reach_item_location(item_name: str, state: CollectionState, player: int)
     
     return False
 
+directory_rooms = [x for x in rooms if x not in core_rooms and x not in ["Secret Garden", "Room 8"] and x not in classrooms] + ["Progressive Classroom"]
+
 trophies = {
     "Full House Trophy": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 0),
@@ -88,7 +90,7 @@ trophies = {
     "Explorer's Trophy": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 1),
         LOCATION_ROOM_KEY: "Entrance Hall",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Secret Garden", world.player) and state.can_reach_region("Room 8", world.player) and state.has_all([x for x in rooms if x not in core_rooms and (x not in classrooms or x == "Classroom 1") and x not in ["Secret Garden", "Room 8"]], world.player) # Only count Classroom 1
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Secret Garden", world.player) and state.can_reach_region("Room 8", world.player) and state.has_all(directory_rooms, world.player)
     },
     "Trophy of Sigils": {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 2),
@@ -109,7 +111,6 @@ trophies = {
         LOCATION_ID_KEY: get_room_location_id("Entrance Hall", 3),
         LOCATION_ROOM_KEY: "Entrance Hall",
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: all(state.can_reach_region(region, world.player) for region in [
-                "Schoolhouse",
                 "Classroom 1",
                 "Classroom 2",
                 "Classroom 3",
