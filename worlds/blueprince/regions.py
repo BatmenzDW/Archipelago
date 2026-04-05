@@ -242,6 +242,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     room,
                     "Entrance Hall Classroom 1",
                     lambda state: state.has("Progressive Classroom", world.player),
+                )
             
             elif k == "Aquarium":
                 entrance_hall.connect(
