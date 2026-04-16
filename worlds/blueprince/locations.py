@@ -86,14 +86,12 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
         # These trunks require extra logic
         if room_key == "Entrance Hall":
-            # TODO: switch to using set_rule once 0.6.7 is released.
             for idx in range(1, trunk_count + 1):
-                world.get_location(f"Entrance Hall Locked Trunk {idx}").access_rule = lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player)
+                world.set_rule(world.get_location(f"Entrance Hall Locked Trunk {idx}"), lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player))
 
         elif room_key == "The Pool":
-            # TODO: switch to using set_rule once 0.6.7 is released.
             for idx in range(1, trunk_count + 1): 
-                world.get_location(f"The Pool Locked Trunk {idx}").access_rule = lambda state: state.can_reach_region("Gift Shop", world.player)
+                world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
             
     for k, v in locations.items():
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False:
@@ -105,26 +103,22 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
                 reg.locations.append(loc)
 
-                # TODO: switch to using set_rule once 0.6.7 is released.
-                world.get_location(k).access_rule = lambda state, key=k: can_access_location_with_rule(key, world, state)
-                # world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
+                world.set_rule(world.get_location(k), lambda state, key=k: can_access_location_with_rule(key, world, state))
                 continue
         
         location_key = k
         locs = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
 
-        # TODO: switch to using set_rule once 0.6.7 is released.
-        world.get_location(location_key).access_rule = lambda state, key=location_key: can_access_location_with_rule(key, world, state)
-        # world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
+        world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
     
 def can_access_location_with_rule(location_key: str, world: BluePrinceWorld, state: CollectionState) -> bool:
     location_data = locations[location_key]
     
-    if LOCATION_ITEM_KEY in location_data:
-        item_name = location_data[LOCATION_ITEM_KEY]
-        if not state.has(item_name, world.player):
-            return False
+    # if LOCATION_ITEM_KEY in location_data:
+    #     item_name = location_data[LOCATION_ITEM_KEY]
+    #     if not state.has(item_name, world.player):
+    #         return False
     
     if LOCATION_RULE_SIMPLE_COMMON not in location_data and LOCATION_RULE_SIMPLE_RARE not in location_data and LOCATION_RULE_COMPLEX not in location_data and LOCATION_RULE_EXTREME not in location_data:
         return True

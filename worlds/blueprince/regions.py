@@ -243,13 +243,6 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     "Entrance Hall Classroom 1",
                     lambda state: state.has("Progressive Classroom", world.player),
                 )
-            
-            elif k == "Aquarium":
-                entrance_hall.connect(
-                    room,
-                    f"Entrance Hall Aquarium",
-                    lambda state: can_reach_pick_position("Aquarium", world, state) and can_reach_with_dares(world, "Aquarium"),
-                )
 
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
