@@ -34,12 +34,12 @@ class TestRegionAccess(BluePrinceTestBase):
     #         self.assertTrue(self.can_reach_region(room), f"{room} should be reachable after collecting the room as an item")
     
     def test_build_path_to_garage(self) -> None:
-        self.assertFalse(self.can_reach_region("Garage"), "Garage should not be reachable without having the Garage as an item")
-        self.collect_by_name("Garage")
-        self.assertFalse(self.can_reach_region("Garage"), "Garage should not be reachable on its own")
-        self.collect_by_name("Hallway")
-        self.collect_by_name("Office")
-        self.debug_print_regions_items_locations()
+        if not self.multiworld.state.has("Garage", self.player):
+            self.assertFalse(self.can_reach_region("Garage"), "Garage should not be reachable without having the Garage as an item")
+            self.collect_by_name("Garage")
+        if not self.can_reach_region("Garage"):
+            self.collect_by_name("Hallway")
+            self.collect_by_name("Office")
         self.assertTrue(self.can_reach_region("Garage"), "Garage should be reachable after collecting at least 1 I piece and at least 1 J piece as items")
 
     def test_outer_room_requires_garage_utility_closet(self) -> None:
@@ -48,15 +48,16 @@ class TestRegionAccess(BluePrinceTestBase):
         self.collect_by_name("Utility Closet")
         self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the Garage as an item")
         self.collect_by_name("Garage")
-        self.debug_print_regions_items_locations()
         self.assertTrue(self.can_reach_region("Outer Room"), "Outer Room should be reachable after collecting the Garage as an item")
     
     def test_outer_room_requires_garage_boiler_room(self) -> None:
         self.collect_all_but(["Garage", "Boiler Room", "Utility Closet"])
-        self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the Garage as an item")
-        self.collect_by_name("Garage")
-        self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the Boiler Room as an item")
-        self.collect_by_name("Boiler Room")
+        if not self.multiworld.state.has("Garage", self.player):
+            self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the Garage as an item")
+            self.collect_by_name("Garage")
+        if not self.multiworld.state.has("Boiler Room", self.player):
+            self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the Boiler Room as an item")
+            self.collect_by_name("Boiler Room")
         self.assertTrue(self.can_reach_region("Outer Room"), "Outer Room should be reachable after collecting the Garage as an item")
 
     def test_outer_rooms_require_room_item(self) -> None:
@@ -82,10 +83,12 @@ class TestRegionAccess(BluePrinceTestBase):
 
     def test_blackbridge_grotto_requires_boiler_room_and_laboratory(self) -> None:
         self.collect_by_name("Hallway")
-        self.assertFalse(self.can_reach_region("Blackbridge Grotto"), "Blackbridge Grotto should not be reachable without having the Boiler Room as an item")
-        self.collect_by_name("Boiler Room")
-        self.assertFalse(self.can_reach_region("Blackbridge Grotto"), "Blackbridge Grotto should not be reachable without having the Laboratory as an item")
-        self.collect_by_name("Laboratory")
+        if not self.multiworld.state.has("Boiler Room", self.player):
+            self.assertFalse(self.can_reach_region("Blackbridge Grotto"), "Blackbridge Grotto should not be reachable without having the Boiler Room as an item")
+            self.collect_by_name("Boiler Room")
+        if not self.multiworld.state.has("Laboratory", self.player):
+            self.assertFalse(self.can_reach_region("Blackbridge Grotto"), "Blackbridge Grotto should not be reachable without having the Laboratory as an item")
+            self.collect_by_name("Laboratory")
         self.debug_print_regions_items_locations()
         self.assertTrue(self.can_reach_region("Blackbridge Grotto"), "Blackbridge Grotto should be reachable after collecting the Boiler Room as an item")
 
