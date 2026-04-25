@@ -359,6 +359,16 @@ class GoalSanctumSolves(Range):
     range_end = 8
     default = 8
 
+class StartingRoomAmount(Range):
+    """
+    This is the number of starting rooms the player begins with in their inventory, randomly pulled from those that can be drafted from the Entrance Hall. This only applies when room draft sanity is on. Will not choose any that are already in the starting inventory.
+    """
+
+    display_name = "Number of Starting Rooms"
+
+    range_start = 3
+    range_end = 10
+    default = 3
 
 # We must now define a dataclass inheriting from PerGameCommonOptions that we put all our options in.
 # This is in the format "option_name_in_snake_case: OptionClassName".
@@ -367,6 +377,7 @@ class BluePrinceOptions(PerGameCommonOptions):
 
     # Development Options
     room_draft_sanity: RoomDraftSanity
+    starting_room_amount: StartingRoomAmount
     locked_trunks_common: LockedTrunkCommonCount
     locked_trunks_rare: LockedTrunkRareCount
     locked_trunks_complex: LockedTrunkComplexCount
@@ -448,6 +459,7 @@ option_presets = {
         "death_link_monk_exception": True,
         "goal_type": GoalType.option_room46,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
+        "starting_room_amount": StartingRoomAmount.range_start,
         "start_inventory": {"Hallway": 1, "Bedroom": 1, "Closet": 1}
     },
 }
