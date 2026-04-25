@@ -11,7 +11,7 @@ from .constants import *
 
 from .data_rooms import rooms, blue_rooms, core_rooms
 from .data_items import armory_items
-from .data_other_locations import can_reach_item_location, locations
+from .data_other_locations import can_reach_item_location, locations, keys
 from .items import BluePrinceItem
 
 if TYPE_CHECKING:
@@ -93,7 +93,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             for idx in range(1, trunk_count + 1): 
                 world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
             
-    for k, v in locations.items():
+    for k, v in locations.items() if not world.options.key_sanity else [l for l in locations.items() if l not in keys]:
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False:
             if v[NONSANITY_LOCATION_KEY] != STARTING_INVENTORY:
                 # Place room items at their in-game locations when room draft sanity is off.
