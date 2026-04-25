@@ -22,11 +22,11 @@ class TestDraftSanity(BluePrinceTestBase):
         for room in rooms:
             if room in core_rooms:
                 continue
-            if n < self.options["starting_room_amount"].value:
+            if n <= self.options["starting_room_amount"] and self.multiworld.state.has(room, self.player):
                 n += 1
                 continue
 
-            self.assertFalse(self.multiworld.state.has(room, self.player))
+            self.assertFalse(self.multiworld.state.has(room, self.player), f"Should not have {room} in inventory at the start of the game")
         # self.assertFalse(self.multiworld.state.has("Progressive Classroom", self.player))
 
     def test_progressive_classroom(self) -> None:

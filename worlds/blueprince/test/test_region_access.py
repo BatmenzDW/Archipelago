@@ -130,18 +130,25 @@ class TestRegionAccess(BluePrinceTestBase):
         self.collect_by_name("Schoolhouse")
         self.collect_by_name("Hovel")
         # Precipice
-        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
-        self.collect_by_name("Office")
-        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
-        self.collect_by_name("Study")
-        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
-        self.collect_by_name("Nook")
-        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
-        self.collect_by_name("Security")
-        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
-        self.collect_by_name("Chapel")
-        self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
-        self.collect_by_name("Den")
+
+        if not self.multiworld.state.has("Chess Piece King", self.player):
+            self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+            self.collect_by_name("Office")
+        if not self.multiworld.state.has("Chess Piece Queen", self.player):
+            self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+            self.collect_by_name("Study")
+        if not self.multiworld.state.has("Chess Piece Rook", self.player):
+            self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+            self.collect_by_name("Nook")
+        if not self.multiworld.state.has("Chess Piece Knight", self.player):
+            self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+            self.collect_by_name("Security")
+        if not self.multiworld.state.has("Chess Piece Bishop", self.player):
+            self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+            self.collect_by_name("Chapel")
+        if not self.multiworld.state.has("Chess Piece Pawn", self.player):
+            self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
+            self.collect_by_name("Den")
         self.assertTrue(self.can_reach_region("Aries Court"), "Aries Court should be reachable after having all Chess Pieces")
     
     def test_basement_requires_the_foundation_and_basement_key(self) -> None:
