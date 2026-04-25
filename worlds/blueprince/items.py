@@ -420,7 +420,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
     if world.options.key_sanity:
         itempool += key_item_list
     else:
-        to_precollect += key_item_list
+        to_precollect += [k for k in key_item_list if LOCATION_ITEM_KEY not in keys[k.name] or keys[k.name][LOCATION_ITEM_KEY] == STARTING_INVENTORY]
 
     special_shop_item_list = [world.create_item(k) for k in (showroom_items | armory_items)]
     if world.options.special_shop_sanity:

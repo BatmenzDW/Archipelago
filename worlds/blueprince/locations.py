@@ -11,7 +11,7 @@ from .constants import *
 
 from .data_rooms import rooms, blue_rooms, core_rooms
 from .data_items import armory_items
-from .data_other_locations import can_reach_item_location, locations, keys
+from .data_other_locations import can_reach_item_location, locations, keys, floorplans
 from .items import BluePrinceItem
 
 if TYPE_CHECKING:
@@ -93,8 +93,8 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             for idx in range(1, trunk_count + 1): 
                 world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
             
-    for k, v in locations.items() if not world.options.key_sanity else [l for l in locations.items() if l not in keys]:
-        if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False:
+    for k, v in locations.items():
+        if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False and k in floorplans.keys():
             if v[NONSANITY_LOCATION_KEY] != STARTING_INVENTORY:
                 # Place room items at their in-game locations when room draft sanity is off.
                 reg = world.get_region(v[LOCATION_ROOM_KEY])
@@ -105,7 +105,18 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
                 world.set_rule(world.get_location(k), lambda state, key=k: can_access_location_with_rule(key, world, state))
                 continue
-        
+        elif LOCATION_ITEM_KEY in v and world.options.key_sanity == False and k in keys.keys():
+            if v[LOCATION_ITEM_KEY] != STARTING_INVENTORY:
+                # Place keys at their in-game locations when key sanity is off.
+                reg = world.get_region(v[LOCATION_ROOM_KEY])
+                loc = BluePrinceLocation(world.player, k, LOCATION_NAME_TO_ID[k], reg)
+                loc.place_locked_item(BluePrinceItem(v[LOCATION_ITEM_KEY], ItemClassification.progression_skip_balancing, None, world.player))
+
+                reg.locations.append(loc)
+
+                world.set_rule(world.get_location(k), lambda state, key=k: can_access_location_with_rule(key, world, state))
+                continue
+
         location_key = k
         locs = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)

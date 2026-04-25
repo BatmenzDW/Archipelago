@@ -23,6 +23,9 @@ def get_room_location_id(room_name: str, n: int = 0) -> int:
 
 def can_reach_item_location(item_name: str, state: CollectionState, player: int) -> bool:
     loc_name = item_name + " First Pickup"
+    if not state.has(item_name, player):
+        return False
+
     if state.has(loc_name, player):
         return True
     
