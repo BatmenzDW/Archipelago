@@ -478,15 +478,81 @@ upgrade_items = {
     },
 }
 
+gift_shop_items = {
+    "Mt. Holly Tee": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 4001,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+    },
+    "Lunch Box": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 4002,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+    },
+    "Swim Trunks": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 4003,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+    },
+    "Swim Bird Plushie": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 4004,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+    },
+    "Blue Tents": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 4005,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler | ItemClassification.useful,
+    },
+    "Cursed Coffers": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 4006,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+}
+
+bookshop_items = {
+    "History of Orindia (1st ed.)": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 5001,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+    },
+    "A New Clue": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 5002,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+    },
+    "The Curse of Black Bridge": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 5003,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "Realm & Rune": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 5004,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+    },
+    "Drafting Strategy: Architectural Digest Vol. 4": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 5005,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+    },
+    "Drafting Strategy: Architectural Digest Vol. 5": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 5006,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+    },
+}
+
+shop_items = gift_shop_items | bookshop_items | showroom_items | armory_items
+
 # 
 # Items to add:
 # 
-# Gift Shop Items
-# Bookshop Items
-# 
 # Orchard Gate?
+#
 
-all_items_excluding_upgrade_items = upgrade_disks | keys | showroom_items | armory_items | workshop_items | other_items
+all_items_excluding_upgrade_items = upgrade_disks | keys | workshop_items | shop_items | other_items
 all_items = all_items_excluding_upgrade_items | upgrade_items
 
 #############################

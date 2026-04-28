@@ -30,6 +30,7 @@ class TestDraftSanity(BluePrinceTestBase):
         # self.assertFalse(self.multiworld.state.has("Progressive Classroom", self.player))
 
     def test_progressive_classroom(self) -> None:
+        # This fails occasionally; needs Fuzzer testing.
         for cnum in range(1, 10):
             current = f"Classroom {cnum}" if cnum < 9 else "Classroom Exam"
 

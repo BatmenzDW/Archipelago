@@ -380,55 +380,67 @@ gift_shop_items = {
     "Gift Shop - Mt. Holly Tee": {
         LOCATION_ID_KEY: get_room_location_id("Gift Shop", 0),
         LOCATION_ROOM_KEY: "Gift Shop",
+        NONSANITY_LOCATION_KEY: "Mt. Holly Tee"
     },
     "Gift Shop - Lunch Box": {
         LOCATION_ID_KEY: get_room_location_id("Gift Shop", 1),
         LOCATION_ROOM_KEY: "Gift Shop",
+        NONSANITY_LOCATION_KEY: "Lunch Box"
     },
     "Gift Shop - Swim Trunks": {
         LOCATION_ID_KEY: get_room_location_id("Gift Shop", 2),
         LOCATION_ROOM_KEY: "Gift Shop",
+        NONSANITY_LOCATION_KEY: "Swim Trunks"
     },
     "Gift Shop - Swim Bird Plushie": {
         LOCATION_ID_KEY: get_room_location_id("Gift Shop", 3),
         LOCATION_ROOM_KEY: "Gift Shop",
+        NONSANITY_LOCATION_KEY: "Swim Bird Plushie"
     },
     "Gift Shop - Blue Tents": {
         LOCATION_ID_KEY: get_room_location_id("Gift Shop", 4),
         LOCATION_ROOM_KEY: "Gift Shop",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: len([loc for loc in trophies if state.can_reach_location(loc, world.player)]) >= 8
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: len([loc for loc in trophies if state.can_reach_location(loc, world.player)]) >= 8,
+        NONSANITY_LOCATION_KEY: "Blue Tents"
     },
     "Gift Shop - Cursed Coffers": {
         LOCATION_ID_KEY: get_room_location_id("Gift Shop", 5),
         LOCATION_ROOM_KEY: "Gift Shop",
-        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: any(state.can_reach_region(region, world.player) for region in ["Library", "Shrine"]),
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: state.can_reach_region("Shrine", world.player) or state.has("The Curse of Black Bridge", world.player),
+        NONSANITY_LOCATION_KEY: "Cursed Coffers"
     }
 }
 
 bookshop_items = {
-    "Bookshop - The History of Orindia (1st ed.) ": {
+    "Bookshop - The History of Orindia (1st ed.)": {
         LOCATION_ID_KEY: get_room_location_id("Bookshop", 0),
         LOCATION_ROOM_KEY: "Bookshop",
+        NONSANITY_LOCATION_KEY: "History of Orindia (1st ed.)"
     },
     "Bookshop - A New Clue": {
         LOCATION_ID_KEY: get_room_location_id("Bookshop", 1),
         LOCATION_ROOM_KEY: "Bookshop",
+        NONSANITY_LOCATION_KEY: "A New Clue"
     },
     "Bookshop - The Curse of Black Bridge": {
         LOCATION_ID_KEY: get_room_location_id("Bookshop", 2),
         LOCATION_ROOM_KEY: "Bookshop",
+        NONSANITY_LOCATION_KEY: "The Curse of Black Bridge"
     },
     "Bookshop - Realm & Rune": {
         LOCATION_ID_KEY: get_room_location_id("Bookshop", 3),
         LOCATION_ROOM_KEY: "Bookshop",
+        NONSANITY_LOCATION_KEY: "Realm & Rune"
     },
     "Bookshop - Drafting Strategy: Architectural Digest Vol. 4": {
         LOCATION_ID_KEY: get_room_location_id("Bookshop", 4),
         LOCATION_ROOM_KEY: "Bookshop",
+        NONSANITY_LOCATION_KEY: "Drafting Strategy: Architectural Digest Vol. 4"
     },
     "Bookshop - Drafting Strategy: Architectural Digest Vol. 5": {
         LOCATION_ID_KEY: get_room_location_id("Bookshop", 5),
         LOCATION_ROOM_KEY: "Bookshop",
+        NONSANITY_LOCATION_KEY: "Drafting Strategy: Architectural Digest Vol. 5"
     },
 }
 

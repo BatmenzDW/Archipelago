@@ -425,11 +425,18 @@ def create_all_items(world: BluePrinceWorld) -> None:
     else:
         to_precollect += [k for k in key_item_list if LOCATION_ITEM_KEY not in keys[k.name] or keys[k.name][LOCATION_ITEM_KEY] == STARTING_INVENTORY]
 
-    special_shop_item_list = [world.create_item(k) for k in (showroom_items | armory_items)]
+    special_shop_item_list = [world.create_item(k) for k in shop_items if k not in gift_shop_items]
     if world.options.special_shop_sanity:
         itempool += special_shop_item_list
     else:
         to_precollect += special_shop_item_list
+
+
+    giftshop_item_list = [world.create_item(k) for k in gift_shop_items]
+    if world.options.special_shop_sanity and world.options.goal_type.value > 1: # Only if Goal is past room 46
+        itempool += giftshop_item_list
+    elif world.options.goal_type.value > 1:
+        to_precollect += giftshop_item_list
 
     data_rooms.progressive_classroom = [world.create_item("Progressive Classroom") for _ in range(9)]
 
