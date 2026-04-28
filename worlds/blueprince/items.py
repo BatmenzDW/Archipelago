@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from random import random
 from typing import TYPE_CHECKING
+
+from .room_min_pieces import ENTRANCE_HALL_DRAFTABLE
 
 from .data_rooms import rooms, core_rooms, classrooms
 from .data_items import *
@@ -420,7 +423,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
     if world.options.key_sanity:
         itempool += key_item_list
     else:
-        to_precollect += key_item_list
+        to_precollect += [k for k in key_item_list if LOCATION_ITEM_KEY not in keys[k.name] or keys[k.name][LOCATION_ITEM_KEY] == STARTING_INVENTORY]
 
     special_shop_item_list = [world.create_item(k) for k in (showroom_items | armory_items)]
     if world.options.special_shop_sanity:
@@ -428,16 +431,23 @@ def create_all_items(world: BluePrinceWorld) -> None:
     else:
         to_precollect += special_shop_item_list
 
+    data_rooms.progressive_classroom = [world.create_item("Progressive Classroom") for _ in range(9)]
+
     room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"] and room not in classrooms]
     if world.options.room_draft_sanity:
-        itempool += room_item_list
+        world.starting_rooms = world.random.choices(
+            [room for room in room_item_list if ROOM_PICK_POSITIONS_KEY in rooms[room.name] and set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE] + [data_rooms.progressive_classroom[0]],
+            k=world.options.starting_room_amount.value,
+        )
+        itempool += [room for room in room_item_list if room not in world.starting_rooms]
+        to_precollect += world.starting_rooms
     else:
         # Precollects all room items, except for those that should be at their in-game locations, which are handled in locations.py
         to_precollect += [room for room in room_item_list if NONSANITY_LOCATION_KEY not in rooms[room.name] or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY]
 
-    data_rooms.progressive_classroom = [world.create_item("Progressive Classroom") for _ in range(9)]
     if world.options.room_draft_sanity:
-        itempool += data_rooms.progressive_classroom
+        n = len([room for room in world.starting_rooms if room in data_rooms.progressive_classroom])
+        itempool += data_rooms.progressive_classroom[n:]
     else:
         to_precollect += data_rooms.progressive_classroom
 

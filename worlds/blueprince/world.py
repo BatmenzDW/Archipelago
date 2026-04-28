@@ -37,6 +37,8 @@ class BluePrinceWorld(World):
     # Technically, Simon starts in the Entrance Hall, but for lore reasons, Starting at The Campsite is also acceptable, and is not a "room"
     origin_region_name = "Campsite"
 
+    starting_rooms = list()  # populated in items.py if room_draft_sanity is on, otherwise remains empty and unused
+
     item_name_groups = ITEMS_BY_GROUPS
 
     dares : Set[str] = set()
@@ -65,7 +67,7 @@ class BluePrinceWorld(World):
     # slot_data is just a dictionary using basic types, that will be converted to json when sent to the client.
     def fill_slot_data(self) -> Mapping[str, Any]:
         # If you need access to the player's chosen options on the client side, there is a helper for that.
-        return self.options.as_dict(
+        slot_data = self.options.as_dict(
             "room_draft_sanity",
             "locked_trunks_common",
             "locked_trunks_rare",
@@ -86,3 +88,5 @@ class BluePrinceWorld(World):
             "goal_sanctum_solves",
             "start_inventory",
         )
+        slot_data["starting_rooms"] = [room.name for room in self.starting_rooms]
+        return slot_data
