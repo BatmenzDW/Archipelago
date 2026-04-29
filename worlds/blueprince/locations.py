@@ -98,7 +98,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             if v[NONSANITY_LOCATION_KEY] != STARTING_INVENTORY:
                 # Place room items at their in-game locations when room draft sanity is off.
                 reg = world.get_region(v[LOCATION_ROOM_KEY])
-                loc = BluePrinceLocation(world.player, k, LOCATION_NAME_TO_ID[k], reg)
+                loc = BluePrinceLocation(world.player, k, None, reg)
                 loc.place_locked_item(BluePrinceItem(v[NONSANITY_LOCATION_KEY], ItemClassification.progression_skip_balancing, None, world.player))
 
                 reg.locations.append(loc)
@@ -109,7 +109,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             if v[LOCATION_ITEM_KEY] != STARTING_INVENTORY:
                 # Place keys at their in-game locations when key sanity is off.
                 reg = world.get_region(v[LOCATION_ROOM_KEY])
-                loc = BluePrinceLocation(world.player, k, LOCATION_NAME_TO_ID[k], reg)
+                loc = BluePrinceLocation(world.player, k, None, reg)
                 loc.place_locked_item(BluePrinceItem(v[LOCATION_ITEM_KEY], ItemClassification.progression_skip_balancing, None, world.player))
 
                 reg.locations.append(loc)

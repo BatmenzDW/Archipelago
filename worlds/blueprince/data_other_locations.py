@@ -1544,13 +1544,9 @@ file_cabinet_keys = {
 keys = vault_keys | sanctum_keys | file_cabinet_keys
 
 doors_walls_and_gates = {
-    "Unlock West Gate": {
+    "West Gate": {
         LOCATION_ID_KEY: get_room_location_id("West Path", 1),
         LOCATION_ROOM_KEY: "West Path",
-    },
-    "Unlock Orchard Gate": {
-        LOCATION_ID_KEY: get_room_location_id("Campsite", 46),
-        LOCATION_ROOM_KEY: "Campsite",
     },
     "Break Grounds to Sealed Entrance Wall": {
         LOCATION_ID_KEY: get_room_location_id("Sealed Entrance", 0),
@@ -1575,7 +1571,7 @@ doors_walls_and_gates = {
         LOCATION_ROOM_KEY: "Secret Garden",
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Power Hammer", state, world.player)
     },
-    "Access the Frozen Server Room in the Freezer": {
+    "Break Freezer Wall": {
         LOCATION_ID_KEY: get_room_location_id("Freezer", 1),
         LOCATION_ROOM_KEY: "Freezer",
         LOCATION_RULE_SIMPLE_COMMON: lambda state, world: can_reach_item_location("Power Hammer", state, world.player) or state.can_reach_region("Furnace", world.player) or can_reach_item_location("Burning Glass", state, world.player) or can_reach_item_location("TORCH", state, world.player)
