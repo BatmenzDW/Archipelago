@@ -446,6 +446,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
             [room for room in room_item_list if ROOM_PICK_POSITIONS_KEY in rooms[room.name] and set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE] + [data_rooms.progressive_classroom[0]],
             k=world.options.starting_room_amount.value,
         )
+        world.starting_rooms += [r for r in room_item_list if r.name == "Closet"]
         itempool += [room for room in room_item_list if room not in world.starting_rooms]
         to_precollect += world.starting_rooms
     else:

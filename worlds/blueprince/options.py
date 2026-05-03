@@ -361,12 +361,12 @@ class GoalSanctumSolves(Range):
 
 class StartingRoomAmount(Range):
     """
-    This is the number of starting rooms the player begins with in their inventory, randomly pulled from those that can be drafted from the Entrance Hall. This only applies when room draft sanity is on. Will not choose any that are already in the starting inventory.
+    This is the number of starting rooms the player begins with in their inventory, randomly pulled from those that can be drafted from the Entrance Hall. This only applies when room draft sanity is on. Will not choose any that are already in the starting inventory. Closet is always added in addition due to technical limitations.
     """
 
     display_name = "Number of Starting Rooms"
 
-    range_start = 3
+    range_start = 2
     range_end = 10
     default = 3
 
