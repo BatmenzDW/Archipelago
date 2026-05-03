@@ -443,7 +443,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
     room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"] and room not in classrooms]
     if world.options.room_draft_sanity:
         world.starting_rooms = world.random.choices(
-            [room for room in room_item_list if ROOM_PICK_POSITIONS_KEY in rooms[room.name] and set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE] + [data_rooms.progressive_classroom[0]],
+            [room for room in room_item_list if ROOM_PICK_POSITIONS_KEY in rooms[room.name] and (set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE) and not (room.name == "Gift Shop" and world.options.goal_type.value <= 1)] + [data_rooms.progressive_classroom[0]],
             k=world.options.starting_room_amount.value,
         )
         world.starting_rooms += [r for r in room_item_list if r.name == "Closet"]
