@@ -41,6 +41,13 @@ def can_reach_item_location(item_name: str, state: CollectionState, player: int)
     
     return False
 
+def mechanarium_door_rule(state: CollectionState, player: int, door_num: int) -> bool:
+    if not state.can_reach_region("Mechanarium", player):
+        return False
+
+    mechanical = state.count_from_list(["Utility Closet", "Boiler Room", "Pump Room", "Security", "Workshop", "Laboratory"], player) # Might add electric eel aquarium when we add upgraded rooms
+    return mechanical >= door_num # might make it require more, since its pretty hard to get a door with the minimum count
+
 directory_rooms = [x for x in rooms if x not in core_rooms and x not in ["Secret Garden", "Room 8"] and x not in classrooms] + ["Progressive Classroom"]
 
 trophies = {
@@ -446,15 +453,16 @@ bookshop_items = {
 
 shop_items = gift_shop_items | bookshop_items
 
+# Trading can get any item of the same tier or lower
 def get_trading_post_offers(give: str) -> list[str]:
     if give in TRADING_POST_TIER1[TRADING_POST_GIVE]:
         return [x for x in TRADING_POST_TIER1[TRADING_POST_RECEIVE] if x != give]
     if give in TRADING_POST_TIER2[TRADING_POST_GIVE]:
-        return [x for x in TRADING_POST_TIER2[TRADING_POST_RECEIVE] if x != give]
+        return [x for x in TRADING_POST_TIER2[TRADING_POST_RECEIVE] + TRADING_POST_TIER1[TRADING_POST_RECEIVE] if x != give]
     if give in TRADING_POST_TIER3[TRADING_POST_GIVE]:
-        return [x for x in TRADING_POST_TIER3[TRADING_POST_RECEIVE] if x != give]
+        return [x for x in TRADING_POST_TIER3[TRADING_POST_RECEIVE] + TRADING_POST_TIER2[TRADING_POST_RECEIVE] + TRADING_POST_TIER1[TRADING_POST_RECEIVE] if x != give]
     if give in TRADING_POST_TIER4[TRADING_POST_GIVE]:
-        return [x for x in TRADING_POST_TIER4[TRADING_POST_RECEIVE] if x != give]
+        return [x for x in TRADING_POST_TIER4[TRADING_POST_RECEIVE] + TRADING_POST_TIER3[TRADING_POST_RECEIVE] + TRADING_POST_TIER2[TRADING_POST_RECEIVE] + TRADING_POST_TIER1[TRADING_POST_RECEIVE] if x != give]
     return []
 
 # I ignored Cloister upgrades for now, but they should probably be checked eventually, since some of them would be a break in logic for item pickups
@@ -547,10 +555,9 @@ standard_item_pickup = {
             "Wine Cellar",
             "Workshop",
             "Clock Tower",
-            "Mechanarium",
             "Toolshed",
             "Hovel",
-        ]),
+        ]) or mechanarium_door_rule(state, world.player, 3),
 
         LOCATION_RULE_SIMPLE_RARE: lambda state, world: any(state.can_reach_region(region, world.player) for region in [
             "Spare Room",
@@ -1160,11 +1167,10 @@ special_key_pickup = {
             "Closet",
             "Music Room",
             "Her Ladyship's Chambers",
-            "Mechanarium",
             "Locksmith",
             "Billiard Room", # Dartboard puzzle
             "Mail Room", # Packages
-        ]),
+        ]) or mechanarium_door_rule(state, world.player, 2),
         # Also ignoring chance to spawn in trunks for the moment
 
         LOCATION_RULE_SIMPLE_RARE: lambda state, world: can_reach_item_location("SHOVEL", state, world.player) and dig_spot_rule(state, world.player, world),
@@ -1406,6 +1412,7 @@ upgrade_disks = {
     "Upgrade Disk - Mechanarium": {
         LOCATION_ID_KEY: get_room_location_id("Mechanarium", 0),
         LOCATION_ROOM_KEY: "Mechanarium",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: mechanarium_door_rule(state, world.player, 3),
     },
     "Upgrade Disk - Archives": {
         LOCATION_ID_KEY: get_room_location_id("Archives", 0),
@@ -1517,7 +1524,8 @@ sanctum_keys = {
     "Sanctum Key - Mechanarium": {
         LOCATION_ID_KEY: get_room_location_id("Mechanarium", 1),
         LOCATION_ROOM_KEY: "Mechanarium",
-        LOCATION_ITEM_KEY: "SANCTUM KEY MECHANARIUM"
+        LOCATION_ITEM_KEY: "SANCTUM KEY MECHANARIUM",
+        LOCATION_RULE_SIMPLE_COMMON: lambda state, world: mechanarium_door_rule(state, world.player, 4),
     }
 }
 

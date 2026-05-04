@@ -8,7 +8,7 @@ from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists
 from .data_items import sanctum_keys
 from .constants import *
 from .room_min_pieces import *
-from .data_other_locations import can_reach_item_location
+from .data_other_locations import can_reach_item_location, mechanarium_door_rule
 from .dares import can_reach_with_dares
 
 if TYPE_CHECKING:
@@ -161,7 +161,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     lambda state: (
                         state.can_reach_region("Great Hall", world.player)
                         or (state.can_reach_region("Greenhouse", world.player) and can_reach_item_location("BROKEN LEVER", state, world.player))
-                        or state.can_reach_region("Mechanarium", world.player)
+                        or mechanarium_door_rule(state, world.player, 1)
                         or (state.can_reach_region("Weight Room", world.player) and can_reach_item_location("Power Hammer", state, world.player))
                         or state.can_reach_region("Secret Garden", world.player)
                         # This check is redundant
