@@ -1,7 +1,6 @@
 from BaseClasses import ItemClassification
 
 from .constants import *
-from .world import ITEMS_BY_GROUPS
 
 core_rooms = {
     "Antechamber": {

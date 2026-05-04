@@ -1716,4 +1716,6 @@ LOCATIONS_BY_GROUPS |= {
     "Item Pickups": {k for k in item_pickups},
     "Workshop Contraptions": {k for k in workshop_contraptions},
     "Doors, Walls, and Gates": {k for k in doors_walls_and_gates},
+    "Gift Shop": {k for k in gift_shop_items},
+    "Bookshop": {k for k in bookshop_items},
 }
