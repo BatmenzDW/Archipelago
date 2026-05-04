@@ -200,11 +200,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     room,
                     "Entrance Hall Trophy Room",
                     lambda state: (
-                            state.can_reach_region("Room 46", world.player) or 
-                            state.can_reach_location("Full House Trophy", world.player) or 
-                            state.can_reach_location("Trophy of Invention", world.player) or 
-                            state.can_reach_location("Trophy of Drafting", world.player) or 
-                            state.can_reach_location("Trophy of Wealth", world.player)
+                            state.can_reach_region("Room 46", world.player) or (world.options.trophy_sanity == True and
+                            (
+                                state.can_reach_location("Full House Trophy", world.player) or 
+                                state.can_reach_location("Trophy of Invention", world.player) or 
+                                state.can_reach_location("Trophy of Drafting", world.player) or 
+                                state.can_reach_location("Trophy of Wealth", world.player)
+                            ))
                         ) and can_reach_pick_position("Trophy Room", world, state),
                 ) # Has reached Room 46 or has one of the 4 listed Trophies
             elif k == "Gift Shop":

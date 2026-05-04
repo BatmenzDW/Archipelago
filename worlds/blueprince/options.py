@@ -88,6 +88,17 @@ class SpecialShopSanity(Toggle):
 
     visibility = Visibility.all
 
+class TrophySanity(Toggle):
+    """
+    This option enables checks for trophies.
+    """
+
+    display_name = "Trophy Sanity"
+
+    default = False
+
+    visibility = Visibility.all
+
 # TODO-2 Crate Sanity?
 # TODO-2 Document full list of potential checks/locations posted in blue prince thread.
 
@@ -388,6 +399,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     upgrade_disk_sanity: UpgradeDiskSanity
     key_sanity: KeySanity
     special_shop_sanity: SpecialShopSanity
+    trophy_sanity: TrophySanity
 
     # Extra item options.
     filler_item_distribution: FillerItemDistribution
@@ -419,6 +431,7 @@ option_groups = [
             UpgradeDiskSanity,
             KeySanity,
             SpecialShopSanity,
+            TrophySanity,
         ],
     ),
     OptionGroup(
@@ -449,7 +462,8 @@ option_presets = {
         "workshop_sanity": True,
         "upgrade_disk_sanity": True,
         "key_sanity": True,
-        "special_shop_sanity": True,
+        "special_shop_sanity": False,
+        "trophy_sanity": False,
         "item_logic_mode": ItemLogicMode.default,
         "filler_item_distribution": {"nothing": 100},
         "trap_type_distribution": {},
