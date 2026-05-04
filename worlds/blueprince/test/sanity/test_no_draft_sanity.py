@@ -14,6 +14,7 @@ class TestNoDraftSanity(BluePrinceTestBase):
         "upgrade_disk_sanity": True,
         "key_sanity": True,
         "special_shop_sanity": True,
+        "trophy_sanity": True,
         "goal_type": GoalType.option_blueprints,
     }
 
