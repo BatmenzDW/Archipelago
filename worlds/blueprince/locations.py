@@ -244,6 +244,15 @@ def create_events(world: BluePrinceWorld) -> None:
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
+        throne_room.add_event(
+            "Ascended The Throne",
+            "Ascend The Throne",
+            lambda state: can_reach_item_location("CROWN", state, world.player) and
+            can_reach_item_location("ROYAL SCEPTER", state, world.player) and
+            can_reach_item_location("CURSED EFFIGY", state, world.player),
+            location_type=BluePrinceLocation,
+            item_type=items.BluePrinceItem,
+        )
     elif world.options.goal_type.value > GoalType.option_ascend:
         throne_room.add_event(
             "Ascended The Throne",
