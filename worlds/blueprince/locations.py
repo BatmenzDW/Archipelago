@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from rule_builder.rules import *
 
 from BaseClasses import CollectionState, ItemClassification, Location
+from .rules import *
 
 from .options import GoalType, ItemLogicMode
 
@@ -11,7 +13,7 @@ from .constants import *
 
 from .data_rooms import rooms, blue_rooms, core_rooms
 from .data_items import armory_items
-from .data_other_locations import can_reach_item_location, locations, keys, floorplans, shop_items, trophies
+from .data_other_locations import locations, keys, floorplans, shop_items, trophies
 from .items import BluePrinceItem
 
 if TYPE_CHECKING:
@@ -121,7 +123,8 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
             reg.locations.append(loc)
 
-            world.set_rule(world.get_location(k), lambda state, key=k: can_access_location_with_rule(key, world, state))
+
+            world.set_rule(world.get_location(k), get_location_rule(k))
             continue
 
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False and k in floorplans.keys():
@@ -133,7 +136,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
                 reg.locations.append(loc)
 
-                world.set_rule(world.get_location(k), lambda state, key=k: can_access_location_with_rule(key, world, state))
+                world.set_rule(world.get_location(k), get_location_rule(k))
                 continue
         if LOCATION_ITEM_KEY in v and world.options.key_sanity == False and k in keys.keys():
             if v[LOCATION_ITEM_KEY] != STARTING_INVENTORY:
@@ -144,41 +147,22 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
                 reg.locations.append(loc)
 
-                world.set_rule(world.get_location(k), lambda state, key=k: can_access_location_with_rule(key, world, state))
+                world.set_rule(world.get_location(k), get_location_rule(k))
                 continue
 
         location_key = k
         locs = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
 
-        world.set_rule(world.get_location(location_key), lambda state, key=location_key: can_access_location_with_rule(key, world, state))
+        world.set_rule(world.get_location(location_key), get_location_rule(location_key))
     
-def can_access_location_with_rule(location_key: str, world: BluePrinceWorld, state: CollectionState) -> bool:
+def get_location_rule(location_key: str) -> Rule:
     location_data = locations[location_key]
     
-    # if LOCATION_ITEM_KEY in location_data:
-    #     item_name = location_data[LOCATION_ITEM_KEY]
-    #     if not state.has(item_name, world.player):
-    #         return False
-    
-    if LOCATION_RULE_SIMPLE_COMMON not in location_data and LOCATION_RULE_SIMPLE_RARE not in location_data and LOCATION_RULE_COMPLEX not in location_data and LOCATION_RULE_EXTREME not in location_data:
-        return True
+    if LOCATION_RULE_SIMPLE_COMMON not in location_data:
+        return True_()
 
-    rules = []
-
-    if LOCATION_RULE_SIMPLE_COMMON in location_data:
-        rules.append(location_data[LOCATION_RULE_SIMPLE_COMMON])
-    if LOCATION_RULE_SIMPLE_RARE in location_data and world.options.item_logic_mode.value is (ItemLogicMode.option_rare or ItemLogicMode.option_rare_complex or ItemLogicMode.option_extreme):
-        rules.append(location_data[LOCATION_RULE_SIMPLE_RARE])
-    if LOCATION_RULE_COMPLEX in location_data and world.options.item_logic_mode.value is (ItemLogicMode.option_complex or ItemLogicMode.option_rare_complex or ItemLogicMode.option_extreme):
-        rules.append(location_data[LOCATION_RULE_COMPLEX])
-    if LOCATION_RULE_EXTREME in location_data and world.options.item_logic_mode.value is ItemLogicMode.option_extreme:
-        rules.append(location_data[LOCATION_RULE_EXTREME])
-
-    if not rules:
-        return False
-
-    return any(rule(state, world) for rule in rules)
+    return location_data[LOCATION_RULE_SIMPLE_COMMON]
 
 def create_events(world: BluePrinceWorld) -> None:
 
@@ -247,9 +231,9 @@ def create_events(world: BluePrinceWorld) -> None:
         throne_room.add_event(
             "Ascended The Throne",
             "Ascend The Throne",
-            lambda state: can_reach_item_location("CROWN", state, world.player) and
-            can_reach_item_location("ROYAL SCEPTER", state, world.player) and
-            can_reach_item_location("CURSED EFFIGY", state, world.player),
+            (CanReachItemLocation("CROWN") &
+                CanReachItemLocation("ROYAL SCEPTER") &
+                CanReachItemLocation("CURSED EFFIGY")).resolve(world),
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
@@ -257,16 +241,16 @@ def create_events(world: BluePrinceWorld) -> None:
         throne_room.add_event(
             "Ascended The Throne",
             "Ascend The Throne",
-            lambda state: can_reach_item_location("CROWN", state, world.player) and
-            can_reach_item_location("ROYAL SCEPTER", state, world.player) and
-            can_reach_item_location("CURSED EFFIGY", state, world.player),
+            (CanReachItemLocation("CROWN") &
+                CanReachItemLocation("ROYAL SCEPTER") &
+                CanReachItemLocation("CURSED EFFIGY")).resolve(world),
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
         throne_room.add_event(
             "Unseal Blue Doors",
             "Blue Door Access",
-            lambda state: len([x for x in blue_rooms if x not in core_rooms and state.can_reach_region(x, world.player)]) >= 8,
+            HasFromList(*[x for x in blue_rooms if x not in core_rooms], count = 8).resolve(world),
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
@@ -298,8 +282,10 @@ def create_events(world: BluePrinceWorld) -> None:
     world.get_region("Apple Orchard").add_event(
         "Raise Satellite",
         "Satellite Raised",
-        lambda state: all(can_reach_item_location(x, state, world.player) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]) 
-        and state.can_reach_location("Scorch Sundial", world.player),
+        And(
+            *[CanReachItemLocation(x) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]],
+            CanReachItemLocation("Scorch Sundial")
+        ).resolve(world),
         location_type=BluePrinceLocation,
         item_type=items.BluePrinceItem,
     )

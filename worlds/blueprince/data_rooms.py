@@ -1834,6 +1834,101 @@ black_rooms = {
 
 rooms = blue_rooms | bedrooms | hallways | green_rooms | shops | red_rooms | black_rooms
 
+other_areas = {
+    "Campsite": {
+        ROOM_ITEM_ID_KEY: 901,
+    },
+    "The Underpass": {
+        ROOM_ITEM_ID_KEY: 902,
+    },
+    "Aries Court": {
+        ROOM_ITEM_ID_KEY: 903,
+    },
+    "Arch Aries Sanctum": {
+        ROOM_ITEM_ID_KEY: 904,
+    },
+    "Corarica Sanctum": {
+        ROOM_ITEM_ID_KEY: 905,
+    },
+    "Eraja Sanctum": {
+        ROOM_ITEM_ID_KEY: 906,
+    },
+    "Fenn Aries Sanctum": {
+        ROOM_ITEM_ID_KEY: 907,
+    },
+    "Mora Jai Sanctum": {
+        ROOM_ITEM_ID_KEY: 908,
+    },
+    "Orinda Aries Sanctum": {
+        ROOM_ITEM_ID_KEY: 909,
+    },
+    "Verra Sanctum": {
+        ROOM_ITEM_ID_KEY: 910,
+    },
+    "Nuance Sanctum": {
+        ROOM_ITEM_ID_KEY: 911,
+    },
+    "Rotating Gear": {
+        ROOM_ITEM_ID_KEY: 912,
+    },
+    "Orindian Ruins": {
+        ROOM_ITEM_ID_KEY: 913,
+    },
+    "Tunnel Area Past Crates": {
+        ROOM_ITEM_ID_KEY: 914,
+    },
+    "Basement": {
+        ROOM_ITEM_ID_KEY: 915,
+    },
+    "West Path": {
+        ROOM_ITEM_ID_KEY: 916,
+    },
+    "Blackbridge Grotto": {
+        ROOM_ITEM_ID_KEY: 917,
+    },
+    "Abandoned Mine": {
+        ROOM_ITEM_ID_KEY: 918,
+    },
+    "Reservoir Bottom": {
+        ROOM_ITEM_ID_KEY: 919,
+    },
+    "Safehouse": {
+        ROOM_ITEM_ID_KEY: 920,
+    },
+    "Sealed Entrance": {
+        ROOM_ITEM_ID_KEY: 921,
+    },
+    "The Precipice": {
+        ROOM_ITEM_ID_KEY: 922,
+    },
+    "Tunnel Area Past Sealed Door": {
+        ROOM_ITEM_ID_KEY: 923,
+    },
+    "The Well": {
+        ROOM_ITEM_ID_KEY: 924,
+    },
+    "Tunnel Area Past Basement key Door": {
+        ROOM_ITEM_ID_KEY: 925,
+    },
+    "Catacombs": {
+        ROOM_ITEM_ID_KEY: 926,
+    },
+    "Torch Chamber": {
+        ROOM_ITEM_ID_KEY: 927,
+    },
+    "Apple Orchard": {
+        ROOM_ITEM_ID_KEY: 928,
+    },
+    "Gemstone Cavern": {
+        ROOM_ITEM_ID_KEY: 929,
+    },
+    "Outer Room": {
+        ROOM_ITEM_ID_KEY: 930,
+    },
+}
+
+all_areas = rooms | other_areas
+
 room_layout_lists = {
     ROOM_LAYOUT_TYPE_X: [k for k, v in rooms.items() if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_X],
     ROOM_LAYOUT_TYPE_J: [k for k, v in rooms.items() if v[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_J],
