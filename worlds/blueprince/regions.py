@@ -147,7 +147,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             outer_room.connect(
                 room,
                 f"Outer Room To {k}",
-                Has(k).resolve(world),
+                Has(k),
             )
         else:
 
@@ -203,14 +203,14 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Trophy Room",
-                    ((CanReachRegion("Room 46") | Filtered(
-                                CanReachItemLocation("Full House Trophy") | 
-                                CanReachItemLocation("Trophy of Invention") | 
-                                CanReachItemLocation("Trophy of Drafting") | 
+                    ((CanReachRegion("Room 46") | Or(
+                                CanReachItemLocation("Full House Trophy"),
+                                CanReachItemLocation("Trophy of Invention"),
+                                CanReachItemLocation("Trophy of Drafting"), 
                                 CanReachItemLocation("Trophy of Wealth"),
                                 options=[OptionFilter(TrophySanity, True)]
                             )
-                        ) and CanReachPickPosition("Trophy Room")).resolve(world),
+                        ) & CanReachPickPosition("Trophy Room")).resolve(world),
                 ) # Has reached Room 46 or has one of the 4 listed Trophies
             elif k == "Gift Shop":
                 entrance_hall.connect(

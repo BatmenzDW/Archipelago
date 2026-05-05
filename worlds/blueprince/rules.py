@@ -92,20 +92,28 @@ class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):
     Get the item rules for if the location is reachable with the current inventory.
     """
     location: str
+    parent_region_name: str = ""
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        from .data_other_locations import locations, armory_items
+        from .data_other_locations import locations, armory_items, vault_keys, workshop_items
         loc_name = self.location + " First Pickup"
+        if self.location in workshop_items:
+            loc_name = self.location + " First Craft"
+        elif self.location in vault_keys:
+            loc_name = self.location
+
+        if self.parent_region_name == "":
+            self.parent_region_name = locations[loc_name][LOCATION_ROOM_KEY] if loc_name in locations else ""
 
         if loc_name in locations:
-            return (Has(self.location) & CanReachLocation(loc_name)).resolve(world)
+            return (Has(self.location) & CanReachLocation(loc_name, parent_region_name=self.parent_region_name)).resolve(world)
 
         if self.location in armory_items:
             return (Has(self.location) & CanReachRegion("The Armory")).resolve(world)
         
         for location, data in locations.items():
             if LOCATION_ITEM_KEY in data and data[LOCATION_ITEM_KEY] == self.location:
-                return (Has(self.location) & CanReachLocation(location)).resolve(world)
+                return (Has(self.location) & CanReachLocation(location, parent_region_name=self.parent_region_name)).resolve(world)
 
         return False_().resolve(world)
     

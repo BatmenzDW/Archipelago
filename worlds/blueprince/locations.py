@@ -103,7 +103,9 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         # elif room_key == "The Pool":
         #     for idx in range(1, trunk_count + 1): 
         #         world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
-            
+    
+    locations_to_setup = []
+
     for k, v in locations.items():
 
         if world.options.goal_type.value < 4 and k in ["Ascend The Throne", "Throne of the Blue Prince Mora Jai Box"]:
@@ -153,7 +155,9 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         location_key = k
         locs = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
+        locations_to_setup.append(location_key)
 
+    for location_key in locations_to_setup:
         world.set_rule(world.get_location(location_key), get_location_rule(location_key))
     
 def get_location_rule(location_key: str) -> Rule:
