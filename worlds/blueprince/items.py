@@ -401,7 +401,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
 
     exclude = [item for item in world.multiworld.precollected_items[world.player]]
 
-    standard_item_list = [world.create_item(k) for k in other_items]
+    standard_item_list = [world.create_item(k) for k in other_items if k not in ["LUNCH BOX", "CURSED EFFIGY"] or world.options.goal_type.value > 1]
     if world.options.standard_item_sanity:
         itempool += standard_item_list
     else:
@@ -425,25 +425,33 @@ def create_all_items(world: BluePrinceWorld) -> None:
     else:
         to_precollect += [k for k in key_item_list if LOCATION_ITEM_KEY not in keys[k.name] or keys[k.name][LOCATION_ITEM_KEY] == STARTING_INVENTORY]
 
-    special_shop_item_list = [world.create_item(k) for k in (showroom_items | armory_items)]
+    special_shop_item_list = [world.create_item(k) for k in shop_items if k not in gift_shop_items]
     if world.options.special_shop_sanity:
         itempool += special_shop_item_list
     else:
         to_precollect += special_shop_item_list
+
+
+    giftshop_item_list = [world.create_item(k) for k in gift_shop_items]
+    if world.options.special_shop_sanity and world.options.goal_type.value > 1: # Only if Goal is past room 46
+        itempool += giftshop_item_list
+    elif world.options.goal_type.value > 1:
+        to_precollect += giftshop_item_list
 
     data_rooms.progressive_classroom = [world.create_item("Progressive Classroom") for _ in range(9)]
 
     room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"] and room not in classrooms]
     if world.options.room_draft_sanity:
         world.starting_rooms = world.random.choices(
-            [room for room in room_item_list if ROOM_PICK_POSITIONS_KEY in rooms[room.name] and set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE] + [data_rooms.progressive_classroom[0]],
+            [room for room in room_item_list if ROOM_PICK_POSITIONS_KEY in rooms[room.name] and (set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE) and not (room.name == "Gift Shop" and world.options.goal_type.value <= 1)] + [data_rooms.progressive_classroom[0]],
             k=world.options.starting_room_amount.value,
         )
-        itempool += [room for room in room_item_list if room not in world.starting_rooms]
+        world.starting_rooms += [r for r in room_item_list if r.name == "Closet"]
+        itempool += [room for room in room_item_list if room not in world.starting_rooms and not (room.name == "Gift Shop" and world.options.goal_type.value <= 1)]
         to_precollect += world.starting_rooms
     else:
         # Precollects all room items, except for those that should be at their in-game locations, which are handled in locations.py
-        to_precollect += [room for room in room_item_list if NONSANITY_LOCATION_KEY not in rooms[room.name] or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY]
+        to_precollect += [room for room in room_item_list if (NONSANITY_LOCATION_KEY not in rooms[room.name] or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY) and not (room.name == "Gift Shop" and world.options.goal_type.value <= 1)]
 
     if world.options.room_draft_sanity:
         n = len([room for room in world.starting_rooms if room in data_rooms.progressive_classroom])

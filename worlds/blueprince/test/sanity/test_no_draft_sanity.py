@@ -14,7 +14,8 @@ class TestNoDraftSanity(BluePrinceTestBase):
         "upgrade_disk_sanity": True,
         "key_sanity": True,
         "special_shop_sanity": True,
-        "goal_type": GoalType.option_room46,
+        "trophy_sanity": True,
+        "goal_type": GoalType.option_blueprints,
     }
 
     def test_all_starting_room_items(self) -> None:

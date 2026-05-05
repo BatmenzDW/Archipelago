@@ -4,7 +4,7 @@ from typing import Any, Set
 # Imports of base Archipelago modules must be absolute.
 from worlds.AutoWorld import World
 
-from .data_items import ITEMS_BY_GROUPS
+from .constants import ITEMS_BY_GROUPS, LOCATIONS_BY_GROUPS
 # Imports of your world's files must be relative.
 from . import items, locations, regions, rules, web_world
 from . import (
@@ -40,6 +40,7 @@ class BluePrinceWorld(World):
     starting_rooms = list()  # populated in items.py if room_draft_sanity is on, otherwise remains empty and unused
 
     item_name_groups = ITEMS_BY_GROUPS
+    location_name_groups = LOCATIONS_BY_GROUPS
 
     dares : Set[str] = set()
 

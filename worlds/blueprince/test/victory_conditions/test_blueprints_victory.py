@@ -8,5 +8,6 @@ class TestBlueprintsVictory(BluePrinceTestBase):
     options = {
         "room_draft_sanity": True,
         "item_sanity": True,
+        "trophy_sanity": True,
         "goal_type": GoalType.option_blueprints,
     }
