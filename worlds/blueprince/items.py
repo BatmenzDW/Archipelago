@@ -59,6 +59,7 @@ ITEM_NAME_TO_ID = (
         "Extra Starting Steps 1": 11201,
         "Extra Starting Steps 2": 11202,
         "Extra Starting Steps 5": 11203,
+        "Extra Starting Steps 10": 11204,
         #
         "Extra Stars 1": 11301,
         "Extra Stars 2": 11302,
@@ -140,6 +141,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = (
         "Extra Starting Steps 1": ItemClassification.filler,
         "Extra Starting Steps 2": ItemClassification.filler,
         "Extra Starting Steps 5": ItemClassification.filler,
+        "Extra Starting Steps 10": ItemClassification.filler,
         #
         "Extra Stars 1": ItemClassification.filler,
         "Extra Stars 2": ItemClassification.filler,
@@ -401,7 +403,8 @@ def create_all_items(world: BluePrinceWorld) -> None:
 
     exclude = [item for item in world.multiworld.precollected_items[world.player]]
 
-    standard_item_list = [world.create_item(k) for k in other_items if k not in ["LUNCH BOX", "CURSED EFFIGY"] or world.options.goal_type.value > 1]
+    standard_item_list = [world.create_item(k) for k in other_items if (k not in ["LUNCH BOX", "CURSED EFFIGY"] or world.options.goal_type.value > 1) 
+                                                                    and (k not in ["CROWN", "ROYAL SCEPTER"] or world.options.goal_type.value > 2)]
     if world.options.standard_item_sanity:
         itempool += standard_item_list
     else:
@@ -419,7 +422,8 @@ def create_all_items(world: BluePrinceWorld) -> None:
     else:
         to_precollect += upgrade_disk_item_list
 
-    key_item_list = [world.create_item(k) for k in keys]
+    key_item_list = [world.create_item(k) for k in keys if (k not in sanctum_keys or world.options.goal_type.value > 1) 
+                                                            and (k not in ["KEY of Aries"] or world.options.goal_type.value > 2)]
     if world.options.key_sanity:
         itempool += key_item_list
     else:
@@ -442,16 +446,22 @@ def create_all_items(world: BluePrinceWorld) -> None:
 
     room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"] and room not in classrooms]
     if world.options.room_draft_sanity:
-        world.starting_rooms = world.random.choices(
-            [room for room in room_item_list if ROOM_PICK_POSITIONS_KEY in rooms[room.name] and (set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE) and not (room.name == "Gift Shop" and world.options.goal_type.value <= 1)] + [data_rooms.progressive_classroom[0]],
+        world.starting_rooms = world.random.choices([room for room in room_item_list 
+                                                    if ROOM_PICK_POSITIONS_KEY in rooms[room.name] 
+                                                    and (set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE) 
+                                                    and room.name not in ["Sauna"] 
+                                                    and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)],
             k=world.options.starting_room_amount.value,
         )
         world.starting_rooms += [r for r in room_item_list if r.name == "Closet"]
-        itempool += [room for room in room_item_list if room not in world.starting_rooms and not (room.name == "Gift Shop" and world.options.goal_type.value <= 1)]
+        itempool += [room for room in room_item_list if room not in world.starting_rooms 
+                     and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)]
         to_precollect += world.starting_rooms
     else:
         # Precollects all room items, except for those that should be at their in-game locations, which are handled in locations.py
-        to_precollect += [room for room in room_item_list if (NONSANITY_LOCATION_KEY not in rooms[room.name] or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY) and not (room.name == "Gift Shop" and world.options.goal_type.value <= 1)]
+        to_precollect += [room for room in room_item_list if (NONSANITY_LOCATION_KEY not in rooms[room.name] 
+                                                              or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY) 
+                                                              and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)]
 
     if world.options.room_draft_sanity:
         n = len([room for room in world.starting_rooms if room in data_rooms.progressive_classroom])

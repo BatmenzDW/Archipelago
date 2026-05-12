@@ -20,7 +20,7 @@ class TestLocationAccess(BluePrinceTestBase):
             mem[id] = name
 
     def test_can_reach_tunnel_floorplan_after_crates(self):
-        self.collect_by_name(["Laboratory", "Boiler Room", "Parlor", "MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3", "Garage", "Hovel", "Utility Closet", "Schoolhouse", "SHOVEL", "SLEDGE HAMMER", "Workshop", "MAGNIFYING GLASS", "METAL DETECTOR", "Library", "Burning Glass"])
+        self.collect_by_name(["Laboratory", "The Pool", "Boiler Room", "Parlor", "MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3", "Garage", "Hovel", "Utility Closet", "Schoolhouse", "SHOVEL", "SLEDGE HAMMER", "Workshop", "MAGNIFYING GLASS", "METAL DETECTOR", "Library", "Burning Glass"])
         self.debug_print_regions_items_locations(True)
         self.assertTrue(self.can_reach_location("Raise Satellite"), "Raise Satellite should be reachable after having the microchips and burning glass")
         self.assertTrue(self.can_reach_region("Tunnel Area Past Crates"), "Tunnel Floorplan should be reachable after having crate experiment")

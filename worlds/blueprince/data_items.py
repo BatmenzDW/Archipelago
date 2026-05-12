@@ -143,7 +143,7 @@ keys = {
     "SILVER KEY": {
         ITEM_ELEMENT_INDEX_KEY: 19,
         ITEM_ID_KEY: 10019,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "KEY 8": {
         ITEM_ELEMENT_INDEX_KEY: 27,
@@ -178,7 +178,7 @@ keys = {
     "DIARY KEY": {
         ITEM_ELEMENT_INDEX_KEY: 42,
         ITEM_ID_KEY: 10042,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "CABINET KEY 1": {
         ITEM_ELEMENT_INDEX_KEY: 45,
@@ -199,7 +199,7 @@ keys = {
         # Known exception to formatting. Keeping consistent with game format.
         ITEM_ELEMENT_INDEX_KEY: 50,
         ITEM_ID_KEY: 10050,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "KEY of Aries": {
         # Known exception to formatting. Keeping consistent with game format.
@@ -233,32 +233,32 @@ showroom_items = {
     "CHRONOGRAPH": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2001,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "EMERALD BRACELET": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2002,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "MASTER KEY": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2003,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "MOON PENDANT": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2004,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "ORNATE COMPASS": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2005,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "SILVER SPOON": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2006,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
 }
 armory_items = {
@@ -270,7 +270,7 @@ armory_items = {
     "THE AXE": {
         ITEM_ELEMENT_INDEX_KEY: 36,
         ITEM_ID_KEY: 1036,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "TORCH": {
         ITEM_ELEMENT_INDEX_KEY: 37,
@@ -323,17 +323,17 @@ other_items = {
     "RUNNING SHOES": {
         ITEM_ELEMENT_INDEX_KEY: 15,
         ITEM_ID_KEY: 1015,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "SALT SHAKER": {
         ITEM_ELEMENT_INDEX_KEY: 16,
         ITEM_ID_KEY: 1016,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "SLEEPING MASK": {
         ITEM_ELEMENT_INDEX_KEY: 21,
         ITEM_ID_KEY: 1021,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "COIN PURSE": {
         ITEM_ELEMENT_INDEX_KEY: 4,
@@ -343,7 +343,7 @@ other_items = {
     "COUPON BOOK": {
         ITEM_ELEMENT_INDEX_KEY: 6,
         ITEM_ID_KEY: 1006,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "LOCK PICK KIT": {
         ITEM_ELEMENT_INDEX_KEY: 11,
@@ -363,12 +363,12 @@ other_items = {
     "STOPWATCH": {
         ITEM_ELEMENT_INDEX_KEY: 29,
         ITEM_ID_KEY: 1029,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "REPELLENT": {
         ITEM_ELEMENT_INDEX_KEY: 30,
         ITEM_ID_KEY: 1030,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "WATERING CAN": {
         ITEM_ELEMENT_INDEX_KEY: 31,
@@ -378,12 +378,12 @@ other_items = {
     "HALL PASS": {
         ITEM_ELEMENT_INDEX_KEY: 32,
         ITEM_ID_KEY: 1032,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "LUNCH BOX": {
         ITEM_ELEMENT_INDEX_KEY: 43,
         ITEM_ID_KEY: 1043,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "CURSED EFFIGY": {
         ITEM_ELEMENT_INDEX_KEY: 44,
@@ -398,7 +398,7 @@ other_items = {
     "PAPER CROWN": {
         ITEM_ELEMENT_INDEX_KEY: 48,
         ITEM_ID_KEY: 1048,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "ROYAL SCEPTER": {
         ITEM_ELEMENT_INDEX_KEY: 49,
@@ -408,7 +408,7 @@ other_items = {
     "GEAR WRENCH": {
         ITEM_ELEMENT_INDEX_KEY: 33,
         ITEM_ID_KEY: 1033,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
     },
     "COMPASS": {
         ITEM_ELEMENT_INDEX_KEY: 5,
@@ -426,7 +426,7 @@ workshop_items = {
     "Detector Shovel": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 3002,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
     "Dowsing Rod": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
@@ -436,7 +436,7 @@ workshop_items = {
     "Electromagnet": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 3004,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
     "Jack Hammer": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
@@ -446,12 +446,12 @@ workshop_items = {
     "Lucky Purse": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 3006,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
     "Pick Sound Amplifier": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 3007,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
     "Power Hammer": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
@@ -525,7 +525,7 @@ bookshop_items = {
     "The Curse of Black Bridge": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 5003,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
     },
     "Realm & Rune": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
@@ -672,6 +672,7 @@ ITEMS_BY_GROUPS |= {
     "Keys": {key for key in keys},
     "Showroom Items": {item for item in showroom_items},
     "Armory Items": {item for item in armory_items},
+    "Bookshop Items": {item for item in bookshop_items},
     "Workshop Items": {item for item in workshop_items},
     "Standard Items": {item for item in other_items}
 }

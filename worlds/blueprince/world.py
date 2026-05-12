@@ -27,7 +27,7 @@ class BluePrinceWorld(World):
 
     # Set the Options
     options_dataclass = blue_prince_options.BluePrinceOptions
-    options: blue_prince_options.BluePrinceOptions
+    options: blue_prince_options.BluePrinceOptions # type: ignore
 
     # Our world class must have a static location_name_to_id and item_name_to_id defined.
     # We define these in regions.py and items.py respectively, so we just set them here.

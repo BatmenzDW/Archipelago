@@ -14,8 +14,8 @@ from .options import ItemLogicMode
 from .data_items import *
 
 default_logic_filter = [OptionFilter(ItemLogicMode, ItemLogicMode.option_default)]
-rare_logic_filter = [OptionFilter(ItemLogicMode, [ItemLogicMode.option_rare, ItemLogicMode.option_rare_complex, ItemLogicMode.option_extreme], operator="contains")]
-complex_logic_filter = [OptionFilter(ItemLogicMode, [ItemLogicMode.option_complex, ItemLogicMode.option_rare_complex, ItemLogicMode.option_extreme], operator="contains")]
+rare_logic_filter = [OptionFilter(ItemLogicMode, [ItemLogicMode.option_rare, ItemLogicMode.option_rare_complex, ItemLogicMode.option_extreme], operator="in")]
+complex_logic_filter = [OptionFilter(ItemLogicMode, [ItemLogicMode.option_complex, ItemLogicMode.option_rare_complex, ItemLogicMode.option_extreme], operator="in")]
 extreme_logic_filter = [OptionFilter(ItemLogicMode, ItemLogicMode.option_extreme)]
 
 def set_all_rules(world: BluePrinceWorld) -> None:
@@ -95,22 +95,18 @@ class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):
     parent_region_name: str = ""
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        from .data_other_locations import locations, armory_items, vault_keys, workshop_items
+        from .data_other_locations import locations, armory_items
         loc_name = self.location + " First Pickup"
-        if self.location in workshop_items:
-            loc_name = self.location + " First Craft"
-        elif self.location in vault_keys:
-            loc_name = self.location
-
-        if self.parent_region_name == "":
-            self.parent_region_name = locations[loc_name][LOCATION_ROOM_KEY] if loc_name in locations else ""
 
         if loc_name in locations:
             return (Has(self.location) & CanReachLocation(loc_name, parent_region_name=self.parent_region_name)).resolve(world)
+        
+        if self.location in workshop_items:
+            return (Has(self.location) & CanReachLocation(f"{self.location} First Craft", parent_region_name="Workshop")).resolve(world)
 
         if self.location in armory_items:
             return (Has(self.location) & CanReachRegion("The Armory")).resolve(world)
-        
+         
         for location, data in locations.items():
             if LOCATION_ITEM_KEY in data and data[LOCATION_ITEM_KEY] == self.location:
                 return (Has(self.location) & CanReachLocation(location, parent_region_name=self.parent_region_name)).resolve(world)
@@ -235,7 +231,8 @@ class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
         return And(CanReachRegion("Laboratory"), Has("Satellite Raised"), options=extreme_logic_filter).resolve(world)
-    
+
+prev_trading_post_offers : set[str] = set()
 @dataclasses.dataclass()
 class TradingPostRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
@@ -245,11 +242,15 @@ class TradingPostRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(CanReachRegion("Trading Post"), 
+        
+        prev_trading_post_offers.add(self.item_name)
+        rule = And(CanReachRegion("Trading Post"), 
                 Or(
-                    *[CanReachItemLocation(item) for item in self.get_trading_post_offers(self.item_name)]
+                    *[CanReachItemLocation(item) for item in self.get_trading_post_offers(self.item_name) if self.item_name not in prev_trading_post_offers],
                 ),
                 options=complex_logic_filter).resolve(world)
+        prev_trading_post_offers.remove(self.item_name)
+        return rule
     
     # Trading can get any item of the same tier or lower
     def get_trading_post_offers(self, give: str) -> list[str]:
@@ -291,7 +292,7 @@ class DigSpotRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                 "Secret Garden",
                 "Root Cellar",
                 "Hovel",
-                "Kennel",
+                "The Kennel",
                 "Dovecote",
                 "Solarium",
                 "Tunnel",
@@ -334,7 +335,7 @@ class CarTrunkRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return (CanReachRegion("Garage") & Has("CAR KEYS")).resolve(world)
+        return (CanReachRegion("Garage") & CanReachItemLocation("CAR KEYS")).resolve(world)
     
 @dataclasses.dataclass()
 class SpiralOfStarsRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -365,8 +366,6 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
         if len(self.targets) == 1:
             return CanReachItemLocation(self.targets[0]).resolve(world)
         
-
-
         return self.Resolved(self.targets, self.count, player=world.player)
     
     class Resolved(Rule.Resolved):
@@ -391,6 +390,44 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
                             if (state.has(target, self.player) and state.can_reach_location(location, self.player)):
                                 reachable_count += 1
                                 break
+
+                if reachable_count >= self.count:
+                    return True
+
+            return False
+        
+@dataclasses.dataclass()
+class CanReachRegionsFromList(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Check if the player can reach at least count regions from the list
+    """
+    targets: tuple[str, ...]
+    count : int = 1
+
+    def __init__(self, *targets: str, count: int = 1):
+        self.targets = tuple(sorted(set(targets)))
+        self.count = count
+
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        if len(self.targets) == 0:
+            return False_().resolve(world)
+        if len(self.targets) == 1:
+            return CanReachRegion(self.targets[0]).resolve(world)
+        if self.count == 1:
+            return Or(*[CanReachRegion(target) for target in self.targets]).resolve(world)
+        return self.Resolved(self.targets, self.count, player=world.player)
+        
+    class Resolved(Rule.Resolved):
+        targets: tuple[str, ...]
+        count : int = 1
+
+        @override
+        def _evaluate(self, state: CollectionState) -> bool:
+            reachable_count = 0
+            for target in self.targets:
+                if state.can_reach_region(target, self.player):
+                    reachable_count += 1
 
                 if reachable_count >= self.count:
                     return True

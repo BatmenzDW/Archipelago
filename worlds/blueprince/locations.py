@@ -13,7 +13,7 @@ from .constants import *
 
 from .data_rooms import rooms, blue_rooms, core_rooms
 from .data_items import armory_items
-from .data_other_locations import locations, keys, floorplans, shop_items, trophies
+from .data_other_locations import locations, keys, floorplans, shop_items, trophies, sanctum_keys, aries_court_mora_jai_boxes
 from .items import BluePrinceItem
 
 if TYPE_CHECKING:
@@ -29,13 +29,13 @@ LOCATION_NAME_TO_ID = (
         f"{k} First Entering": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER
         for k, v in rooms.items()
     }
-    # | {
-    #     # Create 100 locked trunk check locations for each room that has the ability to have locked trunks
-    #     f"{k} Locked Trunk {idx}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 10_000 + idx
-    #     for k, v in rooms.items()
-    #     for idx in range(1, 101)
-    #     if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0
-    # }
+    | {
+        # Create 100 locked trunk check locations for each room that has the ability to have locked trunks
+        f"{k} Locked Trunk {idx}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 10_000 + idx
+        for k, v in rooms.items()
+        for idx in range(1, 101)
+        if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0
+    }
     | {
         # Add First Pickup as locations for armory items.
         f"{k} First Pickup": v[ITEM_ID_KEY] * ROOM_MULTIPLIER
@@ -58,19 +58,17 @@ def create_all_locations(world: BluePrinceWorld) -> None:
 
 def create_regular_locations(world: BluePrinceWorld) -> None:
 
+    locations_to_setup : dict[str, Rule] = dict()
+
     armory = world.get_region("The Armory")
-    LOCATIONS_BY_GROUPS["Armory Purchases"] = set()
     # Ignoring chance to get Knight's Shield by digging with Jack Hammer for now.
     for k, v in armory_items.items():
         location_key = f"{k} First Pickup"
         locs = get_location_names_with_ids([location_key])
         armory.add_locations(locs, BluePrinceLocation)
-        LOCATIONS_BY_GROUPS["Armory Purchases"].add(location_key)
-
-    LOCATIONS_BY_GROUPS["Room Entrances"] = set()
-    LOCATIONS_BY_GROUPS["Trunks"] = set()
+    
     for room_key, v in rooms.items():
-        if world.options.goal_type.value < 2 and room_key in ["Room 46", "Gift Shop"]:
+        if world.options.goal_type.value < 2 and room_key in ["Room 46", "Gift Shop", "Treasure Trove"]:
             continue # Skip Rooms that are past or at the goal
 
         if world.options.goal_type.value < 1 and room_key in ["Antechamber"]:
@@ -85,33 +83,63 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         location_key = f"{room_key} First Entering"
         locs = get_location_names_with_ids([location_key])
         room.add_locations(locs, BluePrinceLocation)
-        LOCATIONS_BY_GROUPS["Room Entrances"].add(location_key)
         # Add Nth locked trunk open
 
-        # trunk_count = world.options.locked_trunks_common if ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON else world.options.locked_trunks_rare if v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE else world.options.locked_trunks_complex
+        trunk_count = world.options.locked_trunks_common if ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON else world.options.locked_trunks_rare if v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE else world.options.locked_trunks_complex
 
-        # trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
-        # locs = get_location_names_with_ids(trunks)
-        # room.add_locations(locs, BluePrinceLocation)
-        # LOCATIONS_BY_GROUPS["Trunks"].update(trunks)
+        trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
+        locs = get_location_names_with_ids(trunks)
+        room.add_locations(locs, BluePrinceLocation)
 
         # These trunks require extra logic
-        # if room_key == "Entrance Hall":
-        #     for idx in range(1, trunk_count + 1):
-        #         world.set_rule(world.get_location(f"Entrance Hall Locked Trunk {idx}"), lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player))
+        if room_key == "Entrance Hall":
+            for idx in range(1, trunk_count + 1):
+                world.set_rule(world.get_location(f"Entrance Hall Locked Trunk {idx}"), lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player))
 
-        # elif room_key == "The Pool":
-        #     for idx in range(1, trunk_count + 1): 
-        #         world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
-    
-    locations_to_setup = []
+        elif room_key == "The Pool":
+            for idx in range(1, trunk_count + 1): 
+                world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
 
     for k, v in locations.items():
 
         if world.options.goal_type.value < 4 and k in ["Ascend The Throne", "Throne of the Blue Prince Mora Jai Box"]:
             continue
 
-        if world.options.goal_type.value < 2 and k in ["LUNCH BOX First Pickup", "CURSED EFFIGY First Pickup", "Gift Shop - Mt. Holly Tee", "Gift Shop - Lunch Box", "Gift Shop - Swim Trunks", "Gift Shop - Swim Bird Plushie", "Gift Shop - Blue Tents", "Gift Shop - Cursed Coffers"]:
+        if world.options.goal_type.value < 3 and (k in aries_court_mora_jai_boxes or k in ["KEY of Aries First Pickup", "ROYAL SCEPTER First Pickup"]):
+            continue
+
+        if world.options.goal_type.value < 2 and (k in sanctum_keys or 
+            k in ["LUNCH BOX First Pickup", 
+                  "CURSED EFFIGY First Pickup", 
+                  "Cursed Coffers", 
+                  "CROWN First Pickup", 
+                  "Underpass Mora Jai Box", 
+                  "Treasure Trove Floorplan",
+                  "Gift Shop - Mt. Holly Tee", 
+                  "Gift Shop - Lunch Box", 
+                  "Gift Shop - Swim Trunks", 
+                  "Gift Shop - Swim Bird Plushie", 
+                  "Gift Shop - Blue Tents", 
+                  "Gift Shop - Cursed Coffers"]
+            or k in [f"Solved {s}" for s in [
+            "Orinda Aries Sanctum",
+            "Fenn Aries Sanctum",
+            "Arch Aries Sanctum",
+            "Eraja Sanctum",
+            "Corarica Sanctum",
+            "Mora Jai Sanctum",
+            "Verra Sanctum",
+            "Nuance Sanctum",
+        ]] or k in [f"{s} Mora Jai Box" for s in [
+            "Orinda Aries Sanctum",
+            "Fenn Aries Sanctum",
+            "Arch Aries Sanctum",
+            "Eraja Sanctum",
+            "Corarica Sanctum",
+            "Mora Jai Sanctum",
+            "Verra Sanctum",
+            "Nuance Sanctum",
+        ]]):
             continue # Skip locations that are past or at the goal
 
         if world.options.trophy_sanity == False and k in trophies:
@@ -125,8 +153,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
             reg.locations.append(loc)
 
-
-            world.set_rule(world.get_location(k), get_location_rule(k))
+            locations_to_setup[k] = get_location_rule(k)
             continue
 
         if NONSANITY_LOCATION_KEY in v and world.options.room_draft_sanity == False and k in floorplans.keys():
@@ -138,7 +165,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
                 reg.locations.append(loc)
 
-                world.set_rule(world.get_location(k), get_location_rule(k))
+                locations_to_setup[k] = get_location_rule(k)
                 continue
         if LOCATION_ITEM_KEY in v and world.options.key_sanity == False and k in keys.keys():
             if v[LOCATION_ITEM_KEY] != STARTING_INVENTORY:
@@ -149,24 +176,29 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
                 reg.locations.append(loc)
 
-                world.set_rule(world.get_location(k), get_location_rule(k))
+                locations_to_setup[k] = get_location_rule(k)
                 continue
 
         location_key = k
         locs = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
-        locations_to_setup.append(location_key)
+        locations_to_setup[location_key] = get_location_rule(location_key)
 
-    for location_key in locations_to_setup:
-        world.set_rule(world.get_location(location_key), get_location_rule(location_key))
+    for location_key, rule in locations_to_setup.items():
+        world.set_rule(world.get_location(location_key), rule)
     
 def get_location_rule(location_key: str) -> Rule:
     location_data = locations[location_key]
     
     if LOCATION_RULE_SIMPLE_COMMON not in location_data:
         return True_()
+    
+    rule = location_data[LOCATION_RULE_SIMPLE_COMMON]
 
-    return location_data[LOCATION_RULE_SIMPLE_COMMON]
+    if isinstance(rule, Rule): # Added this because pylance was showing an error
+        return rule
+
+    raise Exception(f"Invalid rule for location {location_key}: {rule}")
 
 def create_events(world: BluePrinceWorld) -> None:
 
@@ -237,7 +269,7 @@ def create_events(world: BluePrinceWorld) -> None:
             "Ascend The Throne",
             (CanReachItemLocation("CROWN") &
                 CanReachItemLocation("ROYAL SCEPTER") &
-                CanReachItemLocation("CURSED EFFIGY")).resolve(world),
+                CanReachItemLocation("CURSED EFFIGY")),
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
@@ -247,14 +279,14 @@ def create_events(world: BluePrinceWorld) -> None:
             "Ascend The Throne",
             (CanReachItemLocation("CROWN") &
                 CanReachItemLocation("ROYAL SCEPTER") &
-                CanReachItemLocation("CURSED EFFIGY")).resolve(world),
+                CanReachItemLocation("CURSED EFFIGY")),
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
         throne_room.add_event(
             "Unseal Blue Doors",
             "Blue Door Access",
-            HasFromList(*[x for x in blue_rooms if x not in core_rooms], count = 8).resolve(world),
+            HasFromList(*[x for x in blue_rooms if x not in core_rooms], count = 8),
             location_type=BluePrinceLocation,
             item_type=items.BluePrinceItem,
         )
@@ -288,8 +320,8 @@ def create_events(world: BluePrinceWorld) -> None:
         "Satellite Raised",
         And(
             *[CanReachItemLocation(x) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]],
-            CanReachItemLocation("Scorch Sundial")
-        ).resolve(world),
+            CanReachLocation("Scorch Sundial")
+        ),
         location_type=BluePrinceLocation,
         item_type=items.BluePrinceItem,
     )
@@ -298,6 +330,9 @@ def create_events(world: BluePrinceWorld) -> None:
     for k, v in rooms.items():
         if v[ROOM_CHESS_PIECE_KEY] == CHESS_PIECE_NONE:
             continue
+        if world.options.goal_type.value < 2 and k in ["Treasure Trove"]:
+            continue # Skip Rooms that are past or at the goal
+
         world.get_region(k).add_event(
             f"Has {k} Chess Piece",
             f"Chess Piece {v[ROOM_CHESS_PIECE_KEY]}",

@@ -1,5 +1,6 @@
 from typing import ClassVar
 
+from rule_builder.rules import Rule
 from test.bases import WorldTestBase
 
 class BluePrinceTestBase(WorldTestBase):
@@ -18,4 +19,10 @@ class BluePrinceTestBase(WorldTestBase):
             print("Locations: [",", ".join([x.name for x in locations]), "]")
         else:
             return f"Regions: [{', '.join([x.name for x in regions])} ]\nItems: [{', '.join([f'{item}: {items[item]}' if items[item] > 1 else item for item in items])}]\nLocations: [{', '.join([x.name for x in locations])}]"
+        
+    def assertRuleTrue(self, rule: Rule, message=""):
+        self.assertTrue(rule.resolve(self.world)._evaluate(self.multiworld.state), message + "\n" + rule.resolve(self.world).explain_str(self.multiworld.state))
+
+    def assertRuleFalse(self, rule: Rule, message=""):
+        self.assertFalse(rule.resolve(self.world)._evaluate(self.multiworld.state), message + "\n" + rule.resolve(self.world).explain_str(self.multiworld.state))
             
