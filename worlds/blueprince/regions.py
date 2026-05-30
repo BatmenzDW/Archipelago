@@ -264,6 +264,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     CanReachPickPosition("Morning Room") & CanReachRegion("Kitchen"), # Requires Kitchen or Breakfast Nook, but we don't handle room upgrades yet.
                 )
 
+            elif k == "Throne Room":
+                entrance_hall.connect(
+                    room,
+                    "Entrance Hall Throne Room",
+                    CanReachPickPosition("Throne Room") & CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins"), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
+                )
+
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
                 continue
@@ -287,16 +294,17 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     campsite.connect(
         apple_orchard,
         "Campsite To Apple Orchard",
+        Has("Apple Orchard"),
     )
     campsite.connect(
         gemstone_cavern,
         "Campsite To Gemstone Cavern",
-        (CanReachRegion("Utility Closet")),
+        Has("Gemstone Caverns"),
     )  # Rules of are found in office emails. Solution is in office emails. May be able to adjust pattern?
     private_drive.connect(
         blakbridge_grotto,
         "Private Drive To Blackbridge Grotto",
-        (CanReachRegion("Boiler Room") & CanReachRegion("Laboratory")),
+        Has("Blackbridge Grotto"),
     )
     private_drive.connect(grounds, "Private Drive To Grounds")
     blakbridge_grotto.connect(
@@ -424,15 +432,22 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         excavation_tunnel,
         "Reservoir Fountain Side To Excavation Tunnel",
     )
-    the_well.connect(
-        reservoir_fountain_side,
-        "Well To Reservoir Fountain Side",
-        CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
-    )
+
+    if world.options.goal_type.value > 0:
+        the_well.connect(
+            reservoir_fountain_side,
+            "Well To Reservoir Fountain Side",
+            CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
+        )
 
     west_path.connect(
         grounds,
         "West Path To Grounds",
+    )
+    grounds.connect(
+        west_path,
+        "Grounds To West Path",
+        Has("West Gate Path"),
     )
     tomb.connect(
         catacombs,
@@ -451,14 +466,15 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         "Garage To West Path",
         Or(CanReachRegion("Utility Closet"), CanReachRegion("Boiler Room")),
     )
-    foundation_elevator.connect(
-        basement,
-        "Foundation Elevator To Basement",
-        And(
-            CanReachRegion("The Foundation"),
-            CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
-        ),
-    )
+    if world.options.goal_type.value > 0:
+        foundation_elevator.connect(
+            basement,
+            "Foundation Elevator To Basement",
+            And(
+                CanReachRegion("The Foundation"),
+                CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
+            ),
+        )
     torch_chamber.connect(
         the_precipice,
         "Torch Chamber To Precipice",
@@ -476,7 +492,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         tunnel_area_post_crates,
         "Tunnel Area Entrance To Tunnel Area Post Crates",
         And(
-            Has("Satellite Raised"),
+            Has("Satellite Dish"),
             Or(
                 CanReachRegion("Laboratory"),
                 CanReachRegion("Blackbridge Grotto"),
@@ -487,11 +503,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         tunnel_area_post_normal_locked_door,
         "Tunnel Area Post Crates to Tunnel Area Post Normal Locked Door",
     )
-    tunnel_area_post_normal_locked_door.connect(
-        tunnel_area_post_basement_key_door,
-        "Tunnel Area Post Normal Locked Door to Tunnel Area Post Basement Key",
-        CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
-    )
+    if world.options.goal_type.value > 0:
+        tunnel_area_post_normal_locked_door.connect(
+            tunnel_area_post_basement_key_door,
+            "Tunnel Area Post Normal Locked Door to Tunnel Area Post Basement Key",
+            CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
+        )
     tunnel_area_post_basement_key_door.connect(
         tunnel_area_post_security_door,
         "Tunnel Area Post Basement Key to Tunnel Area Post Security Door",

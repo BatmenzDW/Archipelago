@@ -99,16 +99,27 @@ class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):
         loc_name = self.location + " First Pickup"
 
         if loc_name in locations:
-            return (Has(self.location) & CanReachLocation(loc_name, parent_region_name=self.parent_region_name)).resolve(world)
+            if IMPLEMENTATION_STATUS in locations[loc_name] and locations[loc_name][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
+                if LOCATION_RULE_SIMPLE_COMMON in locations[loc_name]:
+                    return (CanReachRegion(locations[loc_name][LOCATION_ROOM_KEY]) & locations[loc_name][LOCATION_RULE_SIMPLE_COMMON]).resolve(world)
+                else:
+                    return True_().resolve(world)
+            else:
+                return (Has(self.location) & CanReachLocation(loc_name, parent_region_name=self.parent_region_name)).resolve(world)
         
         if self.location in workshop_items:
-            return (Has(self.location) & CanReachLocation(f"{self.location} First Craft", parent_region_name="Workshop")).resolve(world)
+            if f"{self.location} First Craft" in locations and IMPLEMENTATION_STATUS in locations[f"{self.location} First Craft"] and locations[f"{self.location} First Craft"][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
+                return locations[f"{self.location} First Craft"][LOCATION_RULE_SIMPLE_COMMON].resolve(world)
+            else:
+                return (Has(self.location) & CanReachLocation(f"{self.location} First Craft", parent_region_name="Workshop")).resolve(world)
 
         if self.location in armory_items:
             return (Has(self.location) & CanReachRegion("The Armory")).resolve(world)
          
         for location, data in locations.items():
             if LOCATION_ITEM_KEY in data and data[LOCATION_ITEM_KEY] == self.location:
+                if IMPLEMENTATION_STATUS in data and data[IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED and LOCATION_RULE_SIMPLE_COMMON in data:
+                    return (CanReachRegion(data[LOCATION_ROOM_KEY]) & data[LOCATION_RULE_SIMPLE_COMMON]).resolve(world)
                 return (Has(self.location) & CanReachLocation(location, parent_region_name=self.parent_region_name)).resolve(world)
 
         return False_().resolve(world)
@@ -230,7 +241,7 @@ class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(CanReachRegion("Laboratory"), Has("Satellite Raised"), options=extreme_logic_filter).resolve(world)
+        return And(Or(CanReachRegion("Laboratory"), CanReachRegion("Blackbridge Grotto"),), Has("Satellite Dish"), options=extreme_logic_filter).resolve(world)
 
 prev_trading_post_offers : set[str] = set()
 @dataclasses.dataclass()
@@ -376,10 +387,16 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
         def _evaluate(self, state: CollectionState) -> bool:
             from .data_other_locations import locations, armory_items
             reachable_count = 0
+            
             for target in self.targets:
                 loc_name = target + " First Pickup"
                 if loc_name in locations:
-                    if (state.has(target, self.player) and state.can_reach_location(loc_name, self.player)):
+                    if IMPLEMENTATION_STATUS in locations[loc_name] and locations[loc_name][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
+                        if LOCATION_RULE_SIMPLE_COMMON in locations[loc_name]:
+                            return (CanReachRegion(locations[loc_name][LOCATION_ROOM_KEY]) & locations[loc_name][LOCATION_RULE_SIMPLE_COMMON]).resolve(state.multiworld.worlds[self.player])
+                        else:
+                            reachable_count += 1
+                    elif state.has(target, self.player) and state.can_reach_location(loc_name, self.player):
                         reachable_count += 1
                 elif target in armory_items:
                     if (state.has(target, self.player) and state.can_reach_region("The Armory", self.player)):
@@ -387,6 +404,14 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
                 else:
                     for location, data in locations.items():
                         if LOCATION_ITEM_KEY in data and data[LOCATION_ITEM_KEY] == target:
+                            if LOCATION_ITEM_KEY in data and data[LOCATION_ITEM_KEY] == target:
+                                if IMPLEMENTATION_STATUS in data and data[IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
+                                    if LOCATION_RULE_SIMPLE_COMMON in data:
+                                        if (CanReachRegion(data[LOCATION_ROOM_KEY]) & data[LOCATION_RULE_SIMPLE_COMMON]).resolve(state.multiworld.worlds[self.player]):
+                                            reachable_count += 1
+                                        break
+                                    reachable_count += 1
+                                    break
                             if (state.has(target, self.player) and state.can_reach_location(location, self.player)):
                                 reachable_count += 1
                                 break

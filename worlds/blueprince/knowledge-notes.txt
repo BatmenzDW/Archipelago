@@ -1,0 +1,121 @@
+Darkroom + Utility Closet + Magnifying Glass -> Orchard Gate Code
+Mail Room + Office + Terminal Password + Randolph's Letter 9 -> VAC Controls
+Chapel Stained Glass -> Tomb Puzzle 1
+All 8 sigils' postcards -> 8 realms in 8 months
+Herbert's Will -> Tomb Puzzle 2
+Herbert's Will -> First Letter of each Gallery Puzzle
+Randolph's Letter 2 -> Terminal Password
+Staff Notice (Commissary, Security) + Magnifying -> Terminal Password
+With?/Without? (Commissary) -> Hint Towards Painting Pairs
+Pump Room + Aquarium -> File Cabinet Keys
+Security Note -> Blue Memos True, Red Memos Lies
+Security Note + Magnifying Glass -> Handwritten Red Memos True
+Security + Attic Monitors Clue -> HSS password
+Labratory Temp Diagram + Drafting Strategy Vol. 2 -> Freezer Thaw
+Labratory Periodic Table + Randolph's Letter 3 + Boiler Power -> Blackbridge Access
+Blackbridge (with password access) -> Electronic Mail for other Terminals besides Office
+
+??? -> Cloister Secret (don't remember where this is learned)
+
+A New Clue (page 13) -> Lor = Word, Jor = Name
+Safehouse Train Route Puzzle -> Scorch Sundial
+
+Randolph's Letter 12 -> Weight Room breakable wall
+
+Patio Black Note + Nook Black Note + Office Note + Pantry Note -> buried beside west bridge -> Microchip 1
+Music Sheet 5 (Greenhouse) + Music Sheet 8 (Workshop) -> Conservatory Floorplan
+Underground Map (Torch Chamber / Reservoir) + Magnifying Glass -> Lost & Found Floorplan
+Randolph's Letter 6 -> Observatory Floorplan
+
+Room 46 frozen clocks/Clock Tower -> Sacred Hour
+
+Lost & Found Note (CLUE = 3) -> (I forget what this helps with)
+Drafting Strategy Vol. 5 -> Drafting Sweepstakes
+
+Pump EPCW Pump System User Manual -> Pump Controls
+
+Freezer Letter -> Room Painting Pairs
+
+Freezer Note -> Admin Key RevaD
+Randolph's Letter 14 -> Admin Key pattern (JoneS)
+
+Randolph's Letter 15 -> Microchip 2 hint
+
+Gardener's Logbook -> Reyna = Gardener
+Her Ladyship's Diary -> Outer Antechamber hint
+
+Maid's Chamber Note -> Start Date/Current Date
+
+Master Bedroom Note -> Foundation Elevator Controls
+
+Safes:
+
+Room Painting Pairs -> if we count small gates 8 dates open 8 safes
+Drawing Room Paintings + Room Painting Pairs -> Drawing Room Safe
+Boudoir Photo + Room Painting Pairs -> Boudoir Safe
+Office Book Order + Foyer Statues + Room Painting Pairs -> Office Safe
+Current Date -> Shelter Safe
+Randolph's Letter 13 Red Handwritten Memo -> Safe Code = D8
+Randolph's Letter 13 Blue Memo -> "The numbers 6, 7 and 9 do not appear in any of the fixed combinations of safes on the estate."
+
+Knowledge From Terminal Network Acces:
+Any -> Current Date (for Shelter Safe)
+
+Sigil Info:
+
+Clocktower Note -> Coffin = Black
+Clocktower Fragment -> Flowers + "-|-" pattern
+Drafting Strategy Vol. 2 -> "Academia isn't only found in the mountains of Corarica" -> Corarica = Academic
+Foreman's Logs -> Orindia = Black
+Secret Garden Sigil -> full Orindia Sigil
+
+Non-Knowledge Docs:
+
+Hallway Red Memo
+Guest Bedroom Letter
+Entry Hall Letters
+Entry Hall Black Note
+Barons Bafflers
+Storeroom Swim Bird
+West Wing Hall Staff Notice
+Reddington Postcard
+Garage Note
+Parlor Letter
+Drawing Room Black Note
+Safe Red Letters
+Commissary Red Memo
+Cloister Note
+Allowance Note
+Bunk Room Journal
+Hovel Notice of Termination
+The Red Prince
+The Fixed Stars
+Annual Maid's Day Sale
+Security Red Memo
+Security Blue Memo
+Lab Tech Letter
+Lab Blue Power Memo
+Office Emails 1 & 3
+Basement Card
+Car Note
+Closed Exhibit Letter
+Conference Room Red Memo
+Conservatory Note
+Darkroom Hartley Memo
+Darkroom Note
+Drafting Strategy Vol. 1
+Drafting Strategy Vol. 3
+Drafting Strategy Vol. 4
+Locker Room Green Memo
+Letter from Simon's Dad
+Randolph's Letter 1
+Randolph's Letter 4
+Randolph's Letter 5
+Randolph's Letter 7
+Randolph's Letter 8
+Randolph's Letter 10
+Randolph's Letter 11
+Randolph's Letter 16
+Locker Room Memo
+Locker Room Note
+Mail Room Note

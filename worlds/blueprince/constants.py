@@ -15,6 +15,11 @@ SPECIAL_SHOP_SANITY = "special_shop_sanity"
 SANITY_TYPE_KEY = "sanity_type"
 NONSANITY_LOCATION_KEY = "nonsanity_location_item"
 
+IMPLEMENTATION_STATUS = "implementation_status"
+LOCATION_IMPLEMENTATION_STATUS = "location_implementation_status"
+NOT_IMPLEMENTED = "not_implemented"
+IMPLEMENTED = "implemented"
+
 ######################
 # ITEM KEY CONSTANTS #
 ######################

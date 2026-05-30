@@ -188,7 +188,7 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
     if world.random.randint(0, 99) < world.options.trap_percentage:
 
         choice = world.random.choices(
-            list(world.options.trap_type_distribution.valid_keys),
+            list(world.options.trap_type_distribution.value.keys()),
             list(world.options.trap_type_distribution.value.values()),
         )[0]
 
@@ -236,7 +236,7 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
                     return "Trap Lose Stars 1"
     else:
         choice = world.random.choices(
-            list(world.options.filler_item_distribution.valid_keys),
+            list(world.options.filler_item_distribution.value.keys()),
             list(world.options.filler_item_distribution.value.values()),
         )[0]
 
@@ -403,7 +403,8 @@ def create_all_items(world: BluePrinceWorld) -> None:
 
     exclude = [item for item in world.multiworld.precollected_items[world.player]]
 
-    standard_item_list = [world.create_item(k) for k in other_items if (k not in ["LUNCH BOX", "CURSED EFFIGY"] or world.options.goal_type.value > 1) 
+    standard_item_list = [world.create_item(k) for k in other_items if (k not in ["BASEMENT KEY"] or world.options.goal_type.value > 0)
+                                                                    and (k not in ["LUNCH BOX", "CURSED EFFIGY"] or world.options.goal_type.value > 1) 
                                                                     and (k not in ["CROWN", "ROYAL SCEPTER"] or world.options.goal_type.value > 2)]
     if world.options.standard_item_sanity:
         itempool += standard_item_list
@@ -450,18 +451,21 @@ def create_all_items(world: BluePrinceWorld) -> None:
                                                     if ROOM_PICK_POSITIONS_KEY in rooms[room.name] 
                                                     and (set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE) 
                                                     and room.name not in ["Sauna"] 
-                                                    and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)],
+                                                    and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)
+                                                    and not (world.options.trophy_sanity == False and world.options.goal_type.value <= 1 and room.name == "Trophy Room")],
             k=world.options.starting_room_amount.value,
         )
         world.starting_rooms += [r for r in room_item_list if r.name == "Closet"]
         itempool += [room for room in room_item_list if room not in world.starting_rooms 
-                     and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)]
+                     and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)
+                     and not (world.options.trophy_sanity == False and world.options.goal_type.value <= 1 and room.name == "Trophy Room")]
         to_precollect += world.starting_rooms
     else:
         # Precollects all room items, except for those that should be at their in-game locations, which are handled in locations.py
         to_precollect += [room for room in room_item_list if (NONSANITY_LOCATION_KEY not in rooms[room.name] 
                                                               or rooms[room.name][NONSANITY_LOCATION_KEY] == STARTING_INVENTORY) 
-                                                              and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)]
+                                                              and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)
+                                                              and not (world.options.trophy_sanity == False and world.options.goal_type.value <=1  and room.name == "Trophy Room")]
 
     if world.options.room_draft_sanity:
         n = len([room for room in world.starting_rooms if room in data_rooms.progressive_classroom])
@@ -469,8 +473,20 @@ def create_all_items(world: BluePrinceWorld) -> None:
     else:
         to_precollect += data_rooms.progressive_classroom
 
+    permanent_additions = [world.create_item(k) for k in permanent_unlocks]
+    itempool += permanent_additions
+
+    # remove anything that isn't implemented yet
+    for item in to_precollect.copy():
+        if not is_implemented(item.name, world):
+            to_precollect.remove(item)
+
+    for item in itempool.copy():
+        if not is_implemented(item.name, world):
+            itempool.remove(item)
+
     # remove any items that are in starting inventory
-    for item in to_precollect:
+    for item in to_precollect.copy():
         if item in exclude:
             exclude.remove(item)
         else:
@@ -499,3 +515,18 @@ def create_all_items(world: BluePrinceWorld) -> None:
 
     # Add Itempool to world itempool
     world.multiworld.itempool += itempool
+
+def is_implemented(item_name: str, world: BluePrinceWorld) -> bool:
+    if world.options.dev_testing:
+        return True
+    if item_name in all_items:
+        if IMPLEMENTATION_STATUS not in all_items[item_name]:
+            return True
+        return all_items[item_name][IMPLEMENTATION_STATUS] == IMPLEMENTED
+    
+    elif item_name in rooms:
+        if IMPLEMENTATION_STATUS not in rooms[item_name]:
+            return True
+        return rooms[item_name][IMPLEMENTATION_STATUS] == IMPLEMENTED
+    
+    return True

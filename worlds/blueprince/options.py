@@ -11,18 +11,16 @@ from Options import (
 )
 
 
-# Current "Sanity" options. Operating Under Assumption of Under Development.
+# Current "Sanity" options.
 
 class RoomDraftSanity(Toggle):
     """
-
-    Currently a Development option:
     Room Draft Sanity puts every single room (sans a single one chosen at random) into the item pool.
     Rooms can not be drafted until they are received from the item pool.
 
     """
 
-    display_name = "Dev: Room Draft Sanity"
+    display_name = "Room Draft Sanity"
 
     default = True
 
@@ -34,7 +32,7 @@ class StandardItemSanity(Toggle):
     That is, standard items can not be picked up or used until they are unlocked.
     """
 
-    display_name = "Dev: Standard Item Sanity"
+    display_name = "Standard Item Sanity"
 
     default = True
 
@@ -46,7 +44,7 @@ class WorkshopSanity(Toggle):
     That is, workshop crafted items can not be crafted until they are unlocked.
     """
 
-    display_name = "Dev: Workshop Sanity"
+    display_name = "Workshop Sanity"
 
     default = False
 
@@ -58,7 +56,7 @@ class UpgradeDiskSanity(Toggle):
     That is, upgrade disk items can not be picked up until they are unlocked.
     """
 
-    display_name = "Dev: Upgrade Disk Sanity"
+    display_name = "Upgrade Disk Sanity"
 
     default = False
 
@@ -70,7 +68,7 @@ class KeySanity(Toggle):
     That is, special keys can not be picked up until they are unlocked.
     """
 
-    display_name = "Dev: Key Sanity"
+    display_name = "Key Sanity"
 
     default = False
 
@@ -82,7 +80,7 @@ class SpecialShopSanity(Toggle):
     That is, special shop items can not be purchased until they are unlocked.
     """
 
-    display_name = "Dev: Special Shop Sanity"
+    display_name = "Special Shop Sanity"
 
     default = False
 
@@ -321,6 +319,18 @@ class DeathLinkGrace(Range):
     range_end = 100
     default = 0
 
+class DeathLinkProtection(Range):
+    """
+    Death Link Protection is the number of times a death link will be blocked before the player will actually die from a death link.
+    """
+
+    display_name = "Death Link Protection"
+    rich_text_doc = True
+
+    range_start = 0
+    range_end = 100
+    default = 0
+
 
 class DeathLinkMonkException(Toggle):
     """
@@ -332,7 +342,7 @@ class DeathLinkMonkException(Toggle):
 
     default = True
 
-
+# TODO: Add Tunnel ending? (after ascend, but before blueprints)
 # Goal Options
 class GoalType(Choice):
     """
@@ -381,12 +391,22 @@ class StartingRoomAmount(Range):
     range_end = 10
     default = 3
 
+class DevTesting(Toggle):
+    """
+    Dev: Toggle to turn on locations and items that are not implemented yet
+    """
+
+    display_name = "Dev: Development Testing"
+
+    default = False
+
+    visibility = Visibility.none
+
 # We must now define a dataclass inheriting from PerGameCommonOptions that we put all our options in.
 # This is in the format "option_name_in_snake_case: OptionClassName".
 @dataclass
 class BluePrinceOptions(PerGameCommonOptions):
 
-    # Development Options
     room_draft_sanity: RoomDraftSanity
     starting_room_amount: StartingRoomAmount
     locked_trunks_common: LockedTrunkCommonCount
@@ -409,11 +429,14 @@ class BluePrinceOptions(PerGameCommonOptions):
     # DeathLink Options
     death_link_type: DeathLinkType
     death_link_grace: DeathLinkGrace
+    death_link_protection: DeathLinkProtection
     death_link_monk_exception: DeathLinkMonkException
 
     # Goal Options
     goal_type: GoalType
     goal_sanctum_solves: GoalSanctumSolves
+
+    dev_testing: DevTesting
 
 
 # If we want to group our options by similar type, we can do so as well. This looks nice on the website.
@@ -440,7 +463,7 @@ option_groups = [
     ),
     OptionGroup(
         "Death Link Options",
-        [DeathLinkType, DeathLinkGrace, DeathLinkMonkException],
+        [DeathLinkType, DeathLinkGrace, DeathLinkProtection, DeathLinkMonkException],
     ),
     OptionGroup(
         "Goal Options",
@@ -470,6 +493,7 @@ option_presets = {
         "trap_percentage": TrapPercentage.range_start,
         "death_link_type": DeathLinkType.option_none,
         "death_link_grace": DeathLinkGrace.range_start,
+        "death_link_protection": 1,
         "death_link_monk_exception": True,
         "goal_type": GoalType.option_room46,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,

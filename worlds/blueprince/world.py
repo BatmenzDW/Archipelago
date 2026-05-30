@@ -1,7 +1,8 @@
 from collections.abc import Mapping
-from typing import Any, Set
+from typing import Any, List, Set
 
 # Imports of base Archipelago modules must be absolute.
+from BaseClasses import Item, Location
 from worlds.AutoWorld import World
 
 from .constants import ITEMS_BY_GROUPS, LOCATIONS_BY_GROUPS
@@ -24,6 +25,8 @@ class BluePrinceWorld(World):
 
     # Set the Web World
     web = web_world.BluePrinceWebWorld()
+
+    topology_present = True
 
     # Set the Options
     options_dataclass = blue_prince_options.BluePrinceOptions
@@ -62,6 +65,16 @@ class BluePrinceWorld(World):
 
     def get_filler_item_name(self) -> str:
         return items.get_random_filler_item_name(self)
+    
+    def fill_hook(self,
+                  progitempool: List["Item"],
+                  usefulitempool: List["Item"],
+                  filleritempool: List["Item"],
+                  fill_locations: List["Location"]) -> None:
+        if self.options.dev_testing == False:
+            return
+        # Very experimental, probably breaks stuff with generation when another world is involved
+        locations.force_special_location_conditions(self, progitempool, usefulitempool, filleritempool, fill_locations)
 
     # There may be data that the game client will need to modify the behavior of the game.
     # This is what slot_data exists for. Upon every client connection, the slot's slot_data is sent to the client.
@@ -84,6 +97,7 @@ class BluePrinceWorld(World):
             "trap_percentage",
             "death_link_type",
             "death_link_grace",
+            "death_link_protection",
             "death_link_monk_exception",
             "goal_type",
             "goal_sanctum_solves",

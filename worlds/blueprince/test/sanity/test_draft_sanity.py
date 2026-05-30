@@ -61,7 +61,7 @@ class TestDraftSanity(BluePrinceTestBase):
                     self.assertTrue(state.can_reach_region("Secret Garden", 1))
                     self.assertTrue(state.can_reach_region("Room 8", 1))
                     for room in data_other_locations.directory_rooms:
-                        if room not in ["Gift Shop", "Treasure Trove"]:
+                        if room not in ["Gift Shop", "Treasure Trove", "Trophy Room"]:
                             self.assertTrue(state.has(room, self.player), f"Expected to have {room} in inventory for player {self.player}")
                 self.assertTrue(sphere or self.multiworld.worlds[1].options.accessibility == "minimal",
                                 f"Unreachable locations: {locations}")

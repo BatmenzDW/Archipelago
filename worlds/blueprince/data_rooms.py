@@ -172,7 +172,7 @@ secret_blue = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
-        NONSANITY_LOCATION_KEY: "The Kennel Floorplan"
+        NONSANITY_LOCATION_KEY: "Kennel Floorplan"
     },
     "Clock Tower": {
         ROOM_ITEM_ID_KEY: 203,
@@ -1627,7 +1627,7 @@ shops = {
     },
 }
 red_rooms = {
-    "Lost And Found": {
+    "Lost & Found": {
         ROOM_ITEM_ID_KEY: 701,
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
@@ -1717,6 +1717,7 @@ red_rooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        LOCATION_IMPLEMENTATION_STATUS: NOT_IMPLEMENTED, # Currently has issues collecting the location for some reason.
     },
     "Archives": {
         ROOM_ITEM_ID_KEY: 706,
@@ -1811,7 +1812,7 @@ black_rooms = {
     },
     "Throne Room": {
         ROOM_ITEM_ID_KEY: 802,
-        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
+        ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
@@ -1834,6 +1835,8 @@ black_rooms = {
 
 rooms = blue_rooms | bedrooms | hallways | green_rooms | shops | red_rooms | black_rooms
 
+# These are here to make sure that location ids are deterministic.
+# Previously used hash() of the room name, but that was not deterministic (for some reason)
 other_areas = {
     "Campsite": {
         ROOM_ITEM_ID_KEY: 901,

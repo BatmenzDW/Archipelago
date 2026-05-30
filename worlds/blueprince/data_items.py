@@ -3,6 +3,7 @@ from .constants import *
 
 from BaseClasses import Item, ItemClassification
 
+# TODO: Maybe replace these with a single progressive item
 upgrade_disks = {
     "UPGRADE DISK COMMISSARY": {
         ITEM_ELEMENT_INDEX_KEY: 28,
@@ -86,6 +87,7 @@ upgrade_disks = {
     },
 }
 
+# TODO: Maybe replace these with a single progressive item
 sanctum_keys = {
     "SANCTUM KEY ANTECHAMBER": {
         ITEM_ELEMENT_INDEX_KEY: 9,
@@ -460,21 +462,25 @@ workshop_items = {
     },
 }
 
+# These are not used rn
 upgrade_items = {
     "IVORY DICE": {
         ITEM_ELEMENT_INDEX_KEY: 8,
         ITEM_ID_KEY: 1008,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "ALLOWANCE TOKENS": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 7001,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "CUPCAKE MESH": {
         ITEM_ELEMENT_INDEX_KEY: 7,
         ITEM_ID_KEY: 1007,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
 }
 
@@ -483,64 +489,105 @@ gift_shop_items = {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 4001,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Lunch Box": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 4002,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Swim Trunks": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 4003,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing | ItemClassification.useful,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Swim Bird Plushie": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 4004,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Blue Tents": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 4005,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler | ItemClassification.useful,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Cursed Coffers": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 4006,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
 }
 
+# TODO: Maybe replace these with a single progressive item
 bookshop_items = {
     "History of Orindia (1st ed.)": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 5001,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "A New Clue": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 5002,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "The Curse of Black Bridge": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 5003,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized_skip_balancing,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Realm & Rune": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 5004,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Drafting Strategy: Architectural Digest Vol. 4": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 5005,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Drafting Strategy: Architectural Digest Vol. 5": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 5006,
         ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.filler,
+        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
+    },
+}
+
+permanent_unlocks = {
+    "Blackbridge Grotto": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 6001,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "Gemstone Caverns": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 6002,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "Apple Orchard": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 6003,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "Satellite Dish": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 6004,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
+    },
+    "West Gate Path": {
+        ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
+        ITEM_ID_KEY: 6005,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
 }
 
@@ -549,10 +596,8 @@ shop_items = gift_shop_items | bookshop_items | showroom_items | armory_items
 # 
 # Items to add:
 # 
-# Orchard Gate?
-#
 
-all_items_excluding_upgrade_items = upgrade_disks | keys | workshop_items | shop_items | other_items
+all_items_excluding_upgrade_items = upgrade_disks | keys | workshop_items | shop_items | other_items | permanent_unlocks
 all_items = all_items_excluding_upgrade_items | upgrade_items
 
 #############################

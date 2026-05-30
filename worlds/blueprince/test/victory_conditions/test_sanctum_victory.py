@@ -8,7 +8,7 @@ class TestSanctumVictory(BluePrinceTestBase):
     options = {
         "room_draft_sanity": True,
         "item_sanity": True,
-        "trophy_sanity": True,
+        "trophy_sanity": False,
         "goal_type": GoalType.option_sanctum,
         "goal_sanctum_solves": 8
     }

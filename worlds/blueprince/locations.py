@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from logging import debug
+from typing import TYPE_CHECKING, List, Optional
 from rule_builder.rules import *
 
-from BaseClasses import CollectionState, ItemClassification, Location
+from BaseClasses import CollectionState, ItemClassification, Location, LocationProgressType, Region, Region
+from worlds.blueprince import world
 from .rules import *
 
 from .options import GoalType, ItemLogicMode
@@ -30,6 +32,9 @@ LOCATION_NAME_TO_ID = (
         for k, v in rooms.items()
     }
     | {
+        "Bunk Room First Entering 2": rooms["Bunk Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1
+    }
+    | {
         # Create 100 locked trunk check locations for each room that has the ability to have locked trunks
         f"{k} Locked Trunk {idx}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 10_000 + idx
         for k, v in rooms.items()
@@ -47,10 +52,8 @@ LOCATION_NAME_TO_ID = (
 class BluePrinceLocation(Location):
     game = "Blue Prince"
 
-
 def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | None]:
     return {location_name: LOCATION_NAME_TO_ID[location_name] for location_name in location_names}
-
 
 def create_all_locations(world: BluePrinceWorld) -> None:
     create_regular_locations(world)
@@ -81,8 +84,16 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
         # Add fist room entrance
         location_key = f"{room_key} First Entering"
-        locs = get_location_names_with_ids([location_key])
-        room.add_locations(locs, BluePrinceLocation)
+        if not is_implemented(location_key, world):
+            continue
+
+        if room_key not in ["Entrance Hall", "Bunk Room"]:
+            locs = get_location_names_with_ids([location_key])
+            room.add_locations(locs, BluePrinceLocation)
+
+        elif room_key == "Bunk Room":
+            locs = get_location_names_with_ids(["Bunk Room First Entering", "Bunk Room First Entering 2"])
+            room.add_locations(locs, BluePrinceLocation)
         # Add Nth locked trunk open
 
         trunk_count = world.options.locked_trunks_common if ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON else world.options.locked_trunks_rare if v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE else world.options.locked_trunks_complex
@@ -140,10 +151,16 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             "Verra Sanctum",
             "Nuance Sanctum",
         ]]):
+            continue 
+
+        if world.options.goal_type.value < 1 and (k in ["BASEMENT KEY First Pickup", "Break Tunnel Wall"] or "Unlock Basement Door" in k):
             continue # Skip locations that are past or at the goal
 
-        if world.options.trophy_sanity == False and k in trophies:
+        if world.options.trophy_sanity == False and (k in trophies or k in ["Gift Shop - Blue Tents"]):
             continue # Skip placing trophies when trophy sanity is off
+
+        if not is_implemented(k, world):
+            continue
 
         if k in shop_items and world.options.special_shop_sanity == False and NONSANITY_LOCATION_KEY in v:
             # Place special shop items at their in-game locations when special shop sanity is off.
@@ -186,7 +203,79 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
     for location_key, rule in locations_to_setup.items():
         world.set_rule(world.get_location(location_key), rule)
+
+def force_special_location_conditions(world: BluePrinceWorld,
+                                    progitempool: List["Item"],
+                                    usefulitempool: List["Item"],
+                                    filleritempool: List["Item"],
+                                    fill_locations: List["Location"]) -> None:
     
+    item = world.random.choice(progitempool + usefulitempool + filleritempool)
+
+    if item in progitempool:
+        if attempt_to_fill_multiple_locations_with_same_item(world, progitempool, fill_locations):
+            return
+    if item in usefulitempool:
+        if attempt_to_fill_multiple_locations_with_same_item(world, usefulitempool, fill_locations):
+            return
+    if item in filleritempool:
+        if attempt_to_fill_multiple_locations_with_same_item(world, filleritempool, fill_locations):
+            return
+
+    if attempt_to_fill_multiple_locations_with_same_item(world, progitempool, fill_locations):
+        return
+    if attempt_to_fill_multiple_locations_with_same_item(world, usefulitempool, fill_locations):
+        return
+    if attempt_to_fill_multiple_locations_with_same_item(world, filleritempool, fill_locations):
+        return
+    raise Exception("Could not satisfy special location conditions. This should be impossible.")
+
+# In theory, this should get a random item with multiple copies, but this world only has one that is progressive, so it will need to be tested if it works correctly
+def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, pool: List["Item"], locations: List["Location"]) -> bool:
+    multi : List[str] = []
+    
+    for item in pool:
+        if item.name in multi:
+            continue
+        if len([x for x in pool if x.name == item.name]) > 1:
+            multi.append(item.name)
+
+    if len(multi) == 0:
+        return False
+
+    loc1 = world.get_location("Bunk Room First Entering")
+    loc2 = world.get_location("Bunk Room First Entering 2")
+
+    l1_item : Item | None = None
+
+    order = list(range(len(pool)))
+    world.random.shuffle(order)
+
+    for i in order:
+        item = pool[i]
+        if item.name not in multi:
+            continue
+
+        if l1_item is None:
+            if loc1.can_fill(world.multiworld.state, item, check_access=False):
+                l1_item = item
+                continue
+        elif item.name == l1_item.name:
+            if loc2.can_fill(world.multiworld.state, item, check_access=False):
+                loc1.place_locked_item(l1_item)
+                loc2.place_locked_item(item)
+
+                locations.remove(loc1)
+                locations.remove(loc2)
+                pool.remove(l1_item)
+                pool.remove(item)
+                print(f"Placed {item} in both Bunk Room First Entering locations to satisfy the condition that they have the same item.")
+                return True
+            else:
+                l1_item = None
+
+    assert False, f"Could not find a way to fill the Bunk Room First Entering locations with the same item. This should be impossible."
+
 def get_location_rule(location_key: str) -> Rule:
     location_data = locations[location_key]
     
@@ -315,17 +404,6 @@ def create_events(world: BluePrinceWorld) -> None:
         item_type=items.BluePrinceItem,
     )
 
-    world.get_region("Apple Orchard").add_event(
-        "Raise Satellite",
-        "Satellite Raised",
-        And(
-            *[CanReachItemLocation(x) for x in ["MICROCHIP 1", "MICROCHIP 2", "MICROCHIP 3"]],
-            CanReachLocation("Scorch Sundial")
-        ),
-        location_type=BluePrinceLocation,
-        item_type=items.BluePrinceItem,
-    )
-
     # Chess Piece Access Rules
     for k, v in rooms.items():
         if v[ROOM_CHESS_PIECE_KEY] == CHESS_PIECE_NONE:
@@ -340,4 +418,20 @@ def create_events(world: BluePrinceWorld) -> None:
             item_type=items.BluePrinceItem,
         )
         
+
+def is_implemented(location_name: str, world: BluePrinceWorld) -> bool:
+    if world.options.dev_testing:
+        return True
+    if location_name in locations:
+        if IMPLEMENTATION_STATUS not in locations[location_name]:
+            return True
+        return locations[location_name][IMPLEMENTATION_STATUS] == IMPLEMENTED
     
+    if location_name.endswith("First Entering"):
+        room_name = location_name.replace(" First Entering", "")
+        if room_name in rooms:
+            if LOCATION_IMPLEMENTATION_STATUS not in rooms[room_name]:
+                return True
+            return rooms[room_name][LOCATION_IMPLEMENTATION_STATUS] == IMPLEMENTED
+
+    return True
