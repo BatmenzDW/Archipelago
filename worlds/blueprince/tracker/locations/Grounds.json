@@ -1,0 +1,24 @@
+[
+    {
+        "name": "Grounds",
+        "children": [
+            {
+                "name": "West Gate",
+                "short_name": "West Gate",
+                "map_locations": [
+                    {
+                        "map": "Grounds",
+                        "x": 1488,
+                        "y": 720
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "West Gate",
+                        "item_count": 1
+                    }
+                ]
+            }
+        ]
+    }
+]

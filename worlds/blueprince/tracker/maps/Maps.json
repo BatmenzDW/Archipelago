@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Grounds",
+        "img": "images/maps/grounds.png"
+    },
+    {
+        "name": "Underground",
+        "img": "images/maps/underground.png"
+    },
+    {
+        "name": "Rooms 001-012",
+        "img": "images/maps/rooms_001-012.png"
+    },
+    {
+        "name": "Rooms 013-024",
+        "img": "images/maps/rooms_013-024.png"
+    },
+    {
+        "name": "Rooms 025-036",
+        "img": "images/maps/rooms_025-036.png"
+    },
+    {
+        "name": "Rooms 037-046",
+        "img": "images/maps/rooms_037-046.png"
+    },
+    {
+        "name": "Bedrooms",
+        "img": "images/maps/bedrooms.png"
+    },
+    {
+        "name": "Hallways",
+        "img": "images/maps/hallways.png"
+    },
+    {
+        "name": "Green Rooms",
+        "img": "images/maps/green_rooms.png"
+    },
+    {
+        "name": "Shops",
+        "img": "images/maps/shops.png"
+    },
+    {
+        "name": "Red Rooms",
+        "img": "images/maps/red_rooms.png"
+    },
+    {
+        "name": "Studio Additions",
+        "img": "images/maps/studio_additions.png"
+    },
+    {
+        "name": "Found Floorplans",
+        "img": "images/maps/found_floorplans.png"
+    },
+    {
+        "name": "Outer Rooms",
+        "img": "images/maps/outer_rooms.png"
+    }
+]
