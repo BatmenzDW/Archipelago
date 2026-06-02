@@ -1928,6 +1928,9 @@ other_areas = {
     "Outer Room": {
         ROOM_ITEM_ID_KEY: 930,
     },
+    "Tunnel Area Entrance": {
+        ROOM_ITEM_ID_KEY: 931,
+    },
 }
 
 all_areas = rooms | other_areas

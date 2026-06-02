@@ -310,9 +310,13 @@ found_floorplans = {
         NONSANITY_LOCATION_KEY: "Throne Room"
     },
     "Tunnel Floorplan": {
-        LOCATION_ID_KEY: all_areas["Tunnel Area Past Crates"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
-        LOCATION_ROOM_KEY: "Tunnel Area Past Crates",
-        NONSANITY_LOCATION_KEY: "Tunnel"
+        LOCATION_ID_KEY: all_areas["Tunnel Area Entrance"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
+        LOCATION_ROOM_KEY: "Tunnel Area Entrance",
+        NONSANITY_LOCATION_KEY: "Tunnel",
+        LOCATION_RULE_SIMPLE_COMMON: Or(
+            CanReachItemLocation("Burning Glass"),
+            CanReachItemLocation("TORCH")
+        ),
     },
     "Conservatory Floorplan": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,

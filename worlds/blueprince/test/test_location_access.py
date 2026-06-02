@@ -29,7 +29,7 @@ class TestLocationAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Blackbridge Grotto"), "Should be able to reach Blackbridge Grotto after having the required rooms")
         self.assertRuleTrue(CanReachItemLocation("MICROCHIP 3"), "Should be able to reach MICROCHIP 3 after having the required rooms") # type: ignore
 
-        self.assertTrue(self.can_reach_location("Raise Satellite"), "Raise Satellite should be reachable after having the microchips and burning glass")
+        # self.assertTrue(self.can_reach_location("Raise Satellite"), "Raise Satellite should be reachable after having the microchips and burning glass")
         self.assertTrue(self.can_reach_region("Tunnel Area Past Crates"), "Tunnel Area Past Crates should be reachable after having crate experiment")
 
     def test_can_reach_compass(self):

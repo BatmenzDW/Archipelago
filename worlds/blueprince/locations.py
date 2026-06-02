@@ -113,6 +113,9 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
     for k, v in locations.items():
 
+        if IMPLEMENTATION_STATUS in v and v[IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
+            continue
+
         if world.options.goal_type.value < 4 and k in ["Ascend The Throne", "Throne of the Blue Prince Mora Jai Box"]:
             continue
 
