@@ -1717,7 +1717,6 @@ red_rooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
-        LOCATION_IMPLEMENTATION_STATUS: NOT_IMPLEMENTED, # Currently has issues collecting the location for some reason.
     },
     "Archives": {
         ROOM_ITEM_ID_KEY: 706,
