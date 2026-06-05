@@ -84,7 +84,7 @@ class SpecialShopSanity(Toggle):
 
     default = False
 
-    visibility = Visibility.all
+    visibility = Visibility.none
 
 class TrophySanity(Toggle):
     """
@@ -95,7 +95,7 @@ class TrophySanity(Toggle):
 
     default = False
 
-    visibility = Visibility.all
+    visibility = Visibility.none
 
 # TODO-2 Crate Sanity?
 # TODO-2 Document full list of potential checks/locations posted in blue prince thread.

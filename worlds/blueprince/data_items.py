@@ -1,4 +1,3 @@
-from typing import Dict, Set
 from .constants import *
 
 from BaseClasses import Item, ItemClassification
