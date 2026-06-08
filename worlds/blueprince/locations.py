@@ -15,7 +15,7 @@ from .constants import *
 
 from .data_rooms import rooms, blue_rooms, core_rooms
 from .data_items import armory_items
-from .data_other_locations import locations, keys, floorplans, shop_items, trophies, sanctum_keys, aries_court_mora_jai_boxes
+from .data_other_locations import locations, keys, floorplans, shop_items, trophies, sanctum_keys, aries_court_mora_jai_boxes, upgrade_disks, workshop_contraptions
 from .items import BluePrinceItem
 
 if TYPE_CHECKING:
@@ -190,6 +190,30 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         if LOCATION_ITEM_KEY in v and world.options.key_sanity == False and k in keys.keys():
             if v[LOCATION_ITEM_KEY] != STARTING_INVENTORY:
                 # Place keys at their in-game locations when key sanity is off.
+                reg = world.get_region(v[LOCATION_ROOM_KEY])
+                loc = BluePrinceLocation(world.player, k, None, reg)
+                loc.place_locked_item(BluePrinceItem(v[LOCATION_ITEM_KEY], ItemClassification.progression_skip_balancing, None, world.player))
+
+                reg.locations.append(loc)
+
+                locations_to_setup[k] = get_location_rule(k)
+                continue
+
+        if k in upgrade_disks.keys() and world.options.upgrade_disk_sanity == False and LOCATION_ITEM_KEY in v:
+            if v[LOCATION_ITEM_KEY] != STARTING_INVENTORY:
+                # Place upgrade disks at their in-game locations when upgrade disk sanity is off.
+                reg = world.get_region(v[LOCATION_ROOM_KEY])
+                loc = BluePrinceLocation(world.player, k, None, reg)
+                loc.place_locked_item(BluePrinceItem(v[LOCATION_ITEM_KEY], ItemClassification.progression_skip_balancing, None, world.player))
+
+                reg.locations.append(loc)
+
+                locations_to_setup[k] = get_location_rule(k)
+                continue
+
+        if k in workshop_contraptions.keys() and world.options.workshop_sanity == False and LOCATION_ITEM_KEY in v:
+            if v[LOCATION_ITEM_KEY] != STARTING_INVENTORY:
+                # Place workshop contraptions at their in-game locations when workshop sanity is off.
                 reg = world.get_region(v[LOCATION_ROOM_KEY])
                 loc = BluePrinceLocation(world.player, k, None, reg)
                 loc.place_locked_item(BluePrinceItem(v[LOCATION_ITEM_KEY], ItemClassification.progression_skip_balancing, None, world.player))

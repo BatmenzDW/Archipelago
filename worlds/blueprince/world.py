@@ -71,8 +71,6 @@ class BluePrinceWorld(World):
                   usefulitempool: List["Item"],
                   filleritempool: List["Item"],
                   fill_locations: List["Location"]) -> None:
-        if self.options.dev_testing == False:
-            return
         # Very experimental, probably breaks stuff with generation when another world is involved
         locations.force_special_location_conditions(self, progitempool, usefulitempool, filleritempool, fill_locations)
 
