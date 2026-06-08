@@ -1323,7 +1323,7 @@ upgrade_disks = {
 }
 
 vault_keys = {
-    "Vault Key 149": {
+    "Vault Key 149 First Pickup": {
         LOCATION_ID_KEY: all_areas["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 4, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Entrance Hall",
         LOCATION_ITEM_KEY: "VAULT KEY 149",
@@ -1338,7 +1338,7 @@ vault_keys = {
         ) | DigSpotRule() | CanReachRegion("Trophy Room", options=rare_logic_filter) | AdvancedExperimentRule(),
         
     },
-    "Vault Key 233": {
+    "Vault Key 233 First Pickup": {
         LOCATION_ID_KEY: all_areas["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 5, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Entrance Hall",
         LOCATION_ITEM_KEY: "VAULT KEY 233",
@@ -1354,7 +1354,7 @@ vault_keys = {
         ) | DigSpotRule() | LavatoryRule() | AdvancedExperimentRule(),
         
     },
-    "Vault Key 304": {
+    "Vault Key 304 First Pickup": {
         LOCATION_ID_KEY: all_areas["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 6, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Entrance Hall",
         LOCATION_ITEM_KEY: "VAULT KEY 304",
@@ -1368,7 +1368,7 @@ vault_keys = {
         ]) | DigSpotRule() | CanReachRegion("Drawing Room", options=rare_logic_filter) | UpgradedRoomRule("Spare Room", "Spare Hall"),
         
     },
-    "Vault Key 370": {
+    "Vault Key 370 First Pickup": {
         LOCATION_ID_KEY: all_areas["Entrance Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 7, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Entrance Hall",
         LOCATION_ITEM_KEY: "VAULT KEY 370",
@@ -1378,50 +1378,50 @@ vault_keys = {
 }
 
 sanctum_keys = {
-    "Sanctum Key - Room 46": {
+    "Sanctum Key - Room 46 First Pickup": {
         LOCATION_ID_KEY: all_areas["Room 46"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 5,
         LOCATION_ROOM_KEY: "Room 46",
         LOCATION_ITEM_KEY: "SANCTUM KEY ANTECHAMBER",
         IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
-    "Sanctum Key - Vault": {
+    "Sanctum Key - Vault First Pickup": {
         LOCATION_ID_KEY: all_areas["Vault"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Vault",
         LOCATION_ITEM_KEY: "SANCTUM KEY VAULT",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("VAULT KEY 370"),
         IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
-    "Sanctum Key - Clock Tower": {
+    "Sanctum Key - Clock Tower First Pickup": {
         LOCATION_ID_KEY: all_areas["Clock Tower"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Clock Tower",
         LOCATION_ITEM_KEY: "SANCTUM KEY CLOCK TOWER",
         IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
-    "Sanctum Key - Reservoir Bottom": {
+    "Sanctum Key - Reservoir Bottom First Pickup": {
         LOCATION_ID_KEY: all_areas["Reservoir Bottom"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Reservoir Bottom",
         LOCATION_ITEM_KEY: "SANCTUM KEY RESERVOIR",
         IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
-    "Sanctum Key - Throne Room": {
+    "Sanctum Key - Throne Room First Pickup": {
         LOCATION_ID_KEY: all_areas["Throne Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Throne Room",
         LOCATION_ITEM_KEY: "SANCTUM KEY THRONE ROOM",
         IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
-    "Sanctum Key - Safehouse": {
+    "Sanctum Key - Safehouse First Pickup": {
         LOCATION_ID_KEY: all_areas["Safehouse"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Safehouse",
         LOCATION_ITEM_KEY: "SANCTUM KEY SAFEHOUSE",
         IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
-    "Sanctum Key - Music Room": {
+    "Sanctum Key - Music Room First Pickup": {
         LOCATION_ID_KEY: all_areas["Music Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Music Room",
         LOCATION_ITEM_KEY: "SANCTUM KEY MUSIC ROOM",
         IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
-    "Sanctum Key - Mechanarium": {
+    "Sanctum Key - Mechanarium First Pickup": {
         LOCATION_ID_KEY: all_areas["Mechanarium"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Mechanarium",
         LOCATION_ITEM_KEY: "SANCTUM KEY MECHANARIUM",
@@ -1431,21 +1431,21 @@ sanctum_keys = {
 }
 
 file_cabinet_keys = {
-    "File Cabinet Key - Patio": {
+    "File Cabinet Key - Patio First Pickup": {
         LOCATION_ID_KEY: all_areas["Patio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Patio",
         LOCATION_ITEM_KEY: "CABINET KEY 1",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("SHOVEL"),
         
     },
-    "File Cabinet Key - Laundry Room": {
+    "File Cabinet Key - Laundry Room First Pickup": {
         LOCATION_ID_KEY: all_areas["Laundry Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Laundry Room",
         LOCATION_ITEM_KEY: "CABINET KEY 2",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("SHOVEL"),
         
     },
-    "File Cabinet Key - Tunnel Area Past Crates": {
+    "File Cabinet Key - Tunnel Area Past Crates First Pickup": {
         LOCATION_ID_KEY: all_areas["Tunnel Area Past Crates"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Tunnel Area Past Crates",
         LOCATION_ITEM_KEY: "CABINET KEY 3",
