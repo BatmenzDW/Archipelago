@@ -1453,7 +1453,7 @@ file_cabinet_keys = {
     },
 }
 
-keys = vault_keys | sanctum_keys | file_cabinet_keys
+keys = vault_keys | sanctum_keys | file_cabinet_keys | special_key_pickup
 
 doors_walls_and_gates = {
     "West Gate": {
