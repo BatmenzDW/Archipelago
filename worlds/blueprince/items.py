@@ -450,7 +450,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
         world.starting_rooms = world.random.choices([room for room in room_item_list 
                                                     if ROOM_PICK_POSITIONS_KEY in rooms[room.name] 
                                                     and (set(rooms[room.name][ROOM_PICK_POSITIONS_KEY]) & ENTRANCE_HALL_DRAFTABLE) 
-                                                    and room.name not in ["Sauna"] 
+                                                    and room.name not in ["Sauna", "Closet"] 
                                                     and not (room.name in ["Treasure Trove", "Gift Shop"] and world.options.goal_type.value <= 1)
                                                     and not (world.options.trophy_sanity == False and world.options.goal_type.value <= 1 and room.name == "Trophy Room")],
             k=world.options.starting_room_amount.value,

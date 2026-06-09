@@ -18,6 +18,8 @@ class TestDraftSanity(BluePrinceTestBase):
     }
 
     def test_starting_room_count(self) -> None:
+        self.assertFalse(self.multiworld.state.has("Closet", self.player, 2), "Should not have more than 1 Closet in inventory")
+
         n = 0
         for room in rooms:
             if room in core_rooms:
