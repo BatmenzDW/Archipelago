@@ -36,55 +36,125 @@ class CanReachPickPosition(Rule["BluePrinceWorld"], game="Blue Prince"):
     always_have: bool = False
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return self.Resolved(self.room, self.always_have, player=world.player)
+        return self._build_rule().resolve(world)
+
+        # return self.Resolved(self.room, self.always_have, player=world.player)
     
-    class Resolved(Rule.Resolved):
-        room : str
-        always_have: bool = False
-        @override
-        def _evaluate(self, state: CollectionState) -> bool:
-            if not self.always_have and self.room not in core_rooms and not state.has(self.room, self.player):
-                return False
-            
-            room_data = rooms[self.room]
-            
-            positions_types = room_data[ROOM_PICK_POSITIONS_KEY]
-
-            inventory = {
-                ROOM_LAYOUT_TYPE_X: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_X], self.player),
-                ROOM_LAYOUT_TYPE_T: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_T], self.player),
-                ROOM_LAYOUT_TYPE_I: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_I], self.player),
-                ROOM_LAYOUT_TYPE_J: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_J], self.player),
-            }
-
-            total_inventory = sum(inventory.values())
-
-            if (room_data[ROOM_LAYOUT_TYPE_KEY] in inventory and inventory[room_data[ROOM_LAYOUT_TYPE_KEY]] > 0):
-                inventory[room_data[ROOM_LAYOUT_TYPE_KEY]] -= 1
-
-            for pt in positions_types:
-                if pt not in POSITION_MINIMUM_PIECES or total_inventory < POSITION_MINIMUM_TOTAL_PIECES[pt]:
-                    continue
-                if self.matches_minimum_inventory(POSITION_MINIMUM_PIECES[pt], inventory):
-                    return True
-                
-            return False
+    def _build_rule(self) -> Rule:
+        rule_has : Rule
+        if not self.always_have and self.room not in core_rooms:
+            rule_has = Has(self.room)
+        else:
+            rule_has = True_()
         
-        def matches_minimum_inventory(self, required: list[tuple[int, int, int, int]], inventory: dict[str, int]) -> bool:
-            inv = tuple(inventory[k] for k in inventory)
-            for req in required:
-                if all(inv[i] >= req[i] for i in range(4)):
-                    return True
-                
-            return False
+        room_data = rooms[self.room]
+            
+        positions_types = room_data[ROOM_PICK_POSITIONS_KEY]
 
-        @override
-        def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
-            return [
-                {"type": "text", "text": "Use pre-calculated tables to determine if a the pick position for  "},
-                {"type": "color", "color": "green" if state and self(state) else "salmon", "text": self.room},
-                {"type": "text", "text": "is reachable with the current inventory."},
-            ]
+        x_layouts = room_layout_lists[ROOM_LAYOUT_TYPE_X]
+        t_layouts = room_layout_lists[ROOM_LAYOUT_TYPE_T]
+        i_layouts = room_layout_lists[ROOM_LAYOUT_TYPE_I]
+        j_layouts = room_layout_lists[ROOM_LAYOUT_TYPE_J]
+
+        total = [*x_layouts, *t_layouts, *i_layouts, *j_layouts]
+
+        pos_types_rule : Rule = True_()
+        for pt in positions_types:
+            if pt not in POSITION_MINIMUM_PIECES:
+                continue
+
+            min_total = POSITION_MINIMUM_TOTAL_PIECES[pt]
+            if room_data[ROOM_LAYOUT_TYPE_KEY] != ROOM_LAYOUT_TYPE_D:
+                min_total -= 1
+            
+            pt_rule = False_()
+
+            min_rule = HasFromList(*total, count=min_total)
+
+            min_layouts = POSITION_MINIMUM_PIECES[pt]
+            
+            if room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_X:
+                for layout in min_layouts:
+                    pt_rule |= And(HasFromList(*x_layouts, count=max(layout[0]-1, 0)),
+                            HasFromList(*t_layouts, count=layout[1]),
+                            HasFromList(*i_layouts, count=layout[2]),
+                            HasFromList(*j_layouts, count=layout[3]))
+            elif room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_T:
+                for layout in min_layouts:
+                    pt_rule |= And(HasFromList(*x_layouts, count=layout[0]),
+                            HasFromList(*t_layouts, count=max(layout[1]-1, 0)),
+                            HasFromList(*i_layouts, count=layout[2]),
+                            HasFromList(*j_layouts, count=layout[3]))
+            elif room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_I:
+                for layout in min_layouts:
+                    pt_rule |= And(HasFromList(*x_layouts, count=layout[0]),
+                            HasFromList(*t_layouts, count=layout[1]),
+                            HasFromList(*i_layouts, count=max(layout[2]-1, 0)),
+                            HasFromList(*j_layouts, count=layout[3]))
+            elif room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_J:
+                for layout in min_layouts:
+                    pt_rule |= And(HasFromList(*x_layouts, count=layout[0]),
+                            HasFromList(*t_layouts, count=layout[1]),
+                            HasFromList(*i_layouts, count=layout[2]),
+                            HasFromList(*j_layouts, count=max(layout[3]-1, 0)))
+            else:
+                for layout in min_layouts:
+                    pt_rule |= And(HasFromList(*x_layouts, count=layout[0]),
+                            HasFromList(*t_layouts, count=layout[1]),
+                            HasFromList(*i_layouts, count=layout[2]),
+                            HasFromList(*j_layouts, count=layout[3]))
+
+            pos_types_rule |= pt_rule & min_rule
+        
+        return rule_has & pos_types_rule
+        
+    # class Resolved(Rule.Resolved):
+    #     room : str
+    #     always_have: bool = False
+    #     @override
+    #     def _evaluate(self, state: CollectionState) -> bool:
+    #         if not self.always_have and self.room not in core_rooms and not state.has(self.room, self.player):
+    #             return False
+            
+    #         room_data = rooms[self.room]
+            
+    #         positions_types = room_data[ROOM_PICK_POSITIONS_KEY]
+
+    #         inventory = {
+    #             ROOM_LAYOUT_TYPE_X: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_X], self.player),
+    #             ROOM_LAYOUT_TYPE_T: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_T], self.player),
+    #             ROOM_LAYOUT_TYPE_I: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_I], self.player),
+    #             ROOM_LAYOUT_TYPE_J: state.count_from_list(room_layout_lists[ROOM_LAYOUT_TYPE_J], self.player),
+    #         }
+
+    #         total_inventory = sum(inventory.values())
+
+    #         if (room_data[ROOM_LAYOUT_TYPE_KEY] in inventory and inventory[room_data[ROOM_LAYOUT_TYPE_KEY]] > 0):
+    #             inventory[room_data[ROOM_LAYOUT_TYPE_KEY]] -= 1
+
+    #         for pt in positions_types:
+    #             if pt not in POSITION_MINIMUM_PIECES or total_inventory < POSITION_MINIMUM_TOTAL_PIECES[pt]:
+    #                 continue
+    #             if self.matches_minimum_inventory(POSITION_MINIMUM_PIECES[pt], inventory):
+    #                 return True
+                
+    #         return False
+        
+    #     def matches_minimum_inventory(self, required: list[tuple[int, int, int, int]], inventory: dict[str, int]) -> bool:
+    #         inv = tuple(inventory[k] for k in inventory)
+    #         for req in required:
+    #             if all(inv[i] >= req[i] for i in range(4)):
+    #                 return True
+                
+    #         return False
+
+    #     @override
+    #     def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
+    #         return [
+    #             {"type": "text", "text": "Use pre-calculated tables to determine if a the pick position for  "},
+    #             {"type": "color", "color": "green" if state and self(state) else "salmon", "text": self.room},
+    #             {"type": "text", "text": "is reachable with the current inventory."},
+    #         ]
 
 @dataclasses.dataclass()
 class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):

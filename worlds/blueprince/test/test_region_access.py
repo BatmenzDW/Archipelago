@@ -21,16 +21,6 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Grounds"))
         self.assertTrue(self.can_reach_region("Private Drive"))
         self.assertTrue(self.can_reach_region("Tunnel Area Entrance"))
-
-    # def test_inner_rooms_requires_room_item(self) -> None:
-
-    #     for room,v in rooms.items():
-    #         if room in core_rooms or v[OUTER_ROOM_KEY]:
-    #             continue
-
-    #         self.assertFalse(self.can_reach_region(room), f"{room} should not be reachable without having the room as an item")
-    #         self.collect_by_name(room)
-    #         self.assertTrue(self.can_reach_region(room), f"{room} should be reachable after collecting the room as an item")
     
     def test_build_path_to_garage(self) -> None:
         if not self.multiworld.state.has("Garage", self.player):
@@ -108,8 +98,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("The Precipice"), "The Precipice should be reachable after having all Gas Valves")
     
     def test_orindian_ruins_requires_microchips(self) -> None:
-        return # Not implemented yet
-        self.collect_by_name(["Hallway", "The Pool", "Boiler Room", "Laboratory", "Garage", "SHOVEL", "SLEDGE HAMMER", "Attic"])
+        self.collect_by_name(["Hallway", "Utility Closet", "Garage", "SHOVEL", "SLEDGE HAMMER", "Attic", "Blackbridge Grotto"])
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
         self.collect_by_name("MICROCHIP 1")
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
@@ -119,7 +108,6 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should be reachable after having all Microchips")
     
     def test_sealed_entrance_requires_power_hammer(self) -> None:
-        return # Not implemented yet
         self.collect_by_name(["Workshop", "SLEDGE HAMMER", "BATTERY PACK", "BROKEN LEVER"])
         self.assertFalse(self.can_reach_region("Sealed Entrance"), "Sealed Entrance should not be reachable without having the Power Hammer")
         self.collect_by_name("Power Hammer")
@@ -139,25 +127,32 @@ class TestRegionAccess(BluePrinceTestBase):
         if not self.multiworld.state.has("Chess Piece King", self.player):
             self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
             self.collect_by_name("Office")
+            self.assertTrue(self.can_reach_region("Office"), f"Should be able to reach the Office")
+            self.assertTrue(self.multiworld.state.has("Chess Piece King", self.player), "Should have the Chess Piece King in inventory after collecting the Office")
         if not self.multiworld.state.has("Chess Piece Queen", self.player):
             self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
             self.collect_by_name("Study")
+            self.assertTrue(self.multiworld.state.has("Chess Piece Queen", self.player), "Should have the Chess Piece Queen in inventory after collecting the Study")
         if not self.multiworld.state.has("Chess Piece Rook", self.player):
             self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
             self.collect_by_name("Nook")
+            self.assertTrue(self.multiworld.state.has("Chess Piece Rook", self.player), "Should have the Chess Piece Rook in inventory after collecting the Nook")
         if not self.multiworld.state.has("Chess Piece Knight", self.player):
             self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
             self.collect_by_name("Security")
+            self.assertTrue(self.multiworld.state.has("Chess Piece Knight", self.player), "Should have the Chess Piece Knight in inventory after collecting the Security")
         if not self.multiworld.state.has("Chess Piece Bishop", self.player):
             self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
             self.collect_by_name("Chapel")
+            self.assertTrue(self.multiworld.state.has("Chess Piece Bishop", self.player), "Should have the Chess Piece Bishop in inventory after collecting the Chapel")
         if not self.multiworld.state.has("Chess Piece Pawn", self.player):
             self.assertFalse(self.can_reach_region("Aries Court"), "Aries Court should not be reachable without having all Chess Pieces")
             self.collect_by_name("Den")
+            self.assertTrue(self.multiworld.state.has("Chess Piece Pawn", self.player), "Should have the Chess Piece Pawn in inventory after collecting the Den")
+            
         self.assertTrue(self.can_reach_region("Aries Court"), "Aries Court should be reachable after having all Chess Pieces")
     
     def test_basement_requires_the_foundation_and_basement_key(self) -> None:
-        return # Not implemented yet
         self.collect_by_name(["Hallway", "Tunnel", "Great Hall", "Courtyard", "Foyer", "Spare Room", "Workshop"])
         self.assertFalse(self.can_reach_region("Basement"), "Basement should not be reachable without having the Foundation")
         self.collect_by_name("The Foundation")
@@ -166,14 +161,12 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Basement"), "Basement should be reachable after having the Foundation and Basement Key")
     
     def test_room_8_requires_key_8(self) -> None:
-        return # Not implemented yet
         self.collect_all_but(["KEY 8"])
         self.assertFalse(self.can_reach_region("Room 8"), "Room 8 should not be reachable without having Key 8")
         self.collect_by_name("KEY 8")
         self.assertTrue(self.can_reach_region("Room 8"), "Room 8 should be reachable after having Key 8")
 
     def test_can_reach_showroom_items(self):
-        return # Not implemented yet
         self.collect_by_name("Showroom")
         self.assertTrue(self.can_reach_region("Showroom"), "Showroom should be reachable after having the Showroom item")
         self.assertTrue(self.can_reach_location("CHRONOGRAPH First Pickup"), "CHRONOGRAPH First Pickup should be reachable after having the Showroom item")
