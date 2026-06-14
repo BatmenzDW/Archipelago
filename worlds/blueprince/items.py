@@ -445,7 +445,7 @@ def create_all_items(world: BluePrinceWorld) -> None:
 
     data_rooms.progressive_classroom = [world.create_item("Progressive Classroom") for _ in range(9)]
 
-    room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8"] and room not in classrooms]
+    room_item_list = [world.create_item(room) for room in rooms if room not in core_rooms and room not in ["Secret Garden", "Room 8", "Bookshop"] and room not in classrooms]
     if world.options.room_draft_sanity:
         world.starting_rooms = world.random.choices([room for room in room_item_list 
                                                     if ROOM_PICK_POSITIONS_KEY in rooms[room.name] 

@@ -1623,7 +1623,7 @@ misc_locations = {
     "Allowance Token - Cloister Statue": {
         LOCATION_ID_KEY: all_areas["Cloister"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Cloister",
-        # IMPLEMENTATION_STATUS: NOT_IMPLEMENTED, # this was working at one point, but something broke it
+        # IMPLEMENTATION_STATUS: NOT_IMPLEMENTED, # turning this on temporarily for testing the mod
     },
     "Allowance Token - Outer Entrance Hall Vase": {
         LOCATION_ID_KEY: all_areas["Outer Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,

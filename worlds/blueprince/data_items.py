@@ -718,5 +718,6 @@ ITEMS_BY_GROUPS |= {
     "Armory Items": {item for item in armory_items},
     "Bookshop Items": {item for item in bookshop_items},
     "Workshop Items": {item for item in workshop_items},
-    "Standard Items": {item for item in other_items}
+    "Standard Items": {item for item in other_items},
+    "Permanent Unlocks": {item for item in permanent_unlocks},
 }
