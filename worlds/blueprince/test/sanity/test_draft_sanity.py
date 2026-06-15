@@ -16,6 +16,14 @@ class TestDraftSanity(BluePrinceTestBase):
         "goal_type": GoalType.option_room46,
         "starting_room_amount": 3,
     }
+    
+    def test_room_requires_path(self) -> None:
+        self.assertFalse(self.can_reach_region("Her Ladyship's Chamber"))
+        self.collect_by_name("Her Ladyship's Chamber")
+        print(self.multiworld.worlds[self.player].get_region("Her Ladyship's Chamber").entrances[0].access_rule)
+        self.assertFalse(self.can_reach_region("Her Ladyship's Chamber"))
+        self.collect_by_name(["Hallway", "Bedroom", "Security", "Courtyard"])
+        self.assertTrue(self.can_reach_region("Her Ladyship's Chamber"), "Should be able to reach Her Ladyship's Chamber after collecting enough rooms")
 
     def test_starting_room_count(self) -> None:
         self.assertFalse(self.multiworld.state.has("Closet", self.player, 2), "Should not have more than 1 Closet in inventory")

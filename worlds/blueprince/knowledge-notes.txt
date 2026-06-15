@@ -48,6 +48,8 @@ Maid's Chamber Note -> Start Date/Current Date
 
 Master Bedroom Note -> Foundation Elevator Controls
 
+Dovecote Letters -> SD
+
 Safes:
 
 Room Painting Pairs -> if we count small gates 8 dates open 8 safes
@@ -68,6 +70,12 @@ Clocktower Fragment -> Flowers + "-|-" pattern
 Drafting Strategy Vol. 2 -> "Academia isn't only found in the mountains of Corarica" -> Corarica = Academic
 Foreman's Logs -> Orindia = Black
 Secret Garden Sigil -> full Orindia Sigil
+
+CASTLE Cipher:
+Destroy Precipice Wall -> C__A__S__T__L__E
+Kennel Note -> C A T
+Cloister Statue -> C_X E_T
+Locker Room Math Sheet -> ?
 
 Non-Knowledge Docs:
 

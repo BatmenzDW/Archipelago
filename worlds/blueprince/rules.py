@@ -58,7 +58,7 @@ class CanReachPickPosition(Rule["BluePrinceWorld"], game="Blue Prince"):
 
         total = [*x_layouts, *t_layouts, *i_layouts, *j_layouts]
 
-        pos_types_rule : Rule = True_()
+        pos_types_rule : Rule = False_()
         for pt in positions_types:
             if pt not in POSITION_MINIMUM_PIECES:
                 continue
