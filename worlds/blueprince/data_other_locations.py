@@ -153,17 +153,14 @@ mora_jai_boxes = {
     "Master Bedroom Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Master Bedroom"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Master Bedroom",
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Closed Exhibit Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Closed Exhibit"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Closed Exhibit",
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Underpass Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["The Underpass"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "The Underpass",
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Tomb Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Tomb"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -172,33 +169,27 @@ mora_jai_boxes = {
             CanReachItemLocation("Burning Glass"),
             CanReachItemLocation("TORCH")
         ),
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Trading Post Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Trading Post",
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Tunnel Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Tunnel"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Tunnel",
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Solarium Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Solarium"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Solarium",
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Lost & Found Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Lost & Found"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Lost & Found",
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Throne of the Blue Prince Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Throne Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Throne Room",
         LOCATION_RULE_SIMPLE_COMMON: Has("Ascend The Throne", options=[OptionFilter(GoalType, GoalType.option_blueprints, "ge")]),
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Arch Aries Sanctum Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Arch Aries Sanctum"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -1623,7 +1614,6 @@ misc_locations = {
     "Allowance Token - Cloister Statue": {
         LOCATION_ID_KEY: all_areas["Cloister"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Cloister",
-        # IMPLEMENTATION_STATUS: NOT_IMPLEMENTED, # turning this on temporarily for testing the mod
     },
     "Allowance Token - Outer Entrance Hall Vase": {
         LOCATION_ID_KEY: all_areas["Outer Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,

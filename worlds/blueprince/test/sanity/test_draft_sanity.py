@@ -16,7 +16,11 @@ class TestDraftSanity(BluePrinceTestBase):
         "goal_type": GoalType.option_room46,
         "starting_room_amount": 3,
     }
-    
+
+    def test_fail_and_print_region_rule(self) -> None:
+        print(self.multiworld.worlds[self.player].get_region("Her Ladyship's Chamber").entrances[0].access_rule)
+        self.assertTrue(False)
+
     def test_room_requires_path(self) -> None:
         self.assertFalse(self.can_reach_region("Her Ladyship's Chamber"))
         self.collect_by_name("Her Ladyship's Chamber")
