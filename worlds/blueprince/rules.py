@@ -62,7 +62,7 @@ class CanReachPickPosition(Rule["BluePrinceWorld"], game="Blue Prince"):
             
             pt_rule = False_()
 
-            min_rule = HasGroup("Rooms", count=min_total)
+            min_rule = HasGroup("Rooms", count=min_total) if min_total > 0 else True_()
 
             min_layouts = POSITION_MINIMUM_PIECES[pt]
             

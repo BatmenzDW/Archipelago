@@ -18,7 +18,7 @@ class TestDraftSanity(BluePrinceTestBase):
     }
 
     def test_fail_and_print_region_rule(self) -> None:
-        print(self.multiworld.worlds[self.player].get_region("Her Ladyship's Chamber").entrances[0].access_rule)
+        print(self.multiworld.worlds[self.player].get_region("Bedroom").entrances[0].access_rule)
         self.assertTrue(False)
 
     def test_room_requires_path(self) -> None:
