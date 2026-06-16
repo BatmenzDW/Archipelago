@@ -1625,7 +1625,6 @@ misc_locations = {
                 CanReachItemLocation("MORNING STAR")
             )
         ),
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Allowance Tokens - Reservoir Bottom": {
         LOCATION_ID_KEY: all_areas["Reservoir Bottom"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
