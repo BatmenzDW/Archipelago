@@ -22,6 +22,13 @@ class TestDraftSanity(BluePrinceTestBase):
     #     print(self.multiworld.worlds[self.player].get_region("Bedroom").entrances[0].access_rule)
     #     self.assertTrue(False)
 
+    def test_no_duplicate_starting_rooms(self) -> None:
+        counts = {}
+        for room in self.multiworld.worlds[self.player].starting_rooms:
+            counts[room] = counts.get(room, 0) + 1
+        for room, count in counts.items():
+            self.assertEqual(count, 1, f"Starting room {room} appears {count} times, but should only appear once")
+
     def test_room_requires_path(self) -> None:
         self.assertFalse(self.can_reach_region("Her Ladyship's Chamber"))
         self.collect_by_name("Her Ladyship's Chamber")
