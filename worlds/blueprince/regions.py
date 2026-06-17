@@ -250,7 +250,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     Has("Progressive Classroom"),
                 )
 
-            elif k in ["Boiler Room", "Pump Room", "Sauna"]:
+            elif k in ["Boiler Room", "Pump Room", "Sauna", "Locker Room"]:
                 pool.connect(
                     room,
                     f"The Pool To {k}",
