@@ -49,14 +49,14 @@ class TrophySanity(BluePrinceTestBase):
     #     self.assertFalse(self.can_reach_location("Trophy of Invention"), "Expected not to be able to reach Trophy of Invention without materials")
     #     self.collect_by_name(["SLEDGE HAMMER", "BROKEN LEVER", "BATTERY PACK", "SHOVEL", "METAL DETECTOR", "MAGNIFYING GLASS", "COMPASS", "COIN PURSE", "LUCKY RABBIT'S FOOT", "LOCK PICK KIT"])
 
-    #     # self.assertTrue(self.can_reach_location("Power Hammer First Craft"), "Expected to be able to reach Power Hammer First Craft with Workshop and materials")
+    #     # self.assertTrue(self.can_reach_location("Power Hammer First Pickup"), "Expected to be able to reach Power Hammer First Pickup with Workshop and materials")
     #     self.assertRuleTrue(CanReachItemLocation("Power Hammer"), "Expected to be able to reach Power Hammer with Workshop and materials") # type: ignore
-    #     self.assertRuleTrue(CanReachItemLocation("Burning Glass"), "Expected to be able to reach Burning Glass First Craft with Workshop and materials") # type: ignore
-    #     self.assertRuleTrue(CanReachItemLocation("Detector Shovel"), "Expected to be able to reach Detector Shovel First Craft with Workshop and materials;") # type: ignore
-    #     self.assertRuleTrue(CanReachItemLocation("Dowsing Rod"), "Expected to be able to reach Dowsing Rod First Craft with Workshop and materials") # type: ignore
-    #     self.assertRuleTrue(CanReachItemLocation("Electromagnet"), "Expected to be able to reach Electromagnet First Craft with Workshop and materials") # type: ignore
-    #     self.assertRuleTrue(CanReachItemLocation("Jack Hammer"), "Expected to be able to reach Jack Hammer First Craft with Workshop and materials") # type: ignore
-    #     self.assertRuleTrue(CanReachItemLocation("Lucky Purse"), "Expected to be able to reach Lucky Purse First Craft with Workshop and materials") # type: ignore
-    #     self.assertRuleTrue(CanReachItemLocation("Pick Sound Amplifier"), "Expected to be able to reach Pick Sound Amplifier First Craft with Workshop and materials") # type: ignore
+    #     self.assertRuleTrue(CanReachItemLocation("Burning Glass"), "Expected to be able to reach Burning Glass First Pickup with Workshop and materials") # type: ignore
+    #     self.assertRuleTrue(CanReachItemLocation("Detector Shovel"), "Expected to be able to reach Detector Shovel First Pickup with Workshop and materials;") # type: ignore
+    #     self.assertRuleTrue(CanReachItemLocation("Dowsing Rod"), "Expected to be able to reach Dowsing Rod First Pickup with Workshop and materials") # type: ignore
+    #     self.assertRuleTrue(CanReachItemLocation("Electromagnet"), "Expected to be able to reach Electromagnet First Pickup with Workshop and materials") # type: ignore
+    #     self.assertRuleTrue(CanReachItemLocation("Jack Hammer"), "Expected to be able to reach Jack Hammer First Pickup with Workshop and materials") # type: ignore
+    #     self.assertRuleTrue(CanReachItemLocation("Lucky Purse"), "Expected to be able to reach Lucky Purse First Pickup with Workshop and materials") # type: ignore
+    #     self.assertRuleTrue(CanReachItemLocation("Pick Sound Amplifier"), "Expected to be able to reach Pick Sound Amplifier First Pickup with Workshop and materials") # type: ignore
     
     #     self.assertTrue(self.can_reach_location("Trophy of Invention"), "Expected to be able to reach Trophy of Invention with Workshop and materials")

@@ -1095,13 +1095,15 @@ unique_item_pickup = {
             ),
             CanReachRegion("Gift Shop")
         ),
-        
     },
     "DIARY KEY First Pickup": {
-        LOCATION_ID_KEY: all_areas["Her Ladyship's Chamber"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
-        LOCATION_ROOM_KEY: "Her Ladyship's Chamber",
+        LOCATION_ID_KEY: all_areas["Tomb"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 101,
+        LOCATION_ROOM_KEY: "Tomb",
         LOCATION_ITEM_KEY: "DIARY KEY",
-        
+        LOCATION_RULE_SIMPLE_COMMON: Or(
+            CanReachItemLocation("Burning Glass"), 
+            CanReachItemLocation("TORCH")
+        ),
     },
     "KEY of Aries First Pickup": {
         LOCATION_ID_KEY: all_areas["Aries Court"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -1158,7 +1160,7 @@ unique_item_pickup = {
 item_pickups = standard_item_pickup | special_key_pickup | showroom_item_pickup | unique_item_pickup
 
 workshop_contraptions = {
-    "Burning Glass First Craft": {
+    "Burning Glass First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Burning Glass",
@@ -1167,7 +1169,7 @@ workshop_contraptions = {
         ),
         
     },
-    "Detector Shovel First Craft": {
+    "Detector Shovel First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Detector Shovel",
@@ -1176,7 +1178,7 @@ workshop_contraptions = {
         ),
         
     },
-    "Dowsing Rod First Craft": {
+    "Dowsing Rod First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 3,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Dowsing Rod",
@@ -1185,7 +1187,7 @@ workshop_contraptions = {
         ),
         
     },
-    "Power Hammer First Craft": {
+    "Power Hammer First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 4,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Power Hammer",
@@ -1194,7 +1196,7 @@ workshop_contraptions = {
         ),
         
     },
-    "Electromagnet First Craft": {
+    "Electromagnet First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 5,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Electromagnet",
@@ -1203,7 +1205,7 @@ workshop_contraptions = {
         ),
         
     },
-    "Lucky Purse First Craft": {
+    "Lucky Purse First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 6,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Lucky Purse",
@@ -1212,7 +1214,7 @@ workshop_contraptions = {
         ),
         
     },
-    "Jack Hammer First Craft": {
+    "Jack Hammer First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 7,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Jack Hammer",
@@ -1221,7 +1223,7 @@ workshop_contraptions = {
         ),
         
     },
-    "Pick Sound Amplifier First Craft": {
+    "Pick Sound Amplifier First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 8,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Pick Sound Amplifier",

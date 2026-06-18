@@ -201,10 +201,10 @@ class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):
                 return (Has(self.location) & CanReachLocation(loc_name, parent_region_name=self.parent_region_name)).resolve(world)
         
         if self.location in workshop_items:
-            if f"{self.location} First Craft" in locations and IMPLEMENTATION_STATUS in locations[f"{self.location} First Craft"] and locations[f"{self.location} First Craft"][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
-                return locations[f"{self.location} First Craft"][LOCATION_RULE_SIMPLE_COMMON].resolve(world)
+            if f"{self.location} First Pickup" in locations and IMPLEMENTATION_STATUS in locations[f"{self.location} First Pickup"] and locations[f"{self.location} First Pickup"][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
+                return locations[f"{self.location} First Pickup"][LOCATION_RULE_SIMPLE_COMMON].resolve(world)
             else:
-                return (Has(self.location) & CanReachLocation(f"{self.location} First Craft", parent_region_name="Workshop")).resolve(world)
+                return (Has(self.location) & CanReachLocation(f"{self.location} First Pickup", parent_region_name="Workshop")).resolve(world)
 
         if self.location in armory_items:
             return (Has(self.location) & CanReachRegion("The Armory")).resolve(world)
