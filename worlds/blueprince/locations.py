@@ -96,7 +96,19 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             room.add_locations(locs, BluePrinceLocation)
         # Add Nth locked trunk open
 
-        trunk_count = world.options.locked_trunks_common if ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON else world.options.locked_trunks_rare if v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE else world.options.locked_trunks_complex
+        trunk_count = 0
+
+        if room_key in world.options.trunks.value:
+            trunk_count = world.options.trunks.value[room_key]
+
+        elif ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON:
+            trunk_count = world.options.locked_trunks_common
+
+        elif v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE:
+            trunk_count = world.options.locked_trunks_rare
+            
+        elif v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMPLEX:
+            trunk_count = world.options.locked_trunks_complex
 
         trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
         locs = get_location_names_with_ids(trunks)

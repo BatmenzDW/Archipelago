@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 
+from .constants import *
+from .data_rooms import rooms
+
 from Options import (
     Choice,
     OptionGroup,
@@ -135,6 +138,32 @@ class LockedTrunkComplexCount(Range):
     range_end = 100
 
     default = 0
+
+class TrunkCounts(OptionCounter):
+    """
+    This allows the user to set the number of trunk locations per-room.
+
+    If not specified, will use the values from the previous three options for the corresponding trunk type.
+    """
+
+    display_name = "Trunk Counts"
+
+    rich_text_doc = True
+
+    min = 0
+    max = 100
+
+    default = {
+        "Great Hall": 5,
+        "Bedroom": 2,
+        "Den": 2,
+        "Veranda": 2,
+        "The Pool": 2,
+        "Spare Room": 2,
+        "Drawing Room": 0,
+    }
+
+    valid_keys = [room for room in rooms if ROOM_CHEST_SPOT_COUNT_KEY in rooms[room] and rooms[room][ROOM_CHEST_SPOT_TYPE_KEY] > 0]
 
 class ItemLogicMode(Choice):
     """
@@ -412,6 +441,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     locked_trunks_common: LockedTrunkCommonCount
     locked_trunks_rare: LockedTrunkRareCount
     locked_trunks_complex: LockedTrunkComplexCount
+    trunks: TrunkCounts
     item_logic_mode: ItemLogicMode
 
     standard_item_sanity: StandardItemSanity
@@ -445,9 +475,11 @@ option_groups = [
         "Sanity Options",
         [
             RoomDraftSanity,
+            StartingRoomAmount,
             LockedTrunkCommonCount,
             LockedTrunkRareCount,
             LockedTrunkComplexCount,
+            TrunkCounts,
             ItemLogicMode,
             StandardItemSanity,
             WorkshopSanity,
@@ -478,9 +510,19 @@ option_presets = {
     # with no death link, with the goal set to room 64, and with no filler items or traps added to the pool.
     "Room 46 Extra Drafting": {
         "room_draft_sanity": True,
+        "starting_room_amount": StartingRoomAmount.range_start,
         "locked_trunks_common": 2,
         "locked_trunks_rare": 0,
         "locked_trunks_complex": 0,
+        "trunks": {
+            "Great Hall": 5,
+            "Bedroom": 2,
+            "Den": 2,
+            "Veranda": 2,
+            "The Pool": 2,
+            "Spare Room": 2,
+            "Drawing Room": 0,
+        },
         "standard_item_sanity": True,
         "workshop_sanity": True,
         "upgrade_disk_sanity": True,
@@ -498,6 +540,6 @@ option_presets = {
         "goal_type": GoalType.option_room46,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
         "starting_room_amount": StartingRoomAmount.range_start,
-        "start_inventory": {"Hallway": 1, "Bedroom": 1, "Closet": 1}
+        "start_inventory": {}
     },
 }
