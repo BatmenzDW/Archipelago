@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from logging import debug
+import warnings
 from typing import TYPE_CHECKING, List, Optional
 from rule_builder.rules import *
 
@@ -114,6 +115,8 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         locs = get_location_names_with_ids(trunks)
 
         if room_key == "The Pool" and world.options.goal_type.value < 2:
+            if "The Pool" in world.options.trunks.value and world.options.trunks.value["The Pool"] > 0:
+                warnings.warn("Cannot create \"The Pool Locked Trunks\" due to current goal type; Skipping.")
             continue # Skip The Pool locked trunks when the goal is before Gift Shop
 
         room.add_locations(locs, BluePrinceLocation)

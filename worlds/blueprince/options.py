@@ -158,7 +158,6 @@ class TrunkCounts(OptionCounter):
         "Bedroom": 2,
         "Den": 2,
         "Veranda": 2,
-        "The Pool": 2,
         "Spare Room": 2,
         "Drawing Room": 0,
     }
