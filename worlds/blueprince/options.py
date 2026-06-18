@@ -163,7 +163,7 @@ class TrunkCounts(OptionCounter):
         "Drawing Room": 0,
     }
 
-    valid_keys = [room for room in rooms if ROOM_CHEST_SPOT_COUNT_KEY in rooms[room] and rooms[room][ROOM_CHEST_SPOT_TYPE_KEY] > 0]
+    valid_keys = [room for room in rooms if ROOM_CHEST_SPOT_COUNT_KEY in rooms[room] and rooms[room][ROOM_CHEST_SPOT_COUNT_KEY] > 0]
 
 class ItemLogicMode(Choice):
     """
