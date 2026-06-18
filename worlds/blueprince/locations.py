@@ -112,6 +112,10 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
         trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
         locs = get_location_names_with_ids(trunks)
+
+        if room_key == "The Pool" and world.options.goal_type.value < 2:
+            continue # Skip The Pool locked trunks when the goal is before Gift Shop
+
         room.add_locations(locs, BluePrinceLocation)
 
         # These trunks require extra logic
