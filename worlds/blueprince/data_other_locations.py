@@ -1238,36 +1238,44 @@ upgrade_disks = {
     "Upgrade Disk - Office": {
         LOCATION_ID_KEY: all_areas["Office"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Office",
+        LOCATION_ITEM_KEY: "UPGRADE DISK OFFICE",
     },
     "Upgrade Disk - Morning Room": {
         LOCATION_ID_KEY: all_areas["Morning Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Morning Room",
+        LOCATION_ITEM_KEY: "UPGRADE DISK MORNING ROOM",
     },
     "Upgrade Disk - Her Ladyship's Chamber": {
         LOCATION_ID_KEY: all_areas["Her Ladyship's Chamber"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Her Ladyship's Chamber",
+        LOCATION_ITEM_KEY: "UPGRADE DISK HER LADYSHIPS CHAMBER",
     },
     "Upgrade Disk - Commissary": {
         LOCATION_ID_KEY: all_areas["Commissary"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Commissary",
+        LOCATION_ITEM_KEY: "UPGRADE DISK COMMISSARY",
     },
     "Upgrade Disk - Garage": {
         LOCATION_ID_KEY: all_areas["Garage"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Garage",
+        LOCATION_ITEM_KEY: "UPGRADE DISK GARAGE",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("CAR KEYS"),
     },
     "Upgrade Disk - Great Hall": {
         LOCATION_ID_KEY: all_areas["Great Hall"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Great Hall",
+        LOCATION_ITEM_KEY: "UPGRADE DISK GREAT HALL",
     },
     "Upgrade Disk - Vault": {
         LOCATION_ID_KEY: all_areas["Vault"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Vault",
+        LOCATION_ITEM_KEY: "UPGRADE DISK VAULT",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("VAULT KEY 304"),
     },
     "Upgrade Disk - Trading Post Dynamite": {
         LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Trading Post",
+        LOCATION_ITEM_KEY: "UPGRADE DISK TRADING POST DYNAMITE",
         LOCATION_RULE_SIMPLE_COMMON: Or(
             CanReachItemLocation("Burning Glass"), CanReachItemLocation("TORCH")
         ),
@@ -1275,6 +1283,7 @@ upgrade_disks = {
     "Upgrade Disk - Freezer": {
         LOCATION_ID_KEY: all_areas["Freezer"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Freezer",
+        LOCATION_ITEM_KEY: "UPGRADE DISK FREEZER",
         LOCATION_RULE_SIMPLE_COMMON: Or(
             CanReachItemLocation("Burning Glass"), CanReachItemLocation("TORCH"), CanReachItemLocation("Power Hammer"), CanReachRegion("Furnace")
         )
@@ -1282,6 +1291,7 @@ upgrade_disks = {
     "Upgrade Disk - Tomb": {
         LOCATION_ID_KEY: all_areas["Tomb"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Tomb",
+        LOCATION_ITEM_KEY: "UPGRADE DISK TOMB",
         LOCATION_RULE_SIMPLE_COMMON: Or(
             CanReachItemLocation("Burning Glass"),
             CanReachItemLocation("TORCH")
@@ -1290,28 +1300,34 @@ upgrade_disks = {
     "Upgrade Disk - The Foundation": {
         LOCATION_ID_KEY: all_areas["The Foundation"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "The Foundation",
+        LOCATION_ITEM_KEY: "UPGRADE DISK FOUNDATION",
     },
     "Upgrade Disk - Abandoned Mine": {
         LOCATION_ID_KEY: all_areas["Abandoned Mine"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Abandoned Mine",
+        LOCATION_ITEM_KEY: "UPGRADE DISK ABANDONED MINE",
     },
     "Upgrade Disk - Lost & Found": {
         LOCATION_ID_KEY: all_areas["Lost & Found"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Lost & Found",
+        LOCATION_ITEM_KEY: "UPGRADE DISK LOST AND FOUND",
     },
     "Upgrade Disk - Mechanarium": {
         LOCATION_ID_KEY: all_areas["Mechanarium"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Mechanarium",
+        LOCATION_ITEM_KEY: "UPGRADE DISK MECHANARIUM",
         LOCATION_RULE_SIMPLE_COMMON: MechanariumDoorRule(3),
     },
     "Upgrade Disk - Archives": {
         LOCATION_ID_KEY: all_areas["Archives"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Archives",
+        LOCATION_ITEM_KEY: "UPGRADE DISK ARCHIVES",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("CABINET KEY 1"),
     },
     "Upgrade Disk - Trading Post Trade": {
         LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
         LOCATION_ROOM_KEY: "Trading Post",
+        LOCATION_ITEM_KEY: "UPGRADE DISK TRADING POST TRADE",
     },
 }
 
