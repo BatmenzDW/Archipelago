@@ -1205,7 +1205,7 @@ hallways = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMPLEX,
-        ROOM_CHEST_SPOT_COUNT_KEY: 1,
+        ROOM_CHEST_SPOT_COUNT_KEY: 0, # Only spawns in one of the upgrades, so excluding it
         ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,

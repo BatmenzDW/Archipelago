@@ -1109,7 +1109,7 @@ unique_item_pickup = {
         LOCATION_ID_KEY: all_areas["Aries Court"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Aries Court",
         LOCATION_ITEM_KEY: "KEY of Aries",
-        
+        LOCATION_RULE_SIMPLE_COMMON: CanReachRegion("Observatory")
     },
     "LUNCH BOX First Pickup": {
         LOCATION_ID_KEY: all_areas["Dining Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
