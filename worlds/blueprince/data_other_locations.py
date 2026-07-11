@@ -1468,6 +1468,7 @@ doors_walls_and_gates = {
     "West Gate": {
         LOCATION_ID_KEY: all_areas["West Path"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "West Path",
+        LOCATION_RULE_SIMPLE_COMMON: Has("West Gate Path")
     },
     "Break Grounds to Sealed Entrance Wall": {
         LOCATION_ID_KEY: all_areas["Sealed Entrance"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
