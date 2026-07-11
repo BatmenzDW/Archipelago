@@ -444,11 +444,11 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         grounds,
         "West Path To Grounds",
     )
-    grounds.connect(
-        west_path,
-        "Grounds To West Path",
-        Has("West Gate Path"),
-    )
+    # grounds.connect(
+    #     west_path,
+    #     "Grounds To West Path",
+    #     Has("West Gate Path"),
+    # )
     tomb.connect(
         catacombs,
         "Tomb to Catacombs",
