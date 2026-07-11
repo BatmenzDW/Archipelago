@@ -75,22 +75,26 @@ class TestRegionAccess(BluePrinceTestBase):
             self.assertTrue(self.can_reach_region(room), f"{room} should be reachable after collecting the room as an item")
     
     def test_gemstone_cavern_requires_gemstone_caverns(self) -> None:
+        self.collect_all_but(["Gemstone Caverns", "Utility Closet"])
         self.assertFalse(self.can_reach_region("Gemstone Cavern"), "Gemstone Caverns should not be reachable without having the Gemstone Caverns as an item")
         self.collect_by_name("Gemstone Caverns")
+        self.assertFalse(self.can_reach_region("Gemstone Cavern"), "Gemstone Caverns should not be reachable without having the Utility Closet as an item")
+        self.collect_by_name("Utility Closet")
         self.assertTrue(self.can_reach_region("Gemstone Cavern"), "Gemstone Caverns should be reachable after collecting the Gemstone Caverns as an item")
 
     def test_blackbridge_grotto_requires_blackbridge_grotto_item(self) -> None:
+        self.collect_all_but(["Blackbridge Grotto", "Laboratory", "Boiler Room", "The Pool"])
         self.assertFalse(self.can_reach_region("Blackbridge Grotto"), "Blackbridge Grotto should not be reachable without having the Blackbridge Grotto as an item")
-        self.collect_by_name("Blackbridge Grotto")
+        self.collect_by_name(["Blackbridge Grotto", "Laboratory", "Boiler Room", "The Pool"])
         self.assertTrue(self.can_reach_region("Blackbridge Grotto"), "Blackbridge Grotto should be reachable after collecting the Blackbridge Grotto as an item")
 
     def test_the_precipice_requires_gas_valves(self) -> None:
         self.assertFalse(self.can_reach_region("The Precipice"), "The Precipice should not be reachable without having all Gas Valves")
         self.collect_by_name("Apple Orchard")
         self.assertFalse(self.can_reach_region("The Precipice"), "The Precipice should not be reachable without having all Gas Valves")
-        self.collect_by_name("Gemstone Caverns")
+        self.collect_by_name(["Gemstone Caverns", "Utility Closet"])
         self.assertFalse(self.can_reach_region("The Precipice"), "The Precipice should not be reachable without having all Gas Valves")
-        self.collect_by_name("West Gate Path")
+        self.collect_by_name(["Garage", "Hallway", "West Wing Hall", "Pantry", "Bedroom"])
         self.collect_by_name("Schoolhouse")
         self.assertFalse(self.can_reach_region("The Precipice"), "The Precipice should not be reachable without having all Gas Valves")
         self.collect_by_name("Hovel")
@@ -98,7 +102,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("The Precipice"), "The Precipice should be reachable after having all Gas Valves")
     
     def test_orindian_ruins_requires_microchips(self) -> None:
-        self.collect_by_name(["Hallway", "Utility Closet", "Garage", "SHOVEL", "SLEDGE HAMMER", "Attic", "Blackbridge Grotto"])
+        self.collect_by_name(["Hallway", "Utility Closet", "Garage", "SHOVEL", "SLEDGE HAMMER", "Attic", "Blackbridge Grotto", "Laboratory", "Boiler Room", "The Pool"])
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
         self.collect_by_name("MICROCHIP 1")
         self.assertFalse(self.can_reach_region("Orindian Ruins"), "Orindian Ruins should not be reachable without having all Microchips")
@@ -121,7 +125,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("The Underpass"), "The Underpass should be reachable after having the Reservoir on both sides")
     
     def test_aries_court_requires_chess_pieces(self) -> None:
-        self.collect_by_name(["West Gate Path", "Apple Orchard", "Gemstone Caverns", "Schoolhouse", "Hovel"])
+        self.collect_by_name(["Apple Orchard", "Gemstone Caverns", "Schoolhouse", "Hovel", "Utility Closet", "Garage", "Laboratory", "Boiler Room", "The Pool"])
         # Precipice
 
         if not self.multiworld.state.has("Chess Piece King", self.player):

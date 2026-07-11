@@ -299,12 +299,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     campsite.connect(
         gemstone_cavern,
         "Campsite To Gemstone Cavern",
-        Has("Gemstone Caverns") & CanReachLocation("VAC Controls"),
+        Has("Gemstone Caverns") & CanReachLocation("VAC Controls", parent_region_name="Utility Closet"),
     )  # Rules of are found in office emails. Solution is in office emails. May be able to adjust pattern?
     private_drive.connect(
         blakbridge_grotto,
         "Private Drive To Blackbridge Grotto",
-        Has("Blackbridge Grotto") & CanReachLocation("Laboratory Puzzle"),
+        Has("Blackbridge Grotto") & CanReachLocation("Laboratory Puzzle", parent_region_name="Laboratory"),
     )
     private_drive.connect(grounds, "Private Drive To Grounds")
     blakbridge_grotto.connect(
