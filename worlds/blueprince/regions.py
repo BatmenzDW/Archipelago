@@ -584,7 +584,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     reservoir_fountain_side.connect(
         reservoir_gear_side,
         "Reservoir Fountain Side To Reservoir Gear Side",
-        CanReachRegion("Pump Room"),
+        And(
+            CanReachRegion("Pump Room"),
+            Or(
+                CanReachRegion("Tomb"),
+                CanReachRegion("Boiler Room")
+            )
+        ),
     )  # Pump Room
 
     outer_room.connect(
