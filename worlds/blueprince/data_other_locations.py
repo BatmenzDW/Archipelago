@@ -1613,7 +1613,6 @@ misc_locations = {
             CanReachItemLocation("Burning Glass"),
             CanReachItemLocation("TORCH")
         ),
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "Raise Satellite": {
         LOCATION_ID_KEY: all_areas["Apple Orchard"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
@@ -1624,7 +1623,6 @@ misc_locations = {
             CanReachItemLocation("MICROCHIP 2"),
             CanReachItemLocation("MICROCHIP 3"),
         ),
-        IMPLEMENTATION_STATUS: NOT_IMPLEMENTED,
     },
     "VAC Controls": {
         LOCATION_ID_KEY: all_areas["Utility Closet"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,

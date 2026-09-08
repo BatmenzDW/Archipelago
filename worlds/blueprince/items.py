@@ -420,8 +420,8 @@ def create_all_items(world: BluePrinceWorld) -> None:
     upgrade_disk_item_list = [world.create_item(k) for k in upgrade_disks]
     if world.options.upgrade_disk_sanity:
         itempool += upgrade_disk_item_list
-    else:
-        to_precollect += upgrade_disk_item_list
+    # else:
+    #     to_precollect += upgrade_disk_item_list
 
     key_item_list = [world.create_item(k) for k in keys if (k not in ["BASEMENT KEY"] or world.options.goal_type.value > 0)
                                                             and (k not in sanctum_keys or world.options.goal_type.value > 1) 

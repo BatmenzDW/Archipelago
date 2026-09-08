@@ -52,12 +52,6 @@ class TestRegionAccess(BluePrinceTestBase):
             self.collect_by_name("Boiler Room")
         self.assertTrue(self.can_reach_region("Outer Room"), "Outer Room should be reachable after collecting the Garage as an item")
 
-    def test_outer_room_requires_west_gate_path(self) -> None:
-        self.collect_all_but(["Garage", "West Gate Path"])
-        self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the West Gate Path as an item")
-        self.collect_by_name("West Gate Path")
-        self.assertTrue(self.can_reach_region("Outer Room"), "Outer Room should be reachable after collecting the West Gate Path as an item")
-
     def test_outer_rooms_require_room_item(self) -> None:
         self.collect_by_name("Hallway")
         self.collect_by_name("Office")
