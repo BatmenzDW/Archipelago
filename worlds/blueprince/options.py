@@ -43,11 +43,12 @@ class StandardItemSanity(Toggle):
 
 class WorkshopSanity(Toggle):
     """
+    Not Implemented - Dev Use Only.
     This option enables workshop item sanity checks.
     That is, workshop crafted items can not be crafted until they are unlocked.
     """
 
-    display_name = "Workshop Sanity"
+    display_name = "Dev: Workshop Sanity"
 
     default = False
 
@@ -73,7 +74,7 @@ class KeySanity(Toggle):
 
     display_name = "Key Sanity"
 
-    default = False
+    default = True
 
     visibility = Visibility.all
 
@@ -113,7 +114,7 @@ class LockedTrunkCommonCount(Range):
     range_start = 0
     range_end = 100
 
-    default = 2
+    default = 0
 
 class LockedTrunkRareCount(Range):
     """
@@ -154,12 +155,8 @@ class TrunkCounts(OptionCounter):
     max = 100
 
     default = {
-        "Great Hall": 5,
+        "Courtyard": 2,
         "Bedroom": 2,
-        "Den": 2,
-        "Veranda": 2,
-        "Spare Room": 2,
-        "Drawing Room": 0,
     }
 
     valid_keys = [room for room in rooms if ROOM_CHEST_SPOT_COUNT_KEY in rooms[room] and rooms[room][ROOM_CHEST_SPOT_COUNT_KEY] > 0]
@@ -233,7 +230,7 @@ class FillerItemDistribution(OptionCounter):
         "extra_starting_key": 0,
         "extra_starting_key_1": 0,
         "extra_starting_key_2": 0,
-        "extra_starting_luck": 0,
+        "extra_starting_luck": 50,
         "extra_starting_luck_1": 0,
         "extra_starting_luck_2": 0,
         "extra_starting_steps": 0,
@@ -284,7 +281,7 @@ class TrapTypeDistribution(OptionCounter):
         "step_traps_set_to_1": 50,
         "step_traps_set_to_10": 50,
         "item_traps": 50,
-        "star_traps": 50,
+        "star_traps": 0,
         "star_traps_1": 0,
         "star_traps_2": 0,
         "star_traps_5": 0,
@@ -379,9 +376,9 @@ class GoalType(Choice):
 
     - **antechamber:** Reach the antechamber once
     - **room46:** Reach room 46 once
-    - **sanctum:** Open a select number of sanctum keys
-    - **ascend:** Ascend the throne
-    - **blueprints:** Find the Blue Prints
+    - **sanctum:** Open a select number of sanctum keys - NOT IMPLEMENTED.
+    - **ascend:** Ascend the throne - NOT IMPLEMENTED.
+    - **blueprints:** Find the Blue Prints - NOT IMPLEMENTED.
 
     """
 
