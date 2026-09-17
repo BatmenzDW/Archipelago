@@ -2,7 +2,8 @@
 
 ## Fork Notes
 This particular fork is the development location for the following game worlds, standalone from the archipelago game worlds listed below
-* Blue Prince
+
+- <img src="./worlds/blueprince/icon.png" alt="Alt Text" style="width:100px; height:auto;"> Blue Prince (Icon by @zygan)
 
 
 ## Back to the Base  Readme
