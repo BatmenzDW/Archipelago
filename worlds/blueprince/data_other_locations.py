@@ -945,7 +945,7 @@ special_key_pickup = {
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "KEY 8",
         LOCATION_RULE_SIMPLE_COMMON: Or(
-            CanReachRegion("Gallery"), CanReachRegion("Lost & Found", options=complex_logic_filter), # Lost & Found: Day 365+
+            CanReachRegion("Gallery"), CanReachRegion("Lost & Found", options=extreme_logic_filter), # Lost & Found: Day 365+, Extreme Filter Only
         ),
         
     },
