@@ -403,7 +403,7 @@ class DigSpotRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                 "Conservatory",
                 "Boiler Room",
             ]], 
-            PlanetariumRule())).resolve(world)
+            PlanetariumRule(), options=extreme_logic_filter)).resolve(world)
 
 # TODO:
 @dataclasses.dataclass()
