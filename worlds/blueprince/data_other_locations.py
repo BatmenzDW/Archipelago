@@ -29,7 +29,7 @@ trophies = {
     "Trophy of Wealth": {
         LOCATION_ID_KEY: all_areas["Showroom"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Showroom",
-        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(),
+        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(300), # for now, this is an estimate on the amount of money needed to buy this and all other items from the Showroom
     },
     "Inheritance Trophy": {
         LOCATION_ID_KEY: all_areas["Room 46"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -1039,42 +1039,42 @@ showroom_item_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 40, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         # LOCATION_ITEM_KEY: "CHRONOGRAPH",
-        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule() | SpiralOfStarsRule(),
+        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(30) | SpiralOfStarsRule(),
         
     },
     "EMERALD BRACELET First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 41, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         # LOCATION_ITEM_KEY: "EMERALD BRACELET",
-        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule() | SpiralOfStarsRule(),
+        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(60) | SpiralOfStarsRule(),
         
     },
     "MASTER KEY First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 42, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         # LOCATION_ITEM_KEY: "MASTER KEY",
-        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule() | SpiralOfStarsRule(),
+        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(80) | SpiralOfStarsRule(),
         
     },
     "MOON PENDANT First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 43, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         # LOCATION_ITEM_KEY: "MOON PENDANT",
-        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule() | SpiralOfStarsRule(),
+        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(20) | SpiralOfStarsRule(),
         
     },
     "ORNATE COMPASS First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 44, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         # LOCATION_ITEM_KEY: "ORNATE COMPASS",
-        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule() | SpiralOfStarsRule(),
+        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(50) | SpiralOfStarsRule(),
         
     },
     "SILVER SPOON First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 45, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         # LOCATION_ITEM_KEY: "SILVER SPOON",
-        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule() | SpiralOfStarsRule(),
+        LOCATION_RULE_SIMPLE_COMMON: ShowroomRule(30) | SpiralOfStarsRule(),
         
     },
 }

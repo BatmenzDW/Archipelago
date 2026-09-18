@@ -451,21 +451,127 @@ class SpiralOfStarsRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
         return Filtered(CanReachRegion("Observatory"), options=extreme_logic_filter).resolve(world)
 
+ROOM_COINS: dict[str, int] = {
+            "Vault": 40,
+            "Casino": 15,
+            "Treasure Trove": 15, # basic logic only accounts for the first 15 coins in treasure trove
+            "Rumpus Room": 8,
+            "Tomb": 5, # basic logic only accounts for the first 5 coins in tomb
+            "Pantry": 4,
+            "Storeroom": 1,
+        }
+
+STOREROOM_UPGRADE_COINS: int = 9
+AQUARIUM_UPGRADE_COINS: int = 10
+
+PAYROLL_COINS: int = 10
+TOMB_SPREAD_COINS: int = 5
+PIETY_OF_THE_BISHOP_COINS: int = 30
+
+coin_sources: dict[str, int] = {}
+
+@dataclasses.dataclass()
+class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Check if the player has access to a certain amount of coins.
+    """
+    amount: int
+
+    def __init__(self, amount: int):
+        self.amount = amount
+
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        return self.Resolved(self.amount, player=world.player)
+
+    class Resolved(Rule.Resolved):
+        amount: int
+
+        @override
+        def _evaluate(self, state: CollectionState) -> bool:
+            coins = self.calculate_reachable_coins(state)
+
+            return coins >= self.amount
+
+        @override
+        def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
+            coins = 0
+            if state is not None:
+                coins = self.calculate_reachable_coins(state, log_sources=True)
+
+            res : list[JSONMessagePart] = [{"type": "text", "text": f"Reachable coins: {coins} / {self.amount}. Sources: {coin_sources}"}]
+
+            return res
+            # return [
+            #     {"type": "text", "text": " "},
+            #     {"type": "color", "color": "green" if state and self(state) else "salmon", "text": str(self.amount)},
+            #     {"type": "text", "text": "is reachable with the current inventory."},
+            #     {"type": "text", "text": f" ({res})"},
+            # ]
+
+        def calculate_reachable_coins(self, state: CollectionState, log_sources: bool = False) -> int:
+            coins = 0
+            if log_sources:
+                coin_sources.clear()
+            for room, room_coins in ROOM_COINS.items():
+                if CanReachRegion(room).resolve(state.multiworld.worlds[self.player]):
+                    coins += room_coins
+                    if log_sources:
+                        coin_sources[room] = room_coins
+
+            if UpgradedRoomRule("Storeroom", "Coins").resolve(state.multiworld.worlds[self.player]): # type: ignore
+                coins += STOREROOM_UPGRADE_COINS
+                if log_sources:
+                    coin_sources["Storeroom Upgrade"] = STOREROOM_UPGRADE_COINS
+
+            if UpgradedRoomRule("Aquarium", "Goldfish").resolve(state.multiworld.worlds[self.player]): # type: ignore
+                coins += AQUARIUM_UPGRADE_COINS
+                if log_sources:
+                    coin_sources["Goldfish Aquarium"] = AQUARIUM_UPGRADE_COINS
+
+            # Coins From "Run Payroll"
+            if CanReachRegion("Office", options=complex_logic_filter).resolve(state.multiworld.worlds[self.player]): # type: ignore
+                if log_sources:
+                    coin_sources["Office Payroll"] = 0
+                if CanReachRegion("Servant's Quarters").resolve(state.multiworld.worlds[self.player]): # type: ignore
+                    coins += PAYROLL_COINS
+                    if log_sources:
+                        coin_sources["Office Payroll"] += PAYROLL_COINS
+                if CanReachRegion("Maid's Chamber").resolve(state.multiworld.worlds[self.player]): # type: ignore
+                    coins += PAYROLL_COINS
+                    if log_sources:
+                        coin_sources["Office Payroll"] += PAYROLL_COINS
+            # TODO: Add logic for Office coin spread
+
+            if CanReachRegion("Tomb", options=complex_logic_filter).resolve(state.multiworld.worlds[self.player]): # type: ignore
+                deadends = state.count_from_list([x for x in rooms if rooms[x][ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_D and not rooms[x][OUTER_ROOM_KEY] and x not in core_rooms and x not in ["Mechanarium"]], self.player)
+                coins += deadends * TOMB_SPREAD_COINS
+                if log_sources:
+                    coin_sources["Tomb Spread"] = deadends * TOMB_SPREAD_COINS
+
+            # Piety of the Bishop
+            if And(CanReachRegion("Aries Court"), CanReachRegion("Chapel"), options=complex_logic_filter).resolve(state.multiworld.worlds[self.player]): # type: ignore
+                coins += PIETY_OF_THE_BISHOP_COINS
+                if log_sources:
+                    coin_sources["Piety of the Bishop"] = PIETY_OF_THE_BISHOP_COINS
+            
+            return coins
+
 @dataclasses.dataclass()
 class ShowroomRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
     Check if the player can get money to buy items from the Showroom.
     """
+    amount: int
+
+    def __init__(self, amount: int):
+        self.amount = amount
+
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
         return (
-            CanReachRegion("Showroom") &
-                (
-                    CanReachRegion("Vault") |
-                    CanReachRegion("Casino") |
-                    CanReachRegion("Treasure Trove")
-                )
-            ).resolve(world)
+            CanReachRegion("Showroom") & HasCoins(self.amount)
+        ).resolve(world)
 
 @dataclasses.dataclass()
 class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince"):
