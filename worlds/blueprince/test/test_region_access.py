@@ -165,7 +165,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Room 8"), "Room 8 should be reachable after having Key 8")
 
     def test_can_reach_showroom_items(self):
-        self.collect_by_name("Showroom")
+        self.collect_by_name(["Showroom", "Vault"])
         self.assertTrue(self.can_reach_region("Showroom"), "Showroom should be reachable after having the Showroom item")
         self.assertTrue(self.can_reach_location("CHRONOGRAPH First Pickup"), "CHRONOGRAPH First Pickup should be reachable after having the Showroom item")
 

@@ -452,6 +452,22 @@ class SpiralOfStarsRule(Rule["BluePrinceWorld"], game="Blue Prince"):
         return Filtered(CanReachRegion("Observatory"), options=extreme_logic_filter).resolve(world)
 
 @dataclasses.dataclass()
+class ShowroomRule(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Check if the player can get money to buy items from the Showroom.
+    """
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        return (
+            CanReachRegion("Showroom") &
+                (
+                    CanReachRegion("Vault") |
+                    CanReachRegion("Casino") |
+                    CanReachRegion("Treasure Trove")
+                )
+            ).resolve(world)
+
+@dataclasses.dataclass()
 class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
     Check if the player can reach at least count item locations from the list

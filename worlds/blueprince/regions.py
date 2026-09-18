@@ -270,14 +270,14 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     "Entrance Hall Throne Room",
                     CanReachPickPosition("Throne Room") & CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins"), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
                 )
-            elif k == "Showroom":
-                entrance_hall.connect(
-                    room,
-                    "Entrance Hall Showroom",
-                    Or(
-                        CanReachRegion("Vault"), 
-                        CanReachRegion("Casino")), # A lie to prevent showroom items from being fully unbuyable and causing the run to stall. 
-                )
+            # elif k == "Showroom":
+            #     entrance_hall.connect(
+            #         room,
+            #         "Entrance Hall Showroom",
+            #         Or(
+            #             CanReachRegion("Vault"), 
+            #             CanReachRegion("Casino")), # A lie to prevent showroom items from being fully unbuyable and causing the run to stall. 
+            #     )
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
                 continue
