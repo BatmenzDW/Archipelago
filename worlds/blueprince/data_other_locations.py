@@ -5,7 +5,7 @@ from .constants import *
 from .data_rooms import rooms, core_rooms, classrooms, room_layout_lists, all_areas
 from .data_items import *
 from .rules import *
-from .options import GoalType
+from .options import GoalType, TrophySanity
 
 directory_rooms = [x for x in rooms if x not in core_rooms and x not in ["Secret Garden", "Room 8"] and x not in classrooms] + ["Progressive Classroom"]
 
@@ -537,7 +537,7 @@ standard_item_pickup = {
                 "Mail Room", # Packages
             ]]
         ) | Or(
-            CanReachRegion("Den"), CanReachRegion("Trophy Room"),
+            CanReachRegion("Den"), CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
         ) | TrunkRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
         
@@ -784,10 +784,10 @@ standard_item_pickup = {
             *[CanReachRegion(region) for region in [
                 "Spare Room",
                 "Garage",
-                "Trophy Room",
                 "Utility Closet",
                 "Boiler Room",
             ]],
+            CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
         ) | TradingPostRule("SHOVEL") | SpiralOfStarsRule() | # Also from AdvancedExperimentRule, but that requires SHOVEL
         UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Greenroom") | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
@@ -817,9 +817,9 @@ standard_item_pickup = {
                 "Spare Room",
                 "Garage",
                 "Music Room",
-                "Trophy Room",
                 "Utility Closet",
             ]],
+            CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
         ) | AdvancedExperimentRule() | TradingPostRule("SLEDGE HAMMER") | SpiralOfStarsRule() | 
         UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Hall"),
@@ -887,7 +887,7 @@ standard_item_pickup = {
                 "Locker Room",
             ]]
         ) | Or(
-            CanReachRegion("Den"), CanReachRegion("Trophy Room"),
+            CanReachRegion("Den"), CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
         ) | TrunkRule() | CarTrunkRule() | LavatoryRule() |
         UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Secret Passage"),
@@ -1345,7 +1345,7 @@ vault_keys = {
                 "Locker Room",
                 "Music Room",
             ]]
-        ) | DigSpotRule() | CanReachRegion("Trophy Room", options=rare_logic_filter) | AdvancedExperimentRule(),
+        ) | DigSpotRule() | Filtered(CanReachRegion("Trophy Room", options=rare_logic_filter), options=[OptionFilter(TrophySanity, True)]) | AdvancedExperimentRule(),
         
     },
     "Vault Key 233 First Pickup": {

@@ -8,7 +8,7 @@ from ...data_other_locations import directory_rooms
 from .. import BluePrinceTestBase
 
 
-class TrophySanity(BluePrinceTestBase):
+class TestTrophySanity(BluePrinceTestBase):
     options = {
         "progression_balancing": 50,
         "room_draft_sanity": True,
