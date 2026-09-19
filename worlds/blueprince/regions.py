@@ -592,10 +592,10 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             CanReachRegion("Reservoir Gear Side"),
         ),
     )  # Require Dual side access
-    rotating_gear.connect(
-        abandoned_mine,
-        "Rotating Gear To Abandoned Mine",
-    )
+    # rotating_gear.connect(
+    #     abandoned_mine,
+    #     "Rotating Gear To Abandoned Mine",
+    # )
     reservoir_fountain_side.connect(
         reservoir_gear_side,
         "Reservoir Fountain Side To Reservoir Gear Side",
