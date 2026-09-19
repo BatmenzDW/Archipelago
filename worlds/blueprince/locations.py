@@ -341,7 +341,6 @@ def create_events(world: BluePrinceWorld) -> None:
     antechamber = world.get_region("Antechamber")
     room_46 = world.get_region("Room 46")
     throne_room = world.get_region("Throne Room")
-    atelier = world.get_region("The Atelier")
 
     # Set Victory as entering antechamber
     if world.options.goal_type.value == GoalType.option_antechamber:
@@ -428,7 +427,7 @@ def create_events(world: BluePrinceWorld) -> None:
 
     # Set Victory as entering the atelier and reading the blue prints.
     if world.options.goal_type.value == GoalType.option_blueprints:
-
+        atelier = world.get_region("The Atelier")
         atelier.add_event(
             "Read The Blue Prints",
             "Victory",

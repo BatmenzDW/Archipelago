@@ -110,17 +110,27 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         outer_room,
         tunnel_area_post_crates,
         tunnel_area_post_normal_locked_door,
-        tunnel_area_post_basement_key_door,
-        tunnel_area_post_security_door,
-        tunnel_area_post_weak_wall,
-        tunnel_area_post_red_door,
-        tunnel_area_post_candle_door,
-        tunnel_area_post_sealed_door,
-        tunnel_area_post_blue_door,
-        atelier,
     ]
 
+    if world.options.goal_type.value > 0:
+        regions.extend([
+            tunnel_area_post_basement_key_door,
+            tunnel_area_post_security_door,
+            tunnel_area_post_weak_wall,
+            tunnel_area_post_red_door,
+            tunnel_area_post_candle_door,
+            tunnel_area_post_sealed_door,
+            tunnel_area_post_blue_door,
+            atelier,
+        ])
+
     for k, v in rooms.items():
+        if world.options.goal_type.value <= 1:
+            if k in ["Treasure Trove", "Gift Shop"] \
+                or (world.options.trophy_sanity == False and k == "Trophy Room"):
+
+                continue
+        
         regions.append(Region(k, world.player, world.multiworld))
 
     world.multiworld.regions += regions
@@ -140,6 +150,12 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
 
     # Go through the rooms and connect them to the outer room/campsite (starting area)
     for k, v in rooms.items():
+        if world.options.goal_type.value <= 1:
+            if k in ["Treasure Trove", "Gift Shop"] \
+                or (world.options.trophy_sanity == False and k == "Trophy Room"):
+        
+                continue
+        
         room = world.get_region(k)
 
         if v[OUTER_ROOM_KEY]:
@@ -270,14 +286,6 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     "Entrance Hall Throne Room",
                     CanReachPickPosition("Throne Room") & CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins"), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
                 )
-            # elif k == "Showroom":
-            #     entrance_hall.connect(
-            #         room,
-            #         "Entrance Hall Showroom",
-            #         Or(
-            #             CanReachRegion("Vault"), 
-            #             CanReachRegion("Casino")), # A lie to prevent showroom items from being fully unbuyable and causing the run to stall. 
-            #     )
             # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
                 continue
@@ -516,44 +524,44 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             "Tunnel Area Post Normal Locked Door to Tunnel Area Post Basement Key",
             CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
         )
-    tunnel_area_post_basement_key_door.connect(
-        tunnel_area_post_security_door,
-        "Tunnel Area Post Basement Key to Tunnel Area Post Security Door",
-        CanReachItemLocation("KEYCARD", parent_region_name="Entrance Hall"),
-    )
-    tunnel_area_post_security_door.connect(
-        tunnel_area_post_weak_wall,
-        "Tunnel Area Post Security Door to Tunnel Area Post Weak Wall",
-        CanReachItemLocation("Power Hammer", parent_region_name="Workshop"),
-    )
-    tunnel_area_post_weak_wall.connect(
-        tunnel_area_post_red_door,
-        "Tunnel Area Post Weak Wall to Tunnel Area Post Red Door",
-        CanReachRegion("Boiler Room"),
-    )
-    tunnel_area_post_red_door.connect(
-        tunnel_area_post_candle_door,
-        "Tunnel Area Post Red Door to Tunnel Area Post Candle Door",
-        Or(
-            CanReachItemLocation("Burning Glass", parent_region_name="Workshop"),
-            CanReachItemLocation("TORCH", parent_region_name="The Armory"),
-        ),
-    )
-    tunnel_area_post_candle_door.connect(
-        tunnel_area_post_sealed_door,
-        "Tunnel Area Post Candle Door to Tunnel Area Post Sealed Door",
-        And(
-            CanReachItemLocation("MICROCHIP 1", parent_region_name="West Path"),
-            CanReachItemLocation("MICROCHIP 2", parent_region_name="Entrance Hall"),
-            CanReachItemLocation("MICROCHIP 3", parent_region_name="Blackbridge Grotto"),
-        ),
-    )
-    tunnel_area_post_sealed_door.connect(
-        tunnel_area_post_blue_door,
-        "Tunnel Area Post Sealed Door to Tunnel Area Post Blue Door",
-        lambda state: state.has("Blue Door Access", world.player),
-        # No item called blue door access RN.
-    )
+        tunnel_area_post_basement_key_door.connect(
+            tunnel_area_post_security_door,
+            "Tunnel Area Post Basement Key to Tunnel Area Post Security Door",
+            CanReachItemLocation("KEYCARD", parent_region_name="Entrance Hall"),
+        )
+        tunnel_area_post_security_door.connect(
+            tunnel_area_post_weak_wall,
+            "Tunnel Area Post Security Door to Tunnel Area Post Weak Wall",
+            CanReachItemLocation("Power Hammer", parent_region_name="Workshop"),
+        )
+        tunnel_area_post_weak_wall.connect(
+            tunnel_area_post_red_door,
+            "Tunnel Area Post Weak Wall to Tunnel Area Post Red Door",
+            CanReachRegion("Boiler Room"),
+        )
+        tunnel_area_post_red_door.connect(
+            tunnel_area_post_candle_door,
+            "Tunnel Area Post Red Door to Tunnel Area Post Candle Door",
+            Or(
+                CanReachItemLocation("Burning Glass", parent_region_name="Workshop"),
+                CanReachItemLocation("TORCH", parent_region_name="The Armory"),
+            ),
+        )
+        tunnel_area_post_candle_door.connect(
+            tunnel_area_post_sealed_door,
+            "Tunnel Area Post Candle Door to Tunnel Area Post Sealed Door",
+            And(
+                CanReachItemLocation("MICROCHIP 1", parent_region_name="West Path"),
+                CanReachItemLocation("MICROCHIP 2", parent_region_name="Entrance Hall"),
+                CanReachItemLocation("MICROCHIP 3", parent_region_name="Blackbridge Grotto"),
+            ),
+        )
+        tunnel_area_post_sealed_door.connect(
+            tunnel_area_post_blue_door,
+            "Tunnel Area Post Sealed Door to Tunnel Area Post Blue Door",
+            lambda state: state.has("Blue Door Access", world.player),
+            # No item called blue door access RN.
+        )
 
     ###################################
     # COMPLEX REGION CONNECTION LOGIC #
@@ -600,15 +608,16 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         ),
     )  # Pump Room
 
-    outer_room.connect(
-        atelier,
-        "Outer Room To Atelier",
-        And(
-            CanReachRegion("Secret Passage"),
-            CanReachRegion("Shrine"),
-            CanReachItemLocation("WATERING CAN", parent_region_name="Entrance Hall"),
-        ),
-    )
+    if world.options.goal_type.value > 0:
+        outer_room.connect(
+            atelier,
+            "Outer Room To Atelier",
+            And(
+                CanReachRegion("Secret Passage"),
+                CanReachRegion("Shrine"),
+                CanReachItemLocation("WATERING CAN", parent_region_name="Entrance Hall"),
+            ),
+        )
 
     grounds.connect(
         the_well,
