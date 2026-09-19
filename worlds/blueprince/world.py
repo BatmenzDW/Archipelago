@@ -5,6 +5,7 @@ from typing import Any, List, Set
 from BaseClasses import Item, Location
 from worlds.AutoWorld import World
 
+from Options import OptionError
 from .constants import ITEMS_BY_GROUPS, LOCATIONS_BY_GROUPS
 # Imports of your world's files must be relative.
 from . import items, locations, regions, rules, web_world
@@ -46,6 +47,14 @@ class BluePrinceWorld(World):
     location_name_groups = LOCATIONS_BY_GROUPS
 
     dares : Set[str] = set()
+
+    # validate settings early in the generation process
+    def generate_early(self) -> None:
+        if len(self.options.filler_item_distribution.value) == 0:
+            raise OptionError("Filler item distribution cannot be empty.")
+
+        if self.options.trap_percentage.value > 0 and len(self.options.trap_type_distribution.value) == 0:
+            raise OptionError("Trap type distribution cannot be empty when trap percentage is greater than 0.")
 
     # # Our world class must have certain functions ("steps") that get called during generation.
     # # The main ones are: create_regions, set_rules, create_items.

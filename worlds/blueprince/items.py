@@ -237,7 +237,7 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
     else:
         choice = world.random.choices(
             list(world.options.filler_item_distribution.value.keys()),
-            list(world.options.filler_item_distribution.value.values()),
+            list(world.options.filler_item_distribution.value.values())
         )[0]
 
         count = world.random.randint(0, 99)
