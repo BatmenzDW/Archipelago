@@ -5,7 +5,7 @@ from ....AutoWorld import call_all
 
 from BaseClasses import Location, MultiWorld, CollectionState, Item
 
-from ...options import GoalType
+from ...options import GoalType, ItemLogicMode
 from ...test import BluePrinceTestBase
 from ...data_rooms import rooms, core_rooms
 from ... import data_rooms, data_other_locations
@@ -60,6 +60,14 @@ class TestDraftSanity(BluePrinceTestBase):
             self.collect(data_rooms.progressive_classroom[cnum - 1])
             self.debug_print_regions_items_locations(True)
             self.assertTrue(self.can_reach_region(current), f"Should be able to reach {current} after collecting {cnum} Progressive Classrooms")
+
+    def test_can_reach_showroom_items_with_money(self):
+        self.collect_by_name(["Showroom"])
+        self.assertTrue(self.can_reach_region("Showroom"), "Showroom should be reachable after having the Showroom item")
+        self.assertFalse(self.can_reach_location("MASTER KEY First Pickup"), "MASTER KEY First Pickup should not be reachable without having the required money from more rooms/items")
+        self.collect_by_name(["Vault", "Casino", "Tomb", "Rumpus Room", "Office", "Servant's Quarters", "Maid's Chamber"])
+        print(self.multiworld.get_location("MASTER KEY First Pickup", self.player).access_rule.explain_str(self.multiworld.state)) # type: ignore
+        self.assertTrue(self.can_reach_location("MASTER KEY First Pickup"), "MASTER KEY First Pickup should be reachable after collecting money from more rooms/items")
 
     #  Copied here for debugging. This is run by the base class, but its easier to debug with it here
     def test_fill(self):

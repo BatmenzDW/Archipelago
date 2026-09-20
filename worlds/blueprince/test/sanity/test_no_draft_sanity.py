@@ -6,7 +6,7 @@ from ...constants import *
 from BaseClasses import CollectionState, Location
 from ....AutoWorld import call_all
 
-from ...options import GoalType
+from ...options import GoalType, ItemLogicMode
 from ...test import BluePrinceTestBase
 from ...data_rooms import rooms, core_rooms
 
@@ -20,6 +20,7 @@ class TestNoDraftSanity(BluePrinceTestBase):
         "key_sanity": True,
         "special_shop_sanity": True,
         "trophy_sanity": True,
+        "item_logic_mode": ItemLogicMode.option_complex,
         "goal_type": GoalType.option_blueprints,
     }
 

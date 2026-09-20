@@ -56,6 +56,9 @@ class BluePrinceWorld(World):
         if self.options.trap_percentage.value > 0 and len(self.options.trap_type_distribution.value) == 0:
             raise OptionError("Trap type distribution cannot be empty when trap percentage is greater than 0.")
 
+        if self.options.item_logic_mode.value <= 1 and self.options.trophy_sanity == True:
+            raise OptionError("Trophy Sanity requires at least complex item logic.")
+
     # # Our world class must have certain functions ("steps") that get called during generation.
     # # The main ones are: create_regions, set_rules, create_items.
     # # For better structure and readability, we put each of these in their own file.

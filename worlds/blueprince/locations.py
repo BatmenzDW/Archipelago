@@ -181,6 +181,9 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         if world.options.trophy_sanity == False and (k in trophies or k in ["Gift Shop - Blue Tents"]):
             continue # Skip placing trophies when trophy sanity is off
 
+        if world.options.item_logic_mode.value <= 1 and k == "Trophy of Wealth":
+            continue # Trophy of Wealth is impractical on basic item logic
+
         if not is_implemented(k, world):
             continue
 

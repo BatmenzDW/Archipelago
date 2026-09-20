@@ -454,12 +454,13 @@ class SpiralOfStarsRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 ROOM_COINS: dict[str, int] = {
             "Vault": 40,
             "Casino": 15,
-            "Treasure Trove": 15, # basic logic only accounts for the first 15 coins in treasure trove
             "Rumpus Room": 8,
             "Tomb": 5, # basic logic only accounts for the first 5 coins in tomb
             "Pantry": 4,
             "Storeroom": 1,
         }
+
+TREASURE_TROVE_COINS: int = 25 # basic logic only accounts for the first 25 coins in treasure trove
 
 STOREROOM_UPGRADE_COINS: int = 9
 AQUARIUM_UPGRADE_COINS: int = 10
@@ -468,7 +469,11 @@ PAYROLL_COINS: int = 10
 TOMB_SPREAD_COINS: int = 5
 PIETY_OF_THE_BISHOP_COINS: int = 30
 
-coin_sources: dict[str, int] = {}
+COIN_PURSE_MULT : float = 3 / 2
+LUCKY_PURSE_MULT : int = 2
+FREEZER_MULT : int = 2
+
+coin_sources: dict[str, str] = {}
 
 @dataclasses.dataclass()
 class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -482,16 +487,27 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return self.Resolved(self.amount, player=world.player)
+        return self.Resolved(self.amount, lategame=world.options.goal_type.value > 1, complex=world.options.item_logic_mode.value >= 2, workshop=world.options.workshop_sanity.value, player=world.player)
 
     class Resolved(Rule.Resolved):
         amount: int
+        lategame: bool = False
+        complex: bool = False
+        workshop: bool = False
 
         @override
         def _evaluate(self, state: CollectionState) -> bool:
             coins = self.calculate_reachable_coins(state)
 
             return coins >= self.amount
+
+        @override
+        def explain_str(self, state: CollectionState | None = None) -> str:
+            coins = 0
+            if state is not None:
+                coins = self.calculate_reachable_coins(state, log_sources=True)
+
+            return f"Reachable coins: {coins} / {self.amount}. Sources: {coin_sources}"
 
         @override
         def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
@@ -514,46 +530,70 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
             if log_sources:
                 coin_sources.clear()
             for room, room_coins in ROOM_COINS.items():
-                if CanReachRegion(room).resolve(state.multiworld.worlds[self.player]):
+                if state.can_reach_region(room, self.player):
                     coins += room_coins
                     if log_sources:
-                        coin_sources[room] = room_coins
+                        coin_sources[room] = f"{room_coins}"
 
-            if UpgradedRoomRule("Storeroom", "Coins").resolve(state.multiworld.worlds[self.player]): # type: ignore
-                coins += STOREROOM_UPGRADE_COINS
+            if self.lategame and state.can_reach_region("Treasure Trove", self.player): # type: ignore
+                coins += TREASURE_TROVE_COINS
                 if log_sources:
-                    coin_sources["Storeroom Upgrade"] = STOREROOM_UPGRADE_COINS
+                    coin_sources["Treasure Trove"] = f"{TREASURE_TROVE_COINS}"
 
-            if UpgradedRoomRule("Aquarium", "Goldfish").resolve(state.multiworld.worlds[self.player]): # type: ignore
-                coins += AQUARIUM_UPGRADE_COINS
-                if log_sources:
-                    coin_sources["Goldfish Aquarium"] = AQUARIUM_UPGRADE_COINS
+            # TODO: other devs suggested using event items to handle room upgrades
+            # if UpgradedRoomRule("Storeroom", "Coins").resolve(state.multiworld.worlds[self.player])._evaluate(state): # type: ignore
+            #     coins += STOREROOM_UPGRADE_COINS
+            #     if log_sources:
+            #         coin_sources["Storeroom Upgrade"] = STOREROOM_UPGRADE_COINS
+
+            # if UpgradedRoomRule("Aquarium", "Goldfish").resolve(state.multiworld.worlds[self.player])._evaluate(state): # type: ignore
+            #     coins += AQUARIUM_UPGRADE_COINS
+            #     if log_sources:
+            #         coin_sources["Goldfish Aquarium"] = AQUARIUM_UPGRADE_COINS
 
             # Coins From "Run Payroll"
-            if CanReachRegion("Office", options=complex_logic_filter).resolve(state.multiworld.worlds[self.player]): # type: ignore
-                if log_sources:
-                    coin_sources["Office Payroll"] = 0
-                if CanReachRegion("Servant's Quarters").resolve(state.multiworld.worlds[self.player]): # type: ignore
+            if state.can_reach_region("Office", self.player):
+                office_payroll = 0
+                
+                if state.can_reach_region("Servant's Quarters", self.player):
+                    office_payroll += PAYROLL_COINS
                     coins += PAYROLL_COINS
-                    if log_sources:
-                        coin_sources["Office Payroll"] += PAYROLL_COINS
-                if CanReachRegion("Maid's Chamber").resolve(state.multiworld.worlds[self.player]): # type: ignore
+                if state.can_reach_region("Maid's Chamber", self.player):
                     coins += PAYROLL_COINS
+                    office_payroll += PAYROLL_COINS
+                if log_sources:
+                    coin_sources["Office Payroll"] = f"{office_payroll}"
+
+            if self.complex:
+                # TODO: Add logic for Office coin spread
+
+            
+                if state.can_reach_region("Tomb", self.player):
+                    deadends = state.count_from_list([x for x in rooms if rooms[x][ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_D and not rooms[x][OUTER_ROOM_KEY] and x not in core_rooms and x not in ["Mechanarium"]], self.player)
+                    coins += deadends * TOMB_SPREAD_COINS
                     if log_sources:
-                        coin_sources["Office Payroll"] += PAYROLL_COINS
-            # TODO: Add logic for Office coin spread
+                        coin_sources["Tomb Spread"] = f"{deadends * TOMB_SPREAD_COINS}"
 
-            if CanReachRegion("Tomb", options=complex_logic_filter).resolve(state.multiworld.worlds[self.player]): # type: ignore
-                deadends = state.count_from_list([x for x in rooms if rooms[x][ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_D and not rooms[x][OUTER_ROOM_KEY] and x not in core_rooms and x not in ["Mechanarium"]], self.player)
-                coins += deadends * TOMB_SPREAD_COINS
-                if log_sources:
-                    coin_sources["Tomb Spread"] = deadends * TOMB_SPREAD_COINS
+                # Piety of the Bishop
+                if state.can_reach_region("Aries Court", self.player) and state.can_reach_region("Chapel", self.player):
+                    coins += PIETY_OF_THE_BISHOP_COINS
+                    if log_sources:
+                        coin_sources["Piety of the Bishop"] = f"{PIETY_OF_THE_BISHOP_COINS}"
 
-            # Piety of the Bishop
-            if And(CanReachRegion("Aries Court"), CanReachRegion("Chapel"), options=complex_logic_filter).resolve(state.multiworld.worlds[self.player]): # type: ignore
-                coins += PIETY_OF_THE_BISHOP_COINS
-                if log_sources:
-                    coin_sources["Piety of the Bishop"] = PIETY_OF_THE_BISHOP_COINS
+                if state.can_reach_region("Freezer", self.player):
+                    coins *= FREEZER_MULT
+                    if log_sources:
+                        coin_sources["Freezer Multiplier"] = f"x{FREEZER_MULT} multiplier"
+
+            if state.can_reach_location("COIN PURSE First Pickup", self.player) and state.has("COIN PURSE", self.player):
+                if self.workshop and state.can_reach_location("Lucky Purse First Pickup", self.player) and state.has("LUCKY PURSE", self.player):
+                    coins *= LUCKY_PURSE_MULT
+                    if log_sources:
+                        coin_sources["Lucky Purse Multiplier"] = f"x{LUCKY_PURSE_MULT} multiplier"
+                else:
+                    coins = int(coins * COIN_PURSE_MULT)
+                    if log_sources:
+                        coin_sources["Coin Purse Multiplier"] = f"x{COIN_PURSE_MULT} multiplier"
             
             return coins
 
@@ -622,7 +662,7 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
                             if LOCATION_ITEM_KEY in data and data[LOCATION_ITEM_KEY] == target:
                                 if IMPLEMENTATION_STATUS in data and data[IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
                                     if LOCATION_RULE_SIMPLE_COMMON in data:
-                                        if (CanReachRegion(data[LOCATION_ROOM_KEY]) & data[LOCATION_RULE_SIMPLE_COMMON]).resolve(state.multiworld.worlds[self.player]):
+                                        if (CanReachRegion(data[LOCATION_ROOM_KEY]) & data[LOCATION_RULE_SIMPLE_COMMON]).resolve(state.multiworld.worlds[self.player])._evaluate(state):
                                             reachable_count += 1
                                         break
                                     reachable_count += 1

@@ -2,7 +2,7 @@
 
 from ...rules import CanReachItemLocation
 
-from ...options import GoalType
+from ...options import GoalType, ItemLogicMode
 from ...data_other_locations import directory_rooms
 
 from .. import BluePrinceTestBase
@@ -18,6 +18,7 @@ class TestTrophySanity(BluePrinceTestBase):
         "key_sanity": True,
         "special_shop_sanity": True,
         "trophy_sanity": True,
+        "item_logic_mode": ItemLogicMode.option_complex,
         "goal_type": GoalType.option_blueprints,
     }
 

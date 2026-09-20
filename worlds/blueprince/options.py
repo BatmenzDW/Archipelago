@@ -93,6 +93,7 @@ class SpecialShopSanity(Toggle):
 class TrophySanity(Toggle):
     """
     This option enables checks for trophies.
+    Trophy sanity requires at least complex item logic.
     """
 
     display_name = "Trophy Sanity"

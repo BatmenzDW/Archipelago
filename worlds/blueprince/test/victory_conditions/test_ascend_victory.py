@@ -4,7 +4,7 @@ from BaseClasses import CollectionState, Location
 from ....AutoWorld import call_all
 from ... import data_other_locations
 
-from ...options import GoalType
+from ...options import GoalType, ItemLogicMode
 from ...test import BluePrinceTestBase
 from ...constants import *
 
@@ -12,6 +12,7 @@ class TestAscendVictory(BluePrinceTestBase):
     options = {
         "room_draft_sanity": True,
         "trophy_sanity": True,
+        "item_logic_mode": ItemLogicMode.option_complex,
         "special_shop_sanity": True,
         "goal_type": GoalType.option_ascend,
     }
