@@ -501,42 +501,95 @@ option_groups = [
 ]
 
 
-# Finally, we can define some option presets if we want the player to be able to quickly choose a specific "mode".
 option_presets = {
-    # Room 46 Extra Drafting is to be a "vanilla" play through to reach room 46,
-    # with no death link, with the goal set to room 64, and with no filler items or traps added to the pool.
-    "Room 46 Extra Drafting": {
+    "Antechamber Basic": {
         "room_draft_sanity": True,
         "starting_room_amount": StartingRoomAmount.range_start,
-        "locked_trunks_common": 2,
+        "locked_trunks_common": 0,
         "locked_trunks_rare": 0,
         "locked_trunks_complex": 0,
         "trunks": {
-            "Great Hall": 5,
-            "Bedroom": 2,
-            "Den": 2,
-            "Veranda": 2,
-            "The Pool": 2,
-            "Spare Room": 2,
-            "Drawing Room": 0,
+            "Bedroom": 1,
+            "Courtyard": 1,
         },
         "standard_item_sanity": True,
-        "workshop_sanity": True,
-        "upgrade_disk_sanity": True,
-        "key_sanity": True,
+        "workshop_sanity": False,
+        "upgrade_disk_sanity": False,
+        "key_sanity": False,
         "special_shop_sanity": False,
         "trophy_sanity": False,
         "item_logic_mode": ItemLogicMode.default,
-        "filler_item_distribution": {"nothing": 100},
-        "trap_type_distribution": {},
+        "filler_item_distribution": {
+            "extra_allowance": 50,
+            "extra_dice": 50,
+            "extra_gems": 50,
+            "extra_gold": 50,
+            "extra_keys": 50,
+            "extra_stars": 50,
+            "extra_starting_luck": 50,
+            "extra_steps": 50,
+            "nothing": 50
+        },
+        "trap_type_distribution": {
+            "eod_traps": 50,
+            "freeze_traps": 50,
+            "item_traps": 50,
+            "step_traps": 50,
+            "step_traps_set_to_1": 50,
+            "step_traps_set_to_10": 50
+        },
         "trap_percentage": TrapPercentage.range_start,
         "death_link_type": DeathLinkType.option_none,
         "death_link_grace": DeathLinkGrace.range_start,
-        "death_link_protection": 1,
+        "death_link_protection": 0,
+        "death_link_monk_exception": True,
+        "goal_type": GoalType.option_antechamber,
+        "goal_sanctum_solves": GoalSanctumSolves.range_end,
+        "start_inventory": {}
+    },
+    "Room 46 Basic": {
+        "room_draft_sanity": True,
+        "starting_room_amount": StartingRoomAmount.range_start,
+        "locked_trunks_common": 0,
+        "locked_trunks_rare": 0,
+        "locked_trunks_complex": 0,
+        "trunks": {
+            "Bedroom": 2,
+            "Courtyard": 2,
+        },
+        "standard_item_sanity": True,
+        "workshop_sanity": False,
+        "upgrade_disk_sanity": False,
+        "key_sanity": False,
+        "special_shop_sanity": False,
+        "trophy_sanity": False,
+        "item_logic_mode": ItemLogicMode.default,
+        "filler_item_distribution": {
+            "extra_allowance": 50,
+            "extra_dice": 50,
+            "extra_gems": 50,
+            "extra_gold": 50,
+            "extra_keys": 50,
+            "extra_stars": 50,
+            "extra_starting_luck": 50,
+            "extra_steps": 50,
+            "nothing": 50
+        },
+        "trap_type_distribution": {
+            "eod_traps": 50,
+            "freeze_traps": 50,
+            "item_traps": 50,
+            "step_traps": 50,
+            "step_traps_set_to_1": 50,
+            "step_traps_set_to_10": 50
+        },
+        "trap_percentage": TrapPercentage.range_start,
+        "death_link_type": DeathLinkType.option_none,
+        "death_link_grace": DeathLinkGrace.range_start,
+        "death_link_protection": 0,
         "death_link_monk_exception": True,
         "goal_type": GoalType.option_room46,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
-        "starting_room_amount": StartingRoomAmount.range_start,
         "start_inventory": {}
     },
 }
