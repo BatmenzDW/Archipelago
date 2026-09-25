@@ -130,6 +130,10 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             for idx in range(1, trunk_count + 1): 
                 world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
 
+        elif room_key == "Mechanarium":
+            for idx in range(1, trunk_count + 1):
+                world.set_rule(world.get_location(f"Mechanarium Locked Trunk {idx}"), MechanariumDoorRule(3))
+
     for k, v in locations.items():
 
         if IMPLEMENTATION_STATUS in v and v[IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
