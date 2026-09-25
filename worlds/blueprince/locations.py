@@ -310,11 +310,11 @@ def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, po
             continue
 
         if l1_item is None:
-            if loc1.can_fill(world.multiworld.state, item, check_access=False):
+            if loc1.can_fill(world.multiworld.state, item, check_access=False) and loc1.item is None:
                 l1_item = item
                 continue
         elif item.name == l1_item.name:
-            if loc2.can_fill(world.multiworld.state, item, check_access=False):
+            if loc2.can_fill(world.multiworld.state, item, check_access=False) and loc2.item is None:
                 loc1.place_locked_item(l1_item)
                 loc2.place_locked_item(item)
 
