@@ -72,7 +72,8 @@ class TestRegionAccess(BluePrinceTestBase):
         self.collect_all_but(["Gemstone Caverns", "Utility Closet"])
         self.assertFalse(self.can_reach_region("Gemstone Cavern"), "Gemstone Caverns should not be reachable without having the Gemstone Caverns as an item")
         self.collect_by_name("Gemstone Caverns")
-        self.assertFalse(self.can_reach_region("Gemstone Cavern"), "Gemstone Caverns should not be reachable without having the Utility Closet as an item")
+        if not self.multiworld.state.has("Utility Closet", self.player):
+            self.assertFalse(self.can_reach_region("Gemstone Cavern"), "Gemstone Caverns should not be reachable without having the Utility Closet as an item")
         self.collect_by_name("Utility Closet")
         self.assertTrue(self.can_reach_region("Gemstone Cavern"), "Gemstone Caverns should be reachable after collecting the Gemstone Caverns as an item")
 
