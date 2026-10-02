@@ -320,8 +320,9 @@ def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, po
 
                 locations.remove(loc1)
                 locations.remove(loc2)
-                pool.remove(l1_item)
-                pool.remove(item)
+                # Item equality compares name and player, so list.remove can remove an
+                # unplaced duplicate instead of either object we just placed.
+                pool[:] = [candidate for candidate in pool if candidate is not l1_item and candidate is not item]
                 print(f"Placed an item in both Bunk Room First Entering locations to satisfy the condition that they have the same item.")
                 return True
             else:
