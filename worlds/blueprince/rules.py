@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 from .data_rooms import rooms, core_rooms, room_layout_lists
 from .constants import *
 from .room_min_pieces import POSITION_MINIMUM_PIECES, POSITION_MINIMUM_TOTAL_PIECES
-from .options import ItemLogicMode
+from .options import ItemLogicMode, TrophySanity
 from .data_items import *
 
 default_logic_filter = [OptionFilter(ItemLogicMode, ItemLogicMode.option_default)]
@@ -278,10 +278,10 @@ class TrunkRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                     "Spare Room",
                     "Music Room",
                     "Drawing Room",
-                    "Trophy Room",
                     "Gallery",
                     "Great Hall",
                 ]], 
+                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
                 CanReachRegion("The Pool") & Has("Gift Shop - Swim Trunks"),
                 PlanetariumRule(),
                 options=extreme_logic_filter
