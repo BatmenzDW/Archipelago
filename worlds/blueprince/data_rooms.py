@@ -147,7 +147,7 @@ secret_blue = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; notably: cannot be drafted in corners
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_EDGE_PIERCE_EAST,
             ROOM_PICK_POSITION_EDGE_PIERCE_WEST,
@@ -163,7 +163,7 @@ secret_blue = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I, # Restricted drafting isn't relevant here
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT,
             ROOM_PICK_POSITION_EDGE_CREEP_EAST,
@@ -274,7 +274,7 @@ blue_001_012 = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_CENTER_FOUNDATION,
         ],
@@ -286,7 +286,7 @@ blue_001_012 = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,  # Technically has SOME SOMETIMES, but not for all upgrades.
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I, # Spare Secret Passage restrictions shouldn't matter
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_CENTER_TIER_1,
@@ -364,7 +364,7 @@ blue_001_012 = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_ROOM_8],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
@@ -780,7 +780,7 @@ blue_025_036 = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_CENTER_TIER_2_GEMS,
             ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS,
@@ -794,7 +794,7 @@ blue_025_036 = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; can't be drafted going sideways from Entrance Hall; could matter if other South Creep rooms were used as Js as well
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_CORNER,
@@ -1061,7 +1061,7 @@ bedrooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; can't be drafted going sideways from Entrance Hall; could matter if other South Creep rooms were used as Js as well
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_SOUTH_PIERCE,
             ROOM_PICK_POSITION_CORNER,
@@ -1190,7 +1190,7 @@ hallways = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_CENTER_TIER_2,
             ROOM_PICK_POSITION_EDGE_CREEP_EAST,
@@ -1206,7 +1206,7 @@ hallways = {
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMPLEX,
         ROOM_CHEST_SPOT_COUNT_KEY: 0, # Only spawns in one of the upgrades, so excluding it
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_SOUTH_PIERCE,
@@ -1220,7 +1220,7 @@ hallways = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_EDGE_CREEP_WEST, ROOM_PICK_POSITION_EDGE_PIERCE_WEST],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
@@ -1230,7 +1230,7 @@ hallways = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_EDGE_CREEP_EAST, ROOM_PICK_POSITION_EDGE_PIERCE_EAST],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
@@ -1265,7 +1265,7 @@ hallways = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_CENTER_TIER_2_GEMS,
             ROOM_PICK_POSITION_EDGE_ADVANCE_WEST_WING_GEMS,
@@ -1328,7 +1328,7 @@ green_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_CORNER_GEMS],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_ROOK,
@@ -1359,7 +1359,7 @@ green_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_EDGE_ADVANCE_WEST_WING_GEMS,
             ROOM_PICK_POSITION_EDGE_RETREAT_EAST_WING_GEMS,
@@ -1402,7 +1402,7 @@ green_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_I,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_EDGE_ADVANCE_WEST_WING_GEMS,
             ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS,
@@ -1417,7 +1417,7 @@ green_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting and Restricted door access
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS,
             ROOM_PICK_POSITION_EDGE_RETREAT_WEST_WING_GEMS,
@@ -1430,7 +1430,7 @@ green_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 1,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS,
             ROOM_PICK_POSITION_EDGE_RETREAT_WEST_WING_GEMS,
@@ -1445,9 +1445,10 @@ green_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [
             # Secret garden IS NOT draftable via normal rules, but DOES require access to these rooms as part of the logic.
+            # TODO: Fix this logic so that it requires getting to a locked door (Draft from Rank 4 (Great Hall or Vestibule can shortcut this))
             ROOM_PICK_POSITION_EDGE_CREEP_EAST,
             ROOM_PICK_POSITION_EDGE_CREEP_WEST,
             ROOM_PICK_POSITION_EDGE_PIERCE_EAST,
@@ -1584,7 +1585,7 @@ shops = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_BISHOP,
@@ -1594,7 +1595,7 @@ shops = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; cannot South Pierce; mostly only matters if you'd be using 2 Xs and this J to get to corner.
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_CENTER_TIER_1_GEMS,
             ROOM_PICK_POSITION_CORNER_GEMS,
@@ -1613,7 +1614,7 @@ shops = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T, # Restricted drafting shouldn't matter
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_CENTER_TIER_2,
             ROOM_PICK_POSITION_FRONT,
@@ -1632,7 +1633,7 @@ red_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; can't be drafted going sideways from Entrance Hall; could matter if other South Creep rooms were used as Js as well
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_CORNER,
@@ -1652,7 +1653,7 @@ red_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; no South Creep
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_NORTH_PIERCE,
@@ -1688,7 +1689,7 @@ red_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; no South Creep
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_NORTH_PIERCE,
@@ -1706,7 +1707,7 @@ red_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_J,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; can't be drafted going sideways from Entrance Hall; could matter if other South Creep rooms were used as Js as well
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_NORTH_PIERCE,
@@ -1733,7 +1734,7 @@ red_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting; no South Creep
         ROOM_PICK_POSITIONS_KEY: [
             ROOM_PICK_POSITION_FRONT_BACK_RARE,
             ROOM_PICK_POSITION_NORTH_PIERCE,
@@ -1814,7 +1815,7 @@ black_rooms = {
         ROOM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression_deprioritized | ItemClassification.useful,
         ROOM_ITEM_SPOT_COUNT_KEY: 0,
         ROOM_CHEST_SPOT_COUNT_KEY: 0,
-        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_T,
+        ROOM_LAYOUT_TYPE_KEY: ROOM_LAYOUT_TYPE_D, # Restricted drafting
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_EDGE_PIERCE_RARE_GEMS, ROOM_PICK_POSITION_CENTER_TIER_2_GEMS],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_KING,
