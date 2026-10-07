@@ -50,10 +50,10 @@ class BluePrinceWorld(World):
 
     # validate settings early in the generation process
     def generate_early(self) -> None:
-        if len(self.options.filler_item_distribution.value) == 0:
+        if sum(self.options.filler_item_distribution.value.values()) == 0:
             raise OptionError("Filler item distribution cannot be empty.")
 
-        if self.options.trap_percentage.value > 0 and len(self.options.trap_type_distribution.value) == 0:
+        if self.options.trap_percentage.value > 0 and sum(self.options.trap_type_distribution.value.values()) == 0:
             raise OptionError("Trap type distribution cannot be empty when trap percentage is greater than 0.")
 
         if self.options.item_logic_mode.value <= 1 and self.options.trophy_sanity == True:
