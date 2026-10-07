@@ -1449,10 +1449,11 @@ green_rooms = {
         ROOM_PICK_POSITIONS_KEY: [
             # Secret garden IS NOT draftable via normal rules, but DOES require access to these rooms as part of the logic.
             # TODO: Fix this logic so that it requires getting to a locked door (Draft from Rank 4 (Great Hall or Vestibule can shortcut this))
-            ROOM_PICK_POSITION_EDGE_CREEP_EAST,
-            ROOM_PICK_POSITION_EDGE_CREEP_WEST,
-            ROOM_PICK_POSITION_EDGE_PIERCE_EAST,
-            ROOM_PICK_POSITION_EDGE_PIERCE_WEST,
+            # ROOM_PICK_POSITION_EDGE_CREEP_EAST,
+            # ROOM_PICK_POSITION_EDGE_CREEP_WEST,
+            # ROOM_PICK_POSITION_EDGE_PIERCE_EAST,
+            # ROOM_PICK_POSITION_EDGE_PIERCE_WEST,
+            ROOM_PICK_POSITION_ROOM_8, # temporary logic fix
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
