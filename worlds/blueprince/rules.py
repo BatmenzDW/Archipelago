@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 from .data_rooms import rooms, core_rooms, room_layout_lists
 from .constants import *
 from .room_min_pieces import POSITION_MINIMUM_PIECES, POSITION_MINIMUM_TOTAL_PIECES
-from .options import ItemLogicMode
+from .options import ItemLogicMode, SpecialShopSanity
 from .data_items import *
 
 default_logic_filter = [OptionFilter(ItemLogicMode, ItemLogicMode.option_default)]
@@ -207,8 +207,8 @@ class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):
                 return (Has(self.location) & CanReachLocation(f"{self.location} First Pickup", parent_region_name="Workshop")).resolve(world)
 
         if self.location in armory_items:
-            return (Has(self.location) & CanReachRegion("The Armory")).resolve(world)
-         
+            return (Has(self.location, options=[OptionFilter(SpecialShopSanity, True)], filtered_resolution=True) & CanReachRegion("The Armory")).resolve(world)
+        
         for location, data in locations.items():
             if LOCATION_ITEM_KEY in data and data[LOCATION_ITEM_KEY] == self.location:
                 if IMPLEMENTATION_STATUS in data and data[IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED and LOCATION_RULE_SIMPLE_COMMON in data:
