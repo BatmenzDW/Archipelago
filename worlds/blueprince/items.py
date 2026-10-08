@@ -420,8 +420,6 @@ def create_all_items(world: BluePrinceWorld) -> None:
     upgrade_disk_item_list = [world.create_item(k) for k in upgrade_disks]
     if world.options.upgrade_disk_sanity:
         itempool += upgrade_disk_item_list
-    # else:
-    #     to_precollect += upgrade_disk_item_list
 
     key_item_list = [world.create_item(k) for k in keys if (k not in ["BASEMENT KEY"] or world.options.goal_type.value > 0)
                                                             and (k not in sanctum_keys or world.options.goal_type.value > 1) 
@@ -434,8 +432,6 @@ def create_all_items(world: BluePrinceWorld) -> None:
     special_shop_item_list = [world.create_item(k) for k in shop_items if k not in gift_shop_items]
     if world.options.special_shop_sanity:
         itempool += special_shop_item_list
-    else:
-        to_precollect += special_shop_item_list
 
     giftshop_item_list = [world.create_item(k) for k in gift_shop_items]
     if world.options.special_shop_sanity and world.options.goal_type.value > 1: # Only if Goal is past room 46
