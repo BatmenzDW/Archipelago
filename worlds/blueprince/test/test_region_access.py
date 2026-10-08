@@ -27,7 +27,7 @@ class TestRegionAccess(BluePrinceTestBase):
             self.assertFalse(self.can_reach_region("Garage"), "Garage should not be reachable without having the Garage as an item")
             self.collect_by_name("Garage")
         if not self.can_reach_region("Garage"):
-            self.collect_by_name("Hallway")
+            self.collect_by_name(["Hallway", "Spare Room", "Passageway"])
             self.collect_by_name("Office")
         self.assertTrue(self.can_reach_region("Garage"), "Garage should be reachable after collecting at least 1 I piece and at least 1 J piece as items")
 
@@ -53,7 +53,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertTrue(self.can_reach_region("Outer Room"), "Outer Room should be reachable after collecting the Garage as an item")
 
     def test_outer_rooms_require_room_item(self) -> None:
-        self.collect_by_name("Hallway")
+        self.collect_by_name(["Hallway", "Spare Room", "Passageway"])
         self.collect_by_name("Office")
         self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the Garage as an item")
         self.collect_by_name("Garage")
@@ -116,7 +116,7 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertFalse(self.can_reach_region("The Underpass"), "The Underpass should not be reachable without having the Reservoir on both sides")
         self.collect_by_name(["Power Hammer", "BASEMENT KEY", "Hallway", "Spare Room", "Workshop", "Attic", "Courtyard", "Greenhouse", "SLEDGE HAMMER", "BROKEN LEVER", "BATTERY PACK", "Veranda", "The Pool", "Observatory"])
         self.assertFalse(self.can_reach_region("The Underpass"), "The Underpass should not be reachable without having the Reservoir on both sides")
-        self.collect_by_name(["Pump Room"])
+        self.collect_by_name("Pump Room")
         self.assertTrue(self.can_reach_region("The Underpass"), "The Underpass should be reachable after having the Reservoir on both sides")
     
     def test_aries_court_requires_chess_pieces(self) -> None:
