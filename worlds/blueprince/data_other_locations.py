@@ -1329,6 +1329,7 @@ upgrade_disks = {
         LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
         LOCATION_ROOM_KEY: "Trading Post",
         LOCATION_ITEM_KEY: "UPGRADE DISK TRADING POST TRADE",
+        LOCATION_RULE_SIMPLE_COMMON: TradingPostRule("UPGRADE DISK TRADING POST TRADE")
     },
 }
 
