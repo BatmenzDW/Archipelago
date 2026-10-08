@@ -249,6 +249,14 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
                 locations_to_setup[k] = get_location_rule(k)
                 continue
 
+        if k == "Allowance Token - Outer Entrance Hall Vase" and world.options.enable_obscure_locations != 2:
+            if world.options.enable_obscure_locations == 0: continue
+            locs = get_location_names_with_ids(["Allowance Token - Outer Entrance Hall Vase"])
+            world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
+            locations_to_setup[location_key] = get_location_rule(location_key)
+            world.get_location("Allowance Token - Outer Entrance Hall Vase").progress_type = LocationProgressType.EXCLUDED
+            continue
+
         location_key = k
         locs = get_location_names_with_ids([location_key])
         world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
@@ -263,7 +271,7 @@ def force_special_location_conditions(world: BluePrinceWorld,
                                     filleritempool: List["Item"],
                                     fill_locations: List["Location"]) -> None:
     
-    item = world.random.choice(progitempool + usefulitempool + filleritempool)
+    item = world.random.choice(progitempool + usefulitempool + filleritempool) # randomly choose which pool to grab from, weighted by the size of each pool
 
     if item in progitempool:
         if attempt_to_fill_multiple_locations_with_same_item(world, progitempool, fill_locations):
@@ -283,7 +291,7 @@ def force_special_location_conditions(world: BluePrinceWorld,
         return
     raise Exception("Could not satisfy special location conditions. This should be impossible.")
 
-# In theory, this should get a random item with multiple copies, but this world only has one that is progressive, so it will need to be tested if it works correctly
+# Attempts to fill both Bunk Room First Entering Locations with two items with the same name, if possible
 def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, pool: List["Item"], locations: List["Location"]) -> bool:
     multi : List[str] = []
     

@@ -186,6 +186,27 @@ class ItemLogicMode(Choice):
 
     default = 0
 
+class EnableObscureLocations(Choice):
+    """
+    This option controls whether the extremely obscure locations will be created, and if they will be excluded (forced to only contian filler).
+    ||Does it never end?||
+    Currently affects: Allowance Token - Outer Entrance Hall Vase
+
+    - **disable**: Disables them entirely
+    - **exclude**: Creates the locations, then sets them to excluded
+    - **enable**: Creates the locations
+
+    """
+
+    display_name = "Enable Obscure Locations"
+
+    rich_text_doc = True
+    option_disable = 0
+    option_exclude = 1
+    option_enable = 2
+
+    default = 0
+
 # TODO: Aries Court and Atelier Mora Jai boxes toggles?
 
 # Filler Options.
@@ -440,6 +461,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     locked_trunks_complex: LockedTrunkComplexCount
     trunks: TrunkCounts
     item_logic_mode: ItemLogicMode
+    enable_obscure_locations: EnableObscureLocations
 
     standard_item_sanity: StandardItemSanity
     workshop_sanity: WorkshopSanity
@@ -484,6 +506,7 @@ option_groups = [
             KeySanity,
             SpecialShopSanity,
             TrophySanity,
+            EnableObscureLocations
         ],
     ),
     OptionGroup(
@@ -519,6 +542,7 @@ option_presets = {
         "special_shop_sanity": False,
         "trophy_sanity": False,
         "item_logic_mode": ItemLogicMode.default,
+        "enable_obscure_locations": EnableObscureLocations.default,
         "filler_item_distribution": {
             "extra_allowance": 50,
             "extra_dice": 50,
@@ -545,7 +569,7 @@ option_presets = {
         "death_link_monk_exception": True,
         "goal_type": GoalType.option_antechamber,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
-        "start_inventory": {}
+        "start_inventory": {},
     },
     "Room 46 Basic": {
         "room_draft_sanity": True,
@@ -564,6 +588,7 @@ option_presets = {
         "special_shop_sanity": False,
         "trophy_sanity": False,
         "item_logic_mode": ItemLogicMode.default,
+        "enable_obscure_locations": EnableObscureLocations.default,
         "filler_item_distribution": {
             "extra_allowance": 50,
             "extra_dice": 50,
@@ -590,6 +615,6 @@ option_presets = {
         "death_link_monk_exception": True,
         "goal_type": GoalType.option_room46,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
-        "start_inventory": {}
+        "start_inventory": {},
     },
 }
