@@ -1310,8 +1310,8 @@ upgrade_disks = {
         ),
     },
     "Upgrade Disk - The Foundation": {
-        LOCATION_ID_KEY: all_areas["The Foundation"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
-        LOCATION_ROOM_KEY: "The Foundation",
+        LOCATION_ID_KEY: all_areas["Foundation Elevator"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
+        LOCATION_ROOM_KEY: "Foundation Elevator",
         LOCATION_ITEM_KEY: "UPGRADE DISK FOUNDATION",
     },
     "Upgrade Disk - Abandoned Mine": {
