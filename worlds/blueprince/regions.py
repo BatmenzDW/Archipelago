@@ -510,7 +510,14 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             Has("Satellite Dish"),
             Or(
                 CanReachRegion("Laboratory"),
-                CanReachRegion("Blackbridge Grotto"),
+                And(
+                    CanReachRegion("Blackbridge Grotto"),
+                    Or(
+                        CanReachRegion("Security"),
+                        CanReachRegion("Office"),
+                        CanReachRegion("Shelter"),
+                    ),
+                ),
             ),
         ),
     )
@@ -570,7 +577,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         safehouse,
         "Reservoir Gear Side To Safehouse",
         And(
-            CanReachPickPosition("Pump Room"),
+            CanReachRegion("Pump Room"),
             CanReachRegion("Reservoir Fountain Side"),
             CanReachRegion("Basement"),
         ),
@@ -604,6 +611,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             Or(
                 CanReachRegion("Tomb"),
                 CanReachRegion("Boiler Room")
+                # TODO: Through Precipice
             )
         ),
     )  # Pump Room
@@ -616,6 +624,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 CanReachRegion("Secret Passage"),
                 CanReachRegion("Shrine"),
                 CanReachItemLocation("WATERING CAN", parent_region_name="Entrance Hall"),
+                # TODO: and Coat Check/Moon Pendant and any Green Room and Trading Post and Burning Glass/Torch and Throne of the Blue Prince/(Room 8 Key and Vault)
             ),
         )
 
