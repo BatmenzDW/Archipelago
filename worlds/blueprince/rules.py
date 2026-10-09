@@ -346,13 +346,16 @@ class TradingPostRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        
+        filter = complex_logic_filter
+        if self.item_name == "Upgrade Disk - Trading Post Trade": # special case because this is the only way to get it
+            filter = ()
+
         prev_trading_post_offers.add(self.item_name)
         rule = And(CanReachRegion("Trading Post"), 
                 Or(
                     *[CanReachItemLocation(item) for item in self.get_trading_post_offers(self.item_name) if self.item_name not in prev_trading_post_offers],
                 ),
-                options=complex_logic_filter).resolve(world)
+                options=filter).resolve(world)
         prev_trading_post_offers.remove(self.item_name)
         return rule
     
