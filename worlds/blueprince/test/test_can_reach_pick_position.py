@@ -37,7 +37,21 @@ class TestCanReachPickPosition(BluePrinceTestBase):
     def opposite(self, d):
         return (d + 2) % 4
 
-    def build_path(self, inventory: tuple[int, int, int, int], target: tuple[int, int], target_dir: int) -> tuple[bool, tuple[int, int, int, int] | None, list[tuple[tuple[int, int], set[int], int]]]:
+    def at_target(self, pos, incoming, targets) -> bool:
+        for r, c, ds in targets:
+            if (r, c) == pos and (len(ds) == 0 or incoming in ds):
+                return True
+        
+        return False
+
+    def in_target(self, pos, targets) -> bool:
+        for r, c, _ in targets:
+            if (r, c) == pos:
+                return True
+        
+        return False
+
+    def build_path(self, inventory: tuple[int, int, int, int], targets: tuple[int, int, set|dict]) -> tuple[bool, tuple[int, int, int, int] | None, list[tuple[tuple[int, int], set[int], int]]]:
         start = (-1, 2)
         total_pieces = sum(inventory)
 
@@ -55,7 +69,7 @@ class TestCanReachPickPosition(BluePrinceTestBase):
 
             used = total_pieces - sum(inv)
 
-            if pos == target:
+            if self.at_target(pos, incoming, targets):
                 if used == total_pieces:
                     return True, None, path
                 else:
@@ -87,13 +101,13 @@ class TestCanReachPickPosition(BluePrinceTestBase):
                         new_pos = (new_r, new_c)
 
                         new_inv = list(inv)
-                        if new_pos != target and pos != start:
+                        if not self.in_target(new_pos, targets) and pos != start:
                             if count == 0:
                                 continue
 
                             new_inv[i] -= 1
-                        elif new_pos == target:
-                            if self.opposite(d) != target_dir:
+                        elif self.in_target(new_pos, targets):
+                            if not self.at_target(new_pos, self.opposite(d), targets):
                                 continue
 
                         new_state = (new_pos, d, tuple(new_inv))
@@ -108,34 +122,45 @@ class TestCanReachPickPosition(BluePrinceTestBase):
             
         return False, None, []
 
-    def check_min_pieces_layout(self, name: str, layout: list[tuple[int, int, int, int]], target: tuple[int, int], target_dir: int, min_total: int):
+    def check_min_pieces_layout(self, name: str, layout: list[tuple[int, int, int, int]], min_total: int):
         with self.subTest(f"{name}: {layout}"):
             self.assertTrue(sum(layout) >= min_total, f"{name}: {layout} has fewer pieces than min total expects: {min_total}")
-            result, rem, path = self.build_path(layout, target, target_dir)
 
+            solved = False
+            targets = POSITION_MINIMUM_LOCATIONS[name]
+
+            result, rem, path = self.build_path(layout, targets)
             self.assertTrue(result, f"{name} should be reachable with inventory: {layout}")
             self.assertTrue(rem is None, f"Had leftover inventory after reaching {name}: {rem}/{layout}: \n{path}")
+            
 
-    def check_min_pieces_position(self, position_type: str, target: tuple[int, int], target_dir: int):   
+    def check_min_pieces_position(self, position_type: str):   
         min_total = POSITION_MINIMUM_TOTAL_PIECES[position_type]
 
         min_layouts = POSITION_MINIMUM_PIECES[position_type]
         for layout in min_layouts:
-            self.check_min_pieces_layout(position_type, layout, target, target_dir, min_total)
+            self.check_min_pieces_layout(position_type, layout, min_total)
             
     def test_foundation_requires_min_pieces(self):
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_FOUNDATION, (2, 2), 0)
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_FOUNDATION)
 
     def test_center_requires_nothing(self):
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_1, (1, 2), 0)
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_2, (1, 2), 0)
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_3, (1, 2), 0)
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_1)
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_2)
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_3)
 
     def test_corner_requires_min_pieces(self):
-        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 1, 0), (0, 0), 1, 1) # (0, 0, 1, 0), (0, 1, 0, 0),
-        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 1, 0, 0), (0, 0), 1, 1)
-        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 0, 3), (0, 0), 2, 1) # (0, 0, 0, 3), (1, 0, 0, 2), (2, 0, 0, 1)
-        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (1, 0, 0, 2), (0, 0), 2, 1)
-        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (2, 0, 0, 1), (0, 0), 2, 1)
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CORNER)
 
-    
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 1, 0), (0, 0), 1, 1) # (0, 0, 1, 0), (0, 1, 0, 0),
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 1, 0, 0), (0, 0), 1, 1)
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 0, 3), (0, 0), 2, 1) # (0, 0, 0, 3), (1, 0, 0, 2), (2, 0, 0, 1)
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (1, 0, 0, 2), (0, 0), 2, 1)
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (2, 0, 0, 1), (0, 0), 2, 1)
+
+    def test_edge_advance_requires_min_pieces(self):
+        self.check_min_pieces_position(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS)
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS, (0, 0, 0, 3), (2, 0), 0, 2) # (0, 0, 0, 4), (1, 0, 0, 3),
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS, (1, 0, 0, 2), (2, 0), 0, 2)
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS, (0, 0, 1, 1), (1, 0), 0, 2) # (0, 0, 1, 1), (0, 1, 0, 1),
+        # self.check_min_pieces_layout(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS, (0, 1, 0, 1), (1, 0), 0, 2)

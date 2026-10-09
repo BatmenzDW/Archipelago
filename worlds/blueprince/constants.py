@@ -128,7 +128,7 @@ ENABLE_ROOM_LOGIC = True
 # Edge creep means going up OR down that edge.
 # Edge Pierce means going INTO the edge from non-edge.
 # STANDALONE ARRAY (Outer Room)
-# Tier:  Center Tier 1 is ranks 2-3 Center Tier 2 is 4-6 Center Tier 3 is 7-8 (Tier does not matter for Corner or Front.)
+# Tier:  ~~Center Tier 1 is ranks 2-3 Center Tier 2 is 4-6 Center Tier 3 is 7-8 (Tier does not matter for Corner or Front.)~~ -outdated info
 # Front Is Rank 1
 # Back Is Rank 9
 # Gems is Requires Gems

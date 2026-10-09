@@ -44,11 +44,49 @@ ENTRANCE_HALL_DRAFTABLE = {
     ROOM_PICK_POSITION_CENTER_TIER_1,
 }
 
+POSITION_MINIMUM_LOCATIONS = {
+    ROOM_PICK_POSITION_CENTER_TIER_1: [(1, 2, {})], # {} = *; any entry direction
+    ROOM_PICK_POSITION_CENTER_TIER_1_GEMS: [(1, 2, {})],
+    ROOM_PICK_POSITION_CENTER_FOUNDATION: [(2, 2, {}), (2, 1, {}), (2, 3, {})],
+    ROOM_PICK_POSITION_CENTER_TIER_2: [(1, 2, {})],
+    ROOM_PICK_POSITION_CENTER_TIER_2_GEMS: [(1, 2, {})],
+    ROOM_PICK_POSITION_CENTER_TIER_3: [(1, 2, {})],
+    ROOM_PICK_POSITION_CENTER_TIER_3_GEMS: [(1, 2, {})],
+    ROOM_PICK_POSITION_CORNER: [(0, 0, {}), (0, 4)],
+    ROOM_PICK_POSITION_CORNER_GEMS: [(0, 0, {}), (0, 4, {})],
+    ROOM_PICK_POSITION_CORNER_RARE: [(0, 0, {}), (0, 4, {})],
+    ROOM_PICK_POSITION_CORNER_RARE_GEMS: [(0, 0, {}), (0, 4, {})],
+    ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS: [(1, 4, {0}), (2, 4, {0})],
+    ROOM_PICK_POSITION_EDGE_ADVANCE_WEST_WING_GEMS: [(1, 0, {0}), (2, 0, {0})],
+    ROOM_PICK_POSITION_EDGE_RETREAT_EAST_WING_GEMS: [(1, 4, {2}), (2, 4, {2})],
+    ROOM_PICK_POSITION_EDGE_RETREAT_WEST_WING_GEMS: [(1, 0, {2}), (2, 0, {2})],
+    ROOM_PICK_POSITION_EDGE_CREEP_RARE: [(1, 0, {0}), (2, 0, {0}), (1, 4, {0}), (2, 4, {0})],
+    ROOM_PICK_POSITION_EDGE_CREEP_RARE_GEMS: [(1, 0, {0}), (2, 0, {0}), (1, 4, {0}), (2, 4, {0})],
+    ROOM_PICK_POSITION_EDGE_CREEP_EAST: [(1, 4, {0}), (2, 4, {0})],
+    ROOM_PICK_POSITION_EDGE_CREEP_WEST: [(1, 0, {0}), (2, 0, {0})],
+    ROOM_PICK_POSITION_EDGE_PIERCE_EAST: [(1, 4, {3}), (2, 4, {3})],
+    ROOM_PICK_POSITION_EDGE_PIERCE_WEST: [(1, 0, {1}), (2, 0, {1})],
+    ROOM_PICK_POSITION_EDGE_PIERCE_GEMS: [(1, 0, {1}), (2, 0, {1}), (1, 4, {3}), (2, 4, {3})],
+    ROOM_PICK_POSITION_EDGE_PIERCE_RARE: [(1, 0, {1}), (2, 0, {1}), (1, 4, {3}), (2, 4, {3})],
+    ROOM_PICK_POSITION_EDGE_PIERCE_RARE_GEMS: [(1, 0, {1}), (2, 0, {1}), (1, 4, {3}), (2, 4, {3})],
+    ROOM_PICK_POSITION_FRONT: [(0, 1, {}), (0, 3, {})], # should always be true
+    ROOM_PICK_POSITION_FRONT_GEMS: [(0, 1, {}), (0, 3, {})], # should always be true
+    ROOM_PICK_POSITION_FRONT_BACK_RARE: [(0, 1, {}), (0, 3, {})], # should always be true
+    ROOM_PICK_POSITION_FRONT_BACK_RARE_GEMS: [(0, 1, {}), (0, 3, {})], # should always be true
+    ROOM_PICK_POSITION_NORTH_PIERCE: [(8, 0, {0}), (8, 1, {0}), (8, 3, {0}), (8, 4, {0})],
+    ROOM_PICK_POSITION_NORTH_PIERCE_GEMS: [(8, 0, {0}), (8, 1, {0}), (8, 3, {0}), (8, 4, {0})],
+    ROOM_PICK_POSITION_SOUTH_PIERCE: [(0, 0, {2}), (0, 1, {2}), (0, 3, {2}), (0, 4, {2})],
+    ROOM_PICK_POSITION_ANTECHAMBER: [(8, 2, {})],
+    ROOM_PICK_POSITION_ROOM_8: [(8, 0, {}), (8, 1, {}), (8, 2, {}), (8, 3, {}), (8, 4, {})],
+    ROOM_PICK_POSITION_GARAGE: [(0, 3, {0, 3})],
+    ROOM_PICK_POSITION_SECRET_GARDEN: [(0, 3, {0, 3}), (4, 3, {0, 1})]
+}
+
 POSITION_MINIMUM_PIECES = {
     ROOM_PICK_POSITION_CENTER_TIER_1: [(0, 0, 0, 0)], # Should always be true
     ROOM_PICK_POSITION_CENTER_TIER_1_GEMS: [(0, 0, 0, 0)], # Should always be true
     ROOM_PICK_POSITION_CENTER_FOUNDATION: [
-        (0, 0, 0, 3),
+        (0, 0, 0, 2),
         (0, 0, 1, 0),
         (0, 1, 0, 0),
         (1, 0, 0, 0),
@@ -86,11 +124,10 @@ POSITION_MINIMUM_PIECES = {
         (2, 0, 0, 1),
     ],
     ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS: [
-        (0, 0, 0, 4),
+        (0, 0, 0, 3),
         (0, 0, 1, 1),
         (0, 1, 0, 1),
-        (1, 0, 0, 3),
-        (2, 0, 0, 2),
+        (1, 0, 0, 2),
     ],
     ROOM_PICK_POSITION_EDGE_ADVANCE_WEST_WING_GEMS: [
         (0, 0, 0, 4),
