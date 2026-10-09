@@ -1030,7 +1030,7 @@ special_key_pickup = {
     #     LOCATION_RULE: lambda state, world: obf_can_reach_region("Parlor", state, world) 
     #     or state.can_reach_region("Observatory", world.player) # Spiral of Stars
     #     or can_reach_item_location("Jack Hammer", state, world.player)
-    #     or state.can_reach_region("Tunnel Area Past Blue Door", world.player) # I would be very suprised if this is the only one a player has access to, but adding just in case
+    #     or state.can_reach_region("Tunnel Area Past Blue Door", world.player) # I would be very surprised if this is the only one a player has access to, but adding just in case
     # }
 }
 
@@ -1329,7 +1329,16 @@ upgrade_disks = {
         LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
         LOCATION_ROOM_KEY: "Trading Post",
         LOCATION_ITEM_KEY: "UPGRADE DISK TRADING POST TRADE",
-        LOCATION_RULE_SIMPLE_COMMON: TradingPostRule("UPGRADE DISK TRADING POST TRADE")
+        LOCATION_RULE_SIMPLE_COMMON: And(CanReachRegion("Trading Post"), # not using trading post rule here because it is the only way to get it
+        Or(*[ 
+            CanReachItemLocation(x) for x in [
+                "GEAR WRENCH",
+                "HALL PASS",
+                "PRISM KEY_0",
+                "SECRET GARDEN KEY",
+                "TELESCOPE",
+            ]
+        ]))
     },
 }
 

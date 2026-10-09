@@ -68,7 +68,7 @@ class CanReachPickPosition(Rule["BluePrinceWorld"], game="Blue Prince"):
             
             if room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_X:
                 for layout in min_layouts:
-                    pt_rule |= And(HasGroup("4-Way Rooms", count=max(layout[0]-1, 0)) if layout[0]-1 > 0 else True_(), # TODO: remove the turnaries when 0.6.8 comes out
+                    pt_rule |= And(HasGroup("4-Way Rooms", count=max(layout[0]-1, 0)) if layout[0]-1 > 0 else True_(), # TODO: remove the ternaries when 0.6.8 comes out
                             HasGroup("T-Shaped Rooms", count=layout[1]) if layout[1] > 0 else True_(),
                             HasGroup("Straight Rooms", count=layout[2]) if layout[2] > 0 else True_(),
                             HasGroup("Corner Rooms", count=layout[3]) if layout[3] > 0 else True_())
@@ -346,16 +346,12 @@ class TradingPostRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        filter = complex_logic_filter
-        if self.item_name == "Upgrade Disk - Trading Post Trade": # special case because this is the only way to get it
-            filter = ()
-
         prev_trading_post_offers.add(self.item_name)
         rule = And(CanReachRegion("Trading Post"), 
                 Or(
                     *[CanReachItemLocation(item) for item in self.get_trading_post_offers(self.item_name) if self.item_name not in prev_trading_post_offers],
                 ),
-                options=filter).resolve(world)
+                options=complex_logic_filter).resolve(world)
         prev_trading_post_offers.remove(self.item_name)
         return rule
     
