@@ -42,7 +42,7 @@ class TestCanReachPickPosition(BluePrinceTestBase):
         total_pieces = sum(inventory)
 
         q = deque()
-        start_state = (start, None, inventory, [])
+        start_state = (start, 2, inventory, [])
         q.append(start_state)
 
         visited = set()
@@ -67,13 +67,15 @@ class TestCanReachPickPosition(BluePrinceTestBase):
                         continue
 
                 for shape in PIECES[ROOM_LAYOUTS[i]]:
-                    if pos == start and shape != {1, 2, 3}:
+                    if pos == start and shape != {0, 1, 2, 3}:
                         continue
 
-                    if incoming is not None and self.opposite(incoming) not in shape:
+                    if path and len(path[-1][1].intersection({self.opposite(x) for x in shape})) == 0:
                         continue
 
                     for d in shape:
+                        if d == 1:
+                            pass
                         if incoming is not None and d == self.opposite(incoming):
                             continue
 
@@ -101,6 +103,8 @@ class TestCanReachPickPosition(BluePrinceTestBase):
                         visited.add(new_state)
                         new_path = path + [(new_pos, shape, d)]
                         q.append((new_pos, d, tuple(new_inv), new_path))
+
+            print(path)
             
         return False, None, []
 
@@ -119,7 +123,19 @@ class TestCanReachPickPosition(BluePrinceTestBase):
         for layout in min_layouts:
             self.check_min_pieces_layout(position_type, layout, target, target_dir, min_total)
             
-
     def test_foundation_requires_min_pieces(self):
         self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_FOUNDATION, (2, 2), 0)
 
+    def test_center_requires_nothing(self):
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_1, (1, 2), 0)
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_2, (1, 2), 0)
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_3, (1, 2), 0)
+
+    def test_corner_requires_min_pieces(self):
+        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 1, 0), (0, 0), 1, 1) # (0, 0, 1, 0), (0, 1, 0, 0),
+        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 1, 0, 0), (0, 0), 1, 1)
+        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 0, 3), (0, 0), 2, 1) # (0, 0, 0, 3), (1, 0, 0, 2), (2, 0, 0, 1)
+        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (1, 0, 0, 2), (0, 0), 2, 1)
+        self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (2, 0, 0, 1), (0, 0), 2, 1)
+
+    
