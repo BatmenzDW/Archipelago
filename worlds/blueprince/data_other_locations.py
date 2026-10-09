@@ -481,6 +481,7 @@ standard_item_pickup = {
                 "Workshop",
                 "Secret Garden",
                 "Conservatory",
+                # TODO: Sheltered Furnace
             ]]
         ) | Or(
             *[CanReachRegion(region) for region in [
@@ -615,6 +616,7 @@ standard_item_pickup = {
                 "Closed Exhibit",
                 "Locksmith",
                 "Mail Room", # Packages
+                # TODO: Sheltered Furnace
             ]]
         ) | CanReachRegion("Garage", options=rare_logic_filter) |
         TrunkRule() | CarTrunkRule() | DarkRoomRule() |
@@ -767,7 +769,7 @@ standard_item_pickup = {
                 "Cloister",
                 "Closet",
                 "Courtyard",
-                "Furnace",
+                "Furnace", # TODO: Requires sheltering effect
                 "Greenhouse",
                 "Patio",
                 "Storeroom",
@@ -814,6 +816,7 @@ standard_item_pickup = {
                 "Tunnel",
                 "Toolshed",
                 "Commissary",
+                # TODO: Sheltered Furnace
             ]]
         ) | Or(
             *[CanReachRegion(region) for region in [
@@ -1376,6 +1379,7 @@ vault_keys = {
                 "Morning Room",
                 "Locker Room",
                 "Music Room",
+                # TODO: Sheltered Furnace
             ]]
         ) | DigSpotRule() | LavatoryRule() | AdvancedExperimentRule(),
         
