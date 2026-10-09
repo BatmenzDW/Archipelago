@@ -37,34 +37,42 @@ class TestCanReachPickPosition(BluePrinceTestBase):
     def opposite(self, d):
         return (d + 2) % 4
 
-    def build_path(self, inventory: tuple[int, int, int, int], target: tuple[int, int]) -> tuple[bool, tuple[int, int, int, int] | None]:
-        start = (0, 2)
+    def build_path(self, inventory: tuple[int, int, int, int], target: tuple[int, int], target_dir: int) -> tuple[bool, tuple[int, int, int, int] | None, list[tuple[tuple[int, int], set[int], int]]]:
+        start = (-1, 2)
         total_pieces = sum(inventory)
 
         q = deque()
-        start_state = (start, None, inventory)
+        start_state = (start, None, inventory, [])
         q.append(start_state)
 
         visited = set()
-        visited.add(start_state)
+
+        visited.add((start, None, inventory))
 
         while q:
-            pos, incoming, inv = q.popleft()
+            pos, incoming, inv, path = q.popleft()
             r, c = pos
 
             used = total_pieces - sum(inv)
 
             if pos == target:
                 if used == total_pieces:
-                    return True, None
+                    return True, None, path
                 else:
-                    return True, inv
+                    return True, inv, path
             
             for i, count in enumerate(inv):
-                if count == 0:
-                    continue
+                if count < 0:
+                    if i != 1 or pos != start:
+                        continue
 
                 for shape in PIECES[ROOM_LAYOUTS[i]]:
+                    if pos == start and shape != {1, 2, 3}:
+                        continue
+
+                    if incoming is not None and self.opposite(incoming) not in shape:
+                        continue
+
                     for d in shape:
                         if incoming is not None and d == self.opposite(incoming):
                             continue
@@ -77,42 +85,41 @@ class TestCanReachPickPosition(BluePrinceTestBase):
                         new_pos = (new_r, new_c)
 
                         new_inv = list(inv)
-                        new_inv[i] -= 1
+                        if new_pos != target and pos != start:
+                            if count == 0:
+                                continue
+
+                            new_inv[i] -= 1
+                        elif new_pos == target:
+                            if self.opposite(d) != target_dir:
+                                continue
 
                         new_state = (new_pos, d, tuple(new_inv))
                         if new_state in visited:
                             continue
 
-                        q.append(new_state)
+                        visited.add(new_state)
+                        new_path = path + [(new_pos, shape, d)]
+                        q.append((new_pos, d, tuple(new_inv), new_path))
             
-        return False, None
-                    
+        return False, None, []
 
-    def check_min_pieces(self, room: str, target: tuple[int, int]):
-        room_data = rooms[room]
-        position_types = room_data[ROOM_PICK_POSITIONS_KEY]
+    def check_min_pieces_layout(self, name: str, layout: list[tuple[int, int, int, int]], target: tuple[int, int], target_dir: int, min_total: int):
+        with self.subTest(f"{name}: {layout}"):
+            self.assertTrue(sum(layout) >= min_total, f"{name}: {layout} has fewer pieces than min total expects: {min_total}")
+            result, rem, path = self.build_path(layout, target, target_dir)
 
-        for pt in position_types:
-            with self.subTest(room):
-                min_total = POSITION_MINIMUM_TOTAL_PIECES[pt]
-                if room_data[ROOM_LAYOUT_TYPE_KEY] != ROOM_LAYOUT_TYPE_D:
-                    min_total += 1
-                
-                min_layouts = POSITION_MINIMUM_PIECES[pt]
-                for layout in min_layouts:
-                    inventory = (
-                        layout[0] + room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_X, 
-                        layout[1] + room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_T,
-                        layout[2] + room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_I,
-                        layout[3] + room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_J
-                    )
-                    assert sum(inventory) >= min_total, f"{pt}:{layout} has fewer pieces than min total expects: {POSITION_MINIMUM_TOTAL_PIECES[pt]}"
-                    result, rem = self.build_path(inventory, target)
+            self.assertTrue(result, f"{name} should be reachable with inventory: {layout}")
+            self.assertTrue(rem is None, f"Had leftover inventory after reaching {name}: {rem}/{layout}: \n{path}")
 
-                    assert result, f"{room} should be reachable with inventory: {layout}"
-                    assert rem in None, f"Had leftover inventory after reaching {room}: {rem}"
-        
+    def check_min_pieces_position(self, position_type: str, target: tuple[int, int], target_dir: int):   
+        min_total = POSITION_MINIMUM_TOTAL_PIECES[position_type]
+
+        min_layouts = POSITION_MINIMUM_PIECES[position_type]
+        for layout in min_layouts:
+            self.check_min_pieces_layout(position_type, layout, target, target_dir, min_total)
+            
 
     def test_foundation_requires_min_pieces(self):
-        self.check_min_pieces("The Foundation", (2, 2))
+        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_FOUNDATION, (2, 2), 0)
 
