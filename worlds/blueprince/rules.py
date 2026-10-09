@@ -58,7 +58,7 @@ class CanReachPickPosition(Rule["BluePrinceWorld"], game="Blue Prince"):
 
             min_total = POSITION_MINIMUM_TOTAL_PIECES[pt]
             if room_data[ROOM_LAYOUT_TYPE_KEY] != ROOM_LAYOUT_TYPE_D:
-                min_total -= 1
+                min_total += 1
             
             pt_rule = False_()
 
@@ -68,52 +68,52 @@ class CanReachPickPosition(Rule["BluePrinceWorld"], game="Blue Prince"):
             
             if room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_X:
                 for layout in min_layouts:
-                    pt_rule |= And(HasGroup("4-Way Rooms", count=max(layout[0]-1, 0)) if layout[0]-1 > 0 else True_(), # TODO: remove the ternaries when 0.6.8 comes out
+                    pt_rule |= And(HasGroup("4-Way Rooms", count=layout[0]+1) if layout[0] + 1 > 0 else True_(), # TODO: remove the ternaries when 0.6.8 comes out
                             HasGroup("T-Shaped Rooms", count=layout[1]) if layout[1] > 0 else True_(),
                             HasGroup("Straight Rooms", count=layout[2]) if layout[2] > 0 else True_(),
                             HasGroup("Corner Rooms", count=layout[3]) if layout[3] > 0 else True_())
                     # TODO: remove this if we ever are able to add Bookshop as an item
                     pt_rule |= And(Has("Library"),
-                            HasGroup("4-Way Rooms", count=max(layout[0]-1, 0)) if layout[0]-1 > 0 else True_(),
+                            HasGroup("4-Way Rooms", count=layout[0]+1) if layout[0]+1 > 0 else True_(),
                             HasGroup("T-Shaped Rooms", count=layout[1]) if layout[1] > 0 else True_(),
                             HasGroup("Straight Rooms", count=layout[2]) if layout[2] > 0 else True_(),
                             HasGroup("Corner Rooms", count=max(layout[3]-1, 0)) if layout[3]-1 > 0 else True_())
             elif room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_T:
                 for layout in min_layouts:
                     pt_rule |= And(HasGroup("4-Way Rooms", count=layout[0]) if layout[0] > 0 else True_(),
-                            HasGroup("T-Shaped Rooms", count=max(layout[1]-1, 0)) if layout[1]-1 > 0 else True_(),
+                            HasGroup("T-Shaped Rooms", count=layout[1]+1) if layout[1]+1 > 0 else True_(),
                             HasGroup("Straight Rooms", count=layout[2]) if layout[2] > 0 else True_(),
                             HasGroup("Corner Rooms", count=layout[3]) if layout[3] > 0 else True_())
                     # TODO: remove this if we ever are able to add Bookshop as an item
                     pt_rule |= And(Has("Library"),
                             HasGroup("4-Way Rooms", count=layout[0]) if layout[0] > 0 else True_(),
-                            HasGroup("T-Shaped Rooms", count=max(layout[1]-1, 0)) if layout[1]-1 > 0 else True_(),
+                            HasGroup("T-Shaped Rooms", count=layout[1]+1) if layout[1]+1 > 0 else True_(),
                             HasGroup("Straight Rooms", count=layout[2]) if layout[2] > 0 else True_(),
                             HasGroup("Corner Rooms", count=max(layout[3]-1, 0)) if layout[3]-1 > 0 else True_())
             elif room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_I:
                 for layout in min_layouts:
                     pt_rule |= And(HasGroup("4-Way Rooms", count=layout[0]) if layout[0] > 0 else True_(),
                             HasGroup("T-Shaped Rooms", count=layout[1]) if layout[1] > 0 else True_(),
-                            HasGroup("Straight Rooms", count=max(layout[2]-1, 0)) if layout[2]-1 > 0 else True_(),
+                            HasGroup("Straight Rooms", count=layout[2]+1) if layout[2]+1 > 0 else True_(),
                             HasGroup("Corner Rooms", count=layout[3]) if layout[3] > 0 else True_())
                     # TODO: remove this if we ever are able to add Bookshop as an item
                     pt_rule |= And(Has("Library"),
                             HasGroup("4-Way Rooms", count=layout[0]) if layout[0] > 0 else True_(),
                             HasGroup("T-Shaped Rooms", count=layout[1]) if layout[1] > 0 else True_(),
-                            HasGroup("Straight Rooms", count=max(layout[2]-1, 0)) if layout[2]-1 > 0 else True_(),
+                            HasGroup("Straight Rooms", count=layout[2]+1) if layout[2]+1 > 0 else True_(),
                             HasGroup("Corner Rooms", count=max(layout[3]-1, 0)) if layout[3]-1 > 0 else True_())
             elif room_data[ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_J:
                 for layout in min_layouts:
                     pt_rule |= And(HasGroup("4-Way Rooms", count=layout[0]) if layout[0] > 0 else True_(),
                             HasGroup("T-Shaped Rooms", count=layout[1]) if layout[1] > 0 else True_(),
                             HasGroup("Straight Rooms", count=layout[2]) if layout[2] > 0 else True_(),
-                            HasGroup("Corner Rooms", count=max(layout[3]-1, 0)) if layout[3]-1 > 0 else True_())
+                            HasGroup("Corner Rooms", count=layout[3]+1) if layout[3]+1 > 0 else True_())
                     # TODO: remove this if we ever are able to add Bookshop as an item
                     pt_rule |= And(Has("Library"),
                             HasGroup("4-Way Rooms", count=layout[0]) if layout[0] > 0 else True_(),
                             HasGroup("T-Shaped Rooms", count=layout[1]) if layout[1] > 0 else True_(),
                             HasGroup("Straight Rooms", count=layout[2]) if layout[2] > 0 else True_(),
-                            HasGroup("Corner Rooms", count=max(layout[3]-2, 0)) if layout[3]-2 > 0 else True_())
+                            HasGroup("Corner Rooms", count=layout[3]) if layout[3] > 0 else True_())
             else:
                 for layout in min_layouts:
                     pt_rule |= And(HasGroup("4-Way Rooms", count=layout[0]) if layout[0] > 0 else True_(),
