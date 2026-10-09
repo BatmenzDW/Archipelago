@@ -25,6 +25,7 @@ trophies = {
         LOCATION_ID_KEY: all_areas["Mail Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Mail Room",
         LOCATION_RULE_SIMPLE_COMMON: CanReachRegionsFromList(*[x for x in rooms if rooms[x][ROOM_LAYOUT_TYPE_KEY] == ROOM_LAYOUT_TYPE_D and not rooms[x][OUTER_ROOM_KEY] and x not in core_rooms and x not in ["Mechanarium"]], count=20), # Mechanarium is a dead end for pathing, but doesn't count for the trophy
+        # TODO: Needs a certain number of Ts/Xs; Secret Passage also counts as a dead end and would reduce the required number of Ts by 1 or Xs by 0.5
     },
     "Trophy of Wealth": {
         LOCATION_ID_KEY: all_areas["Showroom"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -162,6 +163,8 @@ mora_jai_boxes = {
     "Underpass Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["The Underpass"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "The Underpass",
+        LOCATION_RULE_SIMPLE_COMMON: CanReachRegion("Boiler Room"),
+        # lambda state, world: state.can_reach_region("Boiler Room", world.player) and can_reach_with_dares(world, "Boiler Room", "Region")
     },
     "Tomb Mora Jai Box": {
         LOCATION_ID_KEY: all_areas["Tomb"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -1117,6 +1120,7 @@ unique_item_pickup = {
         LOCATION_ROOM_KEY: "Dining Room",
         LOCATION_ITEM_KEY: "LUNCH BOX",
         LOCATION_RULE_SIMPLE_COMMON: CanReachRegion("Gift Shop"),
+        # TODO: Require access to 15 coins.
         
     },
     "MICROCHIP 1 First Pickup": {
@@ -1145,6 +1149,7 @@ unique_item_pickup = {
         LOCATION_ID_KEY: all_areas["Closed Exhibit"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Closed Exhibit",
         LOCATION_ITEM_KEY: "PAPER CROWN",
+        # TODO: Require at least 2 Ls or alternatives for back access
         
     },
     "ROYAL SCEPTER First Pickup": {
@@ -1154,6 +1159,7 @@ unique_item_pickup = {
         LOCATION_RULE_SIMPLE_COMMON: And(
             CanReachRegion("Shrine"), CanReachItemLocation("KEY of Aries")
         ),
+        # TODO: Require Access to KEY of Aries that doesn't involve tomb unless Moon Pendant or Coat Check is available.
         
     }
 }
@@ -1255,6 +1261,8 @@ upgrade_disks = {
         LOCATION_ID_KEY: all_areas["Commissary"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Commissary",
         LOCATION_ITEM_KEY: "UPGRADE DISK COMMISSARY",
+        # TODO: Needs more advanced item logic (if Commissary is the only way to get some items, you may be forced not to see Upgrade Disk in the Commissary)
+        # TODO: Require 15 Coins
     },
     "Upgrade Disk - Garage": {
         LOCATION_ID_KEY: all_areas["Garage"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -1329,16 +1337,14 @@ upgrade_disks = {
         LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
         LOCATION_ROOM_KEY: "Trading Post",
         LOCATION_ITEM_KEY: "UPGRADE DISK TRADING POST TRADE",
-        LOCATION_RULE_SIMPLE_COMMON: And(CanReachRegion("Trading Post"), # not using trading post rule here because it is the only way to get it
-        Or(*[ 
+        LOCATION_RULE_SIMPLE_COMMON: Or(*[ 
             CanReachItemLocation(x) for x in [
-                "GEAR WRENCH",
-                "HALL PASS",
-                "PRISM KEY_0",
-                "SECRET GARDEN KEY",
-                "TELESCOPE",
+                "ORNATE COMPASS",
+                "EMERALD BRACELET",
+                "MASTER KEY",
+                "CURSED EFFIGY", # TODO: Require Coat Check or Moon Pendant to carry Cursed Effigy
             ]
-        ]))
+        ])
     },
 }
 
