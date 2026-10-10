@@ -509,7 +509,7 @@ standard_item_pickup = {
                 "Workshop",
                 "Dining Room",
                 "Bedroom",
-                "Mail Room", # Packages
+                # "Mail Room", # Packages # Freight Shipping would be problematic
             ]]
         ) | Or(
             *[CanReachRegion(region) for region in [
@@ -538,7 +538,7 @@ standard_item_pickup = {
                 "Workshop",
                 "Throne Room",
                 "Commissary",
-                "Mail Room", # Packages
+                # "Mail Room", # Packages # Freight Shipping would be problematic
             ]]
         ) | Or(
             CanReachRegion("Den"), CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
@@ -561,7 +561,7 @@ standard_item_pickup = {
                 "Vault",
                 "Walk-In Closet",
                 "Morning Room",
-                "Mail Room", # Packages
+                # "Mail Room", # Packages # Freight Shipping would be problematic, but was redundant anyway
             ]]
         ) | Or(
             CanReachRegion("Den"), CanReachRegion("Pantry"),
@@ -844,7 +844,7 @@ standard_item_pickup = {
                 "Sauna",
                 "Walk-In Closet",
                 "Commissary",
-                "Mail Room", # Packages
+                # "Mail Room", # Packages # Freight Shipping would be problematic
             ]]
         ) | AdvancedExperimentRule() | SpiralOfStarsRule() | 
         UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Bedroom") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters"),
@@ -1017,7 +1017,7 @@ special_key_pickup = {
                 "Her Ladyship's Chamber",
                 "Locksmith",
                 "Billiard Room", # Dartboard puzzle
-                "Mail Room", # Packages
+                # "Mail Room", # Packages # Freight Shipping would be problematic
             ]]
         ) | MechanariumDoorRule(2) | DigSpotRule() | 
         And(
