@@ -134,6 +134,10 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             for idx in range(1, trunk_count + 1):
                 world.set_rule(world.get_location(f"Mechanarium Locked Trunk {idx}"), MechanariumDoorRule(3))
 
+        elif room_key == "Planetarium":
+            for idx in range(1, trunk_count + 1):
+                world.set_rule(world.get_location(f"Planetarium Locked Trunk {idx}"), PlanetariumRule())
+
     for k, v in locations.items():
 
         if IMPLEMENTATION_STATUS in v and v[IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
@@ -251,6 +255,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
         if k == "Allowance Token - Outer Entrance Hall Vase" and world.options.enable_obscure_locations != 2:
             if world.options.enable_obscure_locations == 0: continue
+            location_key = k
             locs = get_location_names_with_ids(["Allowance Token - Outer Entrance Hall Vase"])
             world.get_region(v[LOCATION_ROOM_KEY]).add_locations(locs, BluePrinceLocation)
             locations_to_setup[location_key] = get_location_rule(location_key)
