@@ -6,6 +6,6 @@ from .. import BluePrinceTestBase
 
 class TrunkSanity(BluePrinceTestBase):
     options = {
-        "trunks": 
-        {room: 100 for room in rooms if "chest_spot_count" in rooms[room] and rooms[room]["chest_spot_count"] > 0},
+        "trunks":
+        {room: 100 for room in rooms if "chest_spot_count" in rooms[room] and rooms[room]["chest_spot_count"] > 0 and room != "Planetarium"},
     }

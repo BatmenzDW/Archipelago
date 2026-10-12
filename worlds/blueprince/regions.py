@@ -108,6 +108,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         tunnel_area_entrance,
         west_path,
         outer_room,
+        foundation_elevator,
         tunnel_area_post_crates,
         tunnel_area_post_normal_locked_door,
     ]

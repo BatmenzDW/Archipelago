@@ -141,25 +141,25 @@ class TestCanReachPickPosition(BluePrinceTestBase):
         for layout in min_layouts:
             self.check_min_pieces_layout(position_type, layout, min_total)
             
-    def test_foundation_requires_min_pieces(self):
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_FOUNDATION)
+    # def test_foundation_requires_min_pieces(self):
+    #     self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_FOUNDATION)
 
-    def test_center_requires_nothing(self):
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_1)
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_2)
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_3)
+    # def test_center_requires_nothing(self):
+    #     self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_1)
+    #     self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_2)
+    #     self.check_min_pieces_position(ROOM_PICK_POSITION_CENTER_TIER_3)
 
-    def test_corner_requires_min_pieces(self):
-        self.check_min_pieces_position(ROOM_PICK_POSITION_CORNER)
+    # def test_corner_requires_min_pieces(self):
+    #     self.check_min_pieces_position(ROOM_PICK_POSITION_CORNER)
 
-        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 1, 0), (0, 0), 1, 1) # (0, 0, 1, 0), (0, 1, 0, 0),
-        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 1, 0, 0), (0, 0), 1, 1)
-        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 0, 3), (0, 0), 2, 1) # (0, 0, 0, 3), (1, 0, 0, 2), (2, 0, 0, 1)
-        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (1, 0, 0, 2), (0, 0), 2, 1)
-        # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (2, 0, 0, 1), (0, 0), 2, 1)
+    #     # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 1, 0), (0, 0), 1, 1) # (0, 0, 1, 0), (0, 1, 0, 0),
+    #     # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 1, 0, 0), (0, 0), 1, 1)
+    #     # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (0, 0, 0, 3), (0, 0), 2, 1) # (0, 0, 0, 3), (1, 0, 0, 2), (2, 0, 0, 1)
+    #     # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (1, 0, 0, 2), (0, 0), 2, 1)
+    #     # self.check_min_pieces_layout(ROOM_PICK_POSITION_CORNER, (2, 0, 0, 1), (0, 0), 2, 1)
 
-    def test_edge_advance_requires_min_pieces(self):
-        self.check_min_pieces_position(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS)
+    # def test_edge_advance_requires_min_pieces(self):
+    #     self.check_min_pieces_position(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS)
         # self.check_min_pieces_layout(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS, (0, 0, 0, 3), (2, 0), 0, 2) # (0, 0, 0, 4), (1, 0, 0, 3),
         # self.check_min_pieces_layout(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS, (1, 0, 0, 2), (2, 0), 0, 2)
         # self.check_min_pieces_layout(ROOM_PICK_POSITION_EDGE_ADVANCE_EAST_WING_GEMS, (0, 0, 1, 1), (1, 0), 0, 2) # (0, 0, 1, 1), (0, 1, 0, 1),

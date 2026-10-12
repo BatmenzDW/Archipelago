@@ -481,9 +481,6 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
     amount: int
 
-    def __init__(self, amount: int):
-        self.amount = amount
-
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
         return self.Resolved(self.amount, lategame=world.options.goal_type.value > 1, complex=world.options.item_logic_mode.value >= 2, workshop=world.options.workshop_sanity.value, player=world.player)
@@ -602,9 +599,6 @@ class ShowroomRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     Check if the player can get money to buy items from the Showroom.
     """
     amount: int
-
-    def __init__(self, amount: int):
-        self.amount = amount
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
