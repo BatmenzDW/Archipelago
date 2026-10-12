@@ -300,6 +300,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     foundation.connect(
         foundation_elevator,
         "Foundation To Foundation Elevator",
+        # TODO: Require guaranteed back controls access (be able to get to the top left/top right corner (the foundation can contextually be used) and have a J for the corner and have an additional J or T for next to the corner)
     )
 
     campsite.connect(
@@ -485,10 +486,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         foundation_elevator.connect(
             basement,
             "Foundation Elevator To Basement",
-            And(
-                CanReachRegion("The Foundation"),
-                CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
-            ),
+            CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
+        )
+    if world.options.goal_type.value > 0:
+        basement.connect(
+            foundation_elevator,
+            "Basement to Foundation Elevator", # Foundation Basement more precisely
+            CanReachItemLocation("BASEMENT KEY", parent_region_name="Antechamber"),
         )
     torch_chamber.connect(
         the_precipice,
@@ -510,7 +514,14 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             Has("Satellite Dish"),
             Or(
                 CanReachRegion("Laboratory"),
-                CanReachRegion("Blackbridge Grotto"),
+                And(
+                    CanReachRegion("Blackbridge Grotto"),
+                    Or(
+                        CanReachRegion("Security"),
+                        CanReachRegion("Office"),
+                        CanReachRegion("Shelter"),
+                    ),
+                ),
             ),
         ),
     )
@@ -570,7 +581,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         safehouse,
         "Reservoir Gear Side To Safehouse",
         And(
-            CanReachPickPosition("Pump Room"),
+            CanReachRegion("Pump Room"),
             CanReachRegion("Reservoir Fountain Side"),
             CanReachRegion("Basement"),
         ),
@@ -604,6 +615,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
             Or(
                 CanReachRegion("Tomb"),
                 CanReachRegion("Boiler Room")
+                # TODO: Through Precipice
             )
         ),
     )  # Pump Room
@@ -616,6 +628,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 CanReachRegion("Secret Passage"),
                 CanReachRegion("Shrine"),
                 CanReachItemLocation("WATERING CAN", parent_region_name="Entrance Hall"),
+                # TODO: and Coat Check/Moon Pendant and any Green Room and Trading Post and Burning Glass/Torch and Throne of the Blue Prince/(Room 8 Key and Vault)
             ),
         )
 
