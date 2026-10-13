@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 import dataclasses
 from typing import TYPE_CHECKING
 from rule_builder.rules import *
@@ -640,7 +641,12 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
     targets: tuple[str, ...]
     count : int = 1
 
-    def __init__(self, *targets: str, count: int = 1):
+    def __init__(self, 
+                *targets: tuple[str, ...],
+                count: int = 1,
+                options: Iterable[OptionFilter] = (),
+                filtered_resolution: bool = False):
+        super().__init__(options=options, filtered_resolution=filtered_resolution)
         self.targets = tuple(sorted(set(targets)))
         self.count = count
 
@@ -703,7 +709,14 @@ class CanReachRegionsFromList(Rule["BluePrinceWorld"], game="Blue Prince"):
     targets: tuple[str, ...]
     count : int = 1
 
-    def __init__(self, *targets: str, count: int = 1):
+    def __init__(
+            self,
+            *targets: tuple[str, ...],
+            count: int = 1,
+            options: Iterable[OptionFilter] = (),
+            filtered_resolution: bool = False,
+        ) -> None:
+        super().__init__(options=options, filtered_resolution=filtered_resolution)
         self.targets = tuple(sorted(set(targets)))
         self.count = count
 
@@ -771,3 +784,193 @@ class SledgeHammerNotFromToolshedRule(Rule["BluePrinceWorld"], game="Blue Prince
             UpgradedRoomRule("Spare Room", "Spare Foyer"),
             UpgradedRoomRule("Spare Room", "Spare Hall")
         ).resolve(world)
+
+@dataclasses.dataclass()
+class ComboItemRule(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Checks if the listed items are reachable, taking into account that you will mostly never get more than one of them in the same room
+    """
+
+    items: tuple[str, ...]
+
+    def __init__(
+            self, 
+            *items: tuple[str, ...],
+            options: Iterable[OptionFilter] = (),
+            filtered_resolution: bool = False):
+        super().__init__(options=options, filtered_resolution=filtered_resolution)
+        self.items = items
+
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        return self.Resolved(self.items, rare_logic=(world.options.item_logic_mode.value > 0), trophy_sanity=world.options.trophy_sanity.value, player=world.player)
+
+
+    class Resolved(Rule.Resolved):
+        items: tuple[str, ...]
+        rare_logic: bool = False
+        trophy_sanity: bool = False
+
+        
+        def all_sets_reachable(self, reachable_sets: list[set[str]]):
+            if any(len(s) == 0 for s in reachable_sets):
+                return False
+
+            n = len(reachable_sets)
+
+            safe_candidates = []
+            for S in reachable_sets:
+                safe = set()
+                for x in S:
+                    if all((T - {x}) for T in reachable_sets):
+                        safe.add(x)
+                safe_candidates.extend(safe)
+
+            if any(len(c) == 0 for c in safe_candidates):
+                return False
+
+            # Bipartite matching
+            match = {}
+
+            def dfs(set_index, visited):
+                for x in safe_candidates: 
+                    if x in visited:
+                        continue
+                    visited.add(x)
+
+                    if x not in match or dfs(match[x], visited):
+                        match[x] = set_index
+                        return True
+
+                return False
+
+            for i in range(n):
+                if not dfs(i, set()):
+                    return False
+
+            return True
+
+
+        def _check_reachable(self, world: "BluePrinceWorld", state: CollectionState) -> dict[str, set[str]]:
+            """
+            Compute all regions where each owned item can be obtained,
+            """
+            res = defaultdict(set)
+
+            def add_if_reachable(item: str, regions: list[str]):
+                for r in regions:
+                    if state.can_reach_region(r, self.player):
+                        res[item].add(r)
+
+            def check_rule(item: str, region_name: str, rule_callable):
+                if rule_callable(state):
+                    res[item].add(region_name)
+
+            base_regions = {
+                "SLEDGE HAMMER": [
+                    "Attic", "Closet", "Courtyard", "Greenhouse", "Storeroom",
+                    "Veranda", "Workshop", "Wine Cellar", "Secret Garden", "Tunnel",
+                    "Toolshed", "Commissary",
+                ],
+                "BROKEN LEVER": [
+                    "Aquarium", "Attic", "Cloister", "Drafting Studio", "Laboratory",
+                    "Locker Room", "Observatory", "Patio", "Sauna", "Security",
+                    "Storeroom", "Weight Room", "Wine Cellar", "Workshop",
+                    "Secret Garden", "Conservatory",
+                ],
+                "BATTERY PACK": [
+                    "Attic", "Archives", "Courtyard", "Laboratory", "Mail Room",
+                    "Patio", "Storeroom", "Wine Cellar", "Workshop", "Clock Tower",
+                    "Toolshed", "Hovel",
+                ],
+            }
+
+            rare_regions = {
+                "SLEDGE HAMMER": ["Spare Room", "Garage", "Music Room", "Utility Closet"],
+                "BROKEN LEVER": ["Spare Room", "Billiard Room", "Garage", "Utility Closet", "Kitchen"],
+                "BATTERY PACK": ["Spare Room", "Garage", "Utility Closet", "Kitchen"],
+            }
+
+            global_rules = {
+                "BROKEN LEVER": [
+                    ("Dark Room", DarkRoomRule().resolve(world)),
+                    ("Advanced Experiment", AdvancedExperimentRule().resolve(world)),
+                    ("Sheltered Furnace", And(ShelteredRule(), CanReachRegion("Furnace")).resolve(world)),
+                ],
+                "BATTERY PACK": [
+                    ("Dark Room", DarkRoomRule().resolve(world)),
+                    ("Car Trunk", CarTrunkRule().resolve(world)),
+                    ("Advanced Experiment", AdvancedExperimentRule().resolve(world)),
+                    ("Sheltered Furnace", And(ShelteredRule(), CanReachRegion("Furnace")).resolve(world)),
+                ],
+                "SLEDGE HAMMER": [
+                    ("Spiral of Stars", SpiralOfStarsRule().resolve(world)),
+                    ("Freight Mail", UpgradedRoomRule("Mail Room", "Freight Mail").resolve(world)),
+                    ("Spare Foyer", UpgradedRoomRule("Spare Room", "Spare Foyer").resolve(world)),
+                    ("Spare Hall", UpgradedRoomRule("Spare Room", "Spare Hall").resolve(world)),
+                    ("Advanced Experiment", AdvancedExperimentRule().resolve(world)),
+                    ("Sheltered Furnace", And(ShelteredRule(), CanReachRegion("Furnace")).resolve(world)),
+                ],
+            }
+
+            # Item-specific rare logic rules
+            rare_rule_additions = {
+                "SLEDGE HAMMER": [
+                    ("Trophy Room", lambda s: self.trophy_sanity and s.can_reach_region("Trophy Room")),
+                ],
+                "BROKEN LEVER": [
+                    ("Dig Spot", DigSpotRule().resolve(world)),
+                ],
+            }
+
+            additional_rules = {
+                "BROKEN LEVER": [
+                    ("Spare Greenroom", UpgradedRoomRule("Spare Room", "Spare Greenroom").resolve(world)),
+                ],
+                "BATTERY PACK": [
+                    ("Mechanarium", MechanariumDoorRule(3).resolve(world)),
+                    ("Spare Patio", UpgradedRoomRule("Patio", "Spare Patio").resolve(world)),
+                ],
+            }
+
+            trading_post_rules = {
+                "SLEDGE HAMMER": TradingPostRule("SLEDGE HAMMER").resolve(world),
+                "BATTERY PACK": TradingPostRule("BATTERY PACK").resolve(world),
+            }
+
+            for item in base_regions:
+                if item not in self.items:
+                    continue
+
+                # Base locations
+                add_if_reachable(item, base_regions[item])
+
+                # Rare locations
+                if self.rare_logic and item in rare_regions:
+                    add_if_reachable(item, rare_regions[item])
+
+                # Rare extra rules
+                for region_name, rule_fn in rare_rule_additions.get(item, []):
+                    if self.rare_logic:
+                        check_rule(item, region_name, rule_fn)
+
+                # Item‑specific global rules
+                for region_name, rule_fn in global_rules.get(item, []):
+                    check_rule(item, region_name, rule_fn)
+
+                # Additional rules (Mechanarium, Spare Greenroom, etc.)
+                for region_name, rule_fn in additional_rules.get(item, []):
+                    check_rule(item, region_name, rule_fn)
+
+                if item in trading_post_rules:
+                    check_rule(item, "Trading Post Trade", trading_post_rules[item])
+
+            return res
+
+        @override
+        def _evaluate(self, state: CollectionState) -> bool:
+            world = state.multiworld.worlds[self.player]
+            if not And(*[CanReachItemLocation(x) for x in self.items]).resolve(world)(state):
+                return False
+            reachable = self._check_reachable(world, state)
+            return self.all_sets_reachable([v for _, v in reachable.items()])

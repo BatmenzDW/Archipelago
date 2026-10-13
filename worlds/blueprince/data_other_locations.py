@@ -1202,10 +1202,7 @@ workshop_contraptions = {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 4,
         LOCATION_ROOM_KEY: "Workshop",
         LOCATION_ITEM_KEY: "Power Hammer",
-        LOCATION_RULE_SIMPLE_COMMON: And(
-            CanReachItemLocation("SLEDGE HAMMER"), CanReachItemLocation("BROKEN LEVER"), CanReachItemLocation("BATTERY PACK")
-        ),
-        
+        LOCATION_RULE_SIMPLE_COMMON: ComboItemRule("SLEDGE HAMMER", "BROKEN LEVER", "BATTERY PACK"),
     },
     "Electromagnet First Pickup": {
         LOCATION_ID_KEY: all_areas["Workshop"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 5,
