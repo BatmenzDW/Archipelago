@@ -287,7 +287,6 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     "Entrance Hall Throne Room",
                     CanReachPickPosition("Throne Room") & CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins"), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
                 )
-            # TODO: Add Her Ladyship's Chamber, it has weird requirements
             elif k == "Entrance Hall":
                 continue
             else:
@@ -511,20 +510,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
     tunnel_area_entrance.connect(
         tunnel_area_post_crates,
         "Tunnel Area Entrance To Tunnel Area Post Crates",
-        And(
-            Has("Satellite Dish"),
-            Or(
-                CanReachRegion("Laboratory"),
-                And(
-                    CanReachRegion("Blackbridge Grotto"),
-                    Or(
-                        CanReachRegion("Security"),
-                        CanReachRegion("Office"),
-                        CanReachRegion("Shelter"),
-                    ),
-                ),
-            ),
-        ),
+        AdvancedExperimentRule(force=True)
     )
     tunnel_area_post_crates.connect(
         tunnel_area_post_normal_locked_door,

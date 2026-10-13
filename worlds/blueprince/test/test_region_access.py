@@ -38,7 +38,8 @@ class TestRegionAccess(BluePrinceTestBase):
         self.assertFalse(self.can_reach_region("Outer Room"), "Outer Room should not be reachable without having the Garage as an item")
         self.collect_by_name("Garage")
         self.assertTrue(self.can_reach_region("Outer Room"), "Outer Room should be reachable after collecting the Garage as an item")
-    
+
+    # TODO: this test is failing very rarely
     def test_outer_room_requires_garage_boiler_room(self) -> None:
         self.collect_all_but(["Garage", "The Pool", "Boiler Room", "Utility Closet", "West Gate Path"])
         if not self.multiworld.state.has("Garage", self.player):

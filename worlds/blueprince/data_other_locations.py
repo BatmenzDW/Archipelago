@@ -481,7 +481,6 @@ standard_item_pickup = {
                 "Workshop",
                 "Secret Garden",
                 "Conservatory",
-                # TODO: Sheltered Furnace
             ]]
         ) | Or(
             *[CanReachRegion(region) for region in [
@@ -493,8 +492,7 @@ standard_item_pickup = {
             ]],
             DigSpotRule(),
             options=rare_logic_filter
-        ) | DarkRoomRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Spare Greenroom"),
-        
+        ) | DarkRoomRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Spare Greenroom") | And(ShelteredRule(), CanReachRegion("Furnace")),
     },
     "COIN PURSE First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 4, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
@@ -616,10 +614,9 @@ standard_item_pickup = {
                 "Closed Exhibit",
                 "Locksmith",
                 "Mail Room", # Packages
-                # TODO: Sheltered Furnace
             ]]
         ) | CanReachRegion("Garage", options=rare_logic_filter) |
-        TrunkRule() | CarTrunkRule() | DarkRoomRule() |
+        TrunkRule() | CarTrunkRule() | DarkRoomRule() | And(ShelteredRule(), CanReachRegion("Furnace")) |
         AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Servant's Spare Quarters") | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Bedroom"),
         
     },
@@ -769,7 +766,6 @@ standard_item_pickup = {
                 "Cloister",
                 "Closet",
                 "Courtyard",
-                "Furnace", # TODO: Requires sheltering effect
                 "Greenhouse",
                 "Patio",
                 "Storeroom",
@@ -794,7 +790,7 @@ standard_item_pickup = {
             ]],
             CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
-        ) | TradingPostRule("SHOVEL") | SpiralOfStarsRule() | # Also from AdvancedExperimentRule, but that requires SHOVEL
+        ) | TradingPostRule("SHOVEL") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | # Also from AdvancedExperimentRule, but that requires SHOVEL
         UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Greenroom") | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
         
     },
@@ -816,7 +812,6 @@ standard_item_pickup = {
                 "Tunnel",
                 "Toolshed",
                 "Commissary",
-                # TODO: Sheltered Furnace
             ]]
         ) | Or(
             *[CanReachRegion(region) for region in [
@@ -827,7 +822,7 @@ standard_item_pickup = {
             ]],
             CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
-        ) | AdvancedExperimentRule() | TradingPostRule("SLEDGE HAMMER") | SpiralOfStarsRule() | 
+        ) | AdvancedExperimentRule() | TradingPostRule("SLEDGE HAMMER") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) |
         UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Hall"),
         
     },
@@ -1122,9 +1117,7 @@ unique_item_pickup = {
         LOCATION_ID_KEY: all_areas["Dining Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Dining Room",
         LOCATION_ITEM_KEY: "LUNCH BOX",
-        LOCATION_RULE_SIMPLE_COMMON: CanReachRegion("Gift Shop"),
-        # TODO: Require access to 15 coins.
-        
+        LOCATION_RULE_SIMPLE_COMMON: And(CanReachRegion("Gift Shop"), HasCoins(15)),
     },
     "MICROCHIP 1 First Pickup": {
         LOCATION_ID_KEY: all_areas["West Path"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -1160,10 +1153,18 @@ unique_item_pickup = {
         LOCATION_ROOM_KEY: "Treasure Trove",
         LOCATION_ITEM_KEY: "ROYAL SCEPTER",
         LOCATION_RULE_SIMPLE_COMMON: And(
-            CanReachRegion("Shrine"), CanReachItemLocation("KEY of Aries")
+            CanReachRegion("Shrine"), CanReachItemLocation("KEY of Aries"),
+            Or(
+                And( # Grounds to Precipice Elevator
+                    CanReachRegion("Apple Orchard"),
+                    CanReachRegion("Schoolhouse"),
+                    CanReachRegion("Hovel"),
+                    CanReachRegion("Gemstone Cavern")
+                ),
+                CanReachItemLocation("Moon Pendant"),
+                CanReachRegion("Coat Check")
+            )
         ),
-        # TODO: Require Access to KEY of Aries that doesn't involve tomb unless Moon Pendant or Coat Check is available.
-        
     }
 }
 
@@ -1264,8 +1265,8 @@ upgrade_disks = {
         LOCATION_ID_KEY: all_areas["Commissary"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Commissary",
         LOCATION_ITEM_KEY: "UPGRADE DISK COMMISSARY",
+        LOCATION_RULE_SIMPLE_COMMON: HasCoins(15)
         # TODO: Needs more advanced item logic (if Commissary is the only way to get some items, you may be forced not to see Upgrade Disk in the Commissary)
-        # TODO: Require 15 Coins
     },
     "Upgrade Disk - Garage": {
         LOCATION_ID_KEY: all_areas["Garage"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
@@ -1349,7 +1350,12 @@ upgrade_disks = {
                 ]
             ], options=[OptionFilter(SpecialShopSanity, True)]),
             ShowroomRule(50, options=[OptionFilter(SpecialShopSanity, False)]),
-            CanReachItemLocation("CURSED EFFIGY", options=[OptionFilter(GoalType, GoalType.option_room46, operator="gt")]) # TODO: Require Coat Check or Moon Pendant to carry Cursed Effigy
+            And(
+                CanReachItemLocation("CURSED EFFIGY"),
+                CanReachItemLocation("Moon Pendant"),
+                CanReachRegion("Coat Check"),
+                options=[OptionFilter(GoalType, GoalType.option_room46, operator="gt")]
+            )
         )
     },
 }
@@ -1382,9 +1388,8 @@ vault_keys = {
                 "Morning Room",
                 "Locker Room",
                 "Music Room",
-                # TODO: Sheltered Furnace
             ]]
-        ) | DigSpotRule() | LavatoryRule() | AdvancedExperimentRule(),
+        ) | DigSpotRule() | LavatoryRule() | AdvancedExperimentRule() | And(ShelteredRule(), CanReachRegion("Furnace")),
         
     },
     "Vault Key 304 First Pickup": {

@@ -315,7 +315,20 @@ class LavatoryRule(Rule["BluePrinceWorld"], game="Blue Prince"):
             CanReachItemLocation("KNIGHTS SHIELD") |
             CanReachItemLocation("Dowsing Rod")
         ), options=complex_logic_filter).resolve(world)
-    
+
+@dataclasses.dataclass()
+class ShelteredRule(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Check if the player can shelter a red room effect
+    """
+
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        return Or(
+            CanReachRegion("Shelter"),
+            CanReachItemLocation("KNIGHTS SHIELD"),
+            options=complex_logic_filter).resolve(world)
+
 @dataclasses.dataclass()
 class PlanetariumRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
@@ -331,10 +344,23 @@ class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
     Check if the player can do the advanced experiment with the current inventory.
     """
+    force: bool = False
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(Or(CanReachRegion("Laboratory"), CanReachRegion("Blackbridge Grotto"),), Has("Satellite Dish"), options=extreme_logic_filter).resolve(world)
+        return And(
+            Or(
+                CanReachRegion("Laboratory"), 
+                And(
+                    CanReachRegion("Blackbridge Grotto"),
+                    Or(
+                        CanReachRegion("Security"),
+                        CanReachRegion("Office"),
+                        CanReachRegion("Shelter"),
+                    ),
+                ),
+            ), 
+            Has("Satellite Dish"), options=([] if self.force else extreme_logic_filter)).resolve(world)
 
 prev_trading_post_offers : set[str] = set()
 @dataclasses.dataclass()
