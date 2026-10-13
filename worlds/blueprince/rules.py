@@ -916,7 +916,7 @@ class ComboItemRule(Rule["BluePrinceWorld"], game="Blue Prince"):
             # Item-specific rare logic rules
             rare_rule_additions = {
                 "SLEDGE HAMMER": [
-                    ("Trophy Room", lambda s: self.trophy_sanity and s.can_reach_region("Trophy Room")),
+                    ("Trophy Room", lambda s: self.trophy_sanity and s.can_reach_region("Trophy Room", self.player)),
                 ],
                 "BROKEN LEVER": [
                     ("Dig Spot", DigSpotRule().resolve(world)),
