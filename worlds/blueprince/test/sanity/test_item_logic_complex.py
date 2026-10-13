@@ -14,7 +14,7 @@ class TestItemLogicComplex(BluePrinceTestBase):
     options = {
         "progression_balancing": 50,
         "starting_room_amount": 3,
-        "room_draft_sanity": False,
+        "room_draft_sanity": True,
         "standard_item_sanity": True,
         "workshop_sanity": True,
         "upgrade_disk_sanity": True,
@@ -23,3 +23,8 @@ class TestItemLogicComplex(BluePrinceTestBase):
         "item_logic_mode": "complex",
         "goal_type": GoalType.option_room46,
     }
+
+    def test_trading_post_upgrade_disk(self):
+        self.collect_by_name(["Garage", "Trading Post", "Utility Closet", "Showroom", "Vault", "Hallway", "Spare Room", "ORNATE COMPASS", "Casino"])
+        self.assertTrue(self.can_reach_location("ORNATE COMPASS First Pickup"), "Should be able to reach Ornate Compass First Pickup with Showroom and required coins")
+        self.assertTrue(self.can_reach_location("Upgrade Disk - Trading Post Trade"), "Should be able to reach Trading Post Upgrade Disk with Trading Post and a valid trade")

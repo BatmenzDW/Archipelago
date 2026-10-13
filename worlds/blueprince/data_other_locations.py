@@ -1336,23 +1336,22 @@ upgrade_disks = {
         LOCATION_ITEM_KEY: "UPGRADE DISK ARCHIVES",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("CABINET KEY 1"),
     },
-    # TODO: figure out why this breaks when SpecialShopSanity is true
-    # "Upgrade Disk - Trading Post Trade": {
-    #     LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
-    #     LOCATION_ROOM_KEY: "Trading Post",
-    #     LOCATION_ITEM_KEY: "UPGRADE DISK TRADING POST TRADE",
-    #     LOCATION_RULE_SIMPLE_COMMON: Or(
-    #         Or(*[
-    #             CanReachItemLocation(x) for x in [
-    #                 "ORNATE COMPASS",
-    #                 "EMERALD BRACELET",
-    #                 "MASTER KEY",
-    #             ]
-    #         ], options=[OptionFilter(SpecialShopSanity, True)]),
-    #         ShowroomRule(50, options=[OptionFilter(SpecialShopSanity, False)]),
-    #         CanReachItemLocation("CURSED EFFIGY", options=[OptionFilter(GoalType, GoalType.option_room46, operator="gt")]) # TODO: Require Coat Check or Moon Pendant to carry Cursed Effigy
-    #     )
-    # },
+    "Upgrade Disk - Trading Post Trade": {
+        LOCATION_ID_KEY: all_areas["Trading Post"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
+        LOCATION_ROOM_KEY: "Trading Post",
+        LOCATION_ITEM_KEY: "UPGRADE DISK TRADING POST TRADE",
+        LOCATION_RULE_SIMPLE_COMMON: Or(
+            Or(*[
+                CanReachItemLocation(x) for x in [
+                    "ORNATE COMPASS",
+                    "EMERALD BRACELET",
+                    "MASTER KEY",
+                ]
+            ], options=[OptionFilter(SpecialShopSanity, True)]),
+            ShowroomRule(50, options=[OptionFilter(SpecialShopSanity, False)]),
+            CanReachItemLocation("CURSED EFFIGY", options=[OptionFilter(GoalType, GoalType.option_room46, operator="gt")]) # TODO: Require Coat Check or Moon Pendant to carry Cursed Effigy
+        )
+    },
 }
 
 vault_keys = {

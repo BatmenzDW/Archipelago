@@ -244,17 +244,17 @@ showroom_items = {
     "MASTER KEY": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2003,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
     "MOON PENDANT": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2004,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
     "ORNATE COMPASS": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
         ITEM_ID_KEY: 2005,
-        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.useful,
+        ITEM_ITEM_CLASSIFICATION_KEY: ItemClassification.progression,
     },
     "SILVER SPOON": {
         ITEM_ELEMENT_INDEX_KEY: NO_ITEM_ELEMENT_INDEX,
