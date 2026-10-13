@@ -1667,7 +1667,14 @@ misc_locations = {
         LOCATION_RULE_SIMPLE_COMMON: And(
             CanReachRegion("Shrine"),
             Or(
-                CanReachItemLocation("SLEDGE HAMMER"),
+                SledgeHammerNotFromToolshedRule(),
+                And(
+                    CanReachItemLocation("SLEDGE HAMMER"),
+                    Or(
+                        CanReachRegion("Coat Check"),
+                        CanReachItemLocation("MOON PENDANT")
+                    )
+                ),
                 CanReachItemLocation("MORNING STAR")
             )
         ),

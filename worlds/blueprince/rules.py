@@ -732,3 +732,42 @@ class CanReachRegionsFromList(Rule["BluePrinceWorld"], game="Blue Prince"):
                     return True
 
             return False
+
+@dataclasses.dataclass()
+class SledgeHammerNotFromToolshedRule(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Check if Sledge Hammer pickup can be reached at any region besides toolshed
+    """
+
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        return Or(
+            *[CanReachRegion(region) for region in [
+                "Attic",
+                "Closet",
+                "Courtyard",
+                "Greenhouse",
+                "Storeroom",
+                "Veranda",
+                "Workshop",
+                "Wine Cellar",
+                "Secret Garden",
+                "Tunnel",
+                "Commissary",
+            ]], 
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Spare Room",
+                    "Garage",
+                    "Music Room",
+                    "Utility Closet",
+                ]],
+                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
+                options=rare_logic_filter
+            ),
+            AdvancedExperimentRule(),
+            SpiralOfStarsRule(),
+            UpgradedRoomRule("Mail Room", "Freight Mail"),
+            UpgradedRoomRule("Spare Room", "Spare Foyer"),
+            UpgradedRoomRule("Spare Room", "Spare Hall")
+        ).resolve(world)
