@@ -15,10 +15,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+<<<<<<< HEAD
     permissions:
       contents: read
       pull-requests: write
 
+=======
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     strategy:
         fail-fast: false
 

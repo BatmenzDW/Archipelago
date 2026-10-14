@@ -64,17 +64,25 @@ else:
             options.EnabledFillerBuffs,
             options.AllowedFillerItems,
             options.TrapDifficulty,
-            options.TrapDistribution,
-            options.MultipleDaySleepEnabled,
-            options.MultipleDaySleepCost,
             options.QuickStart,
         ]),
         OptionGroup("Advanced Options", [
             options.Gifting,
             ap_options.DeathLink,
-            options.Mods,
+            options.AllowedFillerItems,
+            options.TrapDistribution,
             options.BundleWhitelist,
             options.BundleBlacklist,
+            options.MultipleDaySleepEnabled,
+            options.MultipleDaySleepCost,
+        ]),
+        OptionGroup("Very Advanced Options", [
+            options.Mods,
+<<<<<<< HEAD
+            options.BundleWhitelist,
+            options.BundleBlacklist,
+=======
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
             options.CustomLogic,
             ap_options.ProgressionBalancing,
             ap_options.Accessibility,

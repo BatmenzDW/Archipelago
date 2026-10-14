@@ -34,7 +34,11 @@ class MoreExplanation:
             depth *= 2
 
         line = "  " * depth + f"{str(self.rule)} -> {self.result}"
+<<<<<<< HEAD
         line += f" [use `/more {self.more_index}` to explain]"
+=======
+        line += f" [use `/explain_more {self.more_index}` to explain]"
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
         return line
 

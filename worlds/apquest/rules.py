@@ -70,6 +70,27 @@ def set_all_entrance_rules(world: APQuestWorld) -> None:
     # Rule Builder also allows the core AP code to do a lot of under-the-hood optimizations.
     # Rule Builder is quite comprehensive, and even if you have really esoteric rules,
     # you can make custom rules by subclassing CustomRule.
+<<<<<<< HEAD
+=======
+
+    # So far, we've been using "Has" from the Rule Builder to make our rules.
+    # There is another way to make rules that you will see in a lot of older worlds.
+    # A rule can just be a function that takes a "state" argument and returns a bool.
+    # As a demonstration of what that looks like, let's do it with our final Entrance rule:
+    world.set_rule(overworld_to_top_left_room, lambda state: state.has("Key", world.player))
+    # This style is not really recommended anymore, though.
+    # Notice how you have to explicitly capture world.player here so that the rule applies to the correct player?
+    # Well, Rule Builder does this part for you, inside of world.set_rule.
+    # This doesn't just result in shorter code, it also means you can define rules statically (at the module level).
+    # APQuest opts to create its Rule objects locally, but just to show what this would look like,
+    # we'll re-set the "Overworld to Top Left Room" rule to a constant defined at the top of this file:
+    world.set_rule(overworld_to_top_left_room, HAS_KEY)
+
+    # Beyond these structural advantages,
+    # Rule Builder also allows the core AP code to do a lot of under-the-hood optimizations.
+    # Rule Builder is quite comprehensive, and even if you have really esoteric rules,
+    # you can make custom rules by subclassing CustomRule.
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 def set_all_location_rules(world: APQuestWorld) -> None:
     # Location rules work no differently from Entrance rules.

@@ -1,6 +1,10 @@
 {
   "game": "Muse Dash",
   "authors": ["DeamonHunter"],
+<<<<<<< HEAD
   "world_version": "1.5.32",
+=======
+  "world_version": "1.5.37",
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
   "minimum_ap_version": "0.6.3"
 }
