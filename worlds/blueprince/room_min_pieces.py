@@ -870,7 +870,7 @@ POSITION_MINIMUM_PIECES = {
         (5, 1, 0, 0),
         (6, 0, 0, 0),
     ],
-    ROOM_PICK_POSITION_GARAGE: [ # TODO: double check that these numbers are correct
+    ROOM_PICK_POSITION_GARAGE: [
         (0, 0, 0, 4),
         (0, 0, 1, 3),
         (0, 0, 3, 1),

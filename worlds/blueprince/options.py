@@ -389,7 +389,6 @@ class DeathLinkMonkException(Toggle):
 
     default = True
 
-# TODO: Add Tunnel ending? (after ascend, but before blueprints)
 # Goal Options
 class GoalType(Choice):
     """
@@ -398,8 +397,9 @@ class GoalType(Choice):
 
     - **antechamber:** Reach the antechamber once
     - **room46:** Reach room 46 once
-    - **sanctum:** Open a select number of sanctum keys - NOT IMPLEMENTED.
+    - **sanctum:** Open a select number of sanctum keys - PARTIALLY IMPLEMENTED.
     - **ascend:** Ascend the throne - NOT IMPLEMENTED.
+    - **tunnel:** Open one of the boxes at the end of the Tunnel - NOT IMPLEMENTED.
     - **blueprints:** Find the Blue Prints - NOT IMPLEMENTED.
 
     """
@@ -411,7 +411,8 @@ class GoalType(Choice):
     option_room46 = 1
     option_sanctum = 2
     option_ascend = 3
-    option_blueprints = 4
+    option_tunnel = 4
+    option_blueprints = 5
 
     default = 0
 
