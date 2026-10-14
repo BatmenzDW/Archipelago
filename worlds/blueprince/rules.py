@@ -338,7 +338,7 @@ class PlanetariumRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(CanReachRegion("Planetarium"), CanReachItemLocation("TELESCOPE"), options=complex_logic_filter).resolve(world)
+        return And(CanReachRegion("Planetarium"), CanReachItemLocation("TELESCOPE", parent_region_name="Campsite"), options=complex_logic_filter).resolve(world)
     
 @dataclasses.dataclass()
 class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -642,7 +642,7 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
     count : int = 1
 
     def __init__(self, 
-                *targets: tuple[str, ...],
+                *targets: str,
                 count: int = 1,
                 options: Iterable[OptionFilter] = (),
                 filtered_resolution: bool = False):
@@ -711,7 +711,7 @@ class CanReachRegionsFromList(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     def __init__(
             self,
-            *targets: tuple[str, ...],
+            *targets: str,
             count: int = 1,
             options: Iterable[OptionFilter] = (),
             filtered_resolution: bool = False,
@@ -795,7 +795,7 @@ class ComboItemRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     def __init__(
             self, 
-            *items: tuple[str, ...],
+            *items: str,
             options: Iterable[OptionFilter] = (),
             filtered_resolution: bool = False):
         super().__init__(options=options, filtered_resolution=filtered_resolution)
@@ -970,7 +970,7 @@ class ComboItemRule(Rule["BluePrinceWorld"], game="Blue Prince"):
         @override
         def _evaluate(self, state: CollectionState) -> bool:
             world = state.multiworld.worlds[self.player]
-            if not And(*[CanReachItemLocation(x) for x in self.items]).resolve(world)(state):
+            if not And(*[CanReachItemLocation(x) for x in self.items]).resolve(world)(state): # type: ignore
                 return False
-            reachable = self._check_reachable(world, state)
+            reachable = self._check_reachable(world, state) # type: ignore
             return self.all_sets_reachable([v for _, v in reachable.items()])
