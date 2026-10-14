@@ -111,6 +111,9 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         elif v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMPLEX:
             trunk_count = world.options.locked_trunks_complex
 
+        if room_key == "Planetarium" and world.options.item_logic_mode < ItemLogicMode.option_complex:
+            continue
+
         trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
         locs = get_location_names_with_ids(trunks)
 
