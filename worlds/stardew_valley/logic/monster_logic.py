@@ -44,7 +44,11 @@ class MonsterLogic(BaseLogic):
 
     @cache_self1
     def can_kill_many(self, monster: Union[str, monster_data.StardewMonster]) -> StardewRule:
+<<<<<<< HEAD
         return self.logic.monster.can_kill(monster, MAX_MONTHS / 3)
+=======
+        return self.logic.monster.can_kill(monster, MAX_MONTHS // 3)
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
     @cache_self1
     def can_kill_max(self, monster: Union[str, monster_data.StardewMonster]) -> StardewRule:

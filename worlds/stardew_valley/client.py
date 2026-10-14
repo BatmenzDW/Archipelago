@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+<<<<<<< HEAD
 import asyncio
 import re
 # webserver imports
@@ -12,10 +13,18 @@ from CommonClient import logger, get_base_parser, gui_enabled, server_loop
 from MultiServer import mark_raw
 from NetUtils import JSONMessagePart
 from kvui import CommandPromptTextInput
+=======
+import re
+
+import Utils
+from BaseClasses import CollectionState, Location
+from NetUtils import JSONMessagePart
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 from . import StardewValleyWorld
 from .logic.logic import StardewLogic
 from .stardew_rule.rule_explain import explain, ExplainMode, RuleExplanation
 
+<<<<<<< HEAD
 try:
     from worlds.tracker.TrackerClient import TrackerGameContext, TrackerCommandProcessor as ClientCommandProcessor, UT_VERSION  # noqa
     from worlds.tracker.TrackerCore import TrackerCore
@@ -209,10 +218,73 @@ def parse_explanation(explanation: RuleExplanation) -> list[JSONMessagePart]:
     splits = re.split(result_regex, str(explanation).strip())
 
     messages = []
+=======
+
+def cmd_explain(world: StardewValleyWorld, target_name: str, state: CollectionState) -> list[JSONMessagePart]:
+    logic = world.logic
+
+    if target_name.startswith("item "):
+        is_item_explain = True
+        target_name = target_name[len("item "):]
+    else:
+        is_item_explain = False
+
+    if target_name.startswith("missing "):
+        expected = True
+        target_name = target_name[len("missing "):]
+    elif target_name.startswith("how "):
+        expected = False
+        target_name = target_name[len("how "):]
+    else:
+        expected = None
+
+    possible_answers = logic.registry.item_rules.keys() if is_item_explain else world.get_all_location_names()
+    result, usable, response = Utils.get_intended_text(target_name, possible_answers)
+    if usable:
+        if is_item_explain:
+            rule = logic.has(result)
+        else:
+            rule = logic.region.can_reach_location(result)
+        expl = explain(rule, state, expected=expected, mode=ExplainMode.CLIENT)
+        world.previous_explanation = expl
+        return parse_explanation(expl)
+    else:
+        return [{"type": "color", "color": "salmon", "text": response}]
+
+
+def cmd_more(world: StardewValleyWorld, index: str, state: CollectionState) -> list[JSONMessagePart]:
+    logic = world.logic
+
+    if world.previous_explanation is None:
+        return [{"type": "color", "color": "salmon", "text": "No previous explanation found"}]
+
+    try:
+        expl = world.previous_explanation.more(int(index))
+    except (ValueError, IndexError):
+        return [{"type": "text", "text": "Which previous rule do you want to be explained?"}]
+
+    world.previous_explanation = expl
+    return parse_explanation(expl)
+
+
+def parse_explanation(explanation: RuleExplanation) -> list[list[JSONMessagePart]]:
+    # Split the explanation in parts, by isolating all the delimiters, being \(, \), & , -> , | , \d+x , \[ , \] , \(\w+\), \n\s*
+    result_regex = r"\s*(\(|\)| & | -> | \| |\d+x | \[|\](?: ->)?\s*| \(\w+\)|\n)"
+    splits = re.split(result_regex, str(explanation).strip())
+
+    messages = []
+    contents = []
+    content_length = 0
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     for s in splits:
         if len(s) == 0:
             continue
 
+<<<<<<< HEAD
+=======
+        content_length += len(s)
+
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
         if s == "True":
             messages.append({"type": "color", "color": "green", "text": s})
         elif s == "False":
@@ -245,6 +317,7 @@ def parse_explanation(explanation: RuleExplanation) -> list[JSONMessagePart]:
         else:
             messages.append({"text": s, "type": "text"})
 
+<<<<<<< HEAD
     return messages
 
 
@@ -282,3 +355,14 @@ def launch(*args):
             args.password = urllib.parse.unquote(url.password)
 
     asyncio.run(main(args))
+=======
+        if content_length > 5000 and s.endswith("\n"):
+            contents[-1]["text"] = contents[-1]["text"][:-1]
+            messages.append(contents)
+            contents = []
+            content_length = 0
+
+    messages.append(contents)
+
+    return messages
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d

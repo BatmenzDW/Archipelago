@@ -27,5 +27,9 @@ def remove_already_included(items: Iterable[ItemData], already_added_items: set[
     return [
         item
         for item in items
+<<<<<<< HEAD
         if item.name not in already_added_items or (item.has_any_group(*FILLER_GROUPS, Group.TRAP) and Group.MAXIMUM_ONE not in item.groups)
+=======
+        if item.name not in already_added_items or (item.has_any_group(*FILLER_GROUPS, Group.TRAP, Group.PLAYER_BUFF) and Group.MAXIMUM_ONE not in item.groups)
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     ]

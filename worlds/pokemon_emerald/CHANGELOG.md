@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+=======
+# 2.6.0
+
+### Features
+
+- Added `dexsanity_encounter_types` and `world_version` to slot data for trackers.
+
+# 2.5.1
+
+### Fixes
+
+- Fixed dexsanity logic to correctly account only for catching species in their enabled encounter types, even if they
+can be found elsewhere.
+
+>>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 # 2.5.0
 
 ### Features
