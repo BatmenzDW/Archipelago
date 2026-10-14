@@ -1,5 +1,13 @@
 # [Archipelago](https://archipelago.gg) ![Discord Shield](https://discordapp.com/api/guilds/731205301247803413/widget.png?style=shield) | [Install](https://github.com/ArchipelagoMW/Archipelago/releases)
 
+## Fork Notes
+
+This particular fork is the development location for the following game worlds, standalone from the archipelago game worlds listed below
+
+- <img src="./worlds/blueprince/icon.png" alt="Alt Text" style="width:100px; height:auto;"> Blue Prince (Icon by @zygan)
+
+## Back to the Base Readme
+
 Archipelago provides a generic framework for developing multiworld capability for game randomizers. In all cases,
 presently, Archipelago is also the randomizer itself.
 
@@ -96,11 +104,11 @@ windows binaries.
 Archipelago is built upon a strong legacy of brilliant hobbyists. We want to honor that legacy by showing it here.
 The repositories which Archipelago is built upon, inspired by, or otherwise owes its gratitude to are:
 
-* [bonta0's MultiWorld](https://github.com/Bonta0/ALttPEntranceRandomizer/tree/multiworld_31)
-* [AmazingAmpharos' Entrance Randomizer](https://github.com/AmazingAmpharos/ALttPEntranceRandomizer)
-* [VT Web Randomizer](https://github.com/sporchia/alttp_vt_randomizer)
-* [Dessyreqt's alttprandomizer](https://github.com/Dessyreqt/alttprandomizer)
-* [Zarby89's](https://github.com/Ijwu/Enemizer/commits?author=Zarby89)
+- [bonta0's MultiWorld](https://github.com/Bonta0/ALttPEntranceRandomizer/tree/multiworld_31)
+- [AmazingAmpharos' Entrance Randomizer](https://github.com/AmazingAmpharos/ALttPEntranceRandomizer)
+- [VT Web Randomizer](https://github.com/sporchia/alttp_vt_randomizer)
+- [Dessyreqt's alttprandomizer](https://github.com/Dessyreqt/alttprandomizer)
+- [Zarby89's](https://github.com/Ijwu/Enemizer/commits?author=Zarby89)
   and [sosuke3's](https://github.com/Ijwu/Enemizer/commits?author=sosuke3) contributions to Enemizer, which make up the
   vast majority of Enemizer contributions.
 
@@ -131,9 +139,9 @@ If you are a developer or are running on a platform with no compiled releases av
 This project makes use of multiple other projects. We wouldn't be here without these other repositories and the
 contributions of their developers, past and present.
 
-* [z3randomizer](https://github.com/ArchipelagoMW/z3randomizer)
-* [Enemizer](https://github.com/Ijwu/Enemizer)
-* [Ocarina of Time Randomizer](https://github.com/TestRunnerSRL/OoT-Randomizer)
+- [z3randomizer](https://github.com/ArchipelagoMW/z3randomizer)
+- [Enemizer](https://github.com/Ijwu/Enemizer)
+- [Ocarina of Time Randomizer](https://github.com/TestRunnerSRL/OoT-Randomizer)
 
 ## Contributing
 

@@ -1,0 +1,112 @@
+
+
+
+## Regions
+abandoned_mine x # (area off the 9'oclock on the underground map.)
+excavation_tunnel x # Area to the left of the res not past minecart on map.
+basement x
+catacombs x
+inner_sanctum x
+the_precipice x
+reservoir_gear_side x
+reservoir_fountain_side x
+reservoir_bottom
+rotating_gear x
+safehouse x
+torch_chamber x
+the_underpass x
+aries_court x
+the_well x
+
+
+campsite x
+grounds x
+private_drive x
+apple_orchard x
+gemstone_cavern x
+sealed_entrance x
+blakbridge_grotto x
+orindian_ruins x
+tunnel_area_entrance x (The one with the boxes that can be removed)
+west_path x
+outer_room x
+gemstone_cavern x
+
+
+tunnel_area_post_crates
+tunnel_area_post_normal_locked_door
+tunnel_area_post_basement_key_door
+tunnel_area_post_security_door
+tunnel_area_post_weak_wall
+tunnel_area_post_red_door
+tunnel_area_post_candle_door
+tunnel_area_post_sealed_door
+tunnel_area_post_blue_door
+
+
+
+
+## Connections
+
+campsite - private_drive # Unconditional
+campsite - apple_orchard # Conditional on having solution to apple orchard safe (in game, looking at photograph in lit dark room with mag-glass.)
+campsite - gemstone_cavern # Conditional on having access to utility closet, entered in correct combo. Rules of are found in office emails. Solution is in office emails
+private_drive - blakbridge_grotto # Conditional on bloiler room powering lab, knowing solution to puzzle which is IN lab.
+private_drive - grounds # Unconditional
+blakbridge_grotto - orindian_ruins # Having all 3 microchips.
+grounds - entrance_hall # Unconditional
+grounds - the_precipice # Having blue flame elevator access. Requires (1: apple orchard, 2: outer room (school house, hovel), 3: Gemstone Cavern)
+west_path - grounds #ONE WAY, Having opened west path gate, required garage and (boiler | utility closet)
+grounds - sealed_entrance # Powerhammer, Workshop access
+grounds - tunnel_area_entrance # Unconditional. 
+torch_chamber - the_precipice #ONE WAY, burning glass, workshop access OR torch (armory access)
+the_precipice - aries_court #(requires solving Castle puzzle)
+sealed_entrance - basement # Powerhammer, workshop access
+outer_room - tomb #Unconditional on needing tomb
+west_path - outer_room # Unconditional ONE WAY.
+garage - west_path # (ONE WAY)
+foundation_elevator - basement # ONE WAY Having foundation and basement key
+basement - reservoir_gear_side # UNCONDITIONAL
+reservoir_gear_side - rotating_gear # UNCONDITIONAL
+the_underpass - inner_sanctum #UNCONDITIONAL
+abandoned_mine - excavation_tunnel # UNCONDITIONAL
+tomb - catacombs  # ONE WAY, UNCONDITIONAL
+catacombs - excavation_tunnel # ONE WAY, UNCONDITIONAL
+excavation_tunnel - torch_chamber # UNCONDITIONAL
+excavation_tunnel - reservoir_fountain_side # UNCONDITIONAL
+the_well - reservoir_fountain_side  # pump room and basement key 
+
+
+tunnel_area_entrance - tunnel_area_post_crates # Lab or blackbridge and satalite dish raised.
+tunnel_area_post_crates - tunnel_area_post_normal_locked_door # Having access to keys.
+tunnel_area_post_normal_locked_door - tunnel_area_post_basement_key_door # has basement key
+tunnel_area_post_basement_key_door - tunnel_area_post_security_door # Has security key
+tunnel_area_post_security_door - tunnel_area_post_weak_wall # Powerhammer, workshop access
+tunnel_area_post_weak_wall - tunnel_area_post_red_door # Boiler room
+tunnel_area_post_red_door - tunnel_area_post_candle_door # torch (armory) or burning glass (workshop)
+tunnel_area_post_candle_door - tunnel_area_post_sealed_door (all 3 microchips)
+tunnel_area_post_sealed_door - tunnel_area_post_blue_door (Opening blue doors (technically ascension + 8 blue rooms))
+
+## COMPLEX LOGIC WARNING
+(These connections have quite complex logic relating to the )
+
+reservoir_gear_side - safehouse # Pump Room & Fountain Side Access. (take fountain side to gear side, lower again, and make it back down on gear side.)
+reservoir_gear_side - reservoir_bottom # Pump Room and boiler room (both this and safehouse require ability to get to gear side NOT through well side.)
+rotating_gear - the_underpass # Require Dual side access
+rotating_gear - abandoned_mine # UNCONDITIONAL
+reservoir_fountain_side - reservoir_gear_side # Pump Room
+
+
+
+Note: Safe in underground boiler room requires having boiler active. Gives letter & gem & treasure trove floor plan.
+
+
+
+Note: 
+
+This document defines the rough room placement restrictions.
+https://www.reddit.com/r/BluePrince/comments/1ltsn1t/drafting_mechanics_room_placement_restrictions/
+
+Advice from Gelly
+Room 46: 25 room minimum.
+Antechamber: 13 room minimum.

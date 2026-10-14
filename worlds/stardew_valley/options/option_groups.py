@@ -62,6 +62,7 @@ else:
             options.BackpackSize,
             options.NumberOfMovementBuffs,
             options.EnabledFillerBuffs,
+            options.AllowedFillerItems,
             options.TrapDifficulty,
             options.QuickStart,
         ]),

@@ -91,6 +91,28 @@ class StardewWebWorld(WebWorld):
     tutorials = [setup_en, setup_fr]
 
 
+if TRACKER_ENABLED:
+    from .. import user_folder
+    import os
+
+    # Best effort to detect if universal tracker is installed
+    if any("tracker.apworld" in f.name for f in os.scandir(user_folder)):
+        def launch_client(*args):
+            from worlds.LauncherComponents import launch
+            from .client import launch as client_main
+            launch(client_main, name="Stardew Valley Tracker", args=args)
+
+
+        components.append(Component(
+            "Stardew Valley Tracker",
+            func=launch_client,
+            component_type=Type.CLIENT,
+            icon='stardew'
+        ))
+
+        icon_paths['stardew'] = f"ap:{__name__}/stardew.png"
+
+
 class StardewValleyWorld(World):
     """
     Stardew Valley is an open-ended country-life RPG. You can farm, fish, mine, fight, complete quests,

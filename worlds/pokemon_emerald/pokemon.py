@@ -266,6 +266,12 @@ def _adjust_wild_events(world: "PokemonEmeraldWorld", map_data: MapData, new_slo
 
 
 def randomize_wild_encounters(world: "PokemonEmeraldWorld") -> None:
+    encounter_table = {
+        "Land": EncounterType.LAND,
+        "Water": EncounterType.WATER,
+        "Fishing": EncounterType.FISHING,
+    }
+    enabled_encounters = {encounter_table[encounter_type] for encounter_type in world.options.dexsanity_encounter_types.value}
     if world.options.wild_pokemon == RandomizeWildPokemon.option_vanilla:
         return
 
