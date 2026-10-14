@@ -1,24 +1,12 @@
 # [Archipelago](https://archipelago.gg) ![Discord Shield](https://discordapp.com/api/guilds/731205301247803413/widget.png?style=shield) | [Install](https://github.com/ArchipelagoMW/Archipelago/releases)
 
 ## Fork Notes
-<<<<<<< HEAD
-=======
-
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 This particular fork is the development location for the following game worlds, standalone from the archipelago game worlds listed below
 
 - <img src="./worlds/blueprince/icon.png" alt="Alt Text" style="width:100px; height:auto;"> Blue Prince (Icon by @zygan)
 
-<<<<<<< HEAD
-
 ## Back to the Base  Readme
-=======
-## Back to the Base Readme
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
-
-Archipelago provides a generic framework for developing multiworld capability for game randomizers. In all cases,
 presently, Archipelago is also the randomizer itself.
-
 Currently, the following games are supported:
 
 * The Legend of Zelda: A Link to the Past
@@ -101,10 +89,7 @@ Currently, the following games are supported:
 * Satisfactory
 * EarthBound
 * Mega Man 3
-<<<<<<< HEAD
-=======
 * Gauntlet Legends
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 For setup and instructions check out our [tutorials page](https://archipelago.gg/tutorial/).
 Downloads can be found at [Releases](https://github.com/ArchipelagoMW/Archipelago/releases), including compiled

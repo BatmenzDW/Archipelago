@@ -3,11 +3,7 @@ Archipelago init file for The Witness
 """
 import dataclasses
 from logging import error, info, warning
-<<<<<<< HEAD
-from typing import Any, Dict, List, Optional, cast
-=======
 from typing import Any, Dict, List, Optional, cast, ClassVar
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 from BaseClasses import CollectionState, Entrance, Item, Location, LocationProgressType, Region, Tutorial
 
@@ -21,11 +17,7 @@ from .data.item_definition_classes import DoorItemDefinition, ItemData
 from .data.utils import cast_not_none, get_audio_logs
 from .hints import CompactHintData, create_all_hints, make_compact_hint_data, make_laser_hints
 from .locations import WitnessPlayerLocations
-<<<<<<< HEAD
-from .options import TheWitnessOptions, witness_option_groups
-=======
 from .options import RelevanceMixin, TheWitnessOptions, witness_option_groups
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 from .place_early_item import place_early_items
 from .player_items import WitnessItem, WitnessPlayerItems
 from .player_logic import WitnessPlayerLogic
@@ -92,11 +84,8 @@ class WitnessWorld(World):
     location_name_groups = static_witness_locations.AREA_LOCATION_GROUPS
 
     required_client_version = (0, 6, 8)
-<<<<<<< HEAD
-=======
 
     ut_can_gen_without_yaml: ClassVar[bool] = True
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
     player_logic: WitnessPlayerLogic
     player_locations: WitnessPlayerLocations

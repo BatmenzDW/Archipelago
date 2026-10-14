@@ -19,11 +19,7 @@ from .rules import MessengerHardRules, MessengerOOBRules, MessengerRules
 from .shop import FIGURINES, PROG_SHOP_ITEMS, SHOP_ITEMS, USEFUL_SHOP_ITEMS, shuffle_shop_prices
 from .subclasses import MessengerItem, MessengerRegion, MessengerShopLocation
 from .transitions import disconnect_entrances, shuffle_transitions
-<<<<<<< HEAD
-from .universal_tracker import reverse_portal_exits_into_portal_plando, reverse_transitions_into_plando_connections
-=======
 from .universal_tracker import reverse_portal_exits_into_portal_plando, reverse_shop_prices, reverse_transitions_into_plando_connections
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 components.append(
     Component(

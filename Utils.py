@@ -20,13 +20,6 @@ import warnings
 import pathlib
 
 from argparse import Namespace
-<<<<<<< HEAD
-from datetime import datetime, timezone
-
-from settings import Settings, get_settings
-from time import sleep
-from typing import BinaryIO, Coroutine, Mapping, Optional, Set, Dict, Any, Union, TypeGuard
-=======
 from collections.abc import Collection, Iterable, Sequence
 from datetime import datetime, timezone
 from shutil import which
@@ -34,7 +27,6 @@ from shutil import which
 from settings import Settings, get_settings
 from time import sleep
 from typing import BinaryIO, Coroutine, Generic, Mapping, Optional, Set, Dict, Any, TypeVar, Union, TypeGuard
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 from yaml import load, load_all, dump
 from pathspec import PathSpec, GitIgnoreSpec
 from typing_extensions import deprecated
@@ -770,8 +762,6 @@ def env_cleared_lib_path() -> Mapping[str, str]:
     return env
 
 
-<<<<<<< HEAD
-=======
 def run_in_terminal(exe: Sequence[str]) -> bool:
     """
     Runs the given command/args in `exe` in a new terminal window
@@ -814,7 +804,6 @@ def run_in_terminal(exe: Sequence[str]) -> bool:
     return False
 
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 def _mp_open_filename(res: "multiprocessing.Queue[typing.Optional[str]]", *args: Any) -> None:
     if is_kivy_running():
         raise RuntimeError("kivy should not be running in multiprocess")

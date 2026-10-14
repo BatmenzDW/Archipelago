@@ -70,8 +70,6 @@ def set_all_entrance_rules(world: APQuestWorld) -> None:
     # Rule Builder also allows the core AP code to do a lot of under-the-hood optimizations.
     # Rule Builder is quite comprehensive, and even if you have really esoteric rules,
     # you can make custom rules by subclassing CustomRule.
-<<<<<<< HEAD
-=======
 
     # So far, we've been using "Has" from the Rule Builder to make our rules.
     # There is another way to make rules that you will see in a lot of older worlds.
@@ -90,7 +88,6 @@ def set_all_entrance_rules(world: APQuestWorld) -> None:
     # Rule Builder also allows the core AP code to do a lot of under-the-hood optimizations.
     # Rule Builder is quite comprehensive, and even if you have really esoteric rules,
     # you can make custom rules by subclassing CustomRule.
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 def set_all_location_rules(world: APQuestWorld) -> None:
     # Location rules work no differently from Entrance rules.

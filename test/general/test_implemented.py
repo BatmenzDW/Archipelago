@@ -12,11 +12,7 @@ class TestImplemented(unittest.TestCase):
 
     def test_completion_condition(self):
         """Ensure a completion condition is set that has requirements."""
-<<<<<<< HEAD
-        for game_name, world_type in AutoWorldRegister.world_types.items():
-=======
         for game_name, world_type in AutoWorldRegister.testable_worlds.items():
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
             if not world_type.hidden:
                 with self.subTest(game_name):
                     multiworld = setup_solo_multiworld(world_type)
@@ -64,15 +60,7 @@ class TestImplemented(unittest.TestCase):
 
     def test_prefill_items(self):
         """Test that every world can reach every location from allstate before pre_fill."""
-<<<<<<< HEAD
-        for gamename, world_type in AutoWorldRegister.world_types.items():
-=======
         for gamename, world_type in AutoWorldRegister.testable_worlds.items():
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
-            if gamename not in ("Archipelago", "Final Fantasy", "Test Game"):
-                with self.subTest(gamename):
-                    multiworld = setup_solo_multiworld(world_type, ("generate_early", "create_regions", "create_items",
-                                                                    "set_rules", "connect_entrances", "generate_basic"))
                     allstate = multiworld.get_all_state()
                     locations = multiworld.get_locations()
                     reachable = multiworld.get_reachable_locations(allstate)

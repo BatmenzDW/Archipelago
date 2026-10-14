@@ -1,13 +1,8 @@
 from typing import TYPE_CHECKING
 
-<<<<<<< HEAD
-from BaseClasses import CollectionState, CollectionRule, Region
-from worlds.generic.Rules import add_rule, allow_self_locking_items
-=======
 from BaseClasses import CollectionRule, CollectionState, Region
 from worlds.generic.Rules import add_rule, allow_self_locking_items
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 from .constants import NOTES, PHOBEKINS
 from .options import MessengerAccessibility
 
@@ -243,15 +238,9 @@ class MessengerRules:
             ],
         }
 
-<<<<<<< HEAD
-=======
         # fmt: off
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
         self.location_rules = {
-            # hq
-            "Money Wrench": self.can_shop,
             # ninja village
-            "Ninja Village Seal - Tree House":
                 self.has_dart,
             "Ninja Village - Candle":
                 lambda state: state.multiworld.get_location("Searing Crags - Astral Tea Leaves", self.player).can_reach(

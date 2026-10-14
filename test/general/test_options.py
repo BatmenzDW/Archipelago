@@ -20,18 +20,6 @@ class TestOptions(unittest.TestCase):
 
     def test_option_defaults(self):
         """Test that defaults for submitted options are valid."""
-<<<<<<< HEAD
-        for gamename, world_type in AutoWorldRegister.world_types.items():
-            if not world_type.hidden:
-                for option_key, option in world_type.options_dataclass.type_hints.items():
-                    with self.subTest(game=gamename, option=option_key):
-                        if issubclass(option, TextChoice):
-                            self.assertTrue(option.default in option.name_lookup,
-                                f"Default value {option.default} for TextChoice option {option.__name__} in"
-                                f" {gamename} does not resolve to a listed value!"
-                            )
-                        # Standard "can default generate" test
-=======
         for gamename, world_type in AutoWorldRegister.testable_worlds.items():
             if not world_type.hidden:
                 for option_key, option in world_type.options_dataclass.type_hints.items():
@@ -45,7 +33,6 @@ class TestOptions(unittest.TestCase):
                                 f"'validate_text' while default value {option.default} does not resolve "
                                 f"to a listed value!"
                             )
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
                         err_raised = None
                         try:
                             option.from_any(option.default)
@@ -126,18 +113,6 @@ class TestOptions(unittest.TestCase):
 
     def test_option_set_keys_random(self):
         """Tests that option sets do not contain 'random' and its variants as valid keys"""
-<<<<<<< HEAD
-        for game_name, world_type in AutoWorldRegister.world_types.items():
-            if game_name not in ("Archipelago", "Super Metroid"):
-                for option_key, option in world_type.options_dataclass.type_hints.items():
-                    if issubclass(option, OptionSet):
-                        with self.subTest(game=game_name, option=option_key):
-                            self.assertFalse(any(random_key in option.valid_keys for random_key in ("random",
-                                                                                                    "random-high",
-                                                                                                    "random-low")))
-                            for key in option.valid_keys:
-                                self.assertFalse("random-range" in key)
-=======
         excluded_games = ("Super Metroid",)
         worlds_to_test = {game: world
                           for game, world in AutoWorldRegister.testable_worlds.items() if game not in excluded_games}
@@ -150,7 +125,6 @@ class TestOptions(unittest.TestCase):
                                                                                                 "random-low")))
                         for key in option.valid_keys:
                             self.assertFalse("random-range" in key)
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     
     def test_pickle_dumps_plando(self):
         """Test that plando options using containers of a custom type can be pickled"""

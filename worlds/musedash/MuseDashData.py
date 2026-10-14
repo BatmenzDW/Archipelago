@@ -719,8 +719,6 @@ SONG_DATA: Dict[str, SongData] = {
     "YURUSHITE": SongData(2900843, "97-3", "DASH AND SHOOT!", False, 6, 8, 11),
     "girls.exe": SongData(2900844, "97-4", "DASH AND SHOOT!", False, 6, 8, 11),
     "Baqeela": SongData(2900845, "97-5", "DASH AND SHOOT!", False, 6, 8, 10),
-<<<<<<< HEAD
-=======
     "Help me, ERINNNNNN!!": SongData(2900846, "43-74", "MD Plus Project", False, 4, 8, 10),
     "Utakata, Ai no Mahoroba": SongData(2900847, "98-0", "Touhou Mugakudan -V-", False, 3, 5, 7),
     "dynamite": SongData(2900848, "98-1", "Touhou Mugakudan -V-", False, 5, 7, 9),
@@ -757,5 +755,4 @@ SONG_DATA: Dict[str, SongData] = {
     "$trange Attraktor": SongData(2900879, "102-3", "Slumbering Golden Mark", True, 5, 7, 10),
     "Euphoria Laur": SongData(2900880, "102-4", "Slumbering Golden Mark", False, 5, 7, 9),
     "Kirameku Metamorphose": SongData(2900881, "102-5", "Slumbering Golden Mark", True, 3, 6, 9),
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 }

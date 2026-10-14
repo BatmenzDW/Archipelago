@@ -385,11 +385,8 @@ class TunicWorld(World):
         if (name == "Golden Coin" and self.options.laurels_location in
                 (LaurelsLocation.option_10_coins, LaurelsLocation.option_6_coins)):
             itemclass = ItemClassification.progression
-<<<<<<< HEAD
-=======
         if name == "ATT Offering" and self.options.shuffle_enemy_drops:
             itemclass = ItemClassification.progression
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
         return TunicItem(name, itemclass, self.item_name_to_id[name], self.player)
 
     def create_items(self) -> None:

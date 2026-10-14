@@ -1,16 +1,9 @@
 from dataclasses import dataclass
 
-<<<<<<< HEAD
-from Options import Choice, Toggle, DeathLink, TextChoice, Range, OptionDict, PerGameCommonOptions
-from schema import Schema, And, Use, Optional
-from .rules import bosses, weapons_to_id
-
-=======
 from Options import Choice, Toggle, DeathLink, TextChoice, Range, OptionDict, PerGameCommonOptions, OptionError
 from schema import Schema, And, Use, Optional
 from .rules import bosses, weapons_to_id
 from .color import palette_pointers, parse_color, validate_colors
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 class EnergyLink(Toggle):
     """
@@ -79,15 +72,11 @@ class PaletteShuffle(TextChoice):
     option_randomized = 2
     option_singularity = 3
 
-<<<<<<< HEAD
-=======
     @classmethod
     def validate_text(cls, value: str) -> None:
         color_sets = value.split(";")
         if len(color_sets) > 1:
                 # can only have two cases not reach this
-                # just random gets resolved earlier, so its just 1 color singularity
-            shuffle = color_sets.pop()
         for color_set in color_sets:
             if "-" in color_set:
                 character, color = color_set.split("-")
@@ -101,14 +90,12 @@ class PaletteShuffle(TextChoice):
                 real_colors = validate_colors(*parse_color(colors), allow_match=True)
 
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 class EnemyWeaknesses(Toggle):
     """
     Randomizes the damage dealt to enemies by weapons. Certain enemies will always take damage from the buster.
     """
     display_name = "Random Enemy Weaknesses"
-
 
 class StrictWeaknesses(Toggle):
     """

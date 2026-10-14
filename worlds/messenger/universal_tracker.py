@@ -1,17 +1,11 @@
 from Options import PlandoConnection
 from .connections import RANDOMIZED_CONNECTIONS
 from .portals import REGION_ORDER, SHOP_POINTS, CHECKPOINTS
-<<<<<<< HEAD
-from .transitions import TRANSITIONS
-
-REVERSED_RANDOMIZED_CONNECTIONS = {v: k for k, v in RANDOMIZED_CONNECTIONS.items()}
-=======
 from .shop import FIGURINES, SHOP_ITEMS
 from .transitions import TRANSITIONS
 
 REVERSED_RANDOMIZED_CONNECTIONS = {v: k for k, v in RANDOMIZED_CONNECTIONS.items()}
 REVERSED_SHOP_ITEMS = {v.internal_name: k for k, v in (SHOP_ITEMS | FIGURINES).items()}
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 
 def find_spot(portal_key: int) -> str:
@@ -34,8 +28,6 @@ def reverse_portal_exits_into_portal_plando(portal_exits: list[int]) -> list[Pla
         PlandoConnection("Glacial Peak", find_spot(portal_exits[5]), "both"),
     ]
 
-<<<<<<< HEAD
-=======
 def reverse_shop_prices(
     shop_prices: dict[str, int], figures_prices: dict[str, int]
 ) -> tuple[dict[str, int], dict[str, int]]:
@@ -44,7 +36,6 @@ def reverse_shop_prices(
         {REVERSED_SHOP_ITEMS[item_internal_name]: price for item_internal_name, price in figures_prices.items()},
     )
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 def reverse_transitions_into_plando_connections(transitions: list[list[int]]) -> list[PlandoConnection]:
     plando_connections = []

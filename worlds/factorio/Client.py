@@ -19,11 +19,7 @@ import factorio_rcon
 from CommonClient import ClientCommandProcessor, CommonContext, logger, server_loop, gui_enabled, get_base_parser
 from MultiServer import mark_raw
 from NetUtils import ClientStatus, NetworkItem, JSONtoTextParser, JSONMessagePart
-<<<<<<< HEAD
-from Utils import async_start, get_file_safe_name, is_windows, Version, format_SI_prefix, get_text_between, user_path
-=======
 from Utils import async_start, get_file_safe_name, is_linux, is_windows, Version, format_SI_prefix, get_text_between, user_path
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 from .settings import FactorioSettings
 from settings import get_settings
 

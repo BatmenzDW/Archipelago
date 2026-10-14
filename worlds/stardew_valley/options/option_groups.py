@@ -78,11 +78,6 @@ else:
         ]),
         OptionGroup("Very Advanced Options", [
             options.Mods,
-<<<<<<< HEAD
-            options.BundleWhitelist,
-            options.BundleBlacklist,
-=======
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
             options.CustomLogic,
             ap_options.ProgressionBalancing,
             ap_options.Accessibility,

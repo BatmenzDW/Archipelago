@@ -14,10 +14,7 @@ from ..strings.currency_names import Currency, MemeCurrency
 from ..strings.food_names import Beverage
 from ..strings.region_names import Region, LogicRegion
 from ..strings.season_names import Season
-<<<<<<< HEAD
-=======
 from ..strings.tool_names import Tool, ToolMaterial
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 qi_gem_rewards = ("100 Qi Gems", "50 Qi Gems", "40 Qi Gems", "35 Qi Gems", "25 Qi Gems",
                   "20 Qi Gems", "15 Qi Gems", "10 Qi Gems")
@@ -49,13 +46,8 @@ class MoneyLogic(BaseLogic):
         shipping_rule = self.logic.shipping.can_use_shipping_bin
         pierre_rule = self.logic.region.can_reach_all(Region.pierre_store, Region.forest)
         willy_rule = self.logic.region.can_reach_all(Region.fish_shop, LogicRegion.fishing)
-<<<<<<< HEAD
-        clint_rule = self.logic.region.can_reach_all(Region.blacksmith, Region.mines_floor_5)
-        robin_rule = self.logic.region.can_reach_all(Region.carpenter, Region.secret_woods)
-=======
         clint_rule = self.logic.region.can_reach_all(Region.blacksmith, Region.mines_floor_5) & self.logic.tool.has_tool(Tool.pickaxe)
         robin_rule = self.logic.region.can_reach_all(Region.carpenter, Region.secret_woods) & self.logic.tool.has_tool(Tool.axe, ToolMaterial.copper)
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
         farming_rule = self.logic.farming.can_plant_and_grow_item(Season.not_winter)
 
         if amount <= 2000:

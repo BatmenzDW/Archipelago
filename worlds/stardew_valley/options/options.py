@@ -1115,10 +1115,6 @@ class BundleWhitelist(OptionSet):
     If more bundles are specified than what fits in their parent room, that room will randomly pick from only the whitelist ones"""
     internal_name = "bundle_whitelist"
     display_name = "Bundle Whitelist"
-<<<<<<< HEAD
-    visibility = Visibility.template | Visibility.spoiler
-=======
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     valid_keys = set(all_cc_bundle_names)
 
     def prioritizes(self, bundle_name):
@@ -1137,10 +1133,6 @@ class BundleBlacklist(OptionSet):
     If too many bundles are blacklisted for a given room, that room will pick all the non-blacklist bundles, then random blacklisted ones."""
     internal_name = "bundle_blacklist"
     display_name = "Bundle Blacklist"
-<<<<<<< HEAD
-    visibility = Visibility.template | Visibility.spoiler
-=======
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     valid_keys = set(all_cc_bundle_names)
 
     def allows(self, bundle_name):
@@ -1174,10 +1166,6 @@ class AllowedFillerItems(OptionSet):
     """
     internal_name = "allowed_filler_items"
     display_name = "Allowed Filler Items"
-<<<<<<< HEAD
-    visibility = Visibility.template | Visibility.spoiler
-=======
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     valid_keys = frozenset({AllowedFillerOptionName.farming, AllowedFillerOptionName.fishing, AllowedFillerOptionName.fruit_trees,
                             AllowedFillerOptionName.food, AllowedFillerOptionName.buff_food, AllowedFillerOptionName.consumables,
                             AllowedFillerOptionName.machines, AllowedFillerOptionName.storage, AllowedFillerOptionName.quality_of_life,

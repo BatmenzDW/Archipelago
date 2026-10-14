@@ -27,88 +27,7 @@ if __name__ == "__main__":
     ModuleUpdate.update()
 
 import Utils
-<<<<<<< HEAD
-from Utils import (env_cleared_lib_path, init_logging, is_frozen, is_linux, is_macos, is_windows, local_path,
-                   messagebox, open_filename, user_path)
-
-if __name__ == "__main__":
-    init_logging('Launcher')
-
-from worlds.LauncherComponents import Component, components, icon_paths, SuffixIdentifier, Type
-
-
-def open_host_yaml():
-    s = settings.get_settings()
-    file = s.filename
-    s.save()
-    assert file, "host.yaml missing"
-    if is_linux:
-        exe = which('sensible-editor') or which('gedit') or \
-              which('xdg-open') or which('gnome-open') or which('kde-open')
-    elif is_macos:
-        exe = which("open")
-    else:
-        webbrowser.open(file)
-        return
-
-    env = env_cleared_lib_path()
-    subprocess.Popen([exe, file], env=env)
-
-def open_patch():
-    suffixes = []
-    for c in components:
-        if c.type == Type.CLIENT and \
-                isinstance(c.file_identifier, SuffixIdentifier) and \
-                (c.script_name is None or isfile(get_exe(c)[-1])):
-            suffixes += c.file_identifier.suffixes
-    try:
-        filename = open_filename("Select patch", (("Patches", suffixes),))
-    except Exception as e:
-        messagebox("Error", str(e), error=True)
-    else:
-        file, component = identify(filename)
-        if file and component:
-            exe = get_exe(component)
-            if exe is None or not isfile(exe[-1]):
-                exe = get_exe("Launcher")
-
-            launch([*exe, file], component.cli)
-
-
-def generate_yamls(*args):
-    from Options import generate_yaml_templates
-
-    parser = argparse.ArgumentParser(description="Generate Template Options", usage="[-h] [--skip_open_folder]")
-    parser.add_argument("--skip_open_folder", action="store_true")
-    args = parser.parse_args(args)
-
-    target = Utils.user_path("Players", "Templates")
-    generate_yaml_templates(target, False)
-    if not args.skip_open_folder:
-        open_folder(target)
-
-
-def browse_files():
-    open_folder(user_path())
-
-
-def open_folder(folder_path):
-    if is_linux:
-        exe = which('xdg-open') or which('gnome-open') or which('kde-open')
-    elif is_macos:
-        exe = which("open")
-    else:
-        webbrowser.open(folder_path)
-        return
-
-    if exe:
-        env = env_cleared_lib_path()
-        subprocess.Popen([exe, folder_path], env=env)
-    else:
-        logging.warning(f"No file browser available to open {folder_path}")
-=======
 from Utils import init_logging, local_path
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 if __name__ == "__main__":
     init_logging('Launcher')
@@ -149,62 +68,10 @@ def build_uri_popup(component_list: list["Component"], launch_args: tuple[str, .
 def launch(exe: Sequence[str], in_terminal: bool = False) -> bool:
     """Runs the given command/args in `exe` in a new process.
 
-<<<<<<< HEAD
-def get_exe(component: str | Component) -> Sequence[str] | None:
-    if isinstance(component, str):
-        name = component
-        component = None
-        if name.startswith("Archipelago"):
-            name = name[11:]
-        if name.endswith(".exe"):
-            name = name[:-4]
-        if name.endswith(".py"):
-            name = name[:-3]
-        if not name:
-            return None
-        for c in components:
-            if c.script_name == name or c.frozen_name == f"Archipelago{name}":
-                component = c
-                break
-        if not component:
-            return None
-    if is_frozen():
-        suffix = ".exe" if is_windows else ""
-        return [local_path(f"{component.frozen_name}{suffix}")] if component.frozen_name else None
-    else:
-        return [sys.executable, local_path(f"{component.script_name}.py")] if component.script_name else None
-
-
-def launch(exe: Sequence[str], in_terminal: bool = False) -> bool:
-    """Runs the given command/args in `exe` in a new process.
-
-    If `in_terminal` is True, it will attempt to run in a terminal window,
-    and the return value will indicate whether one was found."""
-    if in_terminal:
-        if is_windows:
-            # intentionally using a window title with a space so it gets quoted and treated as a title
-            subprocess.Popen(["start", "Running Archipelago", *exe], shell=True)
-            return True
-        elif is_linux:
-            terminal = which("x-terminal-emulator") or which("konsole") or which("gnome-terminal") or which("xterm")
-            if terminal:
-                # Clear LD_LIB_PATH during terminal startup, but set it again when running command in case it's needed
-                ld_lib_path = os.environ.get("LD_LIBRARY_PATH")
-                lib_path_setter = f"env LD_LIBRARY_PATH={shlex.quote(ld_lib_path)} " if ld_lib_path else ""
-                env = env_cleared_lib_path()
-
-                subprocess.Popen([terminal, "-e", lib_path_setter + shlex.join(exe)], env=env)
-                return True
-        elif is_macos:
-            terminal = [which("open"), "-W", "-a", "Terminal.app"]
-            subprocess.Popen([*terminal, *exe])
-            return True
-=======
     If `in_terminal` is True, it will attempt to run in a terminal window,
     and the return value will indicate whether one was found."""
     if in_terminal and Utils.run_in_terminal(exe):
         return True
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     subprocess.Popen(exe)
     return False
 
@@ -448,17 +315,12 @@ def run_gui(launch_components: list["Component"], args: Any) -> None:
                 button.component.func()
             else:
                 # if launch returns False, it started the process in background (not in a new terminal)
-<<<<<<< HEAD
-=======
                 from worlds.LauncherComponents import get_exe
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
                 if not launch(get_exe(button.component), button.component.cli) and button.component.cli:
                     open_text = "Running in the background..."
 
             MDSnackbar(MDSnackbarText(text=open_text), y=dp(24), pos_hint={"center_x": 0.5},
                        size_hint_x=0.5).open()
-<<<<<<< HEAD
-=======
 
         @staticmethod
         def copy_to_clipboard(text):
@@ -493,7 +355,6 @@ def run_gui(launch_components: list["Component"], args: Any) -> None:
                 )
             )
             dialog.open()
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
         def _on_drop_file(self, window: Window, filename: bytes, x: int, y: int) -> None:
             """ When a patch file is dropped into the window, run the associated component. """

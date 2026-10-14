@@ -79,13 +79,6 @@ sm64_secrets_to_level = {secret: level for (level,secret) in sm64_level_to_secre
 sm64_entrances_to_level = {**sm64_paintings_to_level, **sm64_secrets_to_level }
 sm64_level_to_entrances = {**sm64_level_to_paintings, **sm64_level_to_secrets }
 
-<<<<<<< HEAD
-def create_regions(multiworld: MultiWorld, options: SM64Options, player: int):
-    regSS = Region("Menu", player, multiworld, "Castle Area")
-    create_default_locs(regSS, locSS_table)
-    multiworld.regions.append(regSS)
-
-=======
 # Levels with at least one star without a movement rule
 # Currently excluding WF, HMC, WDW, TTM, THI, TTC, and RR
 valid_move_randomizer_start_courses = [
@@ -99,7 +92,6 @@ def create_regions(multiworld: MultiWorld, options: SM64Options, player: int):
     create_default_locs(regSS, locSS_table)
     multiworld.regions.append(regSS)
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     regBoB = create_region("Bob-omb Battlefield", player, multiworld)
     create_locs(regBoB, "BoB: Big Bob-Omb on the Summit", "BoB: Footrace with Koopa The Quick",
                         "BoB: Mario Wings to the Sky", "BoB: Behind Chain Chomp's Gate", "BoB: Bob-omb Buddy")

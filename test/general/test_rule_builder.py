@@ -263,8 +263,6 @@ class CachedRuleBuilderTestCase(RuleBuilderTestCase):
             Or(HasAnyCount({"A": 1, "B": 2}), HasAnyCount({"A": 2, "B": 2})),
             HasAnyCount.Resolved((("A", 1), ("B", 2)), player=1),
         ),
-<<<<<<< HEAD
-=======
         (
             AtLeast(0, Has("A")),
             True_.Resolved(player=1),
@@ -299,7 +297,6 @@ class CachedRuleBuilderTestCase(RuleBuilderTestCase):
             AtLeast(2, Rule(), Rule()),
             And.Resolved((Rule.Resolved(player=1), Rule.Resolved(player=1)), player=1),
         ),
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     )
 )
 class TestSimplify(RuleBuilderTestCase):
@@ -1486,11 +1483,7 @@ class TestExplain(RuleBuilderTestCase):
             "& True",
             "& False)",
         )
-<<<<<<< HEAD
-        assert str(self.resolved_rule) == " ".join(expected)
-=======
         self.assertEqual(str(self.resolved_rule), " ".join(expected))
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 
 @classvar_matrix(

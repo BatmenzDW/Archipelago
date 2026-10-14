@@ -237,39 +237,20 @@ class Game:
         target_x, target_y = self.auto_target_path.pop(0)
         movement = target_x - self.player.current_x, target_y - self.player.current_y
         direction = Direction(movement)
-<<<<<<< HEAD
-        moved = self.attempt_player_movement(direction, cancel_auto_move=False)
-=======
 
         facing_before = self.player.facing
         moved = self.attempt_player_movement(direction, cancel_auto_move=False)
         direction_changed = self.player.facing != facing_before
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
         if moved:
             return True
 
-<<<<<<< HEAD
-        # We are attempting to interact with something on the path.
-        # First, make the player face it.
-        if self.player.facing != direction:
-            self.player.facing = direction
-            self.auto_target_path.insert(0, (target_x, target_y))
-            return True
-
-        # If we are facing it, attempt to interact with it.
-=======
         # We are trying to interact with something to clear the path.
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
         changed = self.attempt_interact()
 
         if not changed:
             self.cancel_auto_move()
-<<<<<<< HEAD
-            return False
-=======
             return direction_changed
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
         # If the interaction was successful, and this was the end of the path, stop
         # (i.e. don't try to attack the attacked enemy over and over until it's dead)

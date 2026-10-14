@@ -126,10 +126,7 @@ class PokemonEmeraldWorld(World):
     blacklisted_starters: Set[int]
     blacklisted_opponent_pokemon: Set[int]
     allowed_dexsanity_species: set[int]
-<<<<<<< HEAD
-=======
     enabled_dexsanity_encounter_types: set[PokemonSource]
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     hm_requirements: Dict[str, Union[int, List[str]]]
     auth: bytes
 
@@ -150,10 +147,7 @@ class PokemonEmeraldWorld(World):
         self.blacklisted_starters = set()
         self.blacklisted_opponent_pokemon = set()
         self.allowed_dexsanity_species = set()
-<<<<<<< HEAD
-=======
         self.enabled_dexsanity_encounter_types = set()
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
         self.modified_maps = copy.deepcopy(emerald_data.maps)
         self.modified_species = copy.deepcopy(emerald_data.species)
         self.modified_tmhm_moves = []

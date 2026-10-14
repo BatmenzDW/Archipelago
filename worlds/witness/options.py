@@ -74,11 +74,7 @@ class EarlyCaves(RelevanceMixin, Choice):
     alias_on = 2
 
 
-<<<<<<< HEAD
-class EarlyGoodItems(OptionSet):
-=======
 class EarlyGoodItems(RelevanceMixin, OptionSet):
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     """
     Put one random helpful item of each of the chosen types on an early check, specifically a sphere 1 Tutorial location.
     If a type is chosen, but no items of that type exist in the itempool, it is skipped.
@@ -106,11 +102,7 @@ class ShuffleSymbols(RelevanceMixin, DefaultOnToggle):
     display_name = "Shuffle Symbols"
 
 
-<<<<<<< HEAD
-class ProgressiveSymbols(OptionSet):
-=======
 class ProgressiveSymbols(RelevanceMixin, OptionSet):
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     """
     Make some symbols progressive, if they exist.
 
@@ -123,11 +115,8 @@ class ProgressiveSymbols(RelevanceMixin, OptionSet):
     Progressive Shapers: Shapers -> Rotated Shapers -> Negative Shapers
     Progressive Discard Symbols: Triangles -> Arrows
     """
-<<<<<<< HEAD
-=======
     relevance = OptionRelevance.all_trackers  # Client gets this info through chains in slot_data
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     display_name = "Progressive Symbols"
 
     valid_keys = {
@@ -142,11 +131,7 @@ class ProgressiveSymbols(RelevanceMixin, OptionSet):
     default = frozenset({"Progressive Dots", "Progressive Symmetry", "Progressive Stars"})
 
 
-<<<<<<< HEAD
-class SecondStageSymbolsActIndependently(OptionSet):
-=======
 class SecondStageSymbolsActIndependently(RelevanceMixin, OptionSet):
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     """
     Makes certain second stage symbols act independently of first stage symbols if they are not progressive.
 
@@ -156,10 +141,7 @@ class SecondStageSymbolsActIndependently(RelevanceMixin, OptionSet):
 
     Rotated Shapers always act independently from Shapers. The ability to make them dependent on Shapers by omitting them in this option may be added in the future.
     """
-<<<<<<< HEAD
-=======
     relevance = OptionRelevance.all
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
     valid_keys = {
         "Full Dots",
@@ -172,44 +154,26 @@ class SecondStageSymbolsActIndependently(RelevanceMixin, OptionSet):
     visibility = Visibility.template | Visibility.complex_ui
 
 
-<<<<<<< HEAD
-class ColoredDotsAreProgressiveDots(Toggle):
-=======
 class ColoredDotsAreProgressiveDots(RelevanceMixin, Toggle):
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     """
     Put Colored Dots into the "Progressive Dots" group, after Dots.
     This removes Progressive Symmetry.
     """
-<<<<<<< HEAD
-=======
     relevance = OptionRelevance.all_trackers  # Client gets this info through chains in slot_data
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
     visibility = Visibility.template | Visibility.complex_ui
 
 
-<<<<<<< HEAD
-class SoundDotsAreProgressiveDots(Toggle):
-    """
-    Put Sound Dots into the "Progressive Dots" group, before Full Dots.
-    """
-=======
 class SoundDotsAreProgressiveDots(RelevanceMixin, Toggle):
     """
     Put Sound Dots into the "Progressive Dots" group, before Full Dots.
     """
     relevance = OptionRelevance.all_trackers  # Client gets this info through chains in slot_data
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
     visibility = Visibility.template | Visibility.complex_ui
 
 
-<<<<<<< HEAD
-class ShuffleLasers(Choice):
-=======
 class ShuffleLasers(RelevanceMixin, Choice):
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     """
     If on, the 11 lasers are turned into items and will activate on their own upon receiving them.
     """
@@ -777,8 +741,6 @@ class TheWitnessOptions(PerGameCommonOptions):
 
     early_symbol_item: Removed
 
-<<<<<<< HEAD
-=======
 
 assert all(
     (
@@ -789,7 +751,6 @@ assert all(
     for option_name, option_type in TheWitnessOptions.type_hints.items()
 )
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 witness_option_groups = [
     OptionGroup("Puzzles & Goal", [

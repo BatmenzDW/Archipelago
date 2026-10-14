@@ -1,10 +1,6 @@
 {
     "game": "Pokemon Emerald",
-<<<<<<< HEAD
-    "world_version": "2.5.0",
-=======
     "world_version": "2.6.0",
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     "minimum_ap_version": "0.6.1",
     "authors": ["Zunawe"]
 }

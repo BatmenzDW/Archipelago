@@ -372,11 +372,7 @@ def randomize_wild_encounters(world: "PokemonEmeraldWorld") -> None:
 
                     species_old_to_new_map[species_id] = new_species_id
 
-<<<<<<< HEAD
-                    if world.options.dexsanity and encounter_type != EncounterType.ROCK_SMASH \
-=======
                     if world.options.dexsanity and encounter_type != PokemonSource.ROCK_SMASH \
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
                             and map_name not in OUT_OF_LOGIC_MAPS and new_species_id not in world.blacklisted_wilds:
                         already_placed.add(new_species_id)
 
@@ -384,11 +380,7 @@ def randomize_wild_encounters(world: "PokemonEmeraldWorld") -> None:
             new_slots: List[int] = []
             for species_id in table.slots:
                 new_slots.append(species_old_to_new_map[species_id])
-<<<<<<< HEAD
-            if encounter_type in enabled_encounters:
-=======
             if encounter_type in world.enabled_dexsanity_encounter_types:
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
                 world.allowed_dexsanity_species.update(new_slots)
 
             new_encounters[encounter_type] = EncounterTableData(new_slots, table.address)

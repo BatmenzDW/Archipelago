@@ -129,22 +129,14 @@ class Dexsanity(Toggle):
     display_name = "Dexsanity"
 
 
-<<<<<<< HEAD
-class DexsanityEncounterTypes(OptionList):
-=======
 class DexsanityEncounterTypes(OptionSet):
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     """
     Determines which Dexsanity encounter areas are in logic.
 
     Logic will only consider access to Pokemon at these encounter types, but they may still be found elsewhere.
     """
     display_name = "Dexsanity Encounter Types"
-<<<<<<< HEAD
-    valid_keys = {"Land", "Water", "Fishing"}
-=======
     valid_keys = ["Land", "Water", "Fishing"]
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     default = valid_keys.copy()
 
 

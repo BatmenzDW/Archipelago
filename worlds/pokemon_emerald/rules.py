@@ -643,14 +643,7 @@ def set_rules(world: "PokemonEmeraldWorld") -> None:
         # can be tracked, and also guarantees that the roamer is a Latios.
         if world.options.goal == Goal.option_legendary_hunt and \
                 data.constants["SPECIES_LATIOS"] in world.allowed_dexsanity_species:
-<<<<<<< HEAD
-            set_rule(
-                get_location(f"Pokedex - Latios"),
-                lambda state: state.has("EVENT_ENCOUNTER_LATIOS", world.player)
-            )
-=======
             location_rules[f"Pokedex - Latios"] = Has("EVENT_ENCOUNTER_LATIOS")
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
     # Overworld Items
     if world.options.overworld_items:

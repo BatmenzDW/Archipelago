@@ -22,10 +22,7 @@ import typing
 import weakref
 import zlib
 from signal import SIGINT, SIGTERM, signal
-<<<<<<< HEAD
-=======
 from typing import Sequence
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
 import ModuleUpdate
 

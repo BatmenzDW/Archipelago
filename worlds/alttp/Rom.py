@@ -586,11 +586,6 @@ def get_nonnative_item_sprite(code: int) -> int:
     # https://discord.com/channels/731205301247803413/827141303330406408/852102450822905886
 
 
-<<<<<<< HEAD
-def patch_rom(multiworld: MultiWorld, rom: LocalRom, player: int, enemized: bool):
-    local_random = multiworld.worlds[player].random
-    local_world = multiworld.worlds[player]
-=======
 def patch_rom(multiworld: MultiWorld, rom: LocalRom, player: int):
     local_random = multiworld.worlds[player].random
     local_world = multiworld.worlds[player]
@@ -598,7 +593,6 @@ def patch_rom(multiworld: MultiWorld, rom: LocalRom, player: int):
                     or local_world.options.enemy_health != 'default' or local_world.options.enemy_damage != 'default'
                     or local_world.options.pot_shuffle or local_world.options.bush_shuffle
                     or local_world.options.killable_thieves)
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
 
     # patch items
 

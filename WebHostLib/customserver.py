@@ -107,15 +107,6 @@ class WebHostContext(Context):
         from Utils import format_SI_prefix
         self.logger.debug(f"Context destroyed, Mem: {format_SI_prefix(psutil.Process().memory_info().rss, 1024)}iB")
 
-<<<<<<< HEAD
-    def _load_game_data(self):
-        for key, value in self.static_server_data.items():
-            # NOTE: attributes are mutable and shared, so they will have to be copied before being modified
-            setattr(self, key, value)
-        self.non_hintable_names = collections.defaultdict(frozenset, self.non_hintable_names)
-
-=======
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     async def listen_to_db_commands(self):
         cmdprocessor = DBCommandProcessor(self)
 
@@ -327,11 +318,6 @@ def tear_down_logging(room_id):
         del logging.Logger.manager.loggerDict[logger_name]
 
 
-<<<<<<< HEAD
-def run_server_process(name: str, ponyconfig: dict, static_server_data: dict,
-                       cert_file: typing.Optional[str], cert_key_file: typing.Optional[str],
-                       host: str, rooms_to_run: multiprocessing.Queue, rooms_shutting_down: multiprocessing.Queue):
-=======
 def run_server_process(
         name: str,
         ponyconfig: dict[str, typing.Any],
@@ -345,7 +331,6 @@ def run_server_process(
 ) -> None:
     import gc
 
->>>>>>> 5efa6aa29b12482b3ba39fe96967751d649bfb5d
     from setproctitle import setproctitle
 
     setproctitle(name)
