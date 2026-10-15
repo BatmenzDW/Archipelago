@@ -44,7 +44,7 @@ LOCATION_NAME_TO_ID = (
     }
     | {
         # Add First Pickup as locations for armory items.
-        f"{k} First Pickup": v[ITEM_ID_KEY] * ROOM_MULTIPLIER
+        f"First Pickup - {k}": v[ITEM_ID_KEY] * ROOM_MULTIPLIER
         for k, v in armory_items.items()
     }
 )
@@ -67,7 +67,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
     armory = world.get_region("The Armory")
     # Ignoring chance to get Knight's Shield by digging with Jack Hammer for now.
     for k, v in armory_items.items():
-        location_key = f"{k} First Pickup"
+        location_key = f"First Pickup - {k}"
         locs = get_location_names_with_ids([location_key])
         armory.add_locations(locs, BluePrinceLocation)
     
@@ -150,14 +150,14 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         if world.options.goal_type.value < 4 and k in ["Ascend The Throne", "Throne of the Blue Prince Mora Jai Box"]:
             continue
 
-        if world.options.goal_type.value < 3 and (k in aries_court_mora_jai_boxes or k in ["KEY of Aries First Pickup", "ROYAL SCEPTER First Pickup"]):
+        if world.options.goal_type.value < 3 and (k in aries_court_mora_jai_boxes or k in ["First Pickup - KEY of Aries", "First Pickup - ROYAL SCEPTER"]):
             continue
 
         if world.options.goal_type.value < 2 and (k in sanctum_keys or 
-            k in ["LUNCH BOX First Pickup", 
-                  "CURSED EFFIGY First Pickup", 
+            k in ["First Pickup - LUNCH BOX", 
+                  "First Pickup - CURSED EFFIGY", 
                   "Cursed Coffers", 
-                  "CROWN First Pickup", 
+                  "First Pickup - CROWN", 
                   "Underpass Mora Jai Box", 
                   "Treasure Trove Floorplan",
                   "Gift Shop - Mt. Holly Tee", 
@@ -187,7 +187,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         ]]):
             continue 
 
-        if world.options.goal_type.value < 1 and (k in ["BASEMENT KEY First Pickup", "Break Tunnel Wall"] or "Unlock Basement Door" in k):
+        if world.options.goal_type.value < 1 and (k in ["First Pickup - BASEMENT KEY", "Break Tunnel Wall"] or "Unlock Basement Door" in k):
             continue # Skip locations that are past or at the goal
 
         if world.options.trophy_sanity == False and (k in trophies or k in ["Gift Shop - Blue Tents"]):

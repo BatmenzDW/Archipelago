@@ -35,15 +35,15 @@ class TestLocationAccess(BluePrinceTestBase):
     def test_can_reach_compass(self):
         self.collect_by_name(["Closet", "COMPASS"])
         self.debug_print_regions_items_locations(True)
-        self.assertTrue(self.can_reach_location("COMPASS First Pickup"), "COMPASS First Pickup should be reachable after having ")
+        self.assertTrue(self.can_reach_location("First Pickup - COMPASS"), "COMPASS First Pickup should be reachable after having ")
 
     def test_can_craft_electromagnet(self):
         self.collect_by_name(["Electromagnet", "COMPASS", "BATTERY PACK", "Workshop", "Closet", "Bedroom"])
-        self.assertTrue(self.can_reach_location("Electromagnet First Pickup"), "Electromagnet should be reachable after having the required items")
+        self.assertTrue(self.can_reach_location("First Pickup - Electromagnet"), "Electromagnet should be reachable after having the required items")
 
     def test_can_craft_burning_glass(self):
         self.collect_by_name(["Burning Glass", "Workshop", "MAGNIFYING GLASS", "Library", "METAL DETECTOR"])
-        self.assertTrue(self.can_reach_location("Burning Glass First Pickup"), "Burning Glass should be reachable after having the required items")
+        self.assertTrue(self.can_reach_location("First Pickup - Burning Glass"), "Burning Glass should be reachable after having the required items")
 
     def test_bunk_rooms_have_same_item(self):
         from Fill import distribute_items_restrictive

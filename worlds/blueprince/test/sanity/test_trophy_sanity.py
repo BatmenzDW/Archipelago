@@ -50,7 +50,7 @@ class TestTrophySanity(BluePrinceTestBase):
     #     self.assertFalse(self.can_reach_location("Trophy of Invention"), "Expected not to be able to reach Trophy of Invention without materials")
     #     self.collect_by_name(["SLEDGE HAMMER", "BROKEN LEVER", "BATTERY PACK", "SHOVEL", "METAL DETECTOR", "MAGNIFYING GLASS", "COMPASS", "COIN PURSE", "LUCKY RABBIT'S FOOT", "LOCK PICK KIT"])
 
-    #     # self.assertTrue(self.can_reach_location("Power Hammer First Pickup"), "Expected to be able to reach Power Hammer First Pickup with Workshop and materials")
+    #     # self.assertTrue(self.can_reach_location("First Pickup - Power Hammer"), "Expected to be able to reach Power Hammer First Pickup with Workshop and materials")
     #     self.assertRuleTrue(CanReachItemLocation("Power Hammer"), "Expected to be able to reach Power Hammer with Workshop and materials") # type: ignore
     #     self.assertRuleTrue(CanReachItemLocation("Burning Glass"), "Expected to be able to reach Burning Glass First Pickup with Workshop and materials") # type: ignore
     #     self.assertRuleTrue(CanReachItemLocation("Detector Shovel"), "Expected to be able to reach Detector Shovel First Pickup with Workshop and materials;") # type: ignore

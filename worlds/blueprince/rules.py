@@ -190,7 +190,7 @@ class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
         from .data_other_locations import locations, armory_items
-        loc_name = self.location + " First Pickup"
+        loc_name = "First Pickup - " + self.location
 
         if loc_name in locations:
             if IMPLEMENTATION_STATUS in locations[loc_name] and locations[loc_name][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
@@ -202,10 +202,10 @@ class CanReachItemLocation(Rule["BluePrinceWorld"], game="Blue Prince"):
                 return (Has(self.location) & CanReachLocation(loc_name, parent_region_name=self.parent_region_name)).resolve(world)
         
         if self.location in workshop_items:
-            if f"{self.location} First Pickup" in locations and IMPLEMENTATION_STATUS in locations[f"{self.location} First Pickup"] and locations[f"{self.location} First Pickup"][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
-                return locations[f"{self.location} First Pickup"][LOCATION_RULE_SIMPLE_COMMON].resolve(world)
+            if f"First Pickup - {self.location}" in locations and IMPLEMENTATION_STATUS in locations[f"First Pickup - {self.location}"] and locations[f"First Pickup - {self.location}"][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
+                return locations[f"First Pickup - {self.location}"][LOCATION_RULE_SIMPLE_COMMON].resolve(world)
             else:
-                return (Has(self.location) & CanReachLocation(f"{self.location} First Pickup", parent_region_name="Workshop")).resolve(world)
+                return (Has(self.location) & CanReachLocation(f"First Pickup - {self.location}", parent_region_name="Workshop")).resolve(world)
 
         if self.location in armory_items:
             return (Has(self.location, options=[OptionFilter(SpecialShopSanity, True)], filtered_resolution=True) & CanReachRegion("The Armory")).resolve(world)
@@ -608,8 +608,8 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
                     if log_sources:
                         coin_sources["Freezer Multiplier"] = f"x{FREEZER_MULT} multiplier"
 
-            if state.can_reach_location("COIN PURSE First Pickup", self.player) and state.has("COIN PURSE", self.player):
-                if self.workshop and state.can_reach_location("Lucky Purse First Pickup", self.player) and state.has("LUCKY PURSE", self.player):
+            if state.can_reach_location("First Pickup - COIN PURSE", self.player) and state.has("COIN PURSE", self.player):
+                if self.workshop and state.can_reach_location("First Pickup - Lucky Purse", self.player) and state.has("LUCKY PURSE", self.player):
                     coins *= LUCKY_PURSE_MULT
                     if log_sources:
                         coin_sources["Lucky Purse Multiplier"] = f"x{LUCKY_PURSE_MULT} multiplier"
@@ -669,7 +669,7 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
             reachable_count = 0
             
             for target in self.targets:
-                loc_name = target + " First Pickup"
+                loc_name = target + "First Pickup - "
                 if loc_name in locations:
                     if IMPLEMENTATION_STATUS in locations[loc_name] and locations[loc_name][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
                         if LOCATION_RULE_SIMPLE_COMMON in locations[loc_name]:
