@@ -333,7 +333,7 @@ class DeathLinkType(Choice):
 
     - **none:** Death Link is disabled.
     - **eod:** A Death Link is sent whenever the day ends.
-    - **bedroom:** A Death Link is sent whenever the player ends outside a bedroom.
+    - **bedroom:** A Death Link is sent whenever the player ends outside a bedroom or break room.
     - **steps:** A Death Link is sent whenever the player runs out of steps.
 
     """
