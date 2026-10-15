@@ -98,7 +98,7 @@ reservoir_fountain_side - reservoir_gear_side # Pump Room
 
 
 
-Note: Safe in underground boiler room requires having boiler active. Gives letter & gem & treasure trove floor plan.
+Note: "Safe" in underground boiler room requires having boiler active. Gives letter & gem & treasure trove floor plan.
 
 
 
