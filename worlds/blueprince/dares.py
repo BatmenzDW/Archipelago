@@ -90,7 +90,7 @@ dares : dict[str, dict[str, Callable]] = {
         # Should always be possible
     },
     "NeverRideElevator": {
-        DARE_CAN_REACH_RULE: lambda to_check, type_hint, win_day: not ((to_check in ["The Foundation", "Blackbridge Grotto", "Tunnel Area Past Red Door", "Reservoir Bottom"] and type_hint == "Region") or (to_check in ["Underpass Gate", "Treasure Trove Floorplan"] and type_hint == "Location"))
+        DARE_CAN_REACH_RULE: lambda to_check, type_hint, win_day: not ((to_check in ["The Foundation", "Blackbridge Grotto", "Tunnel Area Past Red Door", "Reservoir Bottom"] and type_hint == "Region") or (to_check in ["Underpass Gate", "Floorplan - Treasure Trove"] and type_hint == "Location"))
     },
     "NeverDraftSouth": {
         DARE_CAN_REACH_RULE: lambda to_check, type_hint, win_day: not (to_check == "Her Ladyship's Chamber" and type_hint == "Region")

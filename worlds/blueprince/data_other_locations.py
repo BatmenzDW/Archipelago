@@ -239,42 +239,42 @@ mora_jai_boxes = {
 # not adding atelier boxes, since they are basically already at the latest goal
 
 drafting_studio_additions = {
-    "Dovecote Floorplan": {
+    "Floorplan - Dovecote": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "Dovecote"
     },
-    "Kennel Floorplan": {
+    "Floorplan - Kennel": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "The Kennel"
     },
-    "Clock Tower Floorplan": {
+    "Floorplan - Clock Tower": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 3,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "Clock Tower"
     },
-    "Classroom Floorplan": {
+    "Floorplan - Classroom": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 4,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "Classroom Exam"
     },
-    "Solarium Floorplan": {
+    "Floorplan - Solarium": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 5,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "Solarium"
     },
-    "Dormitory Floorplan": {
+    "Floorplan - Dormitory": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 6,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "Dormitory"
     },
-    "Vestibule Floorplan": {
+    "Floorplan - Vestibule": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 7,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "Vestibule"
     },
-    "Casino Floorplan": {
+    "Floorplan - Casino": {
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 8,
         LOCATION_ROOM_KEY: "Drafting Studio",
         NONSANITY_LOCATION_KEY: "Casino"
@@ -282,29 +282,29 @@ drafting_studio_additions = {
 }
 
 found_floorplans = {
-    "Planetarium Floorplan": {
+    "Floorplan - Planetarium": {
         LOCATION_ID_KEY: all_areas["Observatory"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Observatory",
         NONSANITY_LOCATION_KEY: "Planetarium"
     },
-    "Mechanarium Floorplan": {
+    "Floorplan - Mechanarium": {
         LOCATION_ID_KEY: all_areas["Rotating Gear"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Rotating Gear",
         NONSANITY_LOCATION_KEY: "Mechanarium"
     },
-    "Treasure Trove Floorplan": {
+    "Floorplan - Treasure Trove": {
         LOCATION_ID_KEY: all_areas["The Underpass"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2,
         LOCATION_ROOM_KEY: "The Underpass",
         LOCATION_RULE_SIMPLE_COMMON: CanReachRegion("Boiler Room"),
         # lambda state, world: state.can_reach_region("Boiler Room", world.player) and can_reach_with_dares(world, "Boiler Room", "Region"),
         NONSANITY_LOCATION_KEY: "Treasure Trove"
     },
-    "Throne Room Floorplan": {
+    "Floorplan - Throne Room": {
         LOCATION_ID_KEY: all_areas["Orindian Ruins"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Orindian Ruins",
         NONSANITY_LOCATION_KEY: "Throne Room"
     },
-    "Tunnel Floorplan": {
+    "Floorplan - Tunnel": {
         LOCATION_ID_KEY: all_areas["Tunnel Area Entrance"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Tunnel Area Entrance",
         NONSANITY_LOCATION_KEY: "Tunnel",
@@ -313,19 +313,19 @@ found_floorplans = {
             CanReachItemLocation("TORCH")
         ),
     },
-    "Conservatory Floorplan": {
+    "Floorplan - Conservatory": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Campsite",
         NONSANITY_LOCATION_KEY: "Conservatory",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("SHOVEL"),
     },
-    "Lost And Found Floorplan": {
+    "Floorplan - Lost And Found": {
         LOCATION_ID_KEY: all_areas["Basement"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Basement",
         NONSANITY_LOCATION_KEY: "Lost & Found",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("SHOVEL"),
     },
-    "Closed Exhibit Floorplan": {
+    "Floorplan - Closed Exhibit": {
         LOCATION_ID_KEY: all_areas["Study"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1,
         LOCATION_ROOM_KEY: "Study",
         NONSANITY_LOCATION_KEY: "Closed Exhibit"

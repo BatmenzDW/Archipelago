@@ -159,7 +159,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
                   "Cursed Coffers", 
                   "First Pickup - CROWN", 
                   "Underpass Mora Jai Box", 
-                  "Treasure Trove Floorplan",
+                  "Floorplan - Treasure Trove",
                   "Gift Shop - Mt. Holly Tee", 
                   "Gift Shop - Lunch Box", 
                   "Gift Shop - Swim Trunks", 
