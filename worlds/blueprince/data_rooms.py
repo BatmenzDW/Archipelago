@@ -1968,7 +1968,7 @@ LOCATIONS_BY_GROUPS |= {
     "Room Entrances": {f"First Draft - {k}" for k in rooms} | {"First Draft - Bunk Room 2"},
     "Trunks": {
         # Create 100 locked trunk check locations for each room that has the ability to have locked trunks
-        f"{k} Locked Trunk {idx}"
+        f"Locked Trunk - {k} - {idx}"
         for k, v in rooms.items()
         for idx in range(1, 101)
         if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0
