@@ -535,13 +535,13 @@ standard_item_pickup = {
                 "Walk-In Closet",
                 "Workshop",
                 "Throne Room",
-                "Commissary",
                 # "Mail Room", # Packages # Freight Shipping would be problematic
             ]]
         ) | Or(
             CanReachRegion("Den"), CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
-        ) | TrunkRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
+        ) | TrunkRule() | AdvancedExperimentRule() | CommissaryRule("COMPASS", 6) |
+        UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
         
     },
     "COUPON BOOK First Pickup": {
@@ -673,12 +673,11 @@ standard_item_pickup = {
                 "Classroom 8",
                 "Classroom Exam",
                 "Conservatory",
-                "Commissary",
             ]]
         ) | Or(
             CanReachRegion("Den"), CanReachRegion("Drawing Room"),
             options=rare_logic_filter
-        ) | CarTrunkRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Spare Foyer"),
+        ) | CarTrunkRule() | AdvancedExperimentRule() | CommissaryRule("MAGNIFYING GLASS", 4) | UpgradedRoomRule("Spare Room", "Spare Foyer"),
         
     },
     "METAL DETECTOR First Pickup": {
@@ -700,12 +699,11 @@ standard_item_pickup = {
                 "Secret Garden",
                 "Clock Tower",
                 "Toolshed",
-                "Commissary",
             ]]
         ) | Or(
             CanReachRegion("Garage"), CanReachRegion("Boiler Room"),
             options=rare_logic_filter
-        ) | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda"),
+        ) | AdvancedExperimentRule() | CommissaryRule("METAL DETECTOR", 10) | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda"),
         
     },
     "REPELLENT First Pickup": {
@@ -729,11 +727,10 @@ standard_item_pickup = {
                 "Walk-In Closet",
                 "Weight Room",
                 "Dormitory",
-                "Commissary",
                 "Locker Room",
             ]]
         ) | CanReachRegion("Garage", options=rare_logic_filter) |
-        AdvancedExperimentRule() | UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters"),
+        AdvancedExperimentRule() | CommissaryRule("RUNNING SHOES", 8) | UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters"),
         
     },
     "SALT SHAKER First Pickup": {
@@ -747,12 +744,11 @@ standard_item_pickup = {
                 "Billiard Room",
                 "Dining Room",
                 "Morning Room",
-                "Commissary",
             ]]
         ) | Or(
             CanReachRegion("Pantry"), CanReachRegion("Kitchen"),
             options=rare_logic_filter
-        ) | AdvancedExperimentRule() | TradingPostRule("SALT SHAKER") | SpiralOfStarsRule(),
+        ) | AdvancedExperimentRule() | CommissaryRule("SALT SHAKER", 5) |TradingPostRule("SALT SHAKER") | SpiralOfStarsRule(),
         
     },
     "SHOVEL First Pickup": {
@@ -779,7 +775,6 @@ standard_item_pickup = {
                 "Tunnel",
                 "Toolshed",
                 "Hovel",
-                "Commissary",
             ]]
         ) | Or(
             *[CanReachRegion(region) for region in [
@@ -790,7 +785,7 @@ standard_item_pickup = {
             ]],
             CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
-        ) | TradingPostRule("SHOVEL") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | # Also from AdvancedExperimentRule, but that requires SHOVEL
+        ) | TradingPostRule("SHOVEL") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | CommissaryRule("SHOVEL", 6) | # Also from AdvancedExperimentRule, but that requires SHOVEL
         UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Greenroom") | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
         
     },
@@ -811,7 +806,6 @@ standard_item_pickup = {
                 "Secret Garden",
                 "Tunnel",
                 "Toolshed",
-                "Commissary",
             ]]
         ) | Or(
             *[CanReachRegion(region) for region in [
@@ -822,7 +816,7 @@ standard_item_pickup = {
             ]],
             CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
             options=rare_logic_filter
-        ) | AdvancedExperimentRule() | TradingPostRule("SLEDGE HAMMER") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) |
+        ) | AdvancedExperimentRule() | TradingPostRule("SLEDGE HAMMER") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | CommissaryRule("SLEDGE HAMMER", 8) |
         UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Hall"),
         
     },
@@ -838,10 +832,9 @@ standard_item_pickup = {
                 "Master Bedroom",
                 "Sauna",
                 "Walk-In Closet",
-                "Commissary",
                 # "Mail Room", # Packages # Freight Shipping would be problematic
             ]]
-        ) | AdvancedExperimentRule() | SpiralOfStarsRule() | 
+        ) | AdvancedExperimentRule() | SpiralOfStarsRule() | CommissaryRule("SLEEPING MASK", 8) |
         UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Bedroom") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters"),
         
     },
@@ -1262,8 +1255,7 @@ upgrade_disks = {
         LOCATION_ID_KEY: all_areas["Commissary"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Commissary",
         LOCATION_ITEM_KEY: "UPGRADE DISK COMMISSARY",
-        LOCATION_RULE_SIMPLE_COMMON: HasCoins(15)
-        # TODO: Needs more advanced item logic (if Commissary is the only way to get some items, you may be forced not to see Upgrade Disk in the Commissary)
+        LOCATION_RULE_SIMPLE_COMMON: CommissaryRule("Upgrade Disk - Commissary", 15)
     },
     "Upgrade Disk - Garage": {
         LOCATION_ID_KEY: all_areas["Garage"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,

@@ -1,4 +1,6 @@
 
+from ...rules import CanReachItemLocation
+
 from ...constants import *
 
 from ...options import GoalType
@@ -17,3 +19,9 @@ class TestItemLogicDefault(BluePrinceTestBase):
         "item_logic_mode": "default",
         "goal_type": GoalType.option_room46,
     }
+
+    def test_commissary_upgrade_disk_requires_blocking(self):
+        # self.collect_by_name(["Commissary", "Vault"])
+        self.assertFalse(self.can_reach_location("Upgrade Disk - Commissary"), "Should not be able to reach Upgrade Disk - Commissary without items to block Commissary selections")
+        self.collect_by_name(["SLEDGE HAMMER", "SHOVEL"])
+        self.assertTrue(self.can_reach_location("Upgrade Disk - Commissary"), "Should be able to reach Upgrade Disk - Commissary with items to block Commissary selections")
