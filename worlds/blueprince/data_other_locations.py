@@ -106,34 +106,34 @@ trophies = {
 }
 
 safes_and_small_gates = {
-    "Boudoir Safe": {
+    "Red Letter 4": { # Boudoir Safe
         LOCATION_ID_KEY: all_areas["Boudoir"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Boudoir",
     },
-    "Drafting Studio Safe": {
+    "Red Letter 5": { # Drafting Studio Safe
         LOCATION_ID_KEY: all_areas["Drafting Studio"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Drafting Studio",
         LOCATION_RULE_SIMPLE_COMMON: CanReachItemLocation("MAGNIFYING GLASS"),
     },
-    "Drawing Room Safe": {
+    "Red Letter SIX": { # Drawing Room Safe
         LOCATION_ID_KEY: all_areas["Drawing Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Drawing Room",
     },
-    "Office Safe": {
+    "Red Letter ∞": { # Office Safe
         LOCATION_ID_KEY: all_areas["Office"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Office",
     },
-    "Study Safe": {
+    "Red Letter 2": { # Study Safe
         LOCATION_ID_KEY: all_areas["Study"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Study",
     },
-    "Underpass Gate": {
+    "Red Letter 1": { # Underpass
         LOCATION_ID_KEY: all_areas["The Underpass"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "The Underpass",
         LOCATION_RULE_SIMPLE_COMMON: CanReachRegion("Boiler Room"),
         # lambda state, world: state.can_reach_region("Boiler Room", world.player) and can_reach_with_dares(world, "Boiler Room", "Region")
     },
-    "Shelter Safe": {
+    "Red Letter VII": { # Shelter Safe
         LOCATION_ID_KEY: all_areas["Shelter"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 100,
         LOCATION_ROOM_KEY: "Shelter",
     },
