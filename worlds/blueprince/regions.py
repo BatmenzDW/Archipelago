@@ -288,7 +288,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                     Or(
                         And(
                             CanReachPickPosition("Throne Room"), 
-                            CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins")
+                            CanReachLocation("Floorplan - Throne Room", parent_region_name="Orindian Ruins")
                         ), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
                         can_see_for_ut
                     ),
