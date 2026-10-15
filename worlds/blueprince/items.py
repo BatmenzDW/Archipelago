@@ -22,48 +22,48 @@ ITEM_NAME_TO_ID = (
         #
         # Extra "Stuff" Items
         #
-        "Extra Allowance 1": 10101,
-        "Extra Allowance 2": 10102,
+        "1 Allowance": 10101,
+        "2 Allowance": 10102,
         #
-        "Extra Gold 1": 10201,
-        "Extra Gold 2": 10202,
-        "Extra Gold 5": 10203,
+        "1 Gold": 10201,
+        "2 Gold": 10202,
+        "5 Gold": 10203,
         #
-        "Extra Dice 1": 10301,
-        "Extra Dice 2": 10302,
-        "Extra Dice 4": 10303,
+        "1 Dice": 10301,
+        "2 Dice": 10302,
+        "4 Dice": 10303,
         #
-        "Extra Gems 1": 10501,
-        "Extra Gems 2": 10502,
+        "1 Gems": 10501,
+        "2 Gems": 10502,
         #
-        "Extra Keys 1": 10601,
-        "Extra Keys 2": 10602,
-        "Extra Keys 3": 10603,
+        "1 Keys": 10601,
+        "2 Keys": 10602,
+        "3 Keys": 10603,
         #
-        "Extra Steps 1": 10701,
-        "Extra Steps 2": 10702,
-        "Extra Steps 5": 10703,
+        "1 Steps": 10701,
+        "2 Steps": 10702,
+        "5 Steps": 10703,
         #
-        "Extra Starting Dice 1": 10801,
-        "Extra Starting Dice 2": 10802,
+        "1 Permanent Dice": 10801,
+        "2 Permanent Dice": 10802,
         #
-        "Extra Starting Gems 1": 10901,
-        "Extra Starting Gems 2": 10902,
+        "1 Permanent Gems": 10901,
+        "2 Permanent Gems": 10902,
         #
-        "Extra Starting Keys 1": 11001,
-        "Extra Starting Keys 2": 11002,
+        "1 Permanent Keys": 11001,
+        "2 Permanent Keys": 11002,
         #
-        "Extra Starting Luck 1": 11101,
-        "Extra Starting Luck 2": 11102,
+        "1 Permanent Luck": 11101,
+        "2 Permanent Luck": 11102,
         #
-        "Extra Starting Steps 1": 11201,
-        "Extra Starting Steps 2": 11202,
-        "Extra Starting Steps 5": 11203,
-        "Extra Starting Steps 10": 11204,
+        "1 Permanent Steps": 11201,
+        "2 Permanent Steps": 11202,
+        "5 Permanent Steps": 11203,
+        "10 Permanent Steps": 11204,
         #
-        "Extra Stars 1": 11301,
-        "Extra Stars 2": 11302,
-        "Extra Stars 5": 11303,
+        "1 Stars": 11301,
+        "2 Stars": 11302,
+        "5 Stars": 11303,
         #
         # Traps
         #
@@ -104,48 +104,48 @@ DEFAULT_ITEM_CLASSIFICATIONS = (
         #
         # Extra "Stuff" Items
         #
-        "Extra Allowance 1": ItemClassification.filler,
-        "Extra Allowance 2": ItemClassification.filler,
+        "1 Allowance": ItemClassification.filler,
+        "2 Allowance": ItemClassification.filler,
         #
-        "Extra Gold 1": ItemClassification.filler,
-        "Extra Gold 2": ItemClassification.filler,
-        "Extra Gold 5": ItemClassification.filler,
+        "1 Gold": ItemClassification.filler,
+        "2 Gold": ItemClassification.filler,
+        "5 Gold": ItemClassification.filler,
         #
-        "Extra Dice 1": ItemClassification.filler,
-        "Extra Dice 2": ItemClassification.filler,
-        "Extra Dice 4": ItemClassification.filler,
+        "1 Dice": ItemClassification.filler,
+        "2 Dice": ItemClassification.filler,
+        "4 Dice": ItemClassification.filler,
         #
-        "Extra Gems 1": ItemClassification.filler,
-        "Extra Gems 2": ItemClassification.filler,
+        "1 Gems": ItemClassification.filler,
+        "2 Gems": ItemClassification.filler,
         #
-        "Extra Keys 1": ItemClassification.filler,
-        "Extra Keys 2": ItemClassification.filler,
-        "Extra Keys 3": ItemClassification.filler,
+        "1 Keys": ItemClassification.filler,
+        "2 Keys": ItemClassification.filler,
+        "3 Keys": ItemClassification.filler,
         #
-        "Extra Steps 1": ItemClassification.filler,
-        "Extra Steps 2": ItemClassification.filler,
-        "Extra Steps 5": ItemClassification.filler,
+        "1 Steps": ItemClassification.filler,
+        "2 Steps": ItemClassification.filler,
+        "5 Steps": ItemClassification.filler,
         #
-        "Extra Starting Dice 1": ItemClassification.filler,
-        "Extra Starting Dice 2": ItemClassification.filler,
+        "1 Permanent Dice": ItemClassification.filler,
+        "2 Permanent Dice": ItemClassification.filler,
         #
-        "Extra Starting Gems 1": ItemClassification.filler,
-        "Extra Starting Gems 2": ItemClassification.filler,
+        "1 Permanent Gems": ItemClassification.filler,
+        "2 Permanent Gems": ItemClassification.filler,
         #
-        "Extra Starting Keys 1": ItemClassification.filler,
-        "Extra Starting Keys 2": ItemClassification.filler,
+        "1 Permanent Keys": ItemClassification.filler,
+        "2 Permanent Keys": ItemClassification.filler,
         #
-        "Extra Starting Luck 1": ItemClassification.filler,
-        "Extra Starting Luck 2": ItemClassification.filler,
+        "1 Permanent Luck": ItemClassification.filler,
+        "2 Permanent Luck": ItemClassification.filler,
         #
-        "Extra Starting Steps 1": ItemClassification.filler,
-        "Extra Starting Steps 2": ItemClassification.filler,
-        "Extra Starting Steps 5": ItemClassification.filler,
-        "Extra Starting Steps 10": ItemClassification.filler,
+        "1 Permanent Steps": ItemClassification.filler,
+        "2 Permanent Steps": ItemClassification.filler,
+        "5 Permanent Steps": ItemClassification.filler,
+        "10 Permanent Steps": ItemClassification.filler,
         #
-        "Extra Stars 1": ItemClassification.filler,
-        "Extra Stars 2": ItemClassification.filler,
-        "Extra Stars 5": ItemClassification.filler,
+        "1 Stars": ItemClassification.filler,
+        "2 Stars": ItemClassification.filler,
+        "5 Stars": ItemClassification.filler,
         #
         # Traps
         #
@@ -243,150 +243,150 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
         count = world.random.randint(0, 99)
 
         match choice:
-            case "extra_allowance_1":
-                return "Extra Allowance 1"
-            case "extra_allowance_2":
-                return "Extra Allowance 2"
-            case "extra_gold_1":
-                return "Extra Gold 1"
-            case "extra_gold_2":
-                return "Extra Gold 2"
-            case "extra_gold_5":
-                return "Extra Gold 5"
-            case "extra_dice_1":
-                return "Extra Dice 1"
-            case "extra_dice_2":
-                return "Extra Dice 2"
-            case "extra_dice_4":
-                return "Extra Dice 4"
-            case "extra_gems_1":
-                return "Extra Gems 1"
-            case "extra_gems_2":
-                return "Extra Gems 2"
-            case "extra_keys_1":
-                return "Extra Keys 1"
-            case "extra_keys_2":
-                return "Extra Keys 2"
-            case "extra_keys_3":
-                return "Extra Keys 3"
-            case "extra_stars_1":
-                return "Extra Stars 1"
-            case "extra_stars_2":
-                return "Extra Stars 2"
-            case "extra_stars_5":
-                return "Extra Stars 5"
+            case "1_allowance":
+                return "Allowance 1"
+            case "2_allowance":
+                return "Allowance 2"
+            case "1_gold":
+                return "1 Gold"
+            case "2_gold":
+                return "2 Gold"
+            case "5_gold":
+                return "5 Gold"
+            case "1_dice":
+                return "1 Dice"
+            case "2_dice":
+                return "2 Dice"
+            case "4_dice":
+                return "4 Dice"
+            case "1_gems":
+                return "1 Gems"
+            case "2_gems":
+                return "2 Gems"
+            case "1_keys":
+                return "1 Keys"
+            case "2_keys":
+                return "2 Keys"
+            case "3_keys":
+                return "3 Keys"
+            case "1_stars":
+                return "1 Stars"
+            case "2_stars":
+                return "2 Stars"
+            case "5_stars":
+                return "5 Stars"
 
-            case "extra_starting_dice_1":
-                return "Extra Starting Dice 1"
-            case "extra_starting_dice_2":
-                return "Extra Starting Dice 2"
-            case "extra_starting_gems_1":
-                return "Extra Starting Gems 1"
-            case "extra_starting_gems_2":
-                return "Extra Starting Gems 2"
-            case "extra_starting_key_1":
-                return "Extra Starting Keys 1"
-            case "extra_starting_key_2":
-                return "Extra Starting Keys 2"
-            case "extra_starting_luck_1":
-                return "Extra Starting Luck 1"
-            case "extra_starting_luck_2":
-                return "Extra Starting Luck 2"
-            case "extra_starting_steps_5":
-                return "Extra Starting Steps 5"
-            case "extra_starting_steps_10":
-                return "Extra Starting Steps 10"
+            case "1_permanent_dice":
+                return "1 Permanent Dice"
+            case "2_permanent_dice":
+                return "2 Permanent Dice"
+            case "1_permanent_gems":
+                return "1 Permanent Gems"
+            case "2_permanent_gems":
+                return "2 Permanent Gems"
+            case "1_permanent_keys":
+                return "1 Permanent Keys"
+            case "2_permanent_keys":
+                return "2 Permanent Keys"
+            case "1_permanent_luck":
+                return "1 Permanent Luck"
+            case "2_permanent_luck":
+                return "2 Permanent Luck"
+            case "5_permanent_steps":
+                return "5 Permanent Steps"
+            case "10_permanent_steps":
+                return "10 Permanent Steps"
 
-            case "extra_steps_1":
-                return "Extra Steps 1"
-            case "extra_steps_2":
-                return "Extra Steps 2"
-            case "extra_steps_5":
-                return "Extra Steps 5"
+            case "1_steps":
+                return "1 Steps"
+            case "2_steps":
+                return "2 Steps"
+            case "5_steps":
+                return "5 Steps"
             case "nothing":
                 return "Dug Up Nothing"
 
-            case "extra_allowance":
+            case "allowance":
                 if count < 20:
-                    return "Extra Allowance 2"
+                    return "Allowance 2"
                 else:
-                    return "Extra Allowance 1"
+                    return "Allowance 1"
 
-            case "extra_gold":
+            case "gold":
                 if count < 20:
-                    return "Extra Gold 5"
+                    return "5 Gold"
                 elif count < 60:
-                    return "Extra Gold 2"
+                    return "2 Gold"
                 else:
-                    return "Extra Gold 1"
+                    return "1 Gold"
 
-            case "extra_dice":
+            case "dice":
                 if count < 10:
-                    return "Extra Dice 4"
+                    return "4 Dice"
                 elif count < 40:
-                    return "Extra Dice 2"
+                    return "2 Dice"
                 else:
-                    return "Extra Dice 1"
+                    return "1 Dice"
 
-            case "extra_gems":
+            case "gems":
                 if count < 30:
-                    return "Extra Gems 2"
+                    return "2 Gems"
                 else:
-                    return "Extra Gems 1"
-            case "extra_keys":
+                    return "1 Gems"
+            case "keys":
 
                 if count < 10:
-                    return "Extra Keys 3"
+                    return "3 Keys"
                 elif count < 30:
-                    return "Extra Keys 2"
+                    return "2 Keys"
                 else:
-                    return "Extra Keys 1"
+                    return "1 Keys"
 
-            case "extra_stars":
+            case "stars":
                 if count < 20:
-                    return "Extra Stars 5"
+                    return "5 Stars"
                 elif count < 60:
-                    return "Extra Stars 2"
+                    return "2 Stars"
                 else:
-                    return "Extra Stars 1"
+                    return "1 Stars"
 
-            case "extra_starting_dice":
+            case "permanent_dice":
                 if count < 20:
-                    return "Extra Starting Dice 2"
+                    return "2 Permanent Dice"
                 else:
-                    return "Extra Starting Dice 1"
+                    return "1 Permanent Dice"
 
-            case "extra_starting_gems":
+            case "permanent_gems":
                 if count < 20:
-                    return "Extra Starting Gems 2"
+                    return "2 Permanent Gems"
                 else:
-                    return "Extra Starting Gems 1"
+                    return "1 Permanent Gems"
 
-            case "extra_starting_key":
+            case "permanent_keys":
                 if count < 20:
-                    return "Extra Starting Keys 2"
+                    return "2 Permanent Keys"
                 else:
-                    return "Extra Starting Keys 1"
+                    return "1 Permanent Keys"
 
-            case "extra_starting_luck":
+            case "permanent_luck":
                 if count < 20:
-                    return "Extra Starting Luck 2"
+                    return "2 Permanent Luck"
                 else:
-                    return "Extra Starting Luck 1"
+                    return "2 Permanent Luck"
 
-            case "extra_starting_steps":
+            case "permanent_steps":
                 if count < 20:
-                    return "Extra Starting Steps 10"
+                    return "10 Permanent Steps"
                 else:
-                    return "Extra Starting Steps 5"
+                    return "5 Permanent Steps"
 
-            case "extra_steps":
+            case "steps":
                 if count < 20:
-                    return "Extra Steps 5"
+                    return "5 Steps"
                 elif count < 60:
-                    return "Extra Steps 2"
+                    return "2 Steps"
                 else:
-                    return "Extra Steps 1"
+                    return "1 Steps"
 
     return "Dug Up Nothing"
 
