@@ -1965,7 +1965,7 @@ ITEMS_BY_GROUPS |= {
 }
 
 LOCATIONS_BY_GROUPS |= {
-    "Room Entrances": {f"{k} First Entering" for k in rooms} | {"Bunk Room First Entering 2"},
+    "Room Entrances": {f"First Draft - {k}" for k in rooms} | {"First Draft - Bunk Room 2"},
     "Trunks": {
         # Create 100 locked trunk check locations for each room that has the ability to have locked trunks
         f"{k} Locked Trunk {idx}"

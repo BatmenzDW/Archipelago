@@ -28,12 +28,12 @@ LOCATION_NAME_TO_ID = (
         for k, v in locations.items()
     }
     | {
-        # Create First Entering locations for each room.
-        f"{k} First Entering": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER
+        # Create First Draft locations for each room.
+        f"First Draft - {k}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER
         for k, v in rooms.items()
     }
     | {
-        "Bunk Room First Entering 2": rooms["Bunk Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1
+        "First Draft - Bunk Room 2": rooms["Bunk Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1
     }
     | {
         # Create 100 locked trunk check locations for each room that has the ability to have locked trunks
@@ -83,8 +83,8 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
         room = world.get_region(room_key)
 
-        # Add fist room entrance
-        location_key = f"{room_key} First Entering"
+        # Add roo, first draft
+        location_key = f"First Draft - {room_key}"
         if not is_implemented(location_key, world):
             continue
 
@@ -93,7 +93,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             room.add_locations(locs, BluePrinceLocation)
 
         elif room_key == "Bunk Room":
-            locs = get_location_names_with_ids(["Bunk Room First Entering", "Bunk Room First Entering 2"])
+            locs = get_location_names_with_ids(["First Draft - Bunk Room", "First Draft - Bunk Room 2"])
             room.add_locations(locs, BluePrinceLocation)
         # Add Nth locked trunk open
 
@@ -300,7 +300,7 @@ def force_special_location_conditions(world: BluePrinceWorld,
         return
     raise Exception("Could not satisfy special location conditions. This should be impossible.")
 
-# Attempts to fill both Bunk Room First Entering Locations with two items with the same name, if possible
+# Attempts to fill both First Draft - Bunk Room Locations with two items with the same name, if possible
 def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, pool: List["Item"], locations: List["Location"]) -> bool:
     multi : List[str] = []
     
@@ -313,8 +313,8 @@ def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, po
     if len(multi) == 0:
         return False
 
-    loc1 = world.get_location("Bunk Room First Entering")
-    loc2 = world.get_location("Bunk Room First Entering 2")
+    loc1 = world.get_location("First Draft - Bunk Room")
+    loc2 = world.get_location("First Draft - Bunk Room 2")
 
     l1_item : Item | None = None
 
@@ -340,12 +340,12 @@ def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, po
                 # Item equality compares name and player, so list.remove can remove an
                 # unplaced duplicate instead of either object we just placed.
                 pool[:] = [candidate for candidate in pool if candidate is not l1_item and candidate is not item]
-                print(f"Placed an item in both Bunk Room First Entering locations to satisfy the condition that they have the same item.")
+                print(f"Placed an item in both First Draft - Bunk Room locations to satisfy the condition that they have the same item.")
                 return True
             else:
                 l1_item = None
 
-    assert False, f"Could not find a way to fill the Bunk Room First Entering locations with the same item. This should be impossible."
+    assert False, f"Could not find a way to fill the First Draft - Bunk Room locations with the same item. This should be impossible."
 
 def get_location_rule(location_key: str) -> Rule:
     location_data = locations[location_key]
@@ -507,8 +507,8 @@ def is_implemented(location_name: str, world: BluePrinceWorld) -> bool:
             return True
         return locations[location_name][IMPLEMENTATION_STATUS] == IMPLEMENTED
     
-    if location_name.endswith("First Entering"):
-        room_name = location_name.replace(" First Entering", "")
+    if location_name.startswith("First Draft - "):
+        room_name = location_name.replace("First Draft - ", "")
         if room_name in rooms:
             if LOCATION_IMPLEMENTATION_STATUS not in rooms[room_name]:
                 return True

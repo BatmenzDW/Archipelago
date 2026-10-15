@@ -17,7 +17,7 @@ class TestBunkRoomFill(unittest.TestCase):
             self.worlds.append(world)
             region = Region("Bunk Room", player, self.multiworld)
             self.multiworld.regions.append(region)
-            for address, name in enumerate(("Bunk Room First Entering", "Bunk Room First Entering 2"), 1):
+            for address, name in enumerate(("First Draft - Bunk Room", "First Draft - Bunk Room 2"), 1):
                 location = Location(player, name, address, region)
                 region.locations.append(location)
                 self.locations.append(location)
