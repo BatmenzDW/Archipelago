@@ -450,6 +450,16 @@ def create_events(world: BluePrinceWorld) -> None:
             item_type=items.BluePrinceItem,
         )
 
+    # Set Victory as opening one of the boxes at the end of the tunnel
+    if world.options.goal_type.value == GoalType.option_tunnel:
+        tunnel_end = world.get_region("Tunnel Area Past Blue Door")
+        tunnel_end.add_event(
+            "Open a Tunnel Parlor Box",
+            "Victory",
+            location_type=BluePrinceLocation,
+            item_type=items.BluePrinceItem
+        )
+
     # Set Victory as entering the atelier and reading the blue prints.
     if world.options.goal_type.value == GoalType.option_blueprints:
         atelier = world.get_region("The Atelier")
