@@ -373,6 +373,9 @@ class TradingPostRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        if self.item_name in prev_trading_post_offers:
+            return False_().resolve(world)
+        
         prev_trading_post_offers.add(self.item_name)
         rule = And(CanReachRegion("Trading Post"), 
                 Or(

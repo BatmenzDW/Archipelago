@@ -119,7 +119,7 @@ class LockedTrunkCommonCount(Range):
 
 class LockedTrunkRareCount(Range):
     """
-    This is the number of rare locked trunks per room that need to be opened for archipelago items. Exmple: Drawing Room trunk.
+    This is the number of rare locked trunks per room that need to be opened for archipelago items. Example: Drawing Room trunk.
     """
 
     display_name = "Rare Locked Trunks"
@@ -188,7 +188,7 @@ class ItemLogicMode(Choice):
 
 class EnableObscureLocations(Choice):
     """
-    This option controls whether the extremely obscure locations will be created, and if they will be excluded (forced to only contian filler).
+    This option controls whether the extremely obscure locations will be created, and if they will be excluded (forced to only contain filler).
     ||Does it never end?||
     Currently affects: Allowance Token - Outer Entrance Hall Vase
 
