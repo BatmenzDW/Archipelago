@@ -156,8 +156,22 @@ class TrunkCounts(OptionCounter):
     max = 100
 
     default = {
+        "Bedroom": 1,
+        "Den": 3,
+        "Attic": 2,
+        "Conservatory": 2,
         "Courtyard": 2,
-        "Bedroom": 2,
+        "Her Ladyship's Chamber": 1,
+        "Hovel": 1,
+        "Laboratory": 1,
+        "Library": 1,
+        "Mail Room": 1,
+        "Nook": 1,
+        "Pump Room": 1,
+        "Root Cellar": 1,
+        "Storeroom": 2,
+        "Tunnel": 1,
+        "Veranda": 2
     }
 
     valid_keys = [room for room in rooms if ROOM_CHEST_SPOT_COUNT_KEY in rooms[room] and rooms[room][ROOM_CHEST_SPOT_COUNT_KEY] > 0]
