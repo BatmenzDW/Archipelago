@@ -422,6 +422,7 @@ blue_001_012 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_BISHOP,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Storeroom": {
         ROOM_ITEM_ID_KEY: 12,
@@ -441,6 +442,7 @@ blue_001_012 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_PAWN,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
 }
 blue_013_024 = {
@@ -462,6 +464,7 @@ blue_013_024 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_ROOK,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Garage": {
         ROOM_ITEM_ID_KEY: 14,
@@ -525,6 +528,7 @@ blue_013_024 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_PAWN,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Wine Cellar": {
         ROOM_ITEM_ID_KEY: 18,
@@ -542,6 +546,7 @@ blue_013_024 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Trophy Room": {
         ROOM_ITEM_ID_KEY: 19,
@@ -630,6 +635,7 @@ blue_013_024 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_ROOK,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Office": {
         ROOM_ITEM_ID_KEY: 24,
@@ -651,6 +657,7 @@ blue_013_024 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_KING,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON
     },
 }
 blue_025_036 = {
@@ -693,6 +700,7 @@ blue_025_036 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_QUEEN,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Library": {
         ROOM_ITEM_ID_KEY: 27,
@@ -711,6 +719,7 @@ blue_025_036 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Chamber of Mirrors": {
         ROOM_ITEM_ID_KEY: 28,
@@ -807,6 +816,7 @@ blue_025_036 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Security": {
         ROOM_ITEM_ID_KEY: 34,
@@ -856,6 +866,7 @@ blue_025_036 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
 }
 blue_037_046 = {
@@ -913,6 +924,7 @@ blue_037_046 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Freezer": {
         ROOM_ITEM_ID_KEY: 40,
@@ -967,6 +979,7 @@ blue_037_046 = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_KNIGHT,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Conference Room": {
         ROOM_ITEM_ID_KEY: 43,
@@ -1025,7 +1038,8 @@ bedrooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_PAWN,
-        NONSANITY_LOCATION_KEY: "Dormitory Floorplan"
+        NONSANITY_LOCATION_KEY: "Dormitory Floorplan",
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Hovel": {
         ROOM_ITEM_ID_KEY: 302,
@@ -1036,6 +1050,7 @@ bedrooms = {
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_STANDALONE, ROOM_PICK_POSITION_STANDALONE_FULL],
         OUTER_ROOM_KEY: True,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Bedroom": {
         ROOM_ITEM_ID_KEY: 303,
@@ -1055,6 +1070,7 @@ bedrooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_PAWN,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Boudoir": {
         ROOM_ITEM_ID_KEY: 304,
@@ -1129,6 +1145,7 @@ bedrooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Bunk Room": {
         ROOM_ITEM_ID_KEY: 308,
@@ -1157,6 +1174,7 @@ bedrooms = {
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_EDGE_RETREAT_WEST_WING_GEMS],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_QUEEN,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Master Bedroom": {
         ROOM_ITEM_ID_KEY: 310,
@@ -1198,7 +1216,8 @@ hallways = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
-        NONSANITY_LOCATION_KEY: "Tunnel Floorplan"
+        NONSANITY_LOCATION_KEY: "Tunnel Floorplan",
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Hallway": {
         ROOM_ITEM_ID_KEY: 403,
@@ -1332,7 +1351,8 @@ green_rooms = {
         ROOM_PICK_POSITIONS_KEY: [ROOM_PICK_POSITION_CORNER_GEMS],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_ROOK,
-        NONSANITY_LOCATION_KEY: "Conservatory Floorplan"
+        NONSANITY_LOCATION_KEY: "Conservatory Floorplan",
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Root Cellar": {
         ROOM_ITEM_ID_KEY: 503,
@@ -1386,6 +1406,7 @@ green_rooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Cloister": {
         ROOM_ITEM_ID_KEY: 507,
@@ -1411,6 +1432,7 @@ green_rooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Greenhouse": {
         ROOM_ITEM_ID_KEY: 509,
@@ -1439,6 +1461,7 @@ green_rooms = {
         ],
         OUTER_ROOM_KEY: False,
         ROOM_CHESS_PIECE_KEY: CHESS_PIECE_NONE,
+        ROOM_CHEST_SPOT_TYPE_KEY: ROOM_CHEST_SPOT_COMMON,
     },
     "Secret Garden": {
         ROOM_ITEM_ID_KEY: 511,

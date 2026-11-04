@@ -1711,7 +1711,6 @@ misc_locations = {
 # Room Upgrades
 
 # Possible locations that are currently Events:
-# Raise Satellite
 # Sanctum Solves
 # Ascend the Throne
 # Unseal Blue Doors

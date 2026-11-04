@@ -102,7 +102,10 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         if room_key in world.options.trunks.value:
             trunk_count = world.options.trunks.value[room_key]
 
-        elif ROOM_CHEST_SPOT_TYPE_KEY not in v or v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON:
+        elif ROOM_CHEST_SPOT_TYPE_KEY not in v:
+            trunk_count = 0
+
+        elif v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMMON:
             trunk_count = world.options.locked_trunks_common
 
         elif v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_RARE:
@@ -120,7 +123,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             continue # Skip The Pool locked trunks when the goal is before Gift Shop
         elif room_key == "Planetarium" and world.options.item_logic_mode < ItemLogicMode.option_complex:
             if "Planetarium" in world.options.trunks.value and world.options.trunks.value["Planetarium"] > 0:
-                warnings.warn("Cannot create \"The Pool Locked Trunks\" due to current item logic mode; Skipping.")
+                warnings.warn("Cannot create \"Planetarium Locked Trunks\" due to current item logic mode; Skipping.")
             continue # Skip Planetarium locked trunks when logic mode is not complex
 
         room.add_locations(locs, BluePrinceLocation)
