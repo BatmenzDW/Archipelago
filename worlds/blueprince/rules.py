@@ -362,7 +362,7 @@ class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                 ),
             ), 
             Has("Satellite Dish"),
-            CanReachLocation("Raise Satellite", parent_region_name="Apple Orchard"),
+            Has("Raised Satellite Dish"),
             options=([] if self.force else extreme_logic_filter)
         ).resolve(world)
 

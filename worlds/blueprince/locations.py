@@ -369,6 +369,15 @@ def create_events(world: BluePrinceWorld) -> None:
     antechamber = world.get_region("Antechamber")
     room_46 = world.get_region("Room 46")
     throne_room = world.get_region("Throne Room")
+    apple_orchard = world.get_region("Apple Orchard")
+
+    apple_orchard.add_event(
+        "Raise SD",
+        "Raised Satellite Dish",
+        CanReachLocation("Raise Satellite"),
+        location_type=BluePrinceLocation,
+        item_type=items.BluePrinceItem,
+    )
 
     # Set Victory as entering antechamber
     if world.options.goal_type.value == GoalType.option_antechamber:
