@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 from .data_rooms import rooms, core_rooms, room_layout_lists
 from .constants import *
 from .room_min_pieces import POSITION_MINIMUM_PIECES, POSITION_MINIMUM_TOTAL_PIECES
-from .options import ItemLogicMode, SpecialShopSanity, TrophySanity
+from .options import ItemLogicMode, SpecialShopSanity, TrophySanity, UpgradeDiskSanity
 from .data_items import *
 
 default_logic_filter = [OptionFilter(ItemLogicMode, ItemLogicMode.option_default)]
@@ -468,7 +468,21 @@ class CarTrunkRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return (CanReachRegion("Garage") & CanReachItemLocation("CAR KEYS")).resolve(world)
+        return And(
+            CanReachRegion("Garage"), 
+            CanReachItemLocation("CAR KEYS"),
+            Or(
+                CanReachRegion("Laboratory"),
+                CanReachRegion("Office"),
+                CanReachRegion("Shelter"),
+                CanReachRegion("Laboratory"),
+                CanReachRegion("Blackbridge Grotto"),
+                CanReachRegion("Coat Check"),
+                CanReachItemLocation("Moon Pendant"),
+                options=[OptionFilter(UpgradeDiskSanity, False)],
+                filtered_resolution=True
+            )
+        ).resolve(world)
     
 @dataclasses.dataclass()
 class SpiralOfStarsRule(Rule["BluePrinceWorld"], game="Blue Prince"):

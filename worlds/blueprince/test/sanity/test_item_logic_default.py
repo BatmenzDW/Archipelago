@@ -1,11 +1,8 @@
 
-from ...rules import CanReachItemLocation
-
 from ...constants import *
 
 from ...options import GoalType
 from ...test import BluePrinceTestBase
-from ...data_rooms import rooms, core_rooms
 
 class TestItemLogicDefault(BluePrinceTestBase):
     options = {
