@@ -361,7 +361,10 @@ class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                     ),
                 ),
             ), 
-            Has("Satellite Dish"), options=([] if self.force else extreme_logic_filter)).resolve(world)
+            Has("Satellite Dish"),
+            CanReachLocation("Raise Satellite", parent_region_name="Apple Orchard"),
+            options=([] if self.force else extreme_logic_filter)
+        ).resolve(world)
 
 prev_trading_post_offers : set[str] = set()
 @dataclasses.dataclass()
