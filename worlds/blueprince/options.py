@@ -119,7 +119,7 @@ class LockedTrunkCommonCount(Range):
 
 class LockedTrunkRareCount(Range):
     """
-    This is the number of rare locked trunks per room that need to be opened for archipelago items. Exmple: Drawing Room trunk.
+    This is the number of rare locked trunks per room that need to be opened for archipelago items. Example: Drawing Room trunk.
     """
 
     display_name = "Rare Locked Trunks"
@@ -156,8 +156,22 @@ class TrunkCounts(OptionCounter):
     max = 100
 
     default = {
+        "Bedroom": 1,
+        "Den": 3,
+        "Attic": 2,
+        "Conservatory": 2,
         "Courtyard": 2,
-        "Bedroom": 2,
+        "Her Ladyship's Chamber": 1,
+        "Hovel": 1,
+        "Laboratory": 1,
+        "Library": 1,
+        "Mail Room": 1,
+        "Nook": 1,
+        "Pump Room": 1,
+        "Root Cellar": 1,
+        "Storeroom": 2,
+        "Tunnel": 1,
+        "Veranda": 2
     }
 
     valid_keys = [room for room in rooms if ROOM_CHEST_SPOT_COUNT_KEY in rooms[room] and rooms[room][ROOM_CHEST_SPOT_COUNT_KEY] > 0]
@@ -188,7 +202,7 @@ class ItemLogicMode(Choice):
 
 class EnableObscureLocations(Choice):
     """
-    This option controls whether the extremely obscure locations will be created, and if they will be excluded (forced to only contian filler).
+    This option controls whether the extremely obscure locations will be created, and if they will be excluded (forced to only contain filler).
     ||Does it never end?||
     Currently affects: Allowance Token - Outer Entrance Hall Vase
 
@@ -333,7 +347,7 @@ class DeathLinkType(Choice):
 
     - **none:** Death Link is disabled.
     - **eod:** A Death Link is sent whenever the day ends.
-    - **bedroom:** A Death Link is sent whenever the player ends outside a bedroom.
+    - **bedroom:** A Death Link is sent whenever the player ends outside a bedroom or break room.
     - **steps:** A Death Link is sent whenever the player runs out of steps.
 
     """

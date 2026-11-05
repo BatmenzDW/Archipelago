@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 from .data_rooms import rooms, core_rooms, room_layout_lists
 from .constants import *
 from .room_min_pieces import POSITION_MINIMUM_PIECES, POSITION_MINIMUM_TOTAL_PIECES
-from .options import ItemLogicMode, SpecialShopSanity, TrophySanity
+from .options import ItemLogicMode, SpecialShopSanity, TrophySanity, UpgradeDiskSanity
 from .data_items import *
 
 default_logic_filter = [OptionFilter(ItemLogicMode, ItemLogicMode.option_default)]
@@ -361,7 +361,10 @@ class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                     ),
                 ),
             ), 
-            Has("Satellite Dish"), options=([] if self.force else extreme_logic_filter)).resolve(world)
+            Has("Satellite Dish"),
+            Has("Raised Satellite Dish"),
+            options=([] if self.force else extreme_logic_filter)
+        ).resolve(world)
 
 prev_trading_post_offers : set[str] = set()
 @dataclasses.dataclass()
@@ -373,6 +376,9 @@ class TradingPostRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        if self.item_name in prev_trading_post_offers:
+            return False_().resolve(world)
+        
         prev_trading_post_offers.add(self.item_name)
         rule = And(CanReachRegion("Trading Post"), 
                 Or(
@@ -465,7 +471,21 @@ class CarTrunkRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return (CanReachRegion("Garage") & CanReachItemLocation("CAR KEYS")).resolve(world)
+        return And(
+            CanReachRegion("Garage"), 
+            CanReachItemLocation("CAR KEYS"),
+            Or(
+                CanReachRegion("Laboratory"),
+                CanReachRegion("Office"),
+                CanReachRegion("Shelter"),
+                CanReachRegion("Laboratory"),
+                CanReachRegion("Blackbridge Grotto"),
+                CanReachRegion("Coat Check"),
+                CanReachItemLocation("Moon Pendant"),
+                options=[OptionFilter(UpgradeDiskSanity, False)],
+                filtered_resolution=True
+            )
+        ).resolve(world)
     
 @dataclasses.dataclass()
 class SpiralOfStarsRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -501,6 +521,8 @@ FREEZER_MULT : int = 2
 
 coin_sources: dict[str, str] = {}
 
+has_coins_lock : bool = False
+
 @dataclasses.dataclass()
 class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
@@ -520,7 +542,13 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
 
         @override
         def _evaluate(self, state: CollectionState) -> bool:
+            global has_coins_lock # prevent HasCoins from being called recursively
+            if has_coins_lock:
+                return False
+            
+            has_coins_lock = True
             coins = self.calculate_reachable_coins(state)
+            has_coins_lock = False
 
             return coins >= self.amount
 
@@ -785,6 +813,7 @@ class SledgeHammerNotFromToolshedRule(Rule["BluePrinceWorld"], game="Blue Prince
             UpgradedRoomRule("Spare Room", "Spare Hall")
         ).resolve(world)
 
+prev_combo : set[tuple[str, ...]] = set()
 @dataclasses.dataclass()
 class ComboItemRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
@@ -803,8 +832,12 @@ class ComboItemRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return self.Resolved(self.items, rare_logic=(world.options.item_logic_mode.value > 0), trophy_sanity=world.options.trophy_sanity.value, player=world.player)
-
+        if self.items in prev_combo:
+            return False_().resolve(world)
+        prev_combo.add(self.items)
+        res = self.Resolved(self.items, rare_logic=(world.options.item_logic_mode.value > 0), trophy_sanity=world.options.trophy_sanity.value, player=world.player)
+        prev_combo.remove(self.items)
+        return res
 
     class Resolved(Rule.Resolved):
         items: tuple[str, ...]
@@ -974,3 +1007,54 @@ class ComboItemRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                 return False
             reachable = self._check_reachable(world, state) # type: ignore
             return self.all_sets_reachable([v for _, v in reachable.items()])
+
+prev_commissary : set[str] = set()
+@dataclasses.dataclass()
+class CommissaryRule(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Checks if the item can be purchased from the commissary
+    """
+
+    item: str
+    cost: int
+
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        selections = {
+            "A": {"MAGNIFYING GLASS", "SHOVEL"},
+            "B": {"SALT SHAKER", "SHOVEL"},
+            "C": {"SALT SHAKER", "COMPASS", "SHOVEL", "SLEDGE HAMMER"},
+            "D": {"MAGNIFYING GLASS", "SLEDGE HAMMER", "SLEEPING MASK", "RUNNING SHOES"},
+            "E": {"SALT SHAKER", "SLEDGE HAMMER", "METAL DETECTOR"},
+            "F": {"SLEDGE HAMMER", "RUNNING SHOES"},
+            "G": {"SALT SHAKER", "SHOVEL", "SLEEPING MASK", "METAL DETECTOR"}
+        }
+
+        if "Upgrade Disk" in self.item:
+            rule = True_()
+
+            for _, select in selections.items():
+                rule &= Or(*[CanReachItemLocation(s) for s in select])
+
+            return And(HasCoins(self.cost), rule).resolve(world)
+        
+        prev_commissary.add(self.item)
+        rule = False_()
+
+        for _, select in selections.items():
+            if self.item not in select:
+                continue
+            
+            cur = True_()
+
+            for s in select:
+                if s == self.item or s in prev_commissary:
+                    continue
+
+                cur &= Has(s)
+            
+            rule |= cur
+        
+        prev_commissary.remove(self.item)
+        
+        return And(HasCoins(self.cost), rule).resolve(world)
