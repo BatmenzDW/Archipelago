@@ -244,9 +244,9 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
 
         match choice:
             case "1_allowance":
-                return "Allowance 1"
+                return "1 Allowance"
             case "2_allowance":
-                return "Allowance 2"
+                return "2 Allowance"
             case "1_gold":
                 return "1 Gold"
             case "2_gold":
@@ -308,9 +308,9 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
 
             case "allowance":
                 if count < 20:
-                    return "Allowance 2"
+                    return "2 Allowance"
                 else:
-                    return "Allowance 1"
+                    return "1 Allowance"
 
             case "gold":
                 if count < 20:
