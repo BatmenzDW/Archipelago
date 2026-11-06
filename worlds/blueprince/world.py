@@ -51,7 +51,7 @@ class BluePrinceWorld(World):
     # Dares for dares mode
     dares : Set[str] = set()
 
-    # "soft"/"glitched" location access fake item for UT
+    # "soft" location access fake item for UT
     glitches_item_name = "Does it never end?"
 
     tracker_world: ClassVar[dict[str, Any]] = {
