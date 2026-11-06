@@ -19,6 +19,8 @@ rare_logic_filter = [OptionFilter(ItemLogicMode, [ItemLogicMode.option_rare, Ite
 complex_logic_filter = [OptionFilter(ItemLogicMode, [ItemLogicMode.option_complex, ItemLogicMode.option_rare_complex, ItemLogicMode.option_extreme], operator="in")]
 extreme_logic_filter = [OptionFilter(ItemLogicMode, ItemLogicMode.option_extreme)]
 
+can_see_for_ut = Has("Does it never end?")
+
 def set_all_rules(world: BluePrinceWorld) -> None:
 
     set_completion_condition(world)
@@ -252,8 +254,8 @@ class TrunkRule(Rule["BluePrinceWorld"], game="Blue Prince"):
     """
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return (
-            Or(*[CanReachRegion(room) for room in [
+        normal_trunks = Or(
+            *[CanReachRegion(room) for room in [
                 "Attic",
                 "Bedroom",
                 "Courtyard",
@@ -273,21 +275,34 @@ class TrunkRule(Rule["BluePrinceWorld"], game="Blue Prince"):
                 "Dormitory",
                 "Tunnel",
                 "Conservatory",
-            ]], options=complex_logic_filter) |
+            ]])
+
+        extreme_trunks = Or(
+            *[CanReachRegion(room) for room in [
+                "Spare Room",
+                "Music Room",
+                "Drawing Room",
+                "Gallery",
+                "Great Hall",
+            ]], 
+            CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
+            CanReachRegion("The Pool") & Has("Gift Shop - Swim Trunks"),
+            PlanetariumRule()
+        )
+
+        see_trunks = And(
+            can_see_for_ut,
             Or(
-                *[CanReachRegion(room) for room in [
-                    "Spare Room",
-                    "Music Room",
-                    "Drawing Room",
-                    "Gallery",
-                    "Great Hall",
-                ]], 
-                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
-                CanReachRegion("The Pool") & Has("Gift Shop - Swim Trunks"),
-                PlanetariumRule(),
-                options=extreme_logic_filter
-            )
-        ).resolve(world)
+                normal_trunks,
+                extreme_trunks
+            ),
+            options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]
+        )
+
+        normal_trunks = Filtered(normal_trunks, options=complex_logic_filter)
+        extreme_trunks = Filtered(extreme_trunks, options=extreme_logic_filter)
+        
+        return Or(normal_trunks, extreme_trunks, see_trunks).resolve(world)
     
 @dataclasses.dataclass()
 class DarkRoomRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -297,11 +312,21 @@ class DarkRoomRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(CanReachRegion("Darkroom"), (
+        rule = And(CanReachRegion("Darkroom"), (
             CanReachRegion("Utility Closet") |
             CanReachRegion("Shelter") |
             CanReachItemLocation("KNIGHTS SHIELD")
-        ), options=complex_logic_filter).resolve(world)
+        ))
+
+        see_rule = And(
+            can_see_for_ut,
+            rule,
+            options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]
+        )
+
+        rule = Filtered(rule, options=complex_logic_filter)
+        
+        return Or(rule, see_rule).resolve(world)
     
 @dataclasses.dataclass()
 class LavatoryRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -311,11 +336,21 @@ class LavatoryRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(CanReachRegion("Lavatory"), (
+        rule = And(CanReachRegion("Lavatory"), (
             CanReachRegion("Shelter") |
             CanReachItemLocation("KNIGHTS SHIELD") |
             CanReachItemLocation("Dowsing Rod")
-        ), options=complex_logic_filter).resolve(world)
+        ))
+
+        see_rule = And(
+            can_see_for_ut,
+            rule,
+            options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]
+        )
+
+        rule = Filtered(rule, options=complex_logic_filter)
+        
+        return Or(rule, see_rule).resolve(world)
 
 @dataclasses.dataclass()
 class ShelteredRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -325,10 +360,20 @@ class ShelteredRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return Or(
+        rule = Or(
             CanReachRegion("Shelter"),
-            CanReachItemLocation("KNIGHTS SHIELD"),
-            options=complex_logic_filter).resolve(world)
+            CanReachItemLocation("KNIGHTS SHIELD")
+        )
+
+        see_rule = And(
+            can_see_for_ut,
+            rule,
+            options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]
+        )
+
+        rule = Filtered(rule, options=complex_logic_filter)
+        
+        return Or(rule, see_rule).resolve(world)
 
 @dataclasses.dataclass()
 class PlanetariumRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -338,7 +383,17 @@ class PlanetariumRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(CanReachRegion("Planetarium"), CanReachItemLocation("TELESCOPE", parent_region_name="Campsite"), options=complex_logic_filter).resolve(world)
+        rule = And(CanReachRegion("Planetarium"), CanReachItemLocation("TELESCOPE", parent_region_name="Campsite"))
+    
+        see_rule = And(
+            can_see_for_ut,
+            rule,
+            options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]
+        )
+
+        rule = Filtered(rule, options=complex_logic_filter)
+        
+        return Or(rule, see_rule).resolve(world)
     
 @dataclasses.dataclass()
 class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -349,22 +404,35 @@ class AdvancedExperimentRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return And(
-            Or(
-                CanReachRegion("Laboratory"), 
-                And(
-                    CanReachRegion("Blackbridge Grotto"),
-                    Or(
-                        CanReachRegion("Security"),
-                        CanReachRegion("Office"),
-                        CanReachRegion("Shelter"),
+
+        rule = And(
+                Or(
+                    CanReachRegion("Laboratory"), 
+                    And(
+                        CanReachRegion("Blackbridge Grotto"),
+                        Or(
+                            CanReachRegion("Security"),
+                            CanReachRegion("Office"),
+                            CanReachRegion("Shelter"),
+                        ),
                     ),
-                ),
-            ), 
-            Has("Satellite Dish"),
-            Has("Raised Satellite Dish"),
-            options=([] if self.force else extreme_logic_filter)
-        ).resolve(world)
+                ), 
+                Has("Satellite Dish"),
+                Has("Raised Satellite Dish"),
+            )
+
+        if (self.force):
+            return rule.resolve(world)
+
+        see_rule = And(
+            can_see_for_ut,
+            rule,
+            options=[OptionFilter(ItemLogicMode, ItemLogicMode.option_extreme, operator="ne")]
+        )
+
+        rule = Filtered(rule, options=extreme_logic_filter)
+        
+        return Or(rule, see_rule).resolve(world)
 
 prev_trading_post_offers : set[str] = set()
 @dataclasses.dataclass()
@@ -383,8 +451,16 @@ class TradingPostRule(Rule["BluePrinceWorld"], game="Blue Prince"):
         rule = And(CanReachRegion("Trading Post"), 
                 Or(
                     *[CanReachItemLocation(item) for item in self.get_trading_post_offers(self.item_name) if self.item_name not in prev_trading_post_offers],
-                ),
-                options=complex_logic_filter).resolve(world)
+                ))
+        see_rule = And(
+            can_see_for_ut,
+            rule,
+            options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]
+        )
+
+        rule = Filtered(rule, options=complex_logic_filter)
+        rule = Or(rule, see_rule).resolve(world)
+
         prev_trading_post_offers.remove(self.item_name)
         return rule
     
@@ -408,34 +484,46 @@ class DigSpotRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return (CanReachItemLocation("SHOVEL") &
+        rule = And(
+            CanReachItemLocation("SHOVEL"),
             Or(
-            *[CanReachRegion(room) for room in [
-                "The Foundation",
-                "Wine Cellar",
-                "Aquarium",
-                "Courtyard",
-                "Greenhouse",
-                "Morning Room",
-                "Veranda",
-                "Terrace",
-                "Cloister",
-                "Patio",
-                "Storeroom",
-                "Garage",
-                "Pump Room",
-                "Workshop",
-                "Secret Garden",
-                "Root Cellar",
-                "Hovel",
-                "The Kennel",
-                "Dovecote",
-                "Solarium",
-                "Tunnel",
-                "Conservatory",
-                "Boiler Room",
-            ]], 
-            PlanetariumRule(), options=extreme_logic_filter)).resolve(world)
+                *[CanReachRegion(room) for room in [
+                    "The Foundation",
+                    "Wine Cellar",
+                    "Aquarium",
+                    "Courtyard",
+                    "Greenhouse",
+                    "Morning Room",
+                    "Veranda",
+                    "Terrace",
+                    "Cloister",
+                    "Patio",
+                    "Storeroom",
+                    "Garage",
+                    "Pump Room",
+                    "Workshop",
+                    "Secret Garden",
+                    "Root Cellar",
+                    "Hovel",
+                    "The Kennel",
+                    "Dovecote",
+                    "Solarium",
+                    "Tunnel",
+                    "Conservatory",
+                    "Boiler Room",
+                ]],
+                PlanetariumRule()
+            ))
+        
+        see_rule = And(
+            can_see_for_ut, 
+            rule, 
+            options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]
+        )
+
+        rule = Filtered(rule, options=extreme_logic_filter)
+        
+        return Or(see_rule, rule).resolve(world)
 
 # TODO:
 @dataclasses.dataclass()
@@ -495,7 +583,17 @@ class SpiralOfStarsRule(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return Filtered(CanReachRegion("Observatory"), options=extreme_logic_filter).resolve(world)
+        rule = CanReachRegion("Observatory")
+
+        see_rule = And(
+            can_see_for_ut,
+            rule,
+            options=[OptionFilter(ItemLogicMode, ItemLogicMode.option_extreme, operator="ne")]
+        )
+
+        rule = Filtered(rule, options=extreme_logic_filter)
+        
+        return Or(rule, see_rule).resolve(world)
 
 ROOM_COINS: dict[str, int] = {
             "Vault": 40,
@@ -577,6 +675,7 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
             # ]
 
         def calculate_reachable_coins(self, state: CollectionState, log_sources: bool = False) -> int:
+            check_seen = state.has("Does it never end?", self.player)
             coins = 0
             if log_sources:
                 coin_sources.clear()
@@ -586,7 +685,7 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
                     if log_sources:
                         coin_sources[room] = f"{room_coins}"
 
-            if self.lategame and state.can_reach_region("Treasure Trove", self.player): # type: ignore
+            if (self.lategame or check_seen) and state.can_reach_region("Treasure Trove", self.player): # type: ignore
                 coins += TREASURE_TROVE_COINS
                 if log_sources:
                     coin_sources["Treasure Trove"] = f"{TREASURE_TROVE_COINS}"
@@ -615,7 +714,7 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
                 if log_sources:
                     coin_sources["Office Payroll"] = f"{office_payroll}"
 
-            if self.complex:
+            if self.complex or check_seen:
                 # TODO: Add logic for Office coin spread
 
             
@@ -805,6 +904,24 @@ class SledgeHammerNotFromToolshedRule(Rule["BluePrinceWorld"], game="Blue Prince
                 ]],
                 CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
                 options=rare_logic_filter
+            ),
+            And(
+                can_see_for_ut,
+                Or(
+                    *[CanReachRegion(region) for region in [
+                        "Spare Room",
+                        "Garage",
+                        "Music Room",
+                        "Utility Closet",
+                    ]],
+                    CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
+                ),
+                options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_complex], operator="in")]
+            ),
+            And(
+                can_see_for_ut,
+                CanReachRegion("Trophy Room"),
+                options=[OptionFilter(TrophySanity, False)]
             ),
             AdvancedExperimentRule(),
             SpiralOfStarsRule(),
@@ -1058,3 +1175,78 @@ class CommissaryRule(Rule["BluePrinceWorld"], game="Blue Prince"):
         prev_commissary.remove(self.item)
         
         return And(HasCoins(self.cost), rule).resolve(world)
+
+@dataclasses.dataclass()
+class SeenRule(Rule["BluePrinceWorld"], game="Blue Prince"):
+    """
+    Checks if the given location/region/etc can been seen/reached (Using UT "soft" logic for "seen")
+    """
+
+    normal_children: NestedRule["BluePrinceWorld"]
+    """The normal children rules this rule's logic is based on"""
+
+    rare_children: NestedRule["BluePrinceWorld"]
+    """The rare children rules this rule's logic is based on"""
+
+    complex_children: NestedRule["BluePrinceWorld"]
+    """The complex children rules this rule's logic is based on"""
+
+    extreme_children: NestedRule["BluePrinceWorld"]
+    """The extreme children rules this rule's logic is based on"""
+
+    other_children: NestedRule["BluePrinceWorld"]
+    """Any other children rules this rule's logic is based on, will be treated as normal"""
+
+    def __init__(
+        self,
+        normal_children: NestedRule["BluePrinceWorld"],
+        rare_children: NestedRule["BluePrinceWorld"] = None,
+        complex_children: NestedRule["BluePrinceWorld"] = None,
+        extreme_children: NestedRule["BluePrinceWorld"] = None,
+        other_children: NestedRule["BluePrinceWorld"] = None,
+        options: Iterable[OptionFilter] = (),
+        filtered_resolution: bool = False,
+    ) -> None:
+        super().__init__(options=options, filtered_resolution=filtered_resolution)
+        self.normal_children = normal_children
+        if rare_children is not None:
+            self.rare_children = rare_children
+        else:
+            self.rare_children = False_()
+
+        if complex_children is not None:
+            self.complex_children = complex_children
+        else:
+            self.complex_children = False_()
+
+        if extreme_children is not None:
+            self.extreme_children = extreme_children
+        else:
+            self.extreme_children = False_()
+
+        if other_children is not None:
+            self.other_children = other_children
+        else:
+            self.other_children = False_()
+
+    @override
+    def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
+        seen = And(
+            can_see_for_ut,
+            Or(
+                Filtered(self.rare_children, options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_complex], operator="in")]),
+                Filtered(self.complex_children, options=[OptionFilter(ItemLogicMode, [ItemLogicMode.option_default, ItemLogicMode.option_rare], operator="in")]),
+                Filtered(self.extreme_children, options=[OptionFilter(ItemLogicMode, ItemLogicMode.option_extreme, operator="ne")])
+            )
+        )
+
+        rule = Or(
+            seen,
+            self.normal_children,
+            self.other_children,
+            Filtered(self.rare_children, options=rare_logic_filter),
+            Filtered(self.complex_children, options=complex_logic_filter),
+            Filtered(self.extreme_children, options=extreme_logic_filter),
+        )
+        
+        return rule.resolve(world)

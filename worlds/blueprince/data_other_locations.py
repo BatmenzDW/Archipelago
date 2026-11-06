@@ -423,148 +423,163 @@ standard_item_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 2, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "BATTERY PACK",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Attic",
-                "Archives",
-                "Courtyard",
-                "Laboratory",
-                "Mail Room",
-                "Patio",
-                "Storeroom",
-                "Wine Cellar",
-                "Workshop",
-                "Clock Tower",
-                "Toolshed",
-                "Hovel",
-            ]], 
-            MechanariumDoorRule(3)
-        ) | Or(
-            *[CanReachItemLocation(item) for item in [
-                "Spare Room",
-                "Garage",
-                "Utility Closet",
-                "Kitchen",
-            ]],
-            options=rare_logic_filter
-        ) | Or(
-            DarkRoomRule(),
-            CarTrunkRule(),
-            options=complex_logic_filter
-        ) | Or(
-            AdvancedExperimentRule(),
-            TradingPostRule("BATTERY PACK"),
-            UpgradedRoomRule("Patio", "Spare Patio"),
-            options=extreme_logic_filter
-        ),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Attic",
+                    "Archives",
+                    "Courtyard",
+                    "Laboratory",
+                    "Mail Room",
+                    "Patio",
+                    "Storeroom",
+                    "Wine Cellar",
+                    "Workshop",
+                    "Clock Tower",
+                    "Toolshed",
+                    "Hovel",
+                ]], 
+                MechanariumDoorRule(3)
+            ), 
+            rare_children=Or(
+                *[CanReachItemLocation(item) for item in [
+                    "Spare Room",
+                    "Garage",
+                    "Utility Closet",
+                    "Kitchen",
+                ]]
+            ),
+            complex_children=Or(
+                DarkRoomRule(),
+                CarTrunkRule()
+            ),
+            extreme_children=Or(
+                AdvancedExperimentRule(),
+                TradingPostRule("BATTERY PACK"),
+                UpgradedRoomRule("Patio", "Spare Patio")
+            )),
         
     },
     "BROKEN LEVER First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 3, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "BROKEN LEVER",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Aquarium",
-                "Attic",
-                "Cloister",
-                "Drafting Studio",
-                "Laboratory",
-                "Locker Room",
-                "Observatory",
-                "Patio",
-                "Sauna",
-                "Security",
-                "Storeroom",
-                "Weight Room",
-                "Wine Cellar",
-                "Workshop",
-                "Secret Garden",
-                "Conservatory",
-            ]]
-        ) | Or(
-            *[CanReachRegion(region) for region in [
-                "Spare Room",
-                "Billiard Room",
-                "Garage",
-                "Utility Closet",
-                "Kitchen",
-            ]],
-            DigSpotRule(),
-            options=rare_logic_filter
-        ) | DarkRoomRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Spare Greenroom") | And(ShelteredRule(), CanReachRegion("Furnace")),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Aquarium",
+                    "Attic",
+                    "Cloister",
+                    "Drafting Studio",
+                    "Laboratory",
+                    "Locker Room",
+                    "Observatory",
+                    "Patio",
+                    "Sauna",
+                    "Security",
+                    "Storeroom",
+                    "Weight Room",
+                    "Wine Cellar",
+                    "Workshop",
+                    "Secret Garden",
+                    "Conservatory",
+                ]]
+            ), 
+            rare_children=Or(
+                *[CanReachRegion(region) for region in [
+                    "Spare Room",
+                    "Billiard Room",
+                    "Garage",
+                    "Utility Closet",
+                    "Kitchen",
+                ]],
+                DigSpotRule()
+            ),
+            other_children= DarkRoomRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Spare Greenroom") | And(ShelteredRule(), CanReachRegion("Furnace"))
+        ),
     },
     "COIN PURSE First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 4, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "COIN PURSE",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Closet",
-                "Walk-In Closet",
-                "Parlor",
-                "Attic",
-                "Workshop",
-                "Dining Room",
-                "Bedroom",
-                # "Mail Room", # Packages # Freight Shipping would be problematic
-            ]]
-        ) | Or(
-            *[CanReachRegion(region) for region in [
-                "Gallery",
-                "Ballroom",
-                "Drawing Room",
-            ]],
-            options=rare_logic_filter
-        ) | LavatoryRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Closet",
+                    "Walk-In Closet",
+                    "Parlor",
+                    "Attic",
+                    "Workshop",
+                    "Dining Room",
+                    "Bedroom",
+                    # "Mail Room", # Packages # Freight Shipping would be problematic
+                ]]
+            ),
+            rare_children=Or(
+                *[CanReachRegion(region) for region in [
+                    "Gallery",
+                    "Ballroom",
+                    "Drawing Room",
+                ]]
+            ),
+            other_children= LavatoryRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom")
+        ),
         
     },
     "COMPASS First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 5, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "COMPASS",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Aquarium",
-                "Attic",
-                "Cloister",
-                "Closet",
-                "Drafting Studio",
-                "Observatory",
-                "Terrace",
-                "Walk-In Closet",
-                "Workshop",
-                "Throne Room",
-                # "Mail Room", # Packages # Freight Shipping would be problematic
-            ]]
-        ) | Or(
-            CanReachRegion("Den"), CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
-            options=rare_logic_filter
-        ) | TrunkRule() | AdvancedExperimentRule() | CommissaryRule("COMPASS", 6) |
-        UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Aquarium",
+                    "Attic",
+                    "Cloister",
+                    "Closet",
+                    "Drafting Studio",
+                    "Observatory",
+                    "Terrace",
+                    "Walk-In Closet",
+                    "Workshop",
+                    "Throne Room",
+                    # "Mail Room", # Packages # Freight Shipping would be problematic
+                ]]
+            ),
+            rare_children=Or(
+                CanReachRegion("Den"), 
+                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)])
+            ),
+            other_children= TrunkRule() | AdvancedExperimentRule() | CommissaryRule("COMPASS", 6) |
+                UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Terrace")
+        ),
         
     },
     "COUPON BOOK First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 6, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Attic",
-                "Conference Room",
-                "Dining Room",
-                "Library",
-                "Mail Room",
-                "Nook",
-                "Office",
-                "Vault",
-                "Walk-In Closet",
-                "Morning Room",
-                # "Mail Room", # Packages # Freight Shipping would be problematic, but was redundant anyway
-            ]]
-        ) | Or(
-            CanReachRegion("Den"), CanReachRegion("Pantry"),
-            options=rare_logic_filter
-        ) | AdvancedExperimentRule(),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Attic",
+                    "Conference Room",
+                    "Dining Room",
+                    "Library",
+                    "Mail Room",
+                    "Nook",
+                    "Office",
+                    "Vault",
+                    "Walk-In Closet",
+                    "Morning Room",
+                    # "Mail Room", # Packages # Freight Shipping would be problematic, but was redundant anyway
+                ]]
+            ),
+            rare_children=Or(
+                CanReachRegion("Den"), 
+                CanReachRegion("Pantry")
+            ),
+            other_children= AdvancedExperimentRule()
+        ),
         
     },
     "GEAR WRENCH First Pickup": {
@@ -601,109 +616,125 @@ standard_item_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 9, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "LOCK PICK KIT",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Archives",
-                "Attic",
-                "Rumpus Room",
-                "Security",
-                "Vault",
-                "Walk-In Closet",
-                "Wine Cellar",
-                "Workshop",
-                "Closed Exhibit",
-                "Locksmith",
-                "Mail Room", # Packages
-            ]]
-        ) | CanReachRegion("Garage", options=rare_logic_filter) |
-        TrunkRule() | CarTrunkRule() | DarkRoomRule() | And(ShelteredRule(), CanReachRegion("Furnace")) |
-        AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Servant's Spare Quarters") | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Bedroom"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Archives",
+                    "Attic",
+                    "Rumpus Room",
+                    "Security",
+                    "Vault",
+                    "Walk-In Closet",
+                    "Wine Cellar",
+                    "Workshop",
+                    "Closed Exhibit",
+                    "Locksmith",
+                    "Mail Room", # Packages
+                ]]
+            ),
+            rare_children=CanReachRegion("Garage"),
+            other_children= TrunkRule() | CarTrunkRule() | DarkRoomRule() | And(ShelteredRule(), CanReachRegion("Furnace")) |
+                AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Servant's Spare Quarters") | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Master Bedroom") | UpgradedRoomRule("Spare Room", "Spare Bedroom")
+        ),
         
     },
     "LUCKY RABBIT'S FOOT First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 10, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "LUCKY RABBIT'S FOOT",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Closet",
-                "Walk-In Closet",
-                "Rumpus Room",
-                "Nursery",
-                "Morning Room",
-                "Throne Room",
-                "Lost & Found",
-            ]]
-        ) | Or(
-            CanReachRegion("Gallery"), CanReachRegion("Den"), CanReachRegion("Ballroom"),
-            options=rare_logic_filter
-        ) | LavatoryRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Bedroom") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Closet",
+                    "Walk-In Closet",
+                    "Rumpus Room",
+                    "Nursery",
+                    "Morning Room",
+                    "Throne Room",
+                    "Lost & Found",
+                ]]
+            ),
+            rare_children=Or(
+                CanReachRegion("Gallery"), 
+                CanReachRegion("Den"), 
+                CanReachRegion("Ballroom")
+            ),
+            other_children= LavatoryRule() | AdvancedExperimentRule() | UpgradedRoomRule("Spare Room", "Her Ladyship's Spare Room") | UpgradedRoomRule("Spare Room", "Spare Bedroom") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters")
+        ),
         
     },
     "MAGNIFYING GLASS First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 11, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "MAGNIFYING GLASS",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Archives",
-                "Attic",
-                "Boudoir",
-                "Chapel",
-                "Courtyard",
-                "Drafting Studio",
-                "Guest Bedroom",
-                "Her Ladyship's Chamber",
-                "Laboratory",
-                "Library",
-                "Mail Room",
-                "Nook",
-                "Observatory",
-                "Office",
-                "Parlor",
-                "Study",
-                "Workshop",
-                "Classroom 1",
-                "Classroom 2",
-                "Classroom 3",
-                "Classroom 4",
-                "Classroom 5",
-                "Classroom 6",
-                "Classroom 7",
-                "Classroom 8",
-                "Classroom Exam",
-                "Conservatory",
-            ]]
-        ) | Or(
-            CanReachRegion("Den"), CanReachRegion("Drawing Room"),
-            options=rare_logic_filter
-        ) | CarTrunkRule() | AdvancedExperimentRule() | CommissaryRule("MAGNIFYING GLASS", 4) | UpgradedRoomRule("Spare Room", "Spare Foyer"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Archives",
+                    "Attic",
+                    "Boudoir",
+                    "Chapel",
+                    "Courtyard",
+                    "Drafting Studio",
+                    "Guest Bedroom",
+                    "Her Ladyship's Chamber",
+                    "Laboratory",
+                    "Library",
+                    "Mail Room",
+                    "Nook",
+                    "Observatory",
+                    "Office",
+                    "Parlor",
+                    "Study",
+                    "Workshop",
+                    "Classroom 1",
+                    "Classroom 2",
+                    "Classroom 3",
+                    "Classroom 4",
+                    "Classroom 5",
+                    "Classroom 6",
+                    "Classroom 7",
+                    "Classroom 8",
+                    "Classroom Exam",
+                    "Conservatory",
+                ]]
+            ),
+            rare_children=Or(
+                CanReachRegion("Den"), 
+                CanReachRegion("Drawing Room"),
+            ),
+            other_children= CarTrunkRule() | AdvancedExperimentRule() | CommissaryRule("MAGNIFYING GLASS", 4) | UpgradedRoomRule("Spare Room", "Spare Foyer")
+        ),
         
     },
     "METAL DETECTOR First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 12, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "METAL DETECTOR",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Archives",
-                "Attic",
-                "Closet",
-                "Courtyard",
-                "Greenhouse",
-                "Maid's Chamber",
-                "Mail Room",
-                "Patio",
-                "Veranda",
-                "Workshop",
-                "Secret Garden",
-                "Clock Tower",
-                "Toolshed",
-            ]]
-        ) | Or(
-            CanReachRegion("Garage"), CanReachRegion("Boiler Room"),
-            options=rare_logic_filter
-        ) | AdvancedExperimentRule() | CommissaryRule("METAL DETECTOR", 10) | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Archives",
+                    "Attic",
+                    "Closet",
+                    "Courtyard",
+                    "Greenhouse",
+                    "Maid's Chamber",
+                    "Mail Room",
+                    "Patio",
+                    "Veranda",
+                    "Workshop",
+                    "Secret Garden",
+                    "Clock Tower",
+                    "Toolshed",
+                ]]
+            ),
+            rare_children=Or(
+                CanReachRegion("Garage"), 
+                CanReachRegion("Boiler Room")
+            ),
+            other_children= AdvancedExperimentRule() | CommissaryRule("METAL DETECTOR", 10) | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda")
+        ),
         
     },
     "REPELLENT First Pickup": {
@@ -716,108 +747,121 @@ standard_item_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 14, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "RUNNING SHOES",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Closet",
-                "Gymnasium",
-                "Locker Room",
-                "Rumpus Room",
-                "Sauna",
-                "The Pool",
-                "Walk-In Closet",
-                "Weight Room",
-                "Dormitory",
-                "Locker Room",
-            ]]
-        ) | CanReachRegion("Garage", options=rare_logic_filter) |
-        AdvancedExperimentRule() | CommissaryRule("RUNNING SHOES", 8) | UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Closet",
+                    "Gymnasium",
+                    "Locker Room",
+                    "Rumpus Room",
+                    "Sauna",
+                    "The Pool",
+                    "Walk-In Closet",
+                    "Weight Room",
+                    "Dormitory",
+                    "Locker Room",
+                ]]
+            ),
+            rare_children=CanReachRegion("Garage"),
+            other_children= AdvancedExperimentRule() | CommissaryRule("RUNNING SHOES", 8) | UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters")
+        ),
         
     },
     "SALT SHAKER First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 15, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "SALT SHAKER",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Rumpus Room",
-                "Walk-In Closet",
-                "Billiard Room",
-                "Dining Room",
-                "Morning Room",
-            ]]
-        ) | Or(
-            CanReachRegion("Pantry"), CanReachRegion("Kitchen"),
-            options=rare_logic_filter
-        ) | AdvancedExperimentRule() | CommissaryRule("SALT SHAKER", 5) |TradingPostRule("SALT SHAKER") | SpiralOfStarsRule(),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Rumpus Room",
+                    "Walk-In Closet",
+                    "Billiard Room",
+                    "Dining Room",
+                    "Morning Room",
+                ]]
+            ),
+            rare_children=Or(
+                CanReachRegion("Pantry"), 
+                CanReachRegion("Kitchen")
+            ),
+            other_children= AdvancedExperimentRule() | CommissaryRule("SALT SHAKER", 5) |TradingPostRule("SALT SHAKER") | SpiralOfStarsRule()
+        ),
         
     },
     "SHOVEL First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 16, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "SHOVEL",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Aquarium",
-                "Attic",
-                "Cloister",
-                "Closet",
-                "Courtyard",
-                "Greenhouse",
-                "Patio",
-                "Storeroom",
-                "Terrace",
-                "Veranda",
-                "Wine Cellar",
-                "Workshop",
-                "Secret Garden",
-                "Clock Tower",
-                "Solarium",
-                "Tunnel",
-                "Toolshed",
-                "Hovel",
-            ]]
-        ) | Or(
-            *[CanReachRegion(region) for region in [
-                "Spare Room",
-                "Garage",
-                "Utility Closet",
-                "Boiler Room",
-            ]],
-            CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
-            options=rare_logic_filter
-        ) | TradingPostRule("SHOVEL") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | CommissaryRule("SHOVEL", 6) | # Also from AdvancedExperimentRule, but that requires SHOVEL
-        UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Greenroom") | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda") | UpgradedRoomRule("Spare Room", "Spare Terrace"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Aquarium",
+                    "Attic",
+                    "Cloister",
+                    "Closet",
+                    "Courtyard",
+                    "Greenhouse",
+                    "Patio",
+                    "Storeroom",
+                    "Terrace",
+                    "Veranda",
+                    "Wine Cellar",
+                    "Workshop",
+                    "Secret Garden",
+                    "Clock Tower",
+                    "Solarium",
+                    "Tunnel",
+                    "Toolshed",
+                    "Hovel",
+                ]]
+            ),
+            rare_children=Or(
+                *[CanReachRegion(region) for region in [
+                    "Spare Room",
+                    "Garage",
+                    "Utility Closet",
+                    "Boiler Room",
+                ]],
+                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
+            ),
+            other_children= TradingPostRule("SHOVEL") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | CommissaryRule("SHOVEL", 6) | # Also from AdvancedExperimentRule, but that requires SHOVEL
+            UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Greenroom") | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Veranda") | UpgradedRoomRule("Spare Room", "Spare Terrace")
+        ),
         
     },
     "SLEDGE HAMMER First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 17, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "SLEDGE HAMMER",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Attic",
-                "Closet",
-                "Courtyard",
-                "Greenhouse",
-                "Storeroom",
-                "Veranda",
-                "Workshop",
-                "Wine Cellar",
-                "Secret Garden",
-                "Tunnel",
-                "Toolshed",
-            ]]
-        ) | Or(
-            *[CanReachRegion(region) for region in [
-                "Spare Room",
-                "Garage",
-                "Music Room",
-                "Utility Closet",
-            ]],
-            CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
-            options=rare_logic_filter
-        ) | AdvancedExperimentRule() | TradingPostRule("SLEDGE HAMMER") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | CommissaryRule("SLEDGE HAMMER", 8) |
-        UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Hall"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Attic",
+                    "Closet",
+                    "Courtyard",
+                    "Greenhouse",
+                    "Storeroom",
+                    "Veranda",
+                    "Workshop",
+                    "Wine Cellar",
+                    "Secret Garden",
+                    "Tunnel",
+                    "Toolshed",
+                ]]
+            ),
+            rare_children=Or(
+                *[CanReachRegion(region) for region in [
+                    "Spare Room",
+                    "Garage",
+                    "Music Room",
+                    "Utility Closet",
+                ]],
+                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)])
+            ),
+            other_children= AdvancedExperimentRule() | TradingPostRule("SLEDGE HAMMER") | SpiralOfStarsRule() | And(ShelteredRule(), CanReachRegion("Furnace")) | CommissaryRule("SLEDGE HAMMER", 8) |
+                UpgradedRoomRule("Mail Room", "Freight Mail") | UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Hall")
+        ),
         
     },
     "SLEEPING MASK First Pickup": {
@@ -842,11 +886,15 @@ standard_item_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 19, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "STOPWATCH",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            CanReachRegion("Clock Tower"), CanReachRegion("Lost & Found")
-        ) | And(
-            CanReachItemLocation("Jack Hammer"), DigSpotRule(),
-            options=rare_logic_filter
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                CanReachRegion("Clock Tower"), 
+                CanReachRegion("Lost & Found")
+            ),
+            rare_children=And(
+                CanReachItemLocation("Jack Hammer"), 
+                DigSpotRule()
+            )
         ),
         
     },
@@ -867,24 +915,28 @@ standard_item_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 21, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "TREASURE MAP",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Attic",
-                "Drafting Studio",
-                "Library",
-                "Mail Room",
-                "Observatory",
-                "Rumpus Room",
-                "Study",
-                "Wine Cellar",
-                "Clock Tower",
-                "Locker Room",
-            ]]
-        ) | Or(
-            CanReachRegion("Den"), CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
-            options=rare_logic_filter
-        ) | TrunkRule() | CarTrunkRule() | LavatoryRule() |
-        UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Secret Passage"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Attic",
+                    "Drafting Studio",
+                    "Library",
+                    "Mail Room",
+                    "Observatory",
+                    "Rumpus Room",
+                    "Study",
+                    "Wine Cellar",
+                    "Clock Tower",
+                    "Locker Room",
+                ]]
+            ),
+            rare_children=Or(
+                CanReachRegion("Den"), 
+                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)])
+            ),
+            other_children= TrunkRule() | CarTrunkRule() | LavatoryRule() |
+                UpgradedRoomRule("Spare Room", "Spare Foyer") | UpgradedRoomRule("Spare Room", "Spare Secret Passage")
+        ),
         
     },
     "WATERING CAN First Pickup": {
@@ -911,36 +963,42 @@ special_key_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 31, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "CAR KEYS",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            *[CanReachRegion(region) for region in [
-                "Bedroom",
-                "Billiard Room",
-                "Dining Room",
-                "Gymnasium",
-                "Locker Room",
-                "Music Room",
-                "Office",
-                "Parlor",
-                "Patio",
-                "Rumpus Room",
-                "Sauna",
-                "Security",
-                "The Pool",
-                "Walk-In Closet",
-                "Locker Room",
-        ]]) | Or(
-            CanReachRegion("Gallery"), CanReachRegion("Den"), CanReachRegion("Locksmith"),
-            options=rare_logic_filter
-        ) | TrunkRule() | AdvancedExperimentRule() | SpiralOfStarsRule() | 
-        UpgradedRoomRule("Spare Room", "Spare Bedroom") | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters"),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                *[CanReachRegion(region) for region in [
+                    "Bedroom",
+                    "Billiard Room",
+                    "Dining Room",
+                    "Gymnasium",
+                    "Locker Room",
+                    "Music Room",
+                    "Office",
+                    "Parlor",
+                    "Patio",
+                    "Rumpus Room",
+                    "Sauna",
+                    "Security",
+                    "The Pool",
+                    "Walk-In Closet",
+                    "Locker Room",
+            ]]),
+            rare_children=Or(
+                CanReachRegion("Gallery"), 
+                CanReachRegion("Den"), 
+                CanReachRegion("Locksmith"),
+            ),
+            other_children= TrunkRule() | AdvancedExperimentRule() | SpiralOfStarsRule() | 
+                UpgradedRoomRule("Spare Room", "Spare Bedroom") | UpgradedRoomRule("Spare Room", "Spare Patio") | UpgradedRoomRule("Spare Room", "Spare Servant's Quarters")
+        ),
         
     },
     "KEY 8 First Pickup": {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 32, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "KEY 8",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            CanReachRegion("Gallery"), CanReachRegion("Lost & Found", options=extreme_logic_filter), # Lost & Found: Day 365+, Extreme Filter Only
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            CanReachRegion("Gallery"), 
+            extreme_children=CanReachRegion("Lost & Found"), # Lost & Found: Day 365+, Extreme Filter Only
         ),
         
     },
@@ -976,13 +1034,16 @@ special_key_pickup = {
         LOCATION_ID_KEY: all_areas["Campsite"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 34, # Doesn't spawn there, but putting it there and adding spawn locations as requirements
         LOCATION_ROOM_KEY: "Campsite",
         LOCATION_ITEM_KEY: "PRISM KEY_0",
-        LOCATION_RULE_SIMPLE_COMMON: Or(
-            CanReachRegion("Music Room"), CanReachRegion("Lost & Found"), CanReachRegion("Locksmith")
-        ) | And(
-            CanReachRegion("Freezer"),
-            Or(CanReachItemLocation("Burning Glass"), CanReachItemLocation("TORCH")),
-            options=complex_logic_filter
-        ) | PlanetariumRule(),
+        LOCATION_RULE_SIMPLE_COMMON: SeenRule(
+            Or(
+                CanReachRegion("Music Room"), CanReachRegion("Lost & Found"), CanReachRegion("Locksmith")
+            ),
+            complex_children=And(
+                CanReachRegion("Freezer"),
+                Or(CanReachItemLocation("Burning Glass"), CanReachItemLocation("TORCH")),
+            ),
+            other_children=PlanetariumRule()
+        ),
         
     },
     "SECRET GARDEN KEY First Pickup": {

@@ -285,7 +285,13 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Throne Room",
-                    CanReachPickPosition("Throne Room") & CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins"), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
+                    Or(
+                        And(
+                            CanReachPickPosition("Throne Room"), 
+                            CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins")
+                        ), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
+                        can_see_for_ut
+                    ),
                 )
             elif k == "Entrance Hall":
                 continue
@@ -557,7 +563,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
         tunnel_area_post_sealed_door.connect(
             tunnel_area_post_blue_door,
             "Tunnel Area Post Sealed Door to Tunnel Area Post Blue Door",
-            lambda state: state.has("Blue Door Access", world.player),
+            Has("Blue Door Access"),
             # No item called blue door access RN.
         )
 
