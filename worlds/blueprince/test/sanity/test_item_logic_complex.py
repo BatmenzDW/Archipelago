@@ -26,5 +26,5 @@ class TestItemLogicComplex(BluePrinceTestBase):
 
     def test_trading_post_upgrade_disk(self):
         self.collect_by_name(["Garage", "Trading Post", "Utility Closet", "Showroom", "Vault", "Hallway", "Spare Room", "ORNATE COMPASS", "Casino"])
-        self.assertTrue(self.can_reach_location("ORNATE COMPASS First Pickup"), "Should be able to reach Ornate Compass First Pickup with Showroom and required coins")
+        self.assertTrue(self.can_reach_location("First Pickup - ORNATE COMPASS"), "Should be able to reach Ornate Compass First Pickup with Showroom and required coins")
         self.assertTrue(self.can_reach_location("Upgrade Disk - Trading Post Trade"), "Should be able to reach Trading Post Upgrade Disk with Trading Post and a valid trade")
