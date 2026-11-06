@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from typing import Any, List, Set
+from typing import Any, List, Set, ClassVar
 
 # Imports of base Archipelago modules must be absolute.
 from BaseClasses import Item, Location
@@ -39,6 +39,7 @@ class BluePrinceWorld(World):
     item_name_to_id = items.ITEM_NAME_TO_ID
 
     # Technically, Simon starts in the Entrance Hall, but for lore reasons, Starting at The Campsite is also acceptable, and is not a "room"
+    # We will have to rework this when we add dare mode
     origin_region_name = "Campsite"
 
     starting_rooms = list()  # populated in items.py if room_draft_sanity is on, otherwise remains empty and unused
@@ -46,7 +47,23 @@ class BluePrinceWorld(World):
     item_name_groups = ITEMS_BY_GROUPS
     location_name_groups = LOCATIONS_BY_GROUPS
 
+    # Dares for dares mode
     dares : Set[str] = set()
+
+    # "soft" location access fake item for UT
+    glitches_item_name = "Does it never end?"
+
+    tracker_world: ClassVar[dict[str, Any]] = {
+        "map_page_folder": "tracker",
+        "map_page_maps": "maps/maps.json",
+        "map_page_locations": "locations/the_grounds.json",
+        "item_page_items": "items/items.json",
+        "item_page_item_layouts": {
+            "name": "Rooms",
+            "items": "Rooms",
+            "cols": 5
+        }
+    }
 
     # validate settings early in the generation process
     def generate_early(self) -> None:
@@ -115,3 +132,9 @@ class BluePrinceWorld(World):
         )
         slot_data["starting_rooms"] = [room.name for room in self.starting_rooms]
         return slot_data
+
+    # This is for Universal Tracker
+    # Allows UT to get the world state without needing the player yaml
+    def interpret_slot_data(self, slot_data: dict[str, Any]):
+        
+        pass
