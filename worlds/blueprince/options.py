@@ -519,7 +519,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     death_link_grace: DeathLinkGrace
     death_link_protection: DeathLinkProtection
     death_link_monk_exception: DeathLinkMonkException
-    max_queued_death_links: MaxQueuedDeathLinks
+    max_queued_deathlinks: MaxQueuedDeathLinks
 
     # Goal Options
     goal_type: GoalType
