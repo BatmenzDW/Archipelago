@@ -15,6 +15,7 @@ class TestAscendVictory(BluePrinceTestBase):
         "item_logic_mode": ItemLogicMode.option_complex,
         "special_shop_sanity": True,
         "goal_type": GoalType.option_ascend,
+        "dev_testing": True,
     }
 
     #  Copied here for debugging. This is run by the base class, but its easier to debug with it here
