@@ -120,6 +120,7 @@ class BluePrinceWorld(World):
             "locked_trunks_common",
             "locked_trunks_rare",
             "locked_trunks_complex",
+            "extra_trunk_chance",
             "standard_item_sanity",
             "workshop_sanity",
             "upgrade_disk_sanity",
@@ -133,11 +134,13 @@ class BluePrinceWorld(World):
             "death_link_grace",
             "death_link_protection",
             "death_link_monk_exception",
+            "max_queued_deathlinks",
             "goal_type",
             "goal_sanctum_solves",
             "start_inventory",
         )
         slot_data["starting_rooms"] = [room.name for room in self.starting_rooms]
+        slot_data["world_version"] = self.world_version
         return slot_data
 
     # This is for Universal Tracker

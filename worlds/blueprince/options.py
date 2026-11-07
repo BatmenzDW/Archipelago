@@ -403,6 +403,18 @@ class DeathLinkMonkException(Toggle):
 
     default = True
 
+class MaxQueuedDeathLinks(Range):
+    """
+    The maximum number of queued death links that can be pending at any given time. 0 disables the max limit.
+    """
+
+    display_name = "Max Queued Death Links"
+    rich_text_doc = True
+
+    range_start = 0
+    range_end = 100
+    default = 0
+
 # Goal Options
 class GoalType(Choice):
     """
@@ -433,7 +445,7 @@ class GoalType(Choice):
 
 class GoalSanctumSolves(Range):
     """
-    GoalSanctumSolves is the number of sanctum keys to find, and sanctum doors to open for the goal to be achieved.
+    The number of sanctum keys to find, and sanctum doors to open for the goal to be achieved.
     """
 
     display_name = "Goal: Sanctums Solved"
@@ -452,6 +464,17 @@ class StartingRoomAmount(Range):
     range_start = 2
     range_end = 10
     default = 3
+
+class ExtraTrunkChance(Range):
+    """
+    This increases the chance of spawning a trunk in the rooms that can contain trunks.
+    """
+
+    display_name = "Extra Trunk Chance"
+
+    range_start = 0
+    range_end = 100
+    default = 0
 
 class DevTesting(Toggle):
     """
@@ -475,6 +498,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     locked_trunks_rare: LockedTrunkRareCount
     locked_trunks_complex: LockedTrunkComplexCount
     trunks: TrunkCounts
+    extra_trunk_chance: ExtraTrunkChance
     item_logic_mode: ItemLogicMode
     enable_obscure_locations: EnableObscureLocations
 
@@ -495,6 +519,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     death_link_grace: DeathLinkGrace
     death_link_protection: DeathLinkProtection
     death_link_monk_exception: DeathLinkMonkException
+    max_queued_death_links: MaxQueuedDeathLinks
 
     # Goal Options
     goal_type: GoalType
@@ -514,6 +539,7 @@ option_groups = [
             LockedTrunkRareCount,
             LockedTrunkComplexCount,
             TrunkCounts,
+            ExtraTrunkChance,
             ItemLogicMode,
             StandardItemSanity,
             WorkshopSanity,
@@ -530,7 +556,7 @@ option_groups = [
     ),
     OptionGroup(
         "Death Link Options",
-        [DeathLinkType, DeathLinkGrace, DeathLinkProtection, DeathLinkMonkException],
+        [DeathLinkType, DeathLinkGrace, DeathLinkProtection, DeathLinkMonkException, MaxQueuedDeathLinks],
     ),
     OptionGroup(
         "Goal Options",
@@ -546,6 +572,7 @@ option_presets = {
         "locked_trunks_common": 0,
         "locked_trunks_rare": 0,
         "locked_trunks_complex": 0,
+        "extra_trunk_chance": ExtraTrunkChance.default,
         "trunks": {
             "Bedroom": 1,
             "Courtyard": 1,
@@ -582,6 +609,7 @@ option_presets = {
         "death_link_grace": DeathLinkGrace.range_start,
         "death_link_protection": 0,
         "death_link_monk_exception": True,
+        "max_queued_deathlinks": MaxQueuedDeathLinks.default,
         "goal_type": GoalType.option_antechamber,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
         "start_inventory": {},
@@ -596,6 +624,7 @@ option_presets = {
             "Bedroom": 2,
             "Courtyard": 2,
         },
+        "extra_trunk_chance": ExtraTrunkChance.default,
         "standard_item_sanity": True,
         "workshop_sanity": False,
         "upgrade_disk_sanity": False,
@@ -628,6 +657,7 @@ option_presets = {
         "death_link_grace": DeathLinkGrace.range_start,
         "death_link_protection": 0,
         "death_link_monk_exception": True,
+        "max_queued_deathlinks": MaxQueuedDeathLinks.default,
         "goal_type": GoalType.option_room46,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
         "start_inventory": {},
