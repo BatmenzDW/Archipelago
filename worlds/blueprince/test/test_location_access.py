@@ -30,21 +30,21 @@ class TestLocationAccess(BluePrinceTestBase):
     def test_can_reach_compass(self):
         self.collect_by_name(["Closet", "COMPASS"])
         self.debug_print_regions_items_locations(True)
-        self.assertTrue(self.can_reach_location("COMPASS First Pickup"), "COMPASS First Pickup should be reachable after having ")
+        self.assertTrue(self.can_reach_location("First Pickup - COMPASS"), "COMPASS First Pickup should be reachable after having ")
 
     def test_can_craft_electromagnet(self):
         self.collect_by_name(["Electromagnet", "COMPASS", "BATTERY PACK", "Workshop", "Closet", "Bedroom"])
-        self.assertTrue(self.can_reach_location("Electromagnet First Pickup"), "Electromagnet should be reachable after having the required items")
+        self.assertTrue(self.can_reach_location("First Pickup - Electromagnet"), "Electromagnet should be reachable after having the required items")
 
     def test_can_craft_burning_glass(self):
         self.collect_by_name(["Burning Glass", "Workshop", "MAGNIFYING GLASS", "Library", "METAL DETECTOR"])
-        self.assertTrue(self.can_reach_location("Burning Glass First Pickup"), "Burning Glass should be reachable after having the required items")
+        self.assertTrue(self.can_reach_location("First Pickup - Burning Glass"), "Burning Glass should be reachable after having the required items")
 
     def test_bunk_rooms_have_same_item(self):
         from Fill import distribute_items_restrictive
         distribute_items_restrictive(self.multiworld)
-        loc1 = self.world.get_location("Bunk Room First Entering").item
-        loc2 = self.world.get_location("Bunk Room First Entering 2").item
-        self.assertIsNotNone(loc1, "Bunk Room First Entering should have an item")
-        self.assertIsNotNone(loc2, "Bunk Room First Entering 2 should have an item")
-        self.assertEqual(loc1.name, loc2.name, "Bunk Room First Entering and Bunk Room First Entering 2 should have the same item") # type: ignore
+        loc1 = self.world.get_location("First Draft - Bunk Room").item
+        loc2 = self.world.get_location("First Draft - Bunk Room 2").item
+        self.assertIsNotNone(loc1, "First Draft - Bunk Room should have an item")
+        self.assertIsNotNone(loc2, "First Draft - Bunk Room 2 should have an item")
+        self.assertEqual(loc1.name, loc2.name, "First Draft - Bunk Room and First Draft - Bunk Room 2 should have the same item") # type: ignore

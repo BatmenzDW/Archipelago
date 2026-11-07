@@ -64,10 +64,10 @@ class TestDraftSanity(BluePrinceTestBase):
     def test_can_reach_showroom_items_with_money(self):
         self.collect_by_name(["Showroom"])
         self.assertTrue(self.can_reach_region("Showroom"), "Showroom should be reachable after having the Showroom item")
-        self.assertFalse(self.can_reach_location("MASTER KEY First Pickup"), "MASTER KEY First Pickup should not be reachable without having the required money from more rooms/items")
+        self.assertFalse(self.can_reach_location("First Pickup - MASTER KEY"), "MASTER KEY First Pickup should not be reachable without having the required money from more rooms/items")
         self.collect_by_name(["Vault", "Casino", "Tomb", "Rumpus Room", "Office", "Servant's Quarters", "Maid's Chamber"])
-        print(self.multiworld.get_location("MASTER KEY First Pickup", self.player).access_rule.explain_str(self.multiworld.state)) # type: ignore
-        self.assertTrue(self.can_reach_location("MASTER KEY First Pickup"), "MASTER KEY First Pickup should be reachable after collecting money from more rooms/items")
+        print(self.multiworld.get_location("First Pickup - MASTER KEY", self.player).access_rule.explain_str(self.multiworld.state)) # type: ignore
+        self.assertTrue(self.can_reach_location("First Pickup - MASTER KEY"), "MASTER KEY First Pickup should be reachable after collecting money from more rooms/items")
 
     #  Copied here for debugging. This is run by the base class, but its easier to debug with it here
     def test_fill(self):
