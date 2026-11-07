@@ -13,6 +13,7 @@ class TestRegionAccess(BluePrinceTestBase):
         "key_sanity": True,
         "special_shop_sanity": True,
         "goal_type": GoalType.option_blueprints,
+        "dev_testing": True,
     }
 
     def test_starting_from_campsite(self) -> None:

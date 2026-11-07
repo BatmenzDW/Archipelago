@@ -60,7 +60,7 @@ class BluePrinceWorld(World):
         if self.options.item_logic_mode.value <= 1 and self.options.trophy_sanity == True:
             raise OptionError("Trophy Sanity requires at least complex item logic.")
 
-        if self.options.goal_type > blue_prince_options.GoalType.option_room46:
+        if self.options.goal_type > blue_prince_options.GoalType.option_room46 and not self.options.dev_testing:
             if self.options.goal_type > blue_prince_options.GoalType.option_sanctum:
                 raise OptionError("Goals past sanctum solves are not implemented.")
             else:

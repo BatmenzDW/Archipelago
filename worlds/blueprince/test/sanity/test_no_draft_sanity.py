@@ -22,6 +22,7 @@ class TestNoDraftSanity(BluePrinceTestBase):
         "trophy_sanity": True,
         "item_logic_mode": ItemLogicMode.option_complex,
         "goal_type": GoalType.option_blueprints,
+        "dev_testing": True,
     }
 
     def test_all_starting_room_items(self) -> None:
