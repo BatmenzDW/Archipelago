@@ -1,5 +1,6 @@
 from collections.abc import Mapping
 from typing import Any, List, Set, ClassVar
+import warnings
 
 # Imports of base Archipelago modules must be absolute.
 from BaseClasses import Item, Location
@@ -75,6 +76,12 @@ class BluePrinceWorld(World):
 
         if self.options.item_logic_mode.value <= 1 and self.options.trophy_sanity == True:
             raise OptionError("Trophy Sanity requires at least complex item logic.")
+
+        if self.options.goal_type > blue_prince_options.GoalType.option_room46:
+            if self.options.goal_type > blue_prince_options.GoalType.option_sanctum:
+                raise OptionError("Goals past sanctum solves are not implemented.")
+            else:
+                warnings.warn("Sanctums Solves is not fully implemented.")
 
     # # Our world class must have certain functions ("steps") that get called during generation.
     # # The main ones are: create_regions, set_rules, create_items.
