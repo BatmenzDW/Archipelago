@@ -28,23 +28,23 @@ LOCATION_NAME_TO_ID = (
         for k, v in locations.items()
     }
     | {
-        # Create First Entering locations for each room.
-        f"{k} First Entering": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER
+        # Create First Draft locations for each room.
+        f"First Draft - {k}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER
         for k, v in rooms.items()
     }
     | {
-        "Bunk Room First Entering 2": rooms["Bunk Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1
+        "First Draft - Bunk Room 2": rooms["Bunk Room"][ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 1
     }
     | {
         # Create 100 locked trunk check locations for each room that has the ability to have locked trunks
-        f"{k} Locked Trunk {idx}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 10_000 + idx
+        f"Locked Trunk - {k} - {idx}": v[ROOM_ITEM_ID_KEY] * ROOM_MULTIPLIER + 10_000 + idx
         for k, v in rooms.items()
         for idx in range(1, 101)
         if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0
     }
     | {
         # Add First Pickup as locations for armory items.
-        f"{k} First Pickup": v[ITEM_ID_KEY] * ROOM_MULTIPLIER
+        f"First Pickup - {k}": v[ITEM_ID_KEY] * ROOM_MULTIPLIER
         for k, v in armory_items.items()
     }
 )
@@ -67,7 +67,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
     armory = world.get_region("The Armory")
     # Ignoring chance to get Knight's Shield by digging with Jack Hammer for now.
     for k, v in armory_items.items():
-        location_key = f"{k} First Pickup"
+        location_key = f"First Pickup - {k}"
         locs = get_location_names_with_ids([location_key])
         armory.add_locations(locs, BluePrinceLocation)
     
@@ -83,8 +83,8 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
 
         room = world.get_region(room_key)
 
-        # Add fist room entrance
-        location_key = f"{room_key} First Entering"
+        # Add roo, first draft
+        location_key = f"First Draft - {room_key}"
         if not is_implemented(location_key, world):
             continue
 
@@ -93,7 +93,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
             room.add_locations(locs, BluePrinceLocation)
 
         elif room_key == "Bunk Room":
-            locs = get_location_names_with_ids(["Bunk Room First Entering", "Bunk Room First Entering 2"])
+            locs = get_location_names_with_ids(["First Draft - Bunk Room", "First Draft - Bunk Room 2"])
             room.add_locations(locs, BluePrinceLocation)
         # Add Nth locked trunk open
 
@@ -114,16 +114,16 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         elif v[ROOM_CHEST_SPOT_TYPE_KEY] == ROOM_CHEST_SPOT_COMPLEX:
             trunk_count = world.options.locked_trunks_complex
 
-        trunks = [f"{room_key} Locked Trunk {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
+        trunks = [f"Locked Trunk - {room_key} - {idx}" for idx in range(1, trunk_count + 1) if v[ROOM_CHEST_SPOT_COUNT_KEY] > 0]
         locs = get_location_names_with_ids(trunks)
 
         if room_key == "The Pool" and world.options.goal_type.value < 2:
             if "The Pool" in world.options.trunks.value and world.options.trunks.value["The Pool"] > 0:
-                warnings.warn("Cannot create \"The Pool Locked Trunks\" due to current goal type; Skipping.")
+                warnings.warn("Cannot create \"Locked Trunks - The Pool\" due to current goal type; Skipping.")
             continue # Skip The Pool locked trunks when the goal is before Gift Shop
         elif room_key == "Planetarium" and world.options.item_logic_mode < ItemLogicMode.option_complex:
             if "Planetarium" in world.options.trunks.value and world.options.trunks.value["Planetarium"] > 0:
-                warnings.warn("Cannot create \"Planetarium Locked Trunks\" due to current item logic mode; Skipping.")
+                warnings.warn("Cannot create \"Locked Trunks - Planetarium\" due to current item logic mode; Skipping.")
             continue # Skip Planetarium locked trunks when logic mode is not complex
 
         room.add_locations(locs, BluePrinceLocation)
@@ -131,19 +131,19 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         # These trunks require extra logic
         if room_key == "Entrance Hall":
             for idx in range(1, trunk_count + 1):
-                world.set_rule(world.get_location(f"Entrance Hall Locked Trunk {idx}"), lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player))
+                world.set_rule(world.get_location(f"Locked Trunk - Entrance Hall - {idx}"), lambda state: state.can_reach_region("Observatory", world.player) or state.can_reach_region("Laboratory", world.player))
 
         elif room_key == "The Pool":
             for idx in range(1, trunk_count + 1): 
-                world.set_rule(world.get_location(f"The Pool Locked Trunk {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
+                world.set_rule(world.get_location(f"Locked Trunk - The Pool - {idx}"), lambda state: state.can_reach_region("Gift Shop", world.player))
 
         elif room_key == "Mechanarium":
             for idx in range(1, trunk_count + 1):
-                world.set_rule(world.get_location(f"Mechanarium Locked Trunk {idx}"), MechanariumDoorRule(3))
+                world.set_rule(world.get_location(f"Locked Trunk - Mechanarium - {idx}"), MechanariumDoorRule(3))
 
         elif room_key == "Planetarium":
             for idx in range(1, trunk_count + 1):
-                world.set_rule(world.get_location(f"Planetarium Locked Trunk {idx}"), PlanetariumRule())
+                world.set_rule(world.get_location(f"Locked Trunk - Planetarium - {idx}"), PlanetariumRule())
 
     for k, v in locations.items():
 
@@ -153,16 +153,16 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         if world.options.goal_type.value < 4 and k in ["Ascend The Throne", "Throne of the Blue Prince Mora Jai Box"]:
             continue
 
-        if world.options.goal_type.value < 3 and (k in aries_court_mora_jai_boxes or k in ["KEY of Aries First Pickup", "ROYAL SCEPTER First Pickup"]):
+        if world.options.goal_type.value < 3 and (k in aries_court_mora_jai_boxes or k in ["First Pickup - KEY of Aries", "First Pickup - ROYAL SCEPTER"]):
             continue
 
         if world.options.goal_type.value < 2 and (k in sanctum_keys or 
-            k in ["LUNCH BOX First Pickup", 
-                  "CURSED EFFIGY First Pickup", 
+            k in ["First Pickup - LUNCH BOX", 
+                  "First Pickup - CURSED EFFIGY", 
                   "Cursed Coffers", 
-                  "CROWN First Pickup", 
+                  "First Pickup - CROWN", 
                   "Underpass Mora Jai Box", 
-                  "Treasure Trove Floorplan",
+                  "Floorplan - Treasure Trove",
                   "Gift Shop - Mt. Holly Tee", 
                   "Gift Shop - Lunch Box", 
                   "Gift Shop - Swim Trunks", 
@@ -190,7 +190,7 @@ def create_regular_locations(world: BluePrinceWorld) -> None:
         ]]):
             continue 
 
-        if world.options.goal_type.value < 1 and (k in ["BASEMENT KEY First Pickup", "Break Tunnel Wall"] or "Unlock Basement Door" in k):
+        if world.options.goal_type.value < 1 and (k in ["First Pickup - BASEMENT KEY", "Break Tunnel Wall"] or "Unlock Basement Door" in k):
             continue # Skip locations that are past or at the goal
 
         if world.options.trophy_sanity == False and (k in trophies or k in ["Gift Shop - Blue Tents"]):
@@ -303,7 +303,7 @@ def force_special_location_conditions(world: BluePrinceWorld,
         return
     raise Exception("Could not satisfy special location conditions. This should be impossible.")
 
-# Attempts to fill both Bunk Room First Entering Locations with two items with the same name, if possible
+# Attempts to fill both First Draft - Bunk Room Locations with two items with the same name, if possible
 def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, pool: List["Item"], locations: List["Location"]) -> bool:
     multi : List[str] = []
     
@@ -316,8 +316,8 @@ def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, po
     if len(multi) == 0:
         return False
 
-    loc1 = world.get_location("Bunk Room First Entering")
-    loc2 = world.get_location("Bunk Room First Entering 2")
+    loc1 = world.get_location("First Draft - Bunk Room")
+    loc2 = world.get_location("First Draft - Bunk Room 2")
 
     l1_item : Item | None = None
 
@@ -343,12 +343,12 @@ def attempt_to_fill_multiple_locations_with_same_item(world: BluePrinceWorld, po
                 # Item equality compares name and player, so list.remove can remove an
                 # unplaced duplicate instead of either object we just placed.
                 pool[:] = [candidate for candidate in pool if candidate is not l1_item and candidate is not item]
-                print(f"Placed an item in both Bunk Room First Entering locations to satisfy the condition that they have the same item.")
+                print(f"Placed an item in both First Draft - Bunk Room locations to satisfy the condition that they have the same item.")
                 return True
             else:
                 l1_item = None
 
-    assert False, f"Could not find a way to fill the Bunk Room First Entering locations with the same item. This should be impossible."
+    assert False, f"Could not find a way to fill the First Draft - Bunk Room locations with the same item. This should be impossible."
 
 def get_location_rule(location_key: str) -> Rule:
     location_data = locations[location_key]
@@ -519,8 +519,8 @@ def is_implemented(location_name: str, world: BluePrinceWorld) -> bool:
             return True
         return locations[location_name][IMPLEMENTATION_STATUS] == IMPLEMENTED
     
-    if location_name.endswith("First Entering"):
-        room_name = location_name.replace(" First Entering", "")
+    if location_name.startswith("First Draft - "):
+        room_name = location_name.replace("First Draft - ", "")
         if room_name in rooms:
             if LOCATION_IMPLEMENTATION_STATUS not in rooms[room_name]:
                 return True

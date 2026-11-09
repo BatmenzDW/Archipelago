@@ -285,7 +285,7 @@ def create_and_connect_regions(world: BluePrinceWorld) -> None:
                 entrance_hall.connect(
                     room,
                     "Entrance Hall Throne Room",
-                    CanReachPickPosition("Throne Room") & CanReachLocation("Throne Room Floorplan", parent_region_name="Orindian Ruins"), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
+                    CanReachPickPosition("Throne Room") & CanReachLocation("Floorplan - Throne Room", parent_region_name="Orindian Ruins"), # This is a lie to prevent the Throne Room from being placed early in logic, which was forcing the other routes much later in logic.
                 )
             elif k == "Entrance Hall":
                 continue

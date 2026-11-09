@@ -13,6 +13,7 @@ class TestRegionAccess(BluePrinceTestBase):
         "key_sanity": True,
         "special_shop_sanity": True,
         "goal_type": GoalType.option_blueprints,
+        "dev_testing": True,
     }
 
     def test_starting_from_campsite(self) -> None:
@@ -171,7 +172,7 @@ class TestRegionAccess(BluePrinceTestBase):
     def test_can_reach_showroom_items(self):
         self.collect_by_name(["Showroom", "Vault"])
         self.assertTrue(self.can_reach_region("Showroom"), "Showroom should be reachable after having the Showroom item")
-        self.assertTrue(self.can_reach_location("CHRONOGRAPH First Pickup"), "CHRONOGRAPH First Pickup should be reachable after having the Showroom item")
+        self.assertTrue(self.can_reach_location("First Pickup - CHRONOGRAPH"), "CHRONOGRAPH First Pickup should be reachable after having the Showroom item")
 
     def test_edge_case_regions_reachable(self) -> None:
         self.collect_all_but([])

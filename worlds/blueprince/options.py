@@ -235,47 +235,47 @@ class FillerItemDistribution(OptionCounter):
     max = 100
 
     default = {
-        "extra_allowance": 50,
-        "extra_allowance_1": 0,
-        "extra_allowance_2": 0,
-        "extra_gold": 50,
-        "extra_gold_1": 0,
-        "extra_gold_2": 0,
-        "extra_gold_5": 0,
-        "extra_dice": 50,
-        "extra_dice_1": 0,
-        "extra_dice_2": 0,
-        "extra_dice_4": 0,
-        "extra_gems": 50,
-        "extra_gems_1": 0,
-        "extra_gems_2": 0,
-        "extra_keys": 50,
-        "extra_keys_1": 0,
-        "extra_keys_2": 0,
-        "extra_keys_3": 0,
-        "extra_stars": 50,
-        "extra_stars_1": 0,
-        "extra_stars_2": 0,
-        "extra_stars_5": 0,
-        "extra_starting_dice": 0,
-        "extra_starting_dice_1": 0,
-        "extra_starting_dice_2": 0,
-        "extra_starting_gems": 0,
-        "extra_starting_gems_1": 0,
-        "extra_starting_gems_2": 0,
-        "extra_starting_key": 0,
-        "extra_starting_key_1": 0,
-        "extra_starting_key_2": 0,
-        "extra_starting_luck": 50,
-        "extra_starting_luck_1": 0,
-        "extra_starting_luck_2": 0,
-        "extra_starting_steps": 0,
-        "extra_starting_steps_5": 0,
-        "extra_starting_steps_10": 0,
-        "extra_steps": 50,
-        "extra_steps_1": 0,
-        "extra_steps_2": 0,
-        "extra_steps_5": 0,
+        "allowance": 50,
+        "1_allowance": 0,
+        "2_allowance": 0,
+        "gold": 50,
+        "1_gold": 0,
+        "2_gold": 0,
+        "5_gold": 0,
+        "dice": 50,
+        "1_dice": 0,
+        "2_dice": 0,
+        "4_dice": 0,
+        "gems": 50,
+        "1_gems": 0,
+        "2_gems": 0,
+        "keys": 50,
+        "1_keys": 0,
+        "2_keys": 0,
+        "3_keys": 0,
+        "stars": 50,
+        "1_stars": 0,
+        "2_stars": 0,
+        "5_stars": 0,
+        "permanent_dice": 0,
+        "1_permanent_dice": 0,
+        "2_permanent_dice": 0,
+        "permanent_gems": 0,
+        "1_permanent_gems": 0,
+        "2_permanent_gems": 0,
+        "permanent_keys": 0,
+        "1_permanent_keys": 0,
+        "2_permanent_keys": 0,
+        "permanent_luck": 50,
+        "1_permanent_luck": 0,
+        "2_permanent_luck": 0,
+        "permanent_steps": 0,
+        "5_permanent_steps": 0,
+        "10_permanent_steps": 0,
+        "steps": 50,
+        "1_steps": 0,
+        "2_steps": 0,
+        "5_steps": 0,
         "nothing": 50,
     }
 
@@ -403,6 +403,18 @@ class DeathLinkMonkException(Toggle):
 
     default = True
 
+class MaxQueuedDeathLinks(Range):
+    """
+    The maximum number of queued death links that can be pending at any given time. 0 disables the max limit.
+    """
+
+    display_name = "Max Queued Death Links"
+    rich_text_doc = True
+
+    range_start = 0
+    range_end = 100
+    default = 0
+
 # Goal Options
 class GoalType(Choice):
     """
@@ -433,7 +445,7 @@ class GoalType(Choice):
 
 class GoalSanctumSolves(Range):
     """
-    GoalSanctumSolves is the number of sanctum keys to find, and sanctum doors to open for the goal to be achieved.
+    The number of sanctum keys to find, and sanctum doors to open for the goal to be achieved.
     """
 
     display_name = "Goal: Sanctums Solved"
@@ -452,6 +464,17 @@ class StartingRoomAmount(Range):
     range_start = 2
     range_end = 10
     default = 3
+
+class ExtraTrunkChance(Range):
+    """
+    This increases the chance of spawning a trunk in the rooms that can contain trunks.
+    """
+
+    display_name = "Extra Trunk Chance"
+
+    range_start = 0
+    range_end = 100
+    default = 0
 
 class DevTesting(Toggle):
     """
@@ -475,6 +498,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     locked_trunks_rare: LockedTrunkRareCount
     locked_trunks_complex: LockedTrunkComplexCount
     trunks: TrunkCounts
+    extra_trunk_chance: ExtraTrunkChance
     item_logic_mode: ItemLogicMode
     enable_obscure_locations: EnableObscureLocations
 
@@ -495,6 +519,7 @@ class BluePrinceOptions(PerGameCommonOptions):
     death_link_grace: DeathLinkGrace
     death_link_protection: DeathLinkProtection
     death_link_monk_exception: DeathLinkMonkException
+    max_queued_deathlinks: MaxQueuedDeathLinks
 
     # Goal Options
     goal_type: GoalType
@@ -514,6 +539,7 @@ option_groups = [
             LockedTrunkRareCount,
             LockedTrunkComplexCount,
             TrunkCounts,
+            ExtraTrunkChance,
             ItemLogicMode,
             StandardItemSanity,
             WorkshopSanity,
@@ -530,7 +556,7 @@ option_groups = [
     ),
     OptionGroup(
         "Death Link Options",
-        [DeathLinkType, DeathLinkGrace, DeathLinkProtection, DeathLinkMonkException],
+        [DeathLinkType, DeathLinkGrace, DeathLinkProtection, DeathLinkMonkException, MaxQueuedDeathLinks],
     ),
     OptionGroup(
         "Goal Options",
@@ -546,6 +572,7 @@ option_presets = {
         "locked_trunks_common": 0,
         "locked_trunks_rare": 0,
         "locked_trunks_complex": 0,
+        "extra_trunk_chance": ExtraTrunkChance.default,
         "trunks": {
             "Bedroom": 1,
             "Courtyard": 1,
@@ -559,14 +586,14 @@ option_presets = {
         "item_logic_mode": ItemLogicMode.default,
         "enable_obscure_locations": EnableObscureLocations.default,
         "filler_item_distribution": {
-            "extra_allowance": 50,
-            "extra_dice": 50,
-            "extra_gems": 50,
-            "extra_gold": 50,
-            "extra_keys": 50,
-            "extra_stars": 50,
-            "extra_starting_luck": 50,
-            "extra_steps": 50,
+            "allowance": 50,
+            "dice": 50,
+            "gems": 50,
+            "gold": 50,
+            "keys": 50,
+            "stars": 50,
+            "permanent_luck": 50,
+            "steps": 50,
             "nothing": 50
         },
         "trap_type_distribution": {
@@ -582,6 +609,7 @@ option_presets = {
         "death_link_grace": DeathLinkGrace.range_start,
         "death_link_protection": 0,
         "death_link_monk_exception": True,
+        "max_queued_deathlinks": MaxQueuedDeathLinks.default,
         "goal_type": GoalType.option_antechamber,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
         "start_inventory": {},
@@ -596,6 +624,7 @@ option_presets = {
             "Bedroom": 2,
             "Courtyard": 2,
         },
+        "extra_trunk_chance": ExtraTrunkChance.default,
         "standard_item_sanity": True,
         "workshop_sanity": False,
         "upgrade_disk_sanity": False,
@@ -605,14 +634,14 @@ option_presets = {
         "item_logic_mode": ItemLogicMode.default,
         "enable_obscure_locations": EnableObscureLocations.default,
         "filler_item_distribution": {
-            "extra_allowance": 50,
-            "extra_dice": 50,
-            "extra_gems": 50,
-            "extra_gold": 50,
-            "extra_keys": 50,
-            "extra_stars": 50,
-            "extra_starting_luck": 50,
-            "extra_steps": 50,
+            "allowance": 50,
+            "dice": 50,
+            "gems": 50,
+            "gold": 50,
+            "keys": 50,
+            "stars": 50,
+            "permanent_luck": 50,
+            "steps": 50,
             "nothing": 50
         },
         "trap_type_distribution": {
@@ -628,6 +657,7 @@ option_presets = {
         "death_link_grace": DeathLinkGrace.range_start,
         "death_link_protection": 0,
         "death_link_monk_exception": True,
+        "max_queued_deathlinks": MaxQueuedDeathLinks.default,
         "goal_type": GoalType.option_room46,
         "goal_sanctum_solves": GoalSanctumSolves.range_end,
         "start_inventory": {},
