@@ -782,35 +782,38 @@ class SledgeHammerNotFromToolshedRule(Rule["BluePrinceWorld"], game="Blue Prince
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return Or(
-            *[CanReachRegion(region) for region in [
-                "Attic",
-                "Closet",
-                "Courtyard",
-                "Greenhouse",
-                "Storeroom",
-                "Veranda",
-                "Workshop",
-                "Wine Cellar",
-                "Secret Garden",
-                "Tunnel",
-                "Commissary",
-            ]], 
+        return And(
+            Has("SLEDGE HAMMER"),
             Or(
                 *[CanReachRegion(region) for region in [
-                    "Spare Room",
-                    "Garage",
-                    "Music Room",
-                    "Utility Closet",
-                ]],
-                CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
-                options=rare_logic_filter
-            ),
-            AdvancedExperimentRule(),
-            SpiralOfStarsRule(),
-            UpgradedRoomRule("Mail Room", "Freight Mail"),
-            UpgradedRoomRule("Spare Room", "Spare Foyer"),
-            UpgradedRoomRule("Spare Room", "Spare Hall")
+                    "Attic",
+                    "Closet",
+                    "Courtyard",
+                    "Greenhouse",
+                    "Storeroom",
+                    "Veranda",
+                    "Workshop",
+                    "Wine Cellar",
+                    "Secret Garden",
+                    "Tunnel",
+                    "Commissary",
+                ]], 
+                Or(
+                    *[CanReachRegion(region) for region in [
+                        "Spare Room",
+                        "Garage",
+                        "Music Room",
+                        "Utility Closet",
+                    ]],
+                    CanReachRegion("Trophy Room", options=[OptionFilter(TrophySanity, True)]),
+                    options=rare_logic_filter
+                ),
+                AdvancedExperimentRule(),
+                SpiralOfStarsRule(),
+                UpgradedRoomRule("Mail Room", "Freight Mail"),
+                UpgradedRoomRule("Spare Room", "Spare Foyer"),
+                UpgradedRoomRule("Spare Room", "Spare Hall")
+            )
         ).resolve(world)
 
 prev_combo : set[tuple[str, ...]] = set()
