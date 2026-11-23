@@ -796,7 +796,7 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
             reachable_count = 0
             
             for target in self.targets:
-                loc_name = target + "First Pickup - "
+                loc_name = "First Pickup - " + target
                 if loc_name in locations:
                     if IMPLEMENTATION_STATUS in locations[loc_name] and locations[loc_name][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
                         if LOCATION_RULE_SIMPLE_COMMON in locations[loc_name]:
