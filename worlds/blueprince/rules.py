@@ -8,6 +8,8 @@ from rule_builder.rules import *
 if TYPE_CHECKING:
     from .world import BluePrinceWorld
 
+from BaseClasses import MultiWorld
+from ..AutoWorld import LogicMixin
 from .data_rooms import rooms, core_rooms, room_layout_lists
 from .constants import *
 from .room_min_pieces import POSITION_MINIMUM_PIECES, POSITION_MINIMUM_TOTAL_PIECES
@@ -521,7 +523,20 @@ FREEZER_MULT : int = 2
 
 coin_sources: dict[str, str] = {}
 
-has_coins_lock : bool = False
+class BluePrinceState(LogicMixin):
+    has_coins_lock: dict[int, bool]  # per player
+
+    def init_mixin(self, multiworld: MultiWorld) -> None:
+        # Initialize per player with the corresponding "nothing" value, such as 0 or an empty set.
+        # You can also use something like Collections.defaultdict
+        self.has_coins_lock = {player: False for player in multiworld.get_game_players("Blue Prince")}
+
+    def copy_mixin(self, new_state: CollectionState) -> CollectionState:
+        # Be careful to make a "deep enough" copy here!
+        new_state.has_coins_lock = { # type: ignore
+            player: lock for player, lock in self.has_coins_lock.items()
+        }
+        return new_state
 
 @dataclasses.dataclass()
 class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
@@ -532,7 +547,7 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
 
     @override
     def _instantiate(self, world: "BluePrinceWorld") -> Rule.Resolved:
-        return self.Resolved(self.amount, lategame=world.options.goal_type.value > 1, complex=world.options.item_logic_mode.value >= 2, workshop=world.options.workshop_sanity.value, player=world.player)
+        return self.Resolved(self.amount, lategame=world.options.goal_type.value > 1, complex=world.options.item_logic_mode.value >= 2, workshop=world.options.workshop_sanity.value == 1, player=world.player)
 
     class Resolved(Rule.Resolved):
         amount: int
@@ -542,15 +557,18 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
 
         @override
         def _evaluate(self, state: CollectionState) -> bool:
-            global has_coins_lock # prevent HasCoins from being called recursively
-            if has_coins_lock:
+            if state.has_coins_lock.get(self.player, False): # type: ignore
                 return False
             
-            has_coins_lock = True
+            state.has_coins_lock[self.player] = True # type: ignore
             coins = self.calculate_reachable_coins(state)
-            has_coins_lock = False
+            state.has_coins_lock[self.player] = False # type: ignore
 
             return coins >= self.amount
+
+        @override
+        def __str__(self) -> str:
+            return self.explain_str(None)
 
         @override
         def explain_str(self, state: CollectionState | None = None) -> str:
@@ -558,7 +576,9 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
             if state is not None:
                 coins = self.calculate_reachable_coins(state, log_sources=True)
 
-            return f"Reachable coins: {coins} / {self.amount}. Sources: {coin_sources}"
+            if state is not None and self._evaluate(state):
+                return f"Reachable coins: {coins} / {self.amount}. Sources: {coin_sources} (sufficient)"
+            return f"Reachable coins: {coins} / {self.amount}. Sources: {coin_sources} (insufficient), has_coins_lock: {state.has_coins_lock.get(self.player, False) if state else False}" # type: ignore
 
         @override
         def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
@@ -567,6 +587,11 @@ class HasCoins(Rule["BluePrinceWorld"], game="Blue Prince"):
                 coins = self.calculate_reachable_coins(state, log_sources=True)
 
             res : list[JSONMessagePart] = [{"type": "text", "text": f"Reachable coins: {coins} / {self.amount}. Sources: {coin_sources}"}]
+
+            if coins >= self.amount:
+                res.append({"type": "text", "text": " (sufficient)"})
+            else:
+                res.append({"type": "text", "text": " (insufficient)"})
 
             return res
             # return [
@@ -697,7 +722,7 @@ class CanReachItemLocationsFromList(Rule["BluePrinceWorld"], game="Blue Prince")
             reachable_count = 0
             
             for target in self.targets:
-                loc_name = target + "First Pickup - "
+                loc_name = "First Pickup - " + target
                 if loc_name in locations:
                     if IMPLEMENTATION_STATUS in locations[loc_name] and locations[loc_name][IMPLEMENTATION_STATUS] == NOT_IMPLEMENTED:
                         if LOCATION_RULE_SIMPLE_COMMON in locations[loc_name]:
