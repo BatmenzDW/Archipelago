@@ -217,6 +217,9 @@ def get_random_filler_item_name(world: BluePrinceWorld) -> str:
             case "star_traps_5":
                 return "Trap Lose Stars 5"
 
+            case "item_traps":
+                return "Trap Lose Item"
+
             case "eod_traps":
                 return "Trap End Day"
 
